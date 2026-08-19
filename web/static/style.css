@@ -62,10 +62,23 @@ aside h2, h2 { font-size: 14px; color: var(--accent); margin: 0 0 8px; }
 #history { list-style: none; margin: 0; padding: 0; font-family: Consolas, monospace; font-size: 12px; }
 #history li { padding: 4px 0; border-bottom: 1px solid #333; cursor: pointer; }
 .formula-grid { display: grid; grid-template-columns: 280px 280px 1fr; gap: 14px; min-height: 560px; }
-#category, #flist { width: 100%; height: 480px; background: var(--panel); color: var(--fg); }
-#flist { list-style: none; margin: 8px 0 0; padding: 0; overflow: auto; }
+#flist { width: 100%; height: 480px; background: var(--panel); color: var(--fg); list-style: none; margin: 8px 0 0; padding: 0; overflow: auto; }
 #flist li { padding: 6px 8px; cursor: pointer; }
 #flist li:hover, #flist li.on { background: var(--btn2); }
+#cat-list {
+  list-style: none; margin: 0; padding: 0; overflow: auto;
+  height: 480px; background: var(--panel); color: var(--fg);
+}
+#cat-list li {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 10px; padding: 7px 10px; cursor: pointer;
+}
+#cat-list li .cname { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#cat-list li .n {
+  color: var(--accent); font: 13px/1 Consolas, monospace;
+  min-width: 3.4em; text-align: end; flex: 0 0 auto;
+}
+#cat-list li:hover, #cat-list li.on { background: var(--btn2); }
 .solver { background: var(--panel); padding: 14px; }
 #alist { list-style: none; margin: 8px 0 0; padding: 0; overflow: auto; height: 480px; background: var(--panel); }
 #alist li { padding: 6px 8px; cursor: pointer; }
@@ -100,5 +113,5 @@ aside h2, h2 { font-size: 14px; color: var(--accent); margin: 0 0 8px; }
 }
 @media (max-width: 900px) {
   .calc-wrap, .formula-grid { grid-template-columns: 1fr; }
-  #category, #flist { height: 220px; }
+  #cat-list, #flist { height: 220px; }
 }

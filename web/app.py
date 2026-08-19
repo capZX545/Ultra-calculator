@@ -17,6 +17,12 @@ from strings import UI, ui_text
 app = Flask(__name__)
 
 
+@app.after_request
+def _no_store(resp):
+    resp.headers["Cache-Control"] = "no-store"
+    return resp
+
+
 @app.get("/")
 def home():
     return render_template("index.html")

@@ -13,6 +13,8 @@
     current: null,
     lookupPick: null,
     lastField: null,
+    cat: "",
+    total: 0,
     system: false,
     eqCount: 2,
     unknownCount: 2,
@@ -121,7 +123,7 @@
     if ($("kbd-hint")) $("kbd-hint").textContent = s.kbd_hint || "";
     $("lang-label").textContent = s.lang || "Language";
     $("hist-title").textContent = s.history || "History";
-    $("cat-title").textContent = s.categories || "Categories";
+    $("cat-title").textContent = (s.categories || "Categories") + (state.total ? "  (" + state.total + ")" : "");
     $("search-title").textContent = s.search || "Search";
     $("btn-single").textContent = s.single || "One unknown";
     $("btn-system").textContent = s.system || "System";
@@ -279,27 +281,51 @@
     const data = await get("/api/meta?lang=" + encodeURIComponent(state.lang));
     state.strings = data.strings || {};
     applyStrings();
-    const sel = $("category");
-    const keep = sel.value;
-    sel.innerHTML = "";
-    const all = document.createElement("option");
-    all.value = "";
-    all.textContent = (state.strings.all || "All") + "  " + (data.total || 0);
-    sel.appendChild(all);
-    (data.categories || []).forEach((c) => {
-      const opt = document.createElement("option");
-      opt.value = c.id;
-      opt.textContent = c.id.split(".")[0] + " / " + c.label + "  " + (c.count || 0);
-      sel.appendChild(opt);
-    });
-    if (keep) sel.value = keep;
+    state.total = data.total || 0;
+    if ($("cat-title")) {
+      $("cat-title").textContent = (state.strings.categories || "Categories") + "  (" + state.total + ")";
+    }
+    renderCatList(data);
     await loadFormulas();
     if ($("el-q")) loadElements();
   }
 
+  function renderCatList(data) {
+    const box = $("cat-list");
+    if (!box) return;
+    const keep = state.cat || "";
+    box.innerHTML = "";
+    const rows = [{ id: "", label: state.strings.all || "All", count: data.total || 0 }].concat(data.categories || []);
+    rows.forEach((c) => {
+      const li = document.createElement("li");
+      const id = c.id || "";
+      li.dataset.id = id;
+      const name = document.createElement("span");
+      name.className = "cname";
+      name.textContent = c.label || id;
+      const n = document.createElement("span");
+      n.className = "n";
+      n.textContent = String(c.count || 0);
+      li.appendChild(name);
+      li.appendChild(n);
+      if (id === keep) li.classList.add("on");
+      li.addEventListener("click", () => {
+        state.cat = id;
+        box.querySelectorAll("li").forEach((x) => x.classList.remove("on"));
+        li.classList.add("on");
+        loadFormulas();
+      });
+      box.appendChild(li);
+    });
+    if (!box.querySelector("li.on")) {
+      const first = box.querySelector("li");
+      if (first) first.classList.add("on");
+    }
+  }
+
   async function loadFormulas() {
     const q = $("search").value || "";
-    const cat = $("category").value || "";
+    const cat = state.cat || "";
     const url = "/api/formulas?lang=" + encodeURIComponent(state.lang) + "&q=" + encodeURIComponent(q) + "&category=" + encodeURIComponent(cat);
     state.formulas = await get(url);
     const box = $("flist");
@@ -505,8 +531,7 @@
     state.eng = !state.eng;
     applyStrings();
   });
-  $("category").addEventListener("change", loadFormulas);
-  $("search").addEventListener("input", loadFormulas);
+  if ($("search")) $("search").addEventListener("input", loadFormulas);
   $("search").addEventListener("keydown", (ev) => {
     if (ev.key === "Enter") {
       ev.preventDefault();

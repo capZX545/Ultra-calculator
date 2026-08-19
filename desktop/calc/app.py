@@ -66,7 +66,9 @@ class UltraDesktop(tk.Tk):
         style.map("TButton", background=[("active", BTN2)])
         style.configure("TCombobox", fieldbackground=PANEL, background=PANEL, foreground=FG)
         style.configure("TEntry", fieldbackground="#11141a", foreground=FG)
-        style.configure("Treeview", background=PANEL, fieldbackground=PANEL, foreground=FG, rowheight=24)
+        style.configure("Treeview", background=PANEL, fieldbackground=PANEL, foreground=FG, rowheight=24, borderwidth=0)
+        style.configure("Treeview.Heading", background=BG, foreground=ACCENT, font=("Segoe UI", 10, "bold"), borderwidth=0)
+        style.map("Treeview", background=[("selected", BTN2)], foreground=[("selected", FG)])
         style.configure("TRadiobutton", background=PANEL, foreground=FG)
         style.configure("TCheckbutton", background=PANEL, foreground=FG)
 
@@ -184,7 +186,11 @@ class UltraDesktop(tk.Tk):
         self.angle_btn.configure(text=self.tr("deg") if self.engine.angle == "DEG" else self.tr("rad"))
         self.eng_btn.configure(text=self.tr("eng"))
         self.search_lbl.configure(text=self.tr("search"))
-        self.cat_lbl.configure(text=self.tr("categories"))
+        total = len(getattr(self.engine, "formulas", []) or [])
+        self.cat_lbl.configure(text=f"{self.tr('categories')}  ({total})")
+        if hasattr(self, "cat_list") and isinstance(self.cat_list, ttk.Treeview):
+            self.cat_list.heading("name", text=self.tr("categories"))
+            self.cat_list.heading("n", text="#")
         self.solve_btn.configure(text=self.tr("solve"))
         self.single_btn.configure(text=self.tr("single_mode"))
         self.system_btn.configure(text=self.tr("system_mode"))
@@ -647,9 +653,13 @@ class UltraDesktop(tk.Tk):
 
         self.cat_lbl = tk.Label(left, bg=BG, fg=ACCENT, font=("Segoe UI", 11, "bold"))
         self.cat_lbl.pack(anchor="w")
-        self.cat_list = tk.Listbox(left, bg=PANEL, fg=FG, highlightthickness=0, bd=0, font=("Segoe UI", 10), width=40)
+        self.cat_list = ttk.Treeview(left, columns=("name", "n"), show="headings", selectmode="browse", height=22)
+        self.cat_list.heading("name", text="", anchor="w")
+        self.cat_list.heading("n", text="", anchor="e")
+        self.cat_list.column("name", width=200, stretch=True, anchor="w")
+        self.cat_list.column("n", width=64, stretch=False, anchor="e")
         self.cat_list.pack(fill="both", expand=True, pady=6)
-        self.cat_list.bind("<<ListboxSelect>>", lambda e: self._fill_formula_list())
+        self.cat_list.bind("<<TreeviewSelect>>", lambda e: self._fill_formula_list())
 
         self.search_lbl = tk.Label(mid, bg=BG, fg=ACCENT, font=("Segoe UI", 11, "bold"))
         self.search_lbl.pack(anchor="w")
@@ -712,23 +722,22 @@ class UltraDesktop(tk.Tk):
             self._show_system_editor()
 
     def _fill_categories(self) -> None:
-        self.cat_list.delete(0, "end")
-        self.cat_keys = ["all"]
+        for row in self.cat_list.get_children():
+            self.cat_list.delete(row)
         total = len(self.engine.formulas)
-        self.cat_list.insert("end", f"{self.tr('all_cats')}  {total}")
-        keys = sorted(self.engine.categories.keys())
-        for key in keys:
+        self.cat_list.insert("", "end", iid="all", values=(self.tr("all_cats"), total))
+        for key in sorted(self.engine.categories.keys()):
             names = self.engine.categories[key]
             label = names.get(self.lang) or names.get("en") or key
             n = self.engine.cat_counts.get(key, 0)
-            self.cat_keys.append(key)
-            self.cat_list.insert("end", f"{key.split('.', 1)[0]} / {label}  {n}")
+            self.cat_list.insert("", "end", iid=key, values=(label, n))
+        self.cat_lbl.configure(text=f"{self.tr('categories')}  ({total})")
 
     def _selected_category(self) -> str | None:
-        sel = self.cat_list.curselection()
+        sel = self.cat_list.selection()
         if not sel:
             return None
-        key = self.cat_keys[sel[0]]
+        key = sel[0]
         return None if key == "all" else key
 
     def _fill_formula_list(self) -> None:
