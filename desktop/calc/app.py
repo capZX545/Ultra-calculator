@@ -1079,15 +1079,20 @@ class UltraDesktop(tk.Tk):
         self._fill_algos()
 
     def _fill_algo_cats(self) -> None:
-        cats, _, _ = algo_catalog()
+        cats, items, _ = algo_catalog()
+        counts = {}
+        for row in items:
+            key = row.get("category") or ""
+            counts[key] = counts.get(key, 0) + 1
         self.algo_cats.delete(0, "end")
         self.algo_cat_keys = ["all"]
-        self.algo_cats.insert("end", "—")
+        self.algo_cats.insert("end", f"{self.tr('all_cats')}  ({len(items)})")
         for key in sorted(cats):
             names = cats[key]
             label = names.get(self.lang) or names.get("en") or key
+            n = counts.get(key, 0)
             self.algo_cat_keys.append(key)
-            self.algo_cats.insert("end", f"{key.split('.', 1)[-1]} / {label}")
+            self.algo_cats.insert("end", f"{label}  ({n})")
 
     def _selected_algo_cat(self) -> str | None:
         sel = self.algo_cats.curselection()
@@ -1184,8 +1189,9 @@ class UltraDesktop(tk.Tk):
         for sym, info in (out.get("detail") or {}).items():
             if isinstance(info, dict) and "count" in info:
                 lines.append(f"  {sym}: {info['count']} x {info['mass']} = {info['contrib']}")
+        extra = teach.format_steps(teach.steps_chem(self.lang, self.chem_eq.get(), out.get("text") or "0", True))
         self.chem_out.delete("1.0", "end")
-        self.chem_out.insert("1.0", "\n".join(lines))
+        self.chem_out.insert("1.0", "\n".join(lines) + "\n\n" + extra)
 
     def _build_elements(self, root: tk.Frame) -> None:
         top = tk.Frame(root, bg=BG)

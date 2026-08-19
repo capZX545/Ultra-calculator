@@ -126,13 +126,22 @@ def api_numeric():
     y0 = float(body.get("y0") or 0)
     steps = int(body.get("steps") or 40)
     eng = bool(body.get("eng"))
+    lang = body.get("lang", "en")
     if kind == "integral":
-        return jsonify(core.n_integral(func, a, b, eng))
+        out = core.n_integral(func, a, b, eng)
+        out["steps"] = teach.steps_numeric(lang, "integral", a, b, None, out.get("text") or "0")
+        return jsonify(out)
     if kind == "deriv":
-        return jsonify(core.n_deriv(func, a, eng))
+        out = core.n_deriv(func, a, eng)
+        out["steps"] = teach.steps_numeric(lang, "deriv", a, None, None, out.get("text") or "0")
+        return jsonify(out)
     if kind == "ode":
-        return jsonify(core.n_ode(func, a, y0, b, steps, eng))
-    return jsonify(core.n_root(func, a, b, eng))
+        out = core.n_ode(func, a, y0, b, steps, eng)
+        out["steps"] = teach.steps_numeric(lang, "ode", a, b, y0, out.get("text") or "0")
+        return jsonify(out)
+    out = core.n_root(func, a, b, eng)
+    out["steps"] = teach.steps_numeric(lang, "root", a, b, None, out.get("text") or "0")
+    return jsonify(out)
 
 
 @app.get("/api/elements")
@@ -184,9 +193,26 @@ def api_algos():
     lang = request.args.get("lang", "en")
     query = request.args.get("q", "")
     category = request.args.get("category") or None
-    cats, _, _ = algorithms.catalog()
-    labeled = [{"id": key, "label": names.get(lang) or names.get("en")} for key, names in sorted(cats.items())]
-    return jsonify({"categories": labeled, "items": algorithms.list_algos(query, lang, category)})
+    cats, items, _ = algorithms.catalog()
+    counts = {}
+    for row in items:
+        key = row.get("category") or ""
+        counts[key] = counts.get(key, 0) + 1
+    labeled = [
+        {
+            "id": key,
+            "label": names.get(lang) or names.get("en"),
+            "count": int(counts.get(key, 0)),
+        }
+        for key, names in sorted(cats.items())
+    ]
+    return jsonify(
+        {
+            "categories": labeled,
+            "total": len(items),
+            "items": algorithms.list_algos(query, lang, category),
+        }
+    )
 
 
 @app.post("/api/algo")

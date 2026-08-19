@@ -437,9 +437,11 @@
       values: values,
       unknown: picked ? picked.value : null,
       eng: state.eng,
+      lang: state.lang,
     });
     const extra = out.all && out.all.length > 1 ? " | " + out.all.slice(1).join(", ") : "";
     $("fresult").textContent = (out.unknown || "") + " = " + out.text + " " + (out.unit || "") + extra;
+    showSteps("fsteps", out.steps || []);
   }
 
   function buildPoly() {
@@ -598,8 +600,10 @@
 
   if ($("chem-bal")) {
     $("chem-bal").addEventListener("click", async () => {
-      const out = await post("/api/balance", { eq: $("chem-eq").value });
-      $("chem-out").textContent = out.text || "";
+      const out = await post("/api/balance", { eq: $("chem-eq").value, lang: state.lang });
+      let t = out.text || "";
+      if (out.steps && out.steps.length) t += "\n\n" + out.steps.map((s, i) => (i + 1) + ") " + s).join("\n");
+      $("chem-out").textContent = t;
     });
   }
   if ($("chem-mw")) {
@@ -634,12 +638,12 @@
       sel.innerHTML = "";
       const all = document.createElement("option");
       all.value = "";
-      all.textContent = "—";
+      all.textContent = (state.strings.all || "All") + "  (" + ((data && data.total) || 0) + ")";
       sel.appendChild(all);
       ((data && data.categories) || []).forEach((c) => {
         const opt = document.createElement("option");
         opt.value = c.id;
-        opt.textContent = (c.id.split(".")[1] || c.id) + " / " + c.label;
+        opt.textContent = (c.label || c.id) + "  (" + (c.count || 0) + ")";
         sel.appendChild(opt);
       });
       sel.dataset.ready = "1";
