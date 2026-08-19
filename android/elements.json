@@ -1,0 +1,2738 @@
+{
+  "elements": [
+    {
+      "Z": 1,
+      "symbol": "H",
+      "name": {
+        "en": "Hydrogen",
+        "fa": "هیدروژن",
+        "fi": "Vety"
+      },
+      "mass": 1.008,
+      "group": "nonmetal",
+      "isotopes": [
+        {
+          "A": 1,
+          "mass": 1.007825,
+          "abundance": 99.985,
+          "note": "protium"
+        },
+        {
+          "A": 2,
+          "mass": 2.014102,
+          "abundance": 0.015,
+          "note": "deuterium"
+        },
+        {
+          "A": 3,
+          "mass": 3.016049,
+          "abundance": null,
+          "note": "tritium 12.3 y"
+        }
+      ]
+    },
+    {
+      "Z": 2,
+      "symbol": "He",
+      "name": {
+        "en": "Helium",
+        "fa": "هلیم",
+        "fi": "Helium"
+      },
+      "mass": 4.0026,
+      "group": "noble",
+      "isotopes": [
+        {
+          "A": 3,
+          "mass": 3.016029,
+          "abundance": 0.000137,
+          "note": "helium-3"
+        },
+        {
+          "A": 4,
+          "mass": 4.002603,
+          "abundance": 99.999863,
+          "note": "helium-4"
+        }
+      ]
+    },
+    {
+      "Z": 3,
+      "symbol": "Li",
+      "name": {
+        "en": "Lithium",
+        "fa": "لیتیوم",
+        "fi": "Litium"
+      },
+      "mass": 6.94,
+      "group": "alkali",
+      "isotopes": [
+        {
+          "A": 6,
+          "mass": 6.015122,
+          "abundance": 7.59,
+          "note": null
+        },
+        {
+          "A": 7,
+          "mass": 7.016004,
+          "abundance": 92.41,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 4,
+      "symbol": "Be",
+      "name": {
+        "en": "Beryllium",
+        "fa": "بریلیوم",
+        "fi": "Beryllium"
+      },
+      "mass": 9.0122,
+      "group": "alkaline",
+      "isotopes": [
+        {
+          "A": 9,
+          "mass": 9.012183,
+          "abundance": 100,
+          "note": null
+        },
+        {
+          "A": 10,
+          "mass": 10.013535,
+          "abundance": null,
+          "note": "1.5e6 y"
+        }
+      ]
+    },
+    {
+      "Z": 5,
+      "symbol": "B",
+      "name": {
+        "en": "Boron",
+        "fa": "بور",
+        "fi": "Boori"
+      },
+      "mass": 10.81,
+      "group": "metalloid",
+      "isotopes": [
+        {
+          "A": 10,
+          "mass": 10.012937,
+          "abundance": 19.9,
+          "note": null
+        },
+        {
+          "A": 11,
+          "mass": 11.009305,
+          "abundance": 80.1,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 6,
+      "symbol": "C",
+      "name": {
+        "en": "Carbon",
+        "fa": "کربن",
+        "fi": "Hiili"
+      },
+      "mass": 12.011,
+      "group": "nonmetal",
+      "isotopes": [
+        {
+          "A": 12,
+          "mass": 12.0,
+          "abundance": 98.93,
+          "note": null
+        },
+        {
+          "A": 13,
+          "mass": 13.003355,
+          "abundance": 1.07,
+          "note": null
+        },
+        {
+          "A": 14,
+          "mass": 14.003242,
+          "abundance": null,
+          "note": "5730 y"
+        }
+      ]
+    },
+    {
+      "Z": 7,
+      "symbol": "N",
+      "name": {
+        "en": "Nitrogen",
+        "fa": "نیتروژن",
+        "fi": "Typpi"
+      },
+      "mass": 14.007,
+      "group": "nonmetal",
+      "isotopes": [
+        {
+          "A": 14,
+          "mass": 14.003074,
+          "abundance": 99.636,
+          "note": null
+        },
+        {
+          "A": 15,
+          "mass": 15.000109,
+          "abundance": 0.364,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 8,
+      "symbol": "O",
+      "name": {
+        "en": "Oxygen",
+        "fa": "اکسیژن",
+        "fi": "Happi"
+      },
+      "mass": 15.999,
+      "group": "nonmetal",
+      "isotopes": [
+        {
+          "A": 16,
+          "mass": 15.994915,
+          "abundance": 99.757,
+          "note": null
+        },
+        {
+          "A": 17,
+          "mass": 16.999132,
+          "abundance": 0.038,
+          "note": null
+        },
+        {
+          "A": 18,
+          "mass": 17.99916,
+          "abundance": 0.205,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 9,
+      "symbol": "F",
+      "name": {
+        "en": "Fluorine",
+        "fa": "فلوئور",
+        "fi": "Fluori"
+      },
+      "mass": 18.998,
+      "group": "halogen",
+      "isotopes": [
+        {
+          "A": 19,
+          "mass": 18.998403,
+          "abundance": 100,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 10,
+      "symbol": "Ne",
+      "name": {
+        "en": "Neon",
+        "fa": "نئون",
+        "fi": "Neon"
+      },
+      "mass": 20.18,
+      "group": "noble",
+      "isotopes": [
+        {
+          "A": 20,
+          "mass": 19.99244,
+          "abundance": 90.48,
+          "note": null
+        },
+        {
+          "A": 21,
+          "mass": 20.993847,
+          "abundance": 0.27,
+          "note": null
+        },
+        {
+          "A": 22,
+          "mass": 21.991385,
+          "abundance": 9.25,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 11,
+      "symbol": "Na",
+      "name": {
+        "en": "Sodium",
+        "fa": "سدیم",
+        "fi": "Natrium"
+      },
+      "mass": 22.99,
+      "group": "alkali",
+      "isotopes": [
+        {
+          "A": 23,
+          "mass": 22.989769,
+          "abundance": 100,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 12,
+      "symbol": "Mg",
+      "name": {
+        "en": "Magnesium",
+        "fa": "منیزیم",
+        "fi": "Magnesium"
+      },
+      "mass": 24.305,
+      "group": "alkaline",
+      "isotopes": [
+        {
+          "A": 24,
+          "mass": 23.985042,
+          "abundance": 78.99,
+          "note": null
+        },
+        {
+          "A": 25,
+          "mass": 24.985837,
+          "abundance": 10.0,
+          "note": null
+        },
+        {
+          "A": 26,
+          "mass": 25.982593,
+          "abundance": 11.01,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 13,
+      "symbol": "Al",
+      "name": {
+        "en": "Aluminium",
+        "fa": "آلومینیم",
+        "fi": "Alumiini"
+      },
+      "mass": 26.982,
+      "group": "post_transition",
+      "isotopes": [
+        {
+          "A": 27,
+          "mass": 26.981538,
+          "abundance": 100,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 14,
+      "symbol": "Si",
+      "name": {
+        "en": "Silicon",
+        "fa": "سیلیسیم",
+        "fi": "Pii"
+      },
+      "mass": 28.085,
+      "group": "metalloid",
+      "isotopes": [
+        {
+          "A": 28,
+          "mass": 27.976927,
+          "abundance": 92.223,
+          "note": null
+        },
+        {
+          "A": 29,
+          "mass": 28.976495,
+          "abundance": 4.685,
+          "note": null
+        },
+        {
+          "A": 30,
+          "mass": 29.97377,
+          "abundance": 3.092,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 15,
+      "symbol": "P",
+      "name": {
+        "en": "Phosphorus",
+        "fa": "فسفر",
+        "fi": "Fosfori"
+      },
+      "mass": 30.974,
+      "group": "nonmetal",
+      "isotopes": [
+        {
+          "A": 31,
+          "mass": 30.973762,
+          "abundance": 100,
+          "note": null
+        },
+        {
+          "A": 32,
+          "mass": 31.973907,
+          "abundance": null,
+          "note": "14.3 d"
+        }
+      ]
+    },
+    {
+      "Z": 16,
+      "symbol": "S",
+      "name": {
+        "en": "Sulfur",
+        "fa": "گوگرد",
+        "fi": "Rikki"
+      },
+      "mass": 32.06,
+      "group": "nonmetal",
+      "isotopes": [
+        {
+          "A": 32,
+          "mass": 31.972071,
+          "abundance": 94.99,
+          "note": null
+        },
+        {
+          "A": 33,
+          "mass": 32.971459,
+          "abundance": 0.75,
+          "note": null
+        },
+        {
+          "A": 34,
+          "mass": 33.967867,
+          "abundance": 4.25,
+          "note": null
+        },
+        {
+          "A": 36,
+          "mass": 35.967081,
+          "abundance": 0.01,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 17,
+      "symbol": "Cl",
+      "name": {
+        "en": "Chlorine",
+        "fa": "کلر",
+        "fi": "Kloori"
+      },
+      "mass": 35.45,
+      "group": "halogen",
+      "isotopes": [
+        {
+          "A": 35,
+          "mass": 34.968853,
+          "abundance": 75.76,
+          "note": null
+        },
+        {
+          "A": 37,
+          "mass": 36.965903,
+          "abundance": 24.24,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 18,
+      "symbol": "Ar",
+      "name": {
+        "en": "Argon",
+        "fa": "آرگون",
+        "fi": "Argon"
+      },
+      "mass": 39.948,
+      "group": "noble",
+      "isotopes": [
+        {
+          "A": 36,
+          "mass": 35.967545,
+          "abundance": 0.337,
+          "note": null
+        },
+        {
+          "A": 38,
+          "mass": 37.962732,
+          "abundance": 0.063,
+          "note": null
+        },
+        {
+          "A": 40,
+          "mass": 39.962383,
+          "abundance": 99.6,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 19,
+      "symbol": "K",
+      "name": {
+        "en": "Potassium",
+        "fa": "پتاسیم",
+        "fi": "Kalium"
+      },
+      "mass": 39.098,
+      "group": "alkali",
+      "isotopes": [
+        {
+          "A": 39,
+          "mass": 38.963707,
+          "abundance": 93.258,
+          "note": null
+        },
+        {
+          "A": 40,
+          "mass": 39.963998,
+          "abundance": 0.012,
+          "note": null
+        },
+        {
+          "A": 41,
+          "mass": 40.961826,
+          "abundance": 6.73,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 20,
+      "symbol": "Ca",
+      "name": {
+        "en": "Calcium",
+        "fa": "کلسیم",
+        "fi": "Kalsium"
+      },
+      "mass": 40.078,
+      "group": "alkaline",
+      "isotopes": [
+        {
+          "A": 40,
+          "mass": 39.962591,
+          "abundance": 96.941,
+          "note": null
+        },
+        {
+          "A": 44,
+          "mass": 43.955482,
+          "abundance": 2.086,
+          "note": null
+        },
+        {
+          "A": 48,
+          "mass": 47.952522,
+          "abundance": 0.187,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 21,
+      "symbol": "Sc",
+      "name": {
+        "en": "Scandium",
+        "fa": "اسکاندیم",
+        "fi": "Skandium"
+      },
+      "mass": 44.956,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 45,
+          "mass": 44.955908,
+          "abundance": 100,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 22,
+      "symbol": "Ti",
+      "name": {
+        "en": "Titanium",
+        "fa": "تیتانیم",
+        "fi": "Titaani"
+      },
+      "mass": 47.867,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 46,
+          "mass": 45.952628,
+          "abundance": 8.25,
+          "note": null
+        },
+        {
+          "A": 47,
+          "mass": 46.951764,
+          "abundance": 7.44,
+          "note": null
+        },
+        {
+          "A": 48,
+          "mass": 47.947947,
+          "abundance": 73.72,
+          "note": null
+        },
+        {
+          "A": 49,
+          "mass": 48.947871,
+          "abundance": 5.41,
+          "note": null
+        },
+        {
+          "A": 50,
+          "mass": 49.944792,
+          "abundance": 5.18,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 23,
+      "symbol": "V",
+      "name": {
+        "en": "Vanadium",
+        "fa": "وانادیم",
+        "fi": "Vanadiini"
+      },
+      "mass": 50.942,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 50,
+          "mass": 49.947156,
+          "abundance": 0.25,
+          "note": null
+        },
+        {
+          "A": 51,
+          "mass": 50.943957,
+          "abundance": 99.75,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 24,
+      "symbol": "Cr",
+      "name": {
+        "en": "Chromium",
+        "fa": "کروم",
+        "fi": "Kromi"
+      },
+      "mass": 51.996,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 52,
+          "mass": 51.940506,
+          "abundance": 83.789,
+          "note": null
+        },
+        {
+          "A": 53,
+          "mass": 52.940648,
+          "abundance": 9.501,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 25,
+      "symbol": "Mn",
+      "name": {
+        "en": "Manganese",
+        "fa": "منگنز",
+        "fi": "Mangaani"
+      },
+      "mass": 54.938,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 55,
+          "mass": 54.938044,
+          "abundance": 100,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 26,
+      "symbol": "Fe",
+      "name": {
+        "en": "Iron",
+        "fa": "آهن",
+        "fi": "Rauta"
+      },
+      "mass": 55.845,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 54,
+          "mass": 53.939609,
+          "abundance": 5.845,
+          "note": null
+        },
+        {
+          "A": 56,
+          "mass": 55.934936,
+          "abundance": 91.754,
+          "note": null
+        },
+        {
+          "A": 57,
+          "mass": 56.935393,
+          "abundance": 2.119,
+          "note": null
+        },
+        {
+          "A": 58,
+          "mass": 57.933274,
+          "abundance": 0.282,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 27,
+      "symbol": "Co",
+      "name": {
+        "en": "Cobalt",
+        "fa": "کبالت",
+        "fi": "Koboltti"
+      },
+      "mass": 58.933,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 59,
+          "mass": 58.933194,
+          "abundance": 100,
+          "note": null
+        },
+        {
+          "A": 60,
+          "mass": 59.933816,
+          "abundance": null,
+          "note": "5.27 y"
+        }
+      ]
+    },
+    {
+      "Z": 28,
+      "symbol": "Ni",
+      "name": {
+        "en": "Nickel",
+        "fa": "نیکل",
+        "fi": "Nikkeli"
+      },
+      "mass": 58.693,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 58,
+          "mass": 57.935343,
+          "abundance": 68.077,
+          "note": null
+        },
+        {
+          "A": 60,
+          "mass": 59.930786,
+          "abundance": 26.223,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 29,
+      "symbol": "Cu",
+      "name": {
+        "en": "Copper",
+        "fa": "مس",
+        "fi": "Kupari"
+      },
+      "mass": 63.546,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 63,
+          "mass": 62.929598,
+          "abundance": 69.15,
+          "note": null
+        },
+        {
+          "A": 65,
+          "mass": 64.92779,
+          "abundance": 30.85,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 30,
+      "symbol": "Zn",
+      "name": {
+        "en": "Zinc",
+        "fa": "روی",
+        "fi": "Sinkki"
+      },
+      "mass": 65.38,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 64,
+          "mass": 63.929142,
+          "abundance": 49.17,
+          "note": null
+        },
+        {
+          "A": 66,
+          "mass": 65.926034,
+          "abundance": 27.73,
+          "note": null
+        },
+        {
+          "A": 68,
+          "mass": 67.924845,
+          "abundance": 18.45,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 31,
+      "symbol": "Ga",
+      "name": {
+        "en": "Gallium",
+        "fa": "گالیم",
+        "fi": "Gallium"
+      },
+      "mass": 69.723,
+      "group": "post_transition",
+      "isotopes": [
+        {
+          "A": 69,
+          "mass": 68.925574,
+          "abundance": 60.108,
+          "note": null
+        },
+        {
+          "A": 71,
+          "mass": 70.924703,
+          "abundance": 39.892,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 32,
+      "symbol": "Ge",
+      "name": {
+        "en": "Germanium",
+        "fa": "ژرمانیم",
+        "fi": "Germanium"
+      },
+      "mass": 72.63,
+      "group": "metalloid",
+      "isotopes": [
+        {
+          "A": 70,
+          "mass": 69.924249,
+          "abundance": 20.57,
+          "note": null
+        },
+        {
+          "A": 72,
+          "mass": 71.922076,
+          "abundance": 27.45,
+          "note": null
+        },
+        {
+          "A": 74,
+          "mass": 73.921178,
+          "abundance": 36.5,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 33,
+      "symbol": "As",
+      "name": {
+        "en": "Arsenic",
+        "fa": "آرسنیک",
+        "fi": "Arseeni"
+      },
+      "mass": 74.922,
+      "group": "metalloid",
+      "isotopes": [
+        {
+          "A": 75,
+          "mass": 74.921595,
+          "abundance": 100,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 34,
+      "symbol": "Se",
+      "name": {
+        "en": "Selenium",
+        "fa": "سلنیم",
+        "fi": "Seleeni"
+      },
+      "mass": 78.971,
+      "group": "nonmetal",
+      "isotopes": [
+        {
+          "A": 78,
+          "mass": 77.917304,
+          "abundance": 23.77,
+          "note": null
+        },
+        {
+          "A": 80,
+          "mass": 79.916522,
+          "abundance": 49.61,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 35,
+      "symbol": "Br",
+      "name": {
+        "en": "Bromine",
+        "fa": "برم",
+        "fi": "Bromi"
+      },
+      "mass": 79.904,
+      "group": "halogen",
+      "isotopes": [
+        {
+          "A": 79,
+          "mass": 78.918338,
+          "abundance": 50.69,
+          "note": null
+        },
+        {
+          "A": 81,
+          "mass": 80.91629,
+          "abundance": 49.31,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 36,
+      "symbol": "Kr",
+      "name": {
+        "en": "Krypton",
+        "fa": "کریپتون",
+        "fi": "Krypton"
+      },
+      "mass": 83.798,
+      "group": "noble",
+      "isotopes": [
+        {
+          "A": 84,
+          "mass": 83.911497,
+          "abundance": 57.0,
+          "note": null
+        },
+        {
+          "A": 86,
+          "mass": 85.910611,
+          "abundance": 17.3,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 37,
+      "symbol": "Rb",
+      "name": {
+        "en": "Rubidium",
+        "fa": "روبیدیم",
+        "fi": "Rubidium"
+      },
+      "mass": 85.468,
+      "group": "alkali",
+      "isotopes": [
+        {
+          "A": 85,
+          "mass": 84.91179,
+          "abundance": 72.17,
+          "note": null
+        },
+        {
+          "A": 87,
+          "mass": 86.909184,
+          "abundance": 27.83,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 38,
+      "symbol": "Sr",
+      "name": {
+        "en": "Strontium",
+        "fa": "استرانسیم",
+        "fi": "Strontium"
+      },
+      "mass": 87.62,
+      "group": "alkaline",
+      "isotopes": [
+        {
+          "A": 86,
+          "mass": 85.909261,
+          "abundance": 9.86,
+          "note": null
+        },
+        {
+          "A": 88,
+          "mass": 87.905613,
+          "abundance": 82.58,
+          "note": null
+        },
+        {
+          "A": 90,
+          "mass": 89.90773,
+          "abundance": null,
+          "note": "28.8 y"
+        }
+      ]
+    },
+    {
+      "Z": 39,
+      "symbol": "Y",
+      "name": {
+        "en": "Yttrium",
+        "fa": "ایتریم",
+        "fi": "Yttrium"
+      },
+      "mass": 88.906,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 89,
+          "mass": 88.905848,
+          "abundance": 100,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 40,
+      "symbol": "Zr",
+      "name": {
+        "en": "Zirconium",
+        "fa": "زیرکونیم",
+        "fi": "Zirkonium"
+      },
+      "mass": 91.224,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 90,
+          "mass": 89.904698,
+          "abundance": 51.45,
+          "note": null
+        },
+        {
+          "A": 92,
+          "mass": 91.905035,
+          "abundance": 17.15,
+          "note": null
+        },
+        {
+          "A": 94,
+          "mass": 93.90631,
+          "abundance": 17.38,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 41,
+      "symbol": "Nb",
+      "name": {
+        "en": "Niobium",
+        "fa": "نیوبیم",
+        "fi": "Niobium"
+      },
+      "mass": 92.906,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 93,
+          "mass": 92.906373,
+          "abundance": 100,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 42,
+      "symbol": "Mo",
+      "name": {
+        "en": "Molybdenum",
+        "fa": "مولیبدن",
+        "fi": "Molybdeeni"
+      },
+      "mass": 95.95,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 92,
+          "mass": 91.906808,
+          "abundance": 14.65,
+          "note": null
+        },
+        {
+          "A": 98,
+          "mass": 97.905405,
+          "abundance": 24.39,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 43,
+      "symbol": "Tc",
+      "name": {
+        "en": "Technetium",
+        "fa": "تکنسیم",
+        "fi": "Teknetium"
+      },
+      "mass": 97.907,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 99,
+          "mass": 98.906255,
+          "abundance": null,
+          "note": "2.1e5 y"
+        }
+      ]
+    },
+    {
+      "Z": 44,
+      "symbol": "Ru",
+      "name": {
+        "en": "Ruthenium",
+        "fa": "روتنیم",
+        "fi": "Rutenium"
+      },
+      "mass": 101.07,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 102,
+          "mass": 101.904344,
+          "abundance": 31.55,
+          "note": null
+        },
+        {
+          "A": 104,
+          "mass": 103.905433,
+          "abundance": 18.62,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 45,
+      "symbol": "Rh",
+      "name": {
+        "en": "Rhodium",
+        "fa": "رودیم",
+        "fi": "Rodium"
+      },
+      "mass": 102.91,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 103,
+          "mass": 102.905498,
+          "abundance": 100,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 46,
+      "symbol": "Pd",
+      "name": {
+        "en": "Palladium",
+        "fa": "پالادیم",
+        "fi": "Palladium"
+      },
+      "mass": 106.42,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 106,
+          "mass": 105.90348,
+          "abundance": 27.33,
+          "note": null
+        },
+        {
+          "A": 108,
+          "mass": 107.903892,
+          "abundance": 26.46,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 47,
+      "symbol": "Ag",
+      "name": {
+        "en": "Silver",
+        "fa": "نقره",
+        "fi": "Hopea"
+      },
+      "mass": 107.87,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 107,
+          "mass": 106.905091,
+          "abundance": 51.839,
+          "note": null
+        },
+        {
+          "A": 109,
+          "mass": 108.904755,
+          "abundance": 48.161,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 48,
+      "symbol": "Cd",
+      "name": {
+        "en": "Cadmium",
+        "fa": "کادمیم",
+        "fi": "Kadmium"
+      },
+      "mass": 112.41,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 112,
+          "mass": 111.902758,
+          "abundance": 24.13,
+          "note": null
+        },
+        {
+          "A": 114,
+          "mass": 113.903359,
+          "abundance": 28.73,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 49,
+      "symbol": "In",
+      "name": {
+        "en": "Indium",
+        "fa": "ایندیم",
+        "fi": "Indium"
+      },
+      "mass": 114.82,
+      "group": "post_transition",
+      "isotopes": [
+        {
+          "A": 113,
+          "mass": 112.904061,
+          "abundance": 4.29,
+          "note": null
+        },
+        {
+          "A": 115,
+          "mass": 114.903878,
+          "abundance": 95.71,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 50,
+      "symbol": "Sn",
+      "name": {
+        "en": "Tin",
+        "fa": "قلع",
+        "fi": "Tina"
+      },
+      "mass": 118.71,
+      "group": "post_transition",
+      "isotopes": [
+        {
+          "A": 118,
+          "mass": 117.901607,
+          "abundance": 24.22,
+          "note": null
+        },
+        {
+          "A": 120,
+          "mass": 119.902202,
+          "abundance": 32.58,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 51,
+      "symbol": "Sb",
+      "name": {
+        "en": "Antimony",
+        "fa": "آنتیموان",
+        "fi": "Antimoni"
+      },
+      "mass": 121.76,
+      "group": "metalloid",
+      "isotopes": [
+        {
+          "A": 121,
+          "mass": 120.903816,
+          "abundance": 57.21,
+          "note": null
+        },
+        {
+          "A": 123,
+          "mass": 122.904214,
+          "abundance": 42.79,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 52,
+      "symbol": "Te",
+      "name": {
+        "en": "Tellurium",
+        "fa": "تلوریم",
+        "fi": "Telluuri"
+      },
+      "mass": 127.6,
+      "group": "metalloid",
+      "isotopes": [
+        {
+          "A": 128,
+          "mass": 127.904461,
+          "abundance": 31.74,
+          "note": null
+        },
+        {
+          "A": 130,
+          "mass": 129.906223,
+          "abundance": 34.08,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 53,
+      "symbol": "I",
+      "name": {
+        "en": "Iodine",
+        "fa": "ید",
+        "fi": "Jodi"
+      },
+      "mass": 126.9,
+      "group": "halogen",
+      "isotopes": [
+        {
+          "A": 127,
+          "mass": 126.904473,
+          "abundance": 100,
+          "note": null
+        },
+        {
+          "A": 131,
+          "mass": 130.906125,
+          "abundance": null,
+          "note": "8.02 d"
+        }
+      ]
+    },
+    {
+      "Z": 54,
+      "symbol": "Xe",
+      "name": {
+        "en": "Xenon",
+        "fa": "زنون",
+        "fi": "Ksenon"
+      },
+      "mass": 131.29,
+      "group": "noble",
+      "isotopes": [
+        {
+          "A": 129,
+          "mass": 128.90478,
+          "abundance": 26.4,
+          "note": null
+        },
+        {
+          "A": 132,
+          "mass": 131.904154,
+          "abundance": 26.91,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 55,
+      "symbol": "Cs",
+      "name": {
+        "en": "Caesium",
+        "fa": "سزیم",
+        "fi": "Cesium"
+      },
+      "mass": 132.91,
+      "group": "alkali",
+      "isotopes": [
+        {
+          "A": 133,
+          "mass": 132.905452,
+          "abundance": 100,
+          "note": null
+        },
+        {
+          "A": 137,
+          "mass": 136.90709,
+          "abundance": null,
+          "note": "30.2 y"
+        }
+      ]
+    },
+    {
+      "Z": 56,
+      "symbol": "Ba",
+      "name": {
+        "en": "Barium",
+        "fa": "باریم",
+        "fi": "Barium"
+      },
+      "mass": 137.33,
+      "group": "alkaline",
+      "isotopes": [
+        {
+          "A": 137,
+          "mass": 136.905827,
+          "abundance": 11.23,
+          "note": null
+        },
+        {
+          "A": 138,
+          "mass": 137.905247,
+          "abundance": 71.7,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 57,
+      "symbol": "La",
+      "name": {
+        "en": "Lanthanum",
+        "fa": "لانتان",
+        "fi": "Lantaani"
+      },
+      "mass": 138.91,
+      "group": "lanthanide",
+      "isotopes": [
+        {
+          "A": 139,
+          "mass": 138.906356,
+          "abundance": 99.91,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 58,
+      "symbol": "Ce",
+      "name": {
+        "en": "Cerium",
+        "fa": "سریم",
+        "fi": "Cerium"
+      },
+      "mass": 140.12,
+      "group": "lanthanide",
+      "isotopes": [
+        {
+          "A": 140,
+          "mass": 139.905443,
+          "abundance": 88.45,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 59,
+      "symbol": "Pr",
+      "name": {
+        "en": "Praseodymium",
+        "fa": "پرازئودیمیم",
+        "fi": "Praseodyymi"
+      },
+      "mass": 140.91,
+      "group": "lanthanide",
+      "isotopes": [
+        {
+          "A": 141,
+          "mass": 140.907658,
+          "abundance": 100,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 60,
+      "symbol": "Nd",
+      "name": {
+        "en": "Neodymium",
+        "fa": "نئودیمیم",
+        "fi": "Neodyymi"
+      },
+      "mass": 144.24,
+      "group": "lanthanide",
+      "isotopes": [
+        {
+          "A": 142,
+          "mass": 141.907729,
+          "abundance": 27.2,
+          "note": null
+        },
+        {
+          "A": 146,
+          "mass": 145.913123,
+          "abundance": 17.2,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 61,
+      "symbol": "Pm",
+      "name": {
+        "en": "Promethium",
+        "fa": "پرومتیم",
+        "fi": "Prometium"
+      },
+      "mass": 144.91,
+      "group": "lanthanide",
+      "isotopes": [
+        {
+          "A": 145,
+          "mass": 144.912756,
+          "abundance": null,
+          "note": "17.7 y"
+        }
+      ]
+    },
+    {
+      "Z": 62,
+      "symbol": "Sm",
+      "name": {
+        "en": "Samarium",
+        "fa": "ساماریم",
+        "fi": "Samarium"
+      },
+      "mass": 150.36,
+      "group": "lanthanide",
+      "isotopes": [
+        {
+          "A": 152,
+          "mass": 151.919739,
+          "abundance": 26.75,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 63,
+      "symbol": "Eu",
+      "name": {
+        "en": "Europium",
+        "fa": "یوروپیم",
+        "fi": "Europium"
+      },
+      "mass": 151.96,
+      "group": "lanthanide",
+      "isotopes": [
+        {
+          "A": 151,
+          "mass": 150.919857,
+          "abundance": 47.81,
+          "note": null
+        },
+        {
+          "A": 153,
+          "mass": 152.921238,
+          "abundance": 52.19,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 64,
+      "symbol": "Gd",
+      "name": {
+        "en": "Gadolinium",
+        "fa": "گادولینیم",
+        "fi": "Gadolinium"
+      },
+      "mass": 157.25,
+      "group": "lanthanide",
+      "isotopes": [
+        {
+          "A": 158,
+          "mass": 157.924112,
+          "abundance": 24.84,
+          "note": null
+        },
+        {
+          "A": 160,
+          "mass": 159.927062,
+          "abundance": 21.86,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 65,
+      "symbol": "Tb",
+      "name": {
+        "en": "Terbium",
+        "fa": "تربیم",
+        "fi": "Terbium"
+      },
+      "mass": 158.93,
+      "group": "lanthanide",
+      "isotopes": [
+        {
+          "A": 159,
+          "mass": 158.925354,
+          "abundance": 100,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 66,
+      "symbol": "Dy",
+      "name": {
+        "en": "Dysprosium",
+        "fa": "دیسپروزیم",
+        "fi": "Dysprosium"
+      },
+      "mass": 162.5,
+      "group": "lanthanide",
+      "isotopes": [
+        {
+          "A": 164,
+          "mass": 163.929183,
+          "abundance": 28.18,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 67,
+      "symbol": "Ho",
+      "name": {
+        "en": "Holmium",
+        "fa": "هولمیم",
+        "fi": "Holmium"
+      },
+      "mass": 164.93,
+      "group": "lanthanide",
+      "isotopes": [
+        {
+          "A": 165,
+          "mass": 164.930329,
+          "abundance": 100,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 68,
+      "symbol": "Er",
+      "name": {
+        "en": "Erbium",
+        "fa": "اربیم",
+        "fi": "Erbium"
+      },
+      "mass": 167.26,
+      "group": "lanthanide",
+      "isotopes": [
+        {
+          "A": 166,
+          "mass": 165.930299,
+          "abundance": 33.61,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 69,
+      "symbol": "Tm",
+      "name": {
+        "en": "Thulium",
+        "fa": "تولیم",
+        "fi": "Tulium"
+      },
+      "mass": 168.93,
+      "group": "lanthanide",
+      "isotopes": [
+        {
+          "A": 169,
+          "mass": 168.934218,
+          "abundance": 100,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 70,
+      "symbol": "Yb",
+      "name": {
+        "en": "Ytterbium",
+        "fa": "ایتربیم",
+        "fi": "Ytterbium"
+      },
+      "mass": 173.05,
+      "group": "lanthanide",
+      "isotopes": [
+        {
+          "A": 174,
+          "mass": 173.938867,
+          "abundance": 31.83,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 71,
+      "symbol": "Lu",
+      "name": {
+        "en": "Lutetium",
+        "fa": "لوتتیم",
+        "fi": "Lutetium"
+      },
+      "mass": 174.97,
+      "group": "lanthanide",
+      "isotopes": [
+        {
+          "A": 175,
+          "mass": 174.940777,
+          "abundance": 97.401,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 72,
+      "symbol": "Hf",
+      "name": {
+        "en": "Hafnium",
+        "fa": "هافنیم",
+        "fi": "Hafnium"
+      },
+      "mass": 178.49,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 180,
+          "mass": 179.946557,
+          "abundance": 35.08,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 73,
+      "symbol": "Ta",
+      "name": {
+        "en": "Tantalum",
+        "fa": "تانتال",
+        "fi": "Tantaali"
+      },
+      "mass": 180.95,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 181,
+          "mass": 180.948004,
+          "abundance": 99.988,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 74,
+      "symbol": "W",
+      "name": {
+        "en": "Tungsten",
+        "fa": "تنگستن",
+        "fi": "Volframi"
+      },
+      "mass": 183.84,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 184,
+          "mass": 183.950933,
+          "abundance": 30.64,
+          "note": null
+        },
+        {
+          "A": 186,
+          "mass": 185.954362,
+          "abundance": 28.43,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 75,
+      "symbol": "Re",
+      "name": {
+        "en": "Rhenium",
+        "fa": "رنیم",
+        "fi": "Renium"
+      },
+      "mass": 186.21,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 185,
+          "mass": 184.952955,
+          "abundance": 37.4,
+          "note": null
+        },
+        {
+          "A": 187,
+          "mass": 186.955753,
+          "abundance": 62.6,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 76,
+      "symbol": "Os",
+      "name": {
+        "en": "Osmium",
+        "fa": "اوسمیم",
+        "fi": "Osmium"
+      },
+      "mass": 190.23,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 192,
+          "mass": 191.961481,
+          "abundance": 40.78,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 77,
+      "symbol": "Ir",
+      "name": {
+        "en": "Iridium",
+        "fa": "ایریدیم",
+        "fi": "Iridium"
+      },
+      "mass": 192.22,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 191,
+          "mass": 190.960594,
+          "abundance": 37.3,
+          "note": null
+        },
+        {
+          "A": 193,
+          "mass": 192.962926,
+          "abundance": 62.7,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 78,
+      "symbol": "Pt",
+      "name": {
+        "en": "Platinum",
+        "fa": "پلاتین",
+        "fi": "Platina"
+      },
+      "mass": 195.08,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 194,
+          "mass": 193.96268,
+          "abundance": 32.86,
+          "note": null
+        },
+        {
+          "A": 195,
+          "mass": 194.964791,
+          "abundance": 33.78,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 79,
+      "symbol": "Au",
+      "name": {
+        "en": "Gold",
+        "fa": "طلا",
+        "fi": "Kulta"
+      },
+      "mass": 196.97,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 197,
+          "mass": 196.966569,
+          "abundance": 100,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 80,
+      "symbol": "Hg",
+      "name": {
+        "en": "Mercury",
+        "fa": "جیوه",
+        "fi": "Elohopea"
+      },
+      "mass": 200.59,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 200,
+          "mass": 199.968326,
+          "abundance": 23.1,
+          "note": null
+        },
+        {
+          "A": 202,
+          "mass": 201.970643,
+          "abundance": 29.86,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 81,
+      "symbol": "Tl",
+      "name": {
+        "en": "Thallium",
+        "fa": "تالیم",
+        "fi": "Tallium"
+      },
+      "mass": 204.38,
+      "group": "post_transition",
+      "isotopes": [
+        {
+          "A": 203,
+          "mass": 202.972344,
+          "abundance": 29.52,
+          "note": null
+        },
+        {
+          "A": 205,
+          "mass": 204.974427,
+          "abundance": 70.48,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 82,
+      "symbol": "Pb",
+      "name": {
+        "en": "Lead",
+        "fa": "سرب",
+        "fi": "Lyijy"
+      },
+      "mass": 207.2,
+      "group": "post_transition",
+      "isotopes": [
+        {
+          "A": 206,
+          "mass": 205.974465,
+          "abundance": 24.1,
+          "note": null
+        },
+        {
+          "A": 207,
+          "mass": 206.975897,
+          "abundance": 22.1,
+          "note": null
+        },
+        {
+          "A": 208,
+          "mass": 207.976652,
+          "abundance": 52.4,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 83,
+      "symbol": "Bi",
+      "name": {
+        "en": "Bismuth",
+        "fa": "بیسموت",
+        "fi": "Vismutti"
+      },
+      "mass": 208.98,
+      "group": "post_transition",
+      "isotopes": [
+        {
+          "A": 209,
+          "mass": 208.980399,
+          "abundance": 100,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 84,
+      "symbol": "Po",
+      "name": {
+        "en": "Polonium",
+        "fa": "پولونیم",
+        "fi": "Polonium"
+      },
+      "mass": 208.98,
+      "group": "post_transition",
+      "isotopes": [
+        {
+          "A": 210,
+          "mass": 209.982874,
+          "abundance": null,
+          "note": "138 d"
+        }
+      ]
+    },
+    {
+      "Z": 85,
+      "symbol": "At",
+      "name": {
+        "en": "Astatine",
+        "fa": "استاتین",
+        "fi": "Astatiini"
+      },
+      "mass": 209.99,
+      "group": "halogen",
+      "isotopes": [
+        {
+          "A": 211,
+          "mass": 210.987496,
+          "abundance": null,
+          "note": "7.2 h"
+        }
+      ]
+    },
+    {
+      "Z": 86,
+      "symbol": "Rn",
+      "name": {
+        "en": "Radon",
+        "fa": "رادون",
+        "fi": "Radon"
+      },
+      "mass": 222.02,
+      "group": "noble",
+      "isotopes": [
+        {
+          "A": 222,
+          "mass": 222.017578,
+          "abundance": null,
+          "note": "3.82 d"
+        }
+      ]
+    },
+    {
+      "Z": 87,
+      "symbol": "Fr",
+      "name": {
+        "en": "Francium",
+        "fa": "فرانسیم",
+        "fi": "Frankium"
+      },
+      "mass": 223.02,
+      "group": "alkali",
+      "isotopes": [
+        {
+          "A": 223,
+          "mass": 223.019736,
+          "abundance": null,
+          "note": "22 min"
+        }
+      ]
+    },
+    {
+      "Z": 88,
+      "symbol": "Ra",
+      "name": {
+        "en": "Radium",
+        "fa": "رادیم",
+        "fi": "Radium"
+      },
+      "mass": 226.03,
+      "group": "alkaline",
+      "isotopes": [
+        {
+          "A": 226,
+          "mass": 226.02541,
+          "abundance": null,
+          "note": "1600 y"
+        }
+      ]
+    },
+    {
+      "Z": 89,
+      "symbol": "Ac",
+      "name": {
+        "en": "Actinium",
+        "fa": "اکتینیم",
+        "fi": "Aktinium"
+      },
+      "mass": 227.03,
+      "group": "actinide",
+      "isotopes": [
+        {
+          "A": 227,
+          "mass": 227.027752,
+          "abundance": null,
+          "note": "21.8 y"
+        }
+      ]
+    },
+    {
+      "Z": 90,
+      "symbol": "Th",
+      "name": {
+        "en": "Thorium",
+        "fa": "توریم",
+        "fi": "Torium"
+      },
+      "mass": 232.04,
+      "group": "actinide",
+      "isotopes": [
+        {
+          "A": 232,
+          "mass": 232.038055,
+          "abundance": 100,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 91,
+      "symbol": "Pa",
+      "name": {
+        "en": "Protactinium",
+        "fa": "پروتاکتینیم",
+        "fi": "Protaktinium"
+      },
+      "mass": 231.04,
+      "group": "actinide",
+      "isotopes": [
+        {
+          "A": 231,
+          "mass": 231.035884,
+          "abundance": null,
+          "note": "32760 y"
+        }
+      ]
+    },
+    {
+      "Z": 92,
+      "symbol": "U",
+      "name": {
+        "en": "Uranium",
+        "fa": "اورانیم",
+        "fi": "Uraani"
+      },
+      "mass": 238.03,
+      "group": "actinide",
+      "isotopes": [
+        {
+          "A": 234,
+          "mass": 234.040952,
+          "abundance": 0.005,
+          "note": null
+        },
+        {
+          "A": 235,
+          "mass": 235.04393,
+          "abundance": 0.72,
+          "note": null
+        },
+        {
+          "A": 238,
+          "mass": 238.050788,
+          "abundance": 99.274,
+          "note": null
+        }
+      ]
+    },
+    {
+      "Z": 93,
+      "symbol": "Np",
+      "name": {
+        "en": "Neptunium",
+        "fa": "نپتونیم",
+        "fi": "Neptunium"
+      },
+      "mass": 237.05,
+      "group": "actinide",
+      "isotopes": [
+        {
+          "A": 237,
+          "mass": 237.048173,
+          "abundance": null,
+          "note": "2.14e6 y"
+        }
+      ]
+    },
+    {
+      "Z": 94,
+      "symbol": "Pu",
+      "name": {
+        "en": "Plutonium",
+        "fa": "پلوتونیم",
+        "fi": "Plutonium"
+      },
+      "mass": 244.06,
+      "group": "actinide",
+      "isotopes": [
+        {
+          "A": 239,
+          "mass": 239.052163,
+          "abundance": null,
+          "note": "24110 y"
+        },
+        {
+          "A": 244,
+          "mass": 244.064205,
+          "abundance": null,
+          "note": "8.0e7 y"
+        }
+      ]
+    },
+    {
+      "Z": 95,
+      "symbol": "Am",
+      "name": {
+        "en": "Americium",
+        "fa": "امریسیم",
+        "fi": "Amerikium"
+      },
+      "mass": 243.06,
+      "group": "actinide",
+      "isotopes": [
+        {
+          "A": 241,
+          "mass": 241.056829,
+          "abundance": null,
+          "note": "432.6 y"
+        },
+        {
+          "A": 243,
+          "mass": 243.061381,
+          "abundance": null,
+          "note": "7370 y"
+        }
+      ]
+    },
+    {
+      "Z": 96,
+      "symbol": "Cm",
+      "name": {
+        "en": "Curium",
+        "fa": "کوریم",
+        "fi": "Curium"
+      },
+      "mass": 247.07,
+      "group": "actinide",
+      "isotopes": [
+        {
+          "A": 244,
+          "mass": 244.062753,
+          "abundance": null,
+          "note": "18.1 y"
+        },
+        {
+          "A": 247,
+          "mass": 247.070354,
+          "abundance": null,
+          "note": "1.56e7 y"
+        }
+      ]
+    },
+    {
+      "Z": 97,
+      "symbol": "Bk",
+      "name": {
+        "en": "Berkelium",
+        "fa": "برکلیم",
+        "fi": "Berkelium"
+      },
+      "mass": 247.07,
+      "group": "actinide",
+      "isotopes": [
+        {
+          "A": 247,
+          "mass": 247.070307,
+          "abundance": null,
+          "note": "1380 y"
+        }
+      ]
+    },
+    {
+      "Z": 98,
+      "symbol": "Cf",
+      "name": {
+        "en": "Californium",
+        "fa": "کالیفرنیم",
+        "fi": "Kalifornium"
+      },
+      "mass": 251.08,
+      "group": "actinide",
+      "isotopes": [
+        {
+          "A": 252,
+          "mass": 252.081627,
+          "abundance": null,
+          "note": "2.65 y"
+        }
+      ]
+    },
+    {
+      "Z": 99,
+      "symbol": "Es",
+      "name": {
+        "en": "Einsteinium",
+        "fa": "اینشتینیم",
+        "fi": "Einsteinium"
+      },
+      "mass": 252.08,
+      "group": "actinide",
+      "isotopes": [
+        {
+          "A": 253,
+          "mass": 253.084825,
+          "abundance": null,
+          "note": "20.5 d"
+        }
+      ]
+    },
+    {
+      "Z": 100,
+      "symbol": "Fm",
+      "name": {
+        "en": "Fermium",
+        "fa": "فرمیم",
+        "fi": "Fermium"
+      },
+      "mass": 257.1,
+      "group": "actinide",
+      "isotopes": [
+        {
+          "A": 257,
+          "mass": 257.095106,
+          "abundance": null,
+          "note": "100.5 d"
+        }
+      ]
+    },
+    {
+      "Z": 101,
+      "symbol": "Md",
+      "name": {
+        "en": "Mendelevium",
+        "fa": "مندلیفیم",
+        "fi": "Mendelevium"
+      },
+      "mass": 258.1,
+      "group": "actinide",
+      "isotopes": [
+        {
+          "A": 258,
+          "mass": 258.098431,
+          "abundance": null,
+          "note": "51.5 d"
+        }
+      ]
+    },
+    {
+      "Z": 102,
+      "symbol": "No",
+      "name": {
+        "en": "Nobelium",
+        "fa": "نوبلیم",
+        "fi": "Nobelium"
+      },
+      "mass": 259.1,
+      "group": "actinide",
+      "isotopes": [
+        {
+          "A": 259,
+          "mass": 259.10103,
+          "abundance": null,
+          "note": "58 min"
+        }
+      ]
+    },
+    {
+      "Z": 103,
+      "symbol": "Lr",
+      "name": {
+        "en": "Lawrencium",
+        "fa": "لارنسیم",
+        "fi": "Lawrencium"
+      },
+      "mass": 266.12,
+      "group": "actinide",
+      "isotopes": [
+        {
+          "A": 266,
+          "mass": 266.11983,
+          "abundance": null,
+          "note": "11 h"
+        }
+      ]
+    },
+    {
+      "Z": 104,
+      "symbol": "Rf",
+      "name": {
+        "en": "Rutherfordium",
+        "fa": "رادرفوردیم",
+        "fi": "Rutherfordium"
+      },
+      "mass": 267.12,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 267,
+          "mass": 267.12179,
+          "abundance": null,
+          "note": "1.3 h"
+        }
+      ]
+    },
+    {
+      "Z": 105,
+      "symbol": "Db",
+      "name": {
+        "en": "Dubnium",
+        "fa": "دوبنیم",
+        "fi": "Dubnium"
+      },
+      "mass": 268.13,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 268,
+          "mass": 268.12567,
+          "abundance": null,
+          "note": "29 h"
+        }
+      ]
+    },
+    {
+      "Z": 106,
+      "symbol": "Sg",
+      "name": {
+        "en": "Seaborgium",
+        "fa": "سیبورگیم",
+        "fi": "Seaborgium"
+      },
+      "mass": 269.13,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 269,
+          "mass": 269.12863,
+          "abundance": null,
+          "note": "14 min"
+        }
+      ]
+    },
+    {
+      "Z": 107,
+      "symbol": "Bh",
+      "name": {
+        "en": "Bohrium",
+        "fa": "بوریم",
+        "fi": "Bohrium"
+      },
+      "mass": 270.13,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 270,
+          "mass": 270.13336,
+          "abundance": null,
+          "note": "1 min"
+        }
+      ]
+    },
+    {
+      "Z": 108,
+      "symbol": "Hs",
+      "name": {
+        "en": "Hassium",
+        "fa": "هاسیم",
+        "fi": "Hassium"
+      },
+      "mass": 269.13,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 269,
+          "mass": 269.13375,
+          "abundance": null,
+          "note": "16 s"
+        }
+      ]
+    },
+    {
+      "Z": 109,
+      "symbol": "Mt",
+      "name": {
+        "en": "Meitnerium",
+        "fa": "مایتنریم",
+        "fi": "Meitnerium"
+      },
+      "mass": 278.16,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 278,
+          "mass": 278.15631,
+          "abundance": null,
+          "note": "4 s"
+        }
+      ]
+    },
+    {
+      "Z": 110,
+      "symbol": "Ds",
+      "name": {
+        "en": "Darmstadtium",
+        "fa": "دارمشتاتیم",
+        "fi": "Darmstadtium"
+      },
+      "mass": 281.16,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 281,
+          "mass": 281.16451,
+          "abundance": null,
+          "note": "14 s"
+        }
+      ]
+    },
+    {
+      "Z": 111,
+      "symbol": "Rg",
+      "name": {
+        "en": "Roentgenium",
+        "fa": "رونتگنیم",
+        "fi": "Roentgenium"
+      },
+      "mass": 282.17,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 282,
+          "mass": 282.16912,
+          "abundance": null,
+          "note": "100 s"
+        }
+      ]
+    },
+    {
+      "Z": 112,
+      "symbol": "Cn",
+      "name": {
+        "en": "Copernicium",
+        "fa": "کوپرنیسیم",
+        "fi": "Kopernikium"
+      },
+      "mass": 285.17,
+      "group": "transition",
+      "isotopes": [
+        {
+          "A": 285,
+          "mass": 285.17712,
+          "abundance": null,
+          "note": "29 s"
+        }
+      ]
+    },
+    {
+      "Z": 113,
+      "symbol": "Nh",
+      "name": {
+        "en": "Nihonium",
+        "fa": "نیهونیم",
+        "fi": "Nihonium"
+      },
+      "mass": 286.18,
+      "group": "post_transition",
+      "isotopes": [
+        {
+          "A": 286,
+          "mass": 286.18221,
+          "abundance": null,
+          "note": "20 s"
+        }
+      ]
+    },
+    {
+      "Z": 114,
+      "symbol": "Fl",
+      "name": {
+        "en": "Flerovium",
+        "fa": "فلروویم",
+        "fi": "Flerovium"
+      },
+      "mass": 289.19,
+      "group": "post_transition",
+      "isotopes": [
+        {
+          "A": 289,
+          "mass": 289.19042,
+          "abundance": null,
+          "note": "1.9 s"
+        }
+      ]
+    },
+    {
+      "Z": 115,
+      "symbol": "Mc",
+      "name": {
+        "en": "Moscovium",
+        "fa": "مسکوویم",
+        "fi": "Moskovium"
+      },
+      "mass": 290.2,
+      "group": "post_transition",
+      "isotopes": [
+        {
+          "A": 290,
+          "mass": 290.19615,
+          "abundance": null,
+          "note": "650 ms"
+        }
+      ]
+    },
+    {
+      "Z": 116,
+      "symbol": "Lv",
+      "name": {
+        "en": "Livermorium",
+        "fa": "لیورموریم",
+        "fi": "Livermorium"
+      },
+      "mass": 293.2,
+      "group": "post_transition",
+      "isotopes": [
+        {
+          "A": 293,
+          "mass": 293.20449,
+          "abundance": null,
+          "note": "61 ms"
+        }
+      ]
+    },
+    {
+      "Z": 117,
+      "symbol": "Ts",
+      "name": {
+        "en": "Tennessine",
+        "fa": "تنسین",
+        "fi": "Tennessiini"
+      },
+      "mass": 294.21,
+      "group": "halogen",
+      "isotopes": [
+        {
+          "A": 294,
+          "mass": 294.21046,
+          "abundance": null,
+          "note": "51 ms"
+        }
+      ]
+    },
+    {
+      "Z": 118,
+      "symbol": "Og",
+      "name": {
+        "en": "Oganesson",
+        "fa": "اوگانسون",
+        "fi": "Oganesson"
+      },
+      "mass": 294.21,
+      "group": "noble",
+      "isotopes": [
+        {
+          "A": 294,
+          "mass": 294.21392,
+          "abundance": null,
+          "note": "0.7 ms"
+        }
+      ]
+    }
+  ]
+}

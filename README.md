@@ -1,9 +1,10 @@
 # Ultra Calculator
 
-This repository is two calculators that do the same job. One opens as a desktop window. The other runs in a browser. I wrote them as two separate programs on purpose. Neither folder imports the other. Each one has its own engine, its own formula file, its own periodic table, and its own translation files. The formula IDs are the same in both, so if something solves on the desktop it also solves in the browser.
+This repository is three calculators that do the same job. One opens as a desktop window. One runs in a browser. One is a phone app for Android. I wrote them as separate programs on purpose. None of the folders import each other. Each one has its own engine, its own formula file, its own periodic table, and its own translation files. The formula IDs are the same in all three, so if something solves on the desktop it also solves in the browser and on the phone.
 
 - `desktop` — window app (tkinter)
 - `web` — browser app (Flask)
+- `android` — phone app (Kivy). Run it in Pydroid 3, or pack an APK with Buildozer.
 
 The interface is English, Persian, and Finnish. Menus, buttons, messages, and formula names come from translation files. They are not hardcoded. Persian is right-to-left in the web app.
 
@@ -32,6 +33,14 @@ python3 run.py
 ```
 
 The web server listens on `0.0.0.0:5000`. Open that port in a browser.
+
+Android / phone layout (Kivy). On a computer it opens a tall window so you can try it. On a phone, copy the `android` folder into Pydroid 3 and run `run.py`. To make an installable APK on Linux: `cd android` then `buildozer android debug`.
+
+```
+cd android
+pip install -r requirements.txt
+python3 run.py
+```
 
 ---
 
@@ -390,6 +399,8 @@ If one breaks, the other still has the same formulas.
 | Sources | yes | yes |
 | en / fa / fi | yes | yes |
 | Persian right-to-left | — | yes |
+
+Android is a third copy, not a wrapper around the other two. Same 5196 formulas. Same balancer, periodic table, algorithms, lookup, and teacher steps. Details are in `android/README.md`.
 
 ---
 
