@@ -156,6 +156,7 @@ class UltraDesktop(tk.Tk):
         if hasattr(self, "el_list"):
             self._fill_elements()
         if hasattr(self, "algo_list"):
+            self._fill_algo_cats()
             self._fill_algos()
 
     def _refresh_texts(self) -> None:
