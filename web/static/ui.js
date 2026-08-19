@@ -121,7 +121,7 @@
     if ($("kbd-hint")) $("kbd-hint").textContent = s.kbd_hint || "";
     $("lang-label").textContent = s.lang || "Language";
     $("hist-title").textContent = s.history || "History";
-    $("cat-title").textContent = s.search ? " " : " ";
+    $("cat-title").textContent = s.categories || "Categories";
     $("search-title").textContent = s.search || "Search";
     $("btn-single").textContent = s.single || "One unknown";
     $("btn-system").textContent = s.system || "System";
@@ -280,17 +280,19 @@
     state.strings = data.strings || {};
     applyStrings();
     const sel = $("category");
+    const keep = sel.value;
     sel.innerHTML = "";
     const all = document.createElement("option");
     all.value = "";
-    all.textContent = "—";
+    all.textContent = (state.strings.all || "All") + "  " + (data.total || 0);
     sel.appendChild(all);
     (data.categories || []).forEach((c) => {
       const opt = document.createElement("option");
       opt.value = c.id;
-      opt.textContent = c.id.split(".")[0] + " / " + c.label;
+      opt.textContent = c.id.split(".")[0] + " / " + c.label + "  " + (c.count || 0);
       sel.appendChild(opt);
     });
+    if (keep) sel.value = keep;
     await loadFormulas();
     if ($("el-q")) loadElements();
   }
@@ -302,6 +304,9 @@
     state.formulas = await get(url);
     const box = $("flist");
     box.innerHTML = "";
+    if ($("search-title")) {
+      $("search-title").textContent = (state.strings.search || "Search") + "  (" + state.formulas.length + ")";
+    }
     state.formulas.forEach((item, i) => {
       const li = document.createElement("li");
       li.textContent = item.name;

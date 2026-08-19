@@ -647,7 +647,7 @@ class UltraDesktop(tk.Tk):
 
         self.cat_lbl = tk.Label(left, bg=BG, fg=ACCENT, font=("Segoe UI", 11, "bold"))
         self.cat_lbl.pack(anchor="w")
-        self.cat_list = tk.Listbox(left, bg=PANEL, fg=FG, highlightthickness=0, bd=0, font=("Segoe UI", 10), width=32)
+        self.cat_list = tk.Listbox(left, bg=PANEL, fg=FG, highlightthickness=0, bd=0, font=("Segoe UI", 10), width=40)
         self.cat_list.pack(fill="both", expand=True, pady=6)
         self.cat_list.bind("<<ListboxSelect>>", lambda e: self._fill_formula_list())
 
@@ -714,13 +714,15 @@ class UltraDesktop(tk.Tk):
     def _fill_categories(self) -> None:
         self.cat_list.delete(0, "end")
         self.cat_keys = ["all"]
-        self.cat_list.insert("end", "—")
+        total = len(self.engine.formulas)
+        self.cat_list.insert("end", f"{self.tr('all_cats')}  {total}")
         keys = sorted(self.engine.categories.keys())
         for key in keys:
             names = self.engine.categories[key]
             label = names.get(self.lang) or names.get("en") or key
+            n = self.engine.cat_counts.get(key, 0)
             self.cat_keys.append(key)
-            self.cat_list.insert("end", f"{key.split('.', 1)[0]} / {label}")
+            self.cat_list.insert("end", f"{key.split('.', 1)[0]} / {label}  {n}")
 
     def _selected_category(self) -> str | None:
         sel = self.cat_list.curselection()
@@ -740,6 +742,8 @@ class UltraDesktop(tk.Tk):
         for it in items:
             name = it["name"].get(self.lang) or it["name"].get("en")
             self.formula_list.insert("end", name)
+        if hasattr(self, "search_lbl"):
+            self.search_lbl.configure(text=f"{self.tr('search')}  ({len(items)})")
 
     def _pick_first_formula(self, _evt=None):
         if not getattr(self, "formula_items", None):

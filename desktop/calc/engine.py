@@ -234,6 +234,10 @@ class DesktopEngine:
         self.categories = data["categories"]
         self.formulas = data["formulas"]
         self.by_id = {item["id"]: item for item in self.formulas}
+        self.cat_counts = {}
+        for item in self.formulas:
+            key = item.get("category") or ""
+            self.cat_counts[key] = self.cat_counts.get(key, 0) + 1
         self.angle = "DEG"
         self.eng = False
         self.ans = 0.0

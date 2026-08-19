@@ -25,11 +25,28 @@ def home():
 @app.get("/api/meta")
 def meta():
     lang = request.args.get("lang", "en")
-    cats, _, _ = core.catalog()
+    cats, rows, _ = core.catalog()
+    counts = {}
+    for row in rows:
+        key = row.get("category") or ""
+        counts[key] = counts.get(key, 0) + 1
     labeled = []
     for key, names in sorted(cats.items()):
-        labeled.append({"id": key, "label": names.get(lang) or names.get("en")})
-    return jsonify({"strings": UI.get(lang) or UI["en"], "categories": labeled, "languages": ["en", "fa", "fi"]})
+        labeled.append(
+            {
+                "id": key,
+                "label": names.get(lang) or names.get("en"),
+                "count": int(counts.get(key, 0)),
+            }
+        )
+    return jsonify(
+        {
+            "strings": UI.get(lang) or UI["en"],
+            "categories": labeled,
+            "total": len(rows),
+            "languages": ["en", "fa", "fi"],
+        }
+    )
 
 
 @app.get("/api/formulas")
