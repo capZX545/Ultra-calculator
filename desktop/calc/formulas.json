@@ -16963,16 +16963,8 @@
         "fa": "CAPM",
         "fi": "CAPM"
       },
-      "expr": "re = rf + beta*(rm - rf)",
+      "expr": "er = rf + beta*(rm - rf)",
       "variables": {
-        "re": {
-          "unit": "1",
-          "name": {
-            "en": "Expected return",
-            "fa": "بازده انتظار",
-            "fi": "Odotettu tuotto"
-          }
-        },
         "rf": {
           "unit": "1",
           "name": {
@@ -16995,6 +16987,14 @@
             "en": "Market",
             "fa": "بازار",
             "fi": "Markkina"
+          }
+        },
+        "er": {
+          "unit": "1",
+          "name": {
+            "en": "Expected return",
+            "fa": "بازده انتظار",
+            "fi": "Odotettu tuotto"
           }
         }
       },
