@@ -8,16 +8,15 @@ android {
         applicationId "org.capzx545.ultracalculator"
         minSdk 24
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
     }
     buildTypes {
-        release {
-            minifyEnabled false
-        }
-        debug {
-            minifyEnabled false
-        }
+        release { minifyEnabled false }
+        debug { minifyEnabled false }
+    }
+    aaptOptions {
+        noCompress "wasm", "whl", "zip"
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11

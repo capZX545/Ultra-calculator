@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-from urllib.parse import parse_qs, urlparse
 
 import algorithms
 import chemtools
@@ -160,8 +159,7 @@ def _route(path, query, body):
     if path == "/api/lookup":
         return lookup.lookup(_q(query, "q"), _q(query, "lang", "en"))
     if path == "/api/sources":
-        import json as _j
         from pathlib import Path
 
-        return _j.loads(Path("sources.json").read_text(encoding="utf-8"))
+        return json.loads(Path("sources.json").read_text(encoding="utf-8"))
     return {}

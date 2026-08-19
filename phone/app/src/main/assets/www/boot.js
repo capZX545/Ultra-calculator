@@ -4,10 +4,8 @@
   function say(t) { if (msg) msg.textContent = t; }
   try {
     say("Loading the math engine…");
-    const pyodide = await loadPyodide({
-      indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/",
-    });
-    say("Installing numpy and sympy…");
+    const pyodide = await loadPyodide({ indexURL: "pyodide/" });
+    say("Loading numpy and sympy…");
     await pyodide.loadPackage(["numpy", "sympy"]);
     const files = [
       "clean.py", "teach.py", "chemtools.py", "core.py",
@@ -27,6 +25,6 @@
     if (boot) boot.style.display = "none";
     if (typeof window.startApp === "function") window.startApp();
   } catch (err) {
-    say("Could not start. Check the internet connection and open the app again. " + (err && err.message ? err.message : ""));
+    say("Could not start. " + (err && err.message ? err.message : ""));
   }
 })();

@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#1c1f24">
-  <meta name="apple-mobile-web-app-capable" content="yes">
   <title>Ultra Calculator</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -12,10 +11,9 @@
   <div id="boot">
     <div class="boot-card">
       <h1>Ultra Calculator</h1>
-      <p id="boot-msg">Starting the engine…</p>
+      <p id="boot-msg">Starting…</p>
     </div>
   </div>
-
   <header>
     <h1 id="title">Ultra Calculator</h1>
     <nav>
@@ -37,19 +35,17 @@
       </select>
     </label>
   </header>
-
   <div id="lookup-bar">
     <span id="lookup-label">Lookup</span>
     <input id="lookup-q" type="search" autocomplete="off" placeholder="H2O, Fe, Fe-56, R, g">
     <div id="lookup-hits"></div>
     <button id="lookup-insert" type="button">Insert</button>
   </div>
-
   <main>
     <section id="view-calc" class="view show">
       <div class="calc-wrap">
         <div class="pad">
-          <input id="screen" type="text" inputmode="text" autocomplete="off" spellcheck="false" value="0" aria-label="Expression">
+          <input id="screen" type="text" inputmode="text" autocomplete="off" spellcheck="false" value="0">
           <p class="hint" id="kbd-hint"></p>
           <pre id="calc-steps"></pre>
           <div class="row">
@@ -66,7 +62,6 @@
         </aside>
       </div>
     </section>
-
     <section id="view-formulas" class="view">
       <div class="formula-grid">
         <div>
@@ -94,7 +89,6 @@
         </div>
       </div>
     </section>
-
     <section id="view-poly" class="view">
       <p class="hint">a6 x^6 + a5 x^5 + a4 x^4 + a3 x^3 + a2 x^2 + a1 x + a0</p>
       <div class="coeffs" id="coeffs"></div>
@@ -105,7 +99,6 @@
       </div>
       <pre id="poly-out"></pre>
     </section>
-
     <section id="view-numeric" class="view">
       <label>f(x) or f(x,y) <input id="n-func" value="x**2"></label>
       <label>a / x0 <input id="n-a" value="0"></label>
@@ -120,7 +113,6 @@
       </div>
       <pre id="n-out"></pre>
     </section>
-
     <section id="view-algo" class="view">
       <div class="formula-grid">
         <div>
@@ -141,9 +133,8 @@
         </div>
       </div>
     </section>
-
     <section id="view-chem" class="view">
-      <p class="hint">H2 + O2 = H2O &nbsp; | &nbsp; Fe2(SO4)3</p>
+      <p class="hint">H2 + O2 = H2O</p>
       <input id="chem-eq" value="C2H6 + O2 = CO2 + H2O">
       <div class="row">
         <button id="chem-bal" class="accent" type="button">Balance</button>
@@ -151,7 +142,6 @@
       </div>
       <pre id="chem-out"></pre>
     </section>
-
     <section id="view-elements" class="view">
       <input id="el-q" placeholder="Fe / 26 / iron">
       <div class="el-grid">
@@ -159,13 +149,11 @@
         <pre id="el-out"></pre>
       </div>
     </section>
-
     <section id="view-sources" class="view">
       <pre id="src-out"></pre>
     </section>
   </main>
-
-  <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+  <script src="pyodide/pyodide.js"></script>
   <script src="ui.js"></script>
   <script src="boot.js"></script>
 </body>

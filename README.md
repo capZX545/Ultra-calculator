@@ -35,7 +35,7 @@ python3 run.py
 
 The web server listens on `0.0.0.0:5000`. Open that port in a browser.
 
-There is also a real Android app. Install `UltraCalculator.apk` on the phone. You do not need Pydroid. The first launch needs internet so the engine can load.
+There is also a real Android app. Install `UltraCalculator.apk` on the phone. You do not need Pydroid. Numpy and sympy are already inside the APK.
 
 The project that builds that APK is in `phone/`.
 
