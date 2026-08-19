@@ -71,6 +71,7 @@ STRINGS = {
         "atomic_m": "Atomic mass",
         "isotopes": "Isotopes",
         "abundance": "Abundance %",
+        "mode_sources": "Sources",
     },
     "fa": {
         "app_title": "ماشین حساب اولترا",
@@ -140,6 +141,7 @@ STRINGS = {
         "atomic_m": "جرم اتمی",
         "isotopes": "ایزوتوپ ها",
         "abundance": "فراوانی ٪",
+        "mode_sources": "منبع ها",
     },
     "fi": {
         "app_title": "Ultra-laskin",
@@ -209,6 +211,7 @@ STRINGS = {
         "atomic_m": "Atomimassa",
         "isotopes": "Isotoopit",
         "abundance": "Runsaus %",
+        "mode_sources": "Lahteet",
     },
 }
 

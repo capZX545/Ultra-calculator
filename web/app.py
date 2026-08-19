@@ -137,6 +137,12 @@ def api_molar():
     return jsonify(chemtools.molar_mass(body.get("formula", "")))
 
 
+@app.get("/api/sources")
+def api_sources():
+    path = Path(__file__).with_name("sources.json")
+    return jsonify(json.loads(path.read_text(encoding="utf-8")))
+
+
 def main():
     app.run(host="0.0.0.0", port=5000, debug=False)
 

@@ -15,5 +15,8 @@ Both contain the same named formulas (elementary, hypergeometric, Bessel, gamma/
 - chemistry equation balancer and molar mass
 - periodic table (Z, mass, important isotopes)
 - English / Persian / Finnish
+- Sources tab: Equation Encyclopedia, MathWorld, NIST DLMF, CRC/CODATA, PhET, arXiv, Wolfram Functions
 
 See each folder's README for how to start that program.
+
+These sites are used as a subject map and public constants, not as a dumped copy of their full libraries. CRC is a paid book; arXiv is papers, not a formula table. Named equations still solve for a missing variable.

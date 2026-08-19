@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
 import tkinter as tk
 from tkinter import ttk
 
@@ -74,7 +77,8 @@ class UltraDesktop(tk.Tk):
         self.btn_num = tk.Button(top, command=lambda: self._set_mode("numeric"))
         self.btn_chem = tk.Button(top, command=lambda: self._set_mode("chem"))
         self.btn_el = tk.Button(top, command=lambda: self._set_mode("elements"))
-        for b in (self.btn_calc, self.btn_form, self.btn_poly, self.btn_num, self.btn_chem, self.btn_el):
+        self.btn_src = tk.Button(top, command=lambda: self._set_mode("sources"))
+        for b in (self.btn_calc, self.btn_form, self.btn_poly, self.btn_num, self.btn_chem, self.btn_el, self.btn_src):
             self._paint_btn(b, BTN)
             b.pack(side="left", padx=3)
         self.lang_box = ttk.Combobox(top, values=["en", "fa", "fi"], width=6, state="readonly")
@@ -85,7 +89,7 @@ class UltraDesktop(tk.Tk):
         self.lang_lbl.pack(side="right", padx=6)
 
         self.frames = {}
-        for name in ("calc", "formulas", "poly", "numeric", "chem", "elements"):
+        for name in ("calc", "formulas", "poly", "numeric", "chem", "elements", "sources"):
             fr = tk.Frame(self, bg=BG)
             self.frames[name] = fr
         self._build_calc(self.frames["calc"])
@@ -94,6 +98,7 @@ class UltraDesktop(tk.Tk):
         self._build_numeric(self.frames["numeric"])
         self._build_chem(self.frames["chem"])
         self._build_elements(self.frames["elements"])
+        self._build_sources(self.frames["sources"])
         self._set_mode("calc")
 
     def _paint_btn(self, btn: tk.Button, color: str = BTN, fg: str = FG) -> None:
@@ -122,6 +127,7 @@ class UltraDesktop(tk.Tk):
             "numeric": self.btn_num,
             "chem": self.btn_chem,
             "elements": self.btn_el,
+            "sources": self.btn_src,
         }
         for key, btn in mapping.items():
             self._paint_btn(btn, ACCENT if key == mode else BTN, "#1c1f24" if key == mode else FG)
@@ -144,6 +150,7 @@ class UltraDesktop(tk.Tk):
         self.btn_num.configure(text=self.tr("mode_numeric"))
         self.btn_chem.configure(text=self.tr("mode_chem"))
         self.btn_el.configure(text=self.tr("mode_elements"))
+        self.btn_src.configure(text=self.tr("mode_sources"))
         self.lang_lbl.configure(text=self.tr("language"))
         if hasattr(self, "chem_bal_btn"):
             self.chem_bal_btn.configure(text=self.tr("balance"))
@@ -674,6 +681,101 @@ class UltraDesktop(tk.Tk):
             lines.append(f"{xv:10.5g}   {yv:10.5g}")
         self.n_out.delete("1.0", "end")
         self.n_out.insert("1.0", "\n".join(lines))
+
+    def _build_chem(self, root: tk.Frame) -> None:
+        tk.Label(root, text="H2 + O2 = H2O    |    Ca(OH)2", bg=BG, fg=MUTED).pack(anchor="w")
+        self.chem_eq = tk.Entry(root, bg="#11141a", fg=FG, insertbackground=FG, relief="flat")
+        self.chem_eq.insert(0, "C2H6 + O2 = CO2 + H2O")
+        self.chem_eq.pack(fill="x", pady=6)
+        row = tk.Frame(root, bg=BG)
+        row.pack(fill="x")
+        self.chem_bal_btn = tk.Button(row, command=self._do_balance)
+        self.chem_mw_btn = tk.Button(row, command=self._do_molar)
+        self._paint_btn(self.chem_bal_btn, ACCENT, "#1c1f24")
+        self._paint_btn(self.chem_mw_btn, BTN2)
+        self.chem_bal_btn.pack(side="left", padx=4)
+        self.chem_mw_btn.pack(side="left", padx=4)
+        self.chem_out = tk.Text(root, bg=PANEL, fg=FG, relief="flat", height=16, font=("Consolas", 12))
+        self.chem_out.pack(fill="both", expand=True, pady=8)
+
+    def _do_balance(self) -> None:
+        out = balance_equation(self.chem_eq.get())
+        self.chem_out.delete("1.0", "end")
+        self.chem_out.insert("1.0", out.get("text") or "")
+
+    def _do_molar(self) -> None:
+        out = molar_mass(self.chem_eq.get().split("=")[0].split("+")[0].strip())
+        lines = [f"{out.get('text')} g/mol"]
+        for sym, info in (out.get("detail") or {}).items():
+            if isinstance(info, dict) and "count" in info:
+                lines.append(f"  {sym}: {info['count']} x {info['mass']} = {info['contrib']}")
+        self.chem_out.delete("1.0", "end")
+        self.chem_out.insert("1.0", "\n".join(lines))
+
+    def _build_elements(self, root: tk.Frame) -> None:
+        top = tk.Frame(root, bg=BG)
+        top.pack(fill="x")
+        self.el_q = tk.Entry(top, bg="#11141a", fg=FG, insertbackground=FG, relief="flat")
+        self.el_q.pack(side="left", fill="x", expand=True)
+        self.el_q.bind("<KeyRelease>", lambda e: self._fill_elements())
+        body = tk.Frame(root, bg=BG)
+        body.pack(fill="both", expand=True, pady=8)
+        self.el_list = tk.Listbox(body, bg=PANEL, fg=FG, highlightthickness=0, bd=0, width=28, font=("Consolas", 10))
+        self.el_list.pack(side="left", fill="y")
+        self.el_list.bind("<<ListboxSelect>>", self._show_element)
+        self.el_out = tk.Text(body, bg=PANEL, fg=FG, relief="flat", font=("Consolas", 11))
+        self.el_out.pack(side="left", fill="both", expand=True, padx=(8, 0))
+        self._el_items = []
+        self._fill_elements()
+
+    def _fill_elements(self) -> None:
+        q = self.el_q.get() if hasattr(self, "el_q") else ""
+        self._el_items = list_elements(q)
+        self.el_list.delete(0, "end")
+        for el in self._el_items:
+            name = el["name"].get(self.lang) or el["name"]["en"]
+            self.el_list.insert("end", f"{el['Z']:3}  {el['symbol']:<3}  {name}")
+
+    def _show_element(self, _evt=None) -> None:
+        sel = self.el_list.curselection()
+        if not sel:
+            return
+        el = self._el_items[sel[0]]
+        name = el["name"].get(self.lang) or el["name"]["en"]
+        lines = [
+            f"{el['symbol']}  {name}",
+            f"{self.tr('atomic_n')}: {el['Z']}",
+            f"{self.tr('atomic_m')}: {el['mass']}",
+            f"group: {el['group']}",
+            "",
+            self.tr("isotopes") + ":",
+        ]
+        for iso in el.get("isotopes") or []:
+            ab = f"{iso.get('abundance')} %" if iso.get("abundance") is not None else (iso.get("note") or "")
+            extra = iso.get("note") if iso.get("abundance") is not None and iso.get("note") else ""
+            lines.append(f"  {el['symbol']}-{iso['A']}   {iso['mass']} u   {ab}  {extra}")
+        self.el_out.delete("1.0", "end")
+        self.el_out.insert("1.0", "\n".join(lines))
+
+    def _build_sources(self, root: tk.Frame) -> None:
+        box = tk.Text(root, bg=PANEL, fg=FG, relief="flat", font=("Segoe UI", 11), wrap="word")
+        box.pack(fill="both", expand=True)
+        path = Path(__file__).with_name("sources.json")
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            data = {"sources": {}}
+        lines = []
+        for key, src in (data.get("sources") or {}).items():
+            name = (src.get("name") or {}).get(self.lang) or (src.get("name") or {}).get("en") or key
+            note = (src.get("note") or {}).get(self.lang) or (src.get("note") or {}).get("en") or ""
+            lines.append(str(name))
+            if src.get("url"):
+                lines.append(src["url"])
+            lines.append(str(note))
+            lines.append("")
+        box.insert("1.0", "\n".join(lines))
+        box.configure(state="disabled")
 
 
 def main() -> None:

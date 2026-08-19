@@ -75,6 +75,7 @@
     $("tab-numeric").textContent = s.numeric || "Numerical";
     if ($("tab-chem")) $("tab-chem").textContent = s.chem || "Chemistry";
     if ($("tab-elements")) $("tab-elements").textContent = s.elements || "Elements";
+    if ($("tab-sources")) $("tab-sources").textContent = s.sources || "Sources";
     if ($("chem-bal")) $("chem-bal").textContent = s.balance || "Balance";
     if ($("chem-mw")) $("chem-mw").textContent = s.molar || "Molar mass";
     $("lang-label").textContent = s.lang || "Language";
@@ -405,6 +406,63 @@
   $("n-der").addEventListener("click", () => doNumeric("deriv"));
   $("n-ode").addEventListener("click", () => doNumeric("ode"));
 
+  if ($("chem-bal")) {
+    $("chem-bal").addEventListener("click", async () => {
+      const out = await post("/api/balance", { eq: $("chem-eq").value });
+      $("chem-out").textContent = out.text || "";
+    });
+  }
+  if ($("chem-mw")) {
+    $("chem-mw").addEventListener("click", async () => {
+      const raw = $("chem-eq").value.split("=")[0].split("+")[0].trim();
+      const out = await post("/api/molar", { formula: raw });
+      let t = (out.text || "0") + " g/mol\n";
+      const d = out.detail || {};
+      Object.keys(d).forEach((k) => {
+        if (d[k] && d[k].count) t += k + ": " + d[k].count + " x " + d[k].mass + " = " + d[k].contrib + "\n";
+      });
+      $("chem-out").textContent = t;
+    });
+  }
+
+  async function loadElements() {
+    if (!$("el-list")) return;
+    const rows = await get("/api/elements?lang=" + encodeURIComponent(state.lang) + "&q=" + encodeURIComponent(($("el-q") && $("el-q").value) || ""));
+    const box = $("el-list");
+    box.innerHTML = "";
+    (rows || []).forEach((el) => {
+      const li = document.createElement("li");
+      li.textContent = el.Z + "  " + el.symbol + "  " + el.name;
+      li.addEventListener("click", () => {
+        document.querySelectorAll("#el-list li").forEach((n) => n.classList.remove("on"));
+        li.classList.add("on");
+        let t = el.symbol + "  " + el.name + "\nZ = " + el.Z + "\nmass = " + el.mass + "\ngroup = " + el.group + "\n\n";
+        t += (state.strings.isotopes || "Isotopes") + ":\n";
+        (el.isotopes || []).forEach((iso) => {
+          const ab = iso.abundance != null ? iso.abundance + " %" : (iso.note || "");
+          t += "  " + el.symbol + "-" + iso.A + "   " + iso.mass + " u   " + ab + "\n";
+        });
+        $("el-out").textContent = t;
+      });
+      box.appendChild(li);
+    });
+  }
+  if ($("el-q")) $("el-q").addEventListener("input", loadElements);
+
+  async function loadSources() {
+    if (!$("src-out")) return;
+    const data = await get("/api/sources");
+    const pack = (data && data.sources) || {};
+    let t = "";
+    Object.keys(pack).forEach((k) => {
+      const s = pack[k];
+      const name = (s.name && (s.name[state.lang] || s.name.en)) || k;
+      const note = (s.note && (s.note[state.lang] || s.note.en)) || "";
+      t += name + "\n" + (s.url || "") + "\n" + note + "\n\n";
+    });
+    $("src-out").textContent = t;
+  }
+
   document.addEventListener("keydown", (ev) => {
     if (state.mode !== "calc") return;
     if (ev.key === "Enter") { ev.preventDefault(); onKey("="); return; }
@@ -419,4 +477,5 @@
   buildKeys();
   buildPoly();
   loadMeta();
+  loadSources();
 })();

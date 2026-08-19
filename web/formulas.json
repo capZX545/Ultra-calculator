@@ -344,6 +344,66 @@
       "en": "Signals",
       "fa": "سیگنال",
       "fi": "Signaalit"
+    },
+    "fin.interest": {
+      "en": "Interest and loans",
+      "fa": "بهره و وام",
+      "fi": "Korko ja lainat"
+    },
+    "fin.invest": {
+      "en": "Investment",
+      "fa": "سرمایه گذاری",
+      "fi": "Sijoittaminen"
+    },
+    "econ.micro": {
+      "en": "Microeconomics",
+      "fa": "خرد",
+      "fi": "Mikrotalous"
+    },
+    "econ.macro": {
+      "en": "Macroeconomics",
+      "fa": "کلان",
+      "fi": "Makrotalous"
+    },
+    "med.clinic": {
+      "en": "Clinical formulas",
+      "fa": "فرمول بالینی",
+      "fi": "Kliiniset kaavat"
+    },
+    "geo.earth": {
+      "en": "Earth and climate",
+      "fa": "زمین و اقلیم",
+      "fi": "Maa ja ilmasto"
+    },
+    "cs.info": {
+      "en": "Computing formulas",
+      "fa": "فرمول رایانه",
+      "fi": "Tietojenkasittely"
+    },
+    "eng.civil": {
+      "en": "Civil / structures",
+      "fa": "عمران",
+      "fi": "Rakennustekniikka"
+    },
+    "eng.mech": {
+      "en": "Machine design",
+      "fa": "طراحی ماشین",
+      "fi": "Konetekniikka"
+    },
+    "phys.em2": {
+      "en": "More EM / quantum",
+      "fa": "الکترومغناطیس و کوانتوم بیشتر",
+      "fi": "Lisaa EM/kvantti"
+    },
+    "chem.eq": {
+      "en": "Equilibrium extra",
+      "fa": "تعادل بیشتر",
+      "fi": "Tasapaino"
+    },
+    "dlmf.extra": {
+      "en": "DLMF extra identities",
+      "fa": "اتحادهای بیشتر DLMF",
+      "fi": "DLMF-lisa"
     }
   },
   "formulas": [
@@ -16534,6 +16594,4330 @@
           }
         }
       }
+    },
+    {
+      "id": "fv_simple",
+      "category": "fin.interest",
+      "name": {
+        "en": "Future value simple",
+        "fa": "ارزش آینده بهره ساده",
+        "fi": "Tuleva arvo yksink."
+      },
+      "expr": "FV = P*(1 + r*t)",
+      "variables": {
+        "FV": {
+          "unit": "1",
+          "name": {
+            "en": "Future",
+            "fa": "آینده",
+            "fi": "Tuleva"
+          }
+        },
+        "P": {
+          "unit": "1",
+          "name": {
+            "en": "Principal",
+            "fa": "اصل",
+            "fi": "Paaoma"
+          }
+        },
+        "r": {
+          "unit": "1",
+          "name": {
+            "en": "Rate",
+            "fa": "نرخ",
+            "fi": "Korko"
+          }
+        },
+        "t": {
+          "unit": "yr",
+          "name": {
+            "en": "Years",
+            "fa": "سال",
+            "fi": "Vuodet"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "fv_comp",
+      "category": "fin.interest",
+      "name": {
+        "en": "Future value compound",
+        "fa": "ارزش آینده مرکب",
+        "fi": "Tuleva arvo korko"
+      },
+      "expr": "FV = P*(1 + r)**t",
+      "variables": {
+        "FV": {
+          "unit": "1",
+          "name": {
+            "en": "Future",
+            "fa": "آینده",
+            "fi": "Tuleva"
+          }
+        },
+        "P": {
+          "unit": "1",
+          "name": {
+            "en": "Principal",
+            "fa": "اصل",
+            "fi": "Paaoma"
+          }
+        },
+        "r": {
+          "unit": "1",
+          "name": {
+            "en": "Rate",
+            "fa": "نرخ",
+            "fi": "Korko"
+          }
+        },
+        "t": {
+          "unit": "yr",
+          "name": {
+            "en": "Years",
+            "fa": "سال",
+            "fi": "Vuodet"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "pv_disc",
+      "category": "fin.interest",
+      "name": {
+        "en": "Present value",
+        "fa": "ارزش فعلی",
+        "fi": "Nykyarvo"
+      },
+      "expr": "PV = FV/(1 + r)**t",
+      "variables": {
+        "PV": {
+          "unit": "1",
+          "name": {
+            "en": "Present",
+            "fa": "فعلی",
+            "fi": "Nyky"
+          }
+        },
+        "FV": {
+          "unit": "1",
+          "name": {
+            "en": "Future",
+            "fa": "آینده",
+            "fi": "Tuleva"
+          }
+        },
+        "r": {
+          "unit": "1",
+          "name": {
+            "en": "Rate",
+            "fa": "نرخ",
+            "fi": "Korko"
+          }
+        },
+        "t": {
+          "unit": "yr",
+          "name": {
+            "en": "Years",
+            "fa": "سال",
+            "fi": "Vuodet"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "cagr",
+      "category": "fin.invest",
+      "name": {
+        "en": "CAGR",
+        "fa": "نرخ رشد مرکب",
+        "fi": "CAGR"
+      },
+      "expr": "g = (FV/PV)**(1/t) - 1",
+      "variables": {
+        "g": {
+          "unit": "1",
+          "name": {
+            "en": "CAGR",
+            "fa": "CAGR",
+            "fi": "CAGR"
+          }
+        },
+        "FV": {
+          "unit": "1",
+          "name": {
+            "en": "End",
+            "fa": "پایان",
+            "fi": "Loppu"
+          }
+        },
+        "PV": {
+          "unit": "1",
+          "name": {
+            "en": "Start",
+            "fa": "شروع",
+            "fi": "Alku"
+          }
+        },
+        "t": {
+          "unit": "yr",
+          "name": {
+            "en": "Years",
+            "fa": "سال",
+            "fi": "Vuodet"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "annuity_pmt",
+      "category": "fin.interest",
+      "name": {
+        "en": "Loan payment",
+        "fa": "قسط وام",
+        "fi": "Lainanera"
+      },
+      "expr": "PMT = P*r*(1 + r)**n/((1 + r)**n - 1)",
+      "variables": {
+        "PMT": {
+          "unit": "1",
+          "name": {
+            "en": "Payment",
+            "fa": "قسط",
+            "fi": "Era"
+          }
+        },
+        "P": {
+          "unit": "1",
+          "name": {
+            "en": "Principal",
+            "fa": "اصل",
+            "fi": "Paaoma"
+          }
+        },
+        "r": {
+          "unit": "1",
+          "name": {
+            "en": "Rate per period",
+            "fa": "نرخ دوره",
+            "fi": "Jakson korko"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "Periods",
+            "fa": "تعداد دوره",
+            "fi": "Jaksot"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "annuity_pv",
+      "category": "fin.interest",
+      "name": {
+        "en": "Annuity present value",
+        "fa": "ارزش فعلی مستمری",
+        "fi": "Anniteetin nykyarvo"
+      },
+      "expr": "PV = PMT*(1 - (1 + r)**(-n))/r",
+      "variables": {
+        "PV": {
+          "unit": "1",
+          "name": {
+            "en": "Present",
+            "fa": "فعلی",
+            "fi": "Nyky"
+          }
+        },
+        "PMT": {
+          "unit": "1",
+          "name": {
+            "en": "Payment",
+            "fa": "قسط",
+            "fi": "Era"
+          }
+        },
+        "r": {
+          "unit": "1",
+          "name": {
+            "en": "Rate",
+            "fa": "نرخ",
+            "fi": "Korko"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "roi",
+      "category": "fin.invest",
+      "name": {
+        "en": "ROI",
+        "fa": "بازده سرمایه",
+        "fi": "ROI"
+      },
+      "expr": "roi = (gain - cost)/cost",
+      "variables": {
+        "roi": {
+          "unit": "1",
+          "name": {
+            "en": "ROI",
+            "fa": "ROI",
+            "fi": "ROI"
+          }
+        },
+        "gain": {
+          "unit": "1",
+          "name": {
+            "en": "Return",
+            "fa": "بازگشت",
+            "fi": "Tuotto"
+          }
+        },
+        "cost": {
+          "unit": "1",
+          "name": {
+            "en": "Cost",
+            "fa": "هزینه",
+            "fi": "Kustannus"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "npv2",
+      "category": "fin.invest",
+      "name": {
+        "en": "NPV two periods",
+        "fa": "ارزش خالص فعلی دو دوره",
+        "fi": "NPV kaksi jaksoa"
+      },
+      "expr": "NPV = -C0 + C1/(1 + r) + C2/(1 + r)**2",
+      "variables": {
+        "NPV": {
+          "unit": "1",
+          "name": {
+            "en": "NPV",
+            "fa": "NPV",
+            "fi": "NPV"
+          }
+        },
+        "C0": {
+          "unit": "1",
+          "name": {
+            "en": "Outlay",
+            "fa": "سرمایه اولیه",
+            "fi": "Alkusijoitus"
+          }
+        },
+        "C1": {
+          "unit": "1",
+          "name": {
+            "en": "CF1",
+            "fa": "جریان ۱",
+            "fi": "CF1"
+          }
+        },
+        "C2": {
+          "unit": "1",
+          "name": {
+            "en": "CF2",
+            "fa": "جریان ۲",
+            "fi": "CF2"
+          }
+        },
+        "r": {
+          "unit": "1",
+          "name": {
+            "en": "Discount",
+            "fa": "تنزیل",
+            "fi": "Diskontto"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "capm",
+      "category": "fin.invest",
+      "name": {
+        "en": "CAPM",
+        "fa": "CAPM",
+        "fi": "CAPM"
+      },
+      "expr": "re = rf + beta*(rm - rf)",
+      "variables": {
+        "re": {
+          "unit": "1",
+          "name": {
+            "en": "Expected return",
+            "fa": "بازده انتظار",
+            "fi": "Odotettu tuotto"
+          }
+        },
+        "rf": {
+          "unit": "1",
+          "name": {
+            "en": "Risk free",
+            "fa": "بدون ریسک",
+            "fi": "Riskiton"
+          }
+        },
+        "beta": {
+          "unit": "1",
+          "name": {
+            "en": "Beta",
+            "fa": "بتا",
+            "fi": "Beta"
+          }
+        },
+        "rm": {
+          "unit": "1",
+          "name": {
+            "en": "Market",
+            "fa": "بازار",
+            "fi": "Markkina"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "sl_dep",
+      "category": "fin.invest",
+      "name": {
+        "en": "Straight-line depreciation",
+        "fa": "استهلاک خط مستقیم",
+        "fi": "Tasapoisto"
+      },
+      "expr": "D = (cost - salvage)/life",
+      "variables": {
+        "D": {
+          "unit": "1",
+          "name": {
+            "en": "Annual dep",
+            "fa": "استهلاک سالانه",
+            "fi": "Vuosipoisto"
+          }
+        },
+        "cost": {
+          "unit": "1",
+          "name": {
+            "en": "Cost",
+            "fa": "بهای تمام شده",
+            "fi": "Hankintahinta"
+          }
+        },
+        "salvage": {
+          "unit": "1",
+          "name": {
+            "en": "Salvage",
+            "fa": "اسقاط",
+            "fi": "Jaannosarvo"
+          }
+        },
+        "life": {
+          "unit": "yr",
+          "name": {
+            "en": "Life",
+            "fa": "عمر",
+            "fi": "Ika"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "real_rate",
+      "category": "fin.interest",
+      "name": {
+        "en": "Fisher real rate",
+        "fa": "نرخ واقعی فیشر",
+        "fi": "Reaalikorko"
+      },
+      "expr": "rr = (1 + rn)/(1 + i) - 1",
+      "variables": {
+        "rr": {
+          "unit": "1",
+          "name": {
+            "en": "Real",
+            "fa": "واقعی",
+            "fi": "Reaali"
+          }
+        },
+        "rn": {
+          "unit": "1",
+          "name": {
+            "en": "Nominal",
+            "fa": "اسمی",
+            "fi": "Nominaali"
+          }
+        },
+        "i": {
+          "unit": "1",
+          "name": {
+            "en": "Inflation",
+            "fa": "تورم",
+            "fi": "Inflaatio"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "ear",
+      "category": "fin.interest",
+      "name": {
+        "en": "Effective annual rate",
+        "fa": "نرخ مؤثر سالانه",
+        "fi": "Todellinen vuosikorko"
+      },
+      "expr": "ear = (1 + r/m)**m - 1",
+      "variables": {
+        "ear": {
+          "unit": "1",
+          "name": {
+            "en": "EAR",
+            "fa": "EAR",
+            "fi": "EAR"
+          }
+        },
+        "r": {
+          "unit": "1",
+          "name": {
+            "en": "APR",
+            "fa": "نرخ اسمی",
+            "fi": "APR"
+          }
+        },
+        "m": {
+          "unit": "1",
+          "name": {
+            "en": "Compounds/year",
+            "fa": "دفعات در سال",
+            "fi": "Korkojaksot"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "elasticity",
+      "category": "econ.micro",
+      "name": {
+        "en": "Price elasticity",
+        "fa": "کشش قیمت",
+        "fi": "Hintajousto"
+      },
+      "expr": "e = (dq/q)/(dp/p)",
+      "variables": {
+        "e": {
+          "unit": "1",
+          "name": {
+            "en": "Elasticity",
+            "fa": "کشش",
+            "fi": "Jousto"
+          }
+        },
+        "dq": {
+          "unit": "1",
+          "name": {
+            "en": "dQ",
+            "fa": "تغییر مقدار",
+            "fi": "dQ"
+          }
+        },
+        "q": {
+          "unit": "1",
+          "name": {
+            "en": "Q",
+            "fa": "مقدار",
+            "fi": "Q"
+          }
+        },
+        "dp": {
+          "unit": "1",
+          "name": {
+            "en": "dP",
+            "fa": "تغییر قیمت",
+            "fi": "dP"
+          }
+        },
+        "p": {
+          "unit": "1",
+          "name": {
+            "en": "P",
+            "fa": "قیمت",
+            "fi": "P"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "markup",
+      "category": "econ.micro",
+      "name": {
+        "en": "Markup price",
+        "fa": "قیمت گذاری مارک آپ",
+        "fi": "Katehinnoittelu"
+      },
+      "expr": "P = MC/(1 - 1/e)",
+      "variables": {
+        "P": {
+          "unit": "1",
+          "name": {
+            "en": "Price",
+            "fa": "قیمت",
+            "fi": "Hinta"
+          }
+        },
+        "MC": {
+          "unit": "1",
+          "name": {
+            "en": "Marginal cost",
+            "fa": "هزینه نهایی",
+            "fi": "Rajakustannus"
+          }
+        },
+        "e": {
+          "unit": "1",
+          "name": {
+            "en": "|elasticity|",
+            "fa": "قدر کشش",
+            "fi": "Jousto"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "gdp_defl",
+      "category": "econ.macro",
+      "name": {
+        "en": "GDP deflator",
+        "fa": "تعدیل کننده GDP",
+        "fi": "BKT-deflaattori"
+      },
+      "expr": "d = 100*nominal/real",
+      "variables": {
+        "d": {
+          "unit": "1",
+          "name": {
+            "en": "Deflator",
+            "fa": "تعدیل کننده",
+            "fi": "Deflaattori"
+          }
+        },
+        "nominal": {
+          "unit": "1",
+          "name": {
+            "en": "Nominal GDP",
+            "fa": "اسمی",
+            "fi": "Nominaali"
+          }
+        },
+        "real": {
+          "unit": "1",
+          "name": {
+            "en": "Real GDP",
+            "fa": "واقعی",
+            "fi": "Reaali"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "unemp",
+      "category": "econ.macro",
+      "name": {
+        "en": "Unemployment rate",
+        "fa": "نرخ بیکاری",
+        "fi": "Tyottomyysaste"
+      },
+      "expr": "u = 100*U/LF",
+      "variables": {
+        "u": {
+          "unit": "%",
+          "name": {
+            "en": "Rate",
+            "fa": "نرخ",
+            "fi": "Aste"
+          }
+        },
+        "U": {
+          "unit": "1",
+          "name": {
+            "en": "Unemployed",
+            "fa": "بیکار",
+            "fi": "Tyottomat"
+          }
+        },
+        "LF": {
+          "unit": "1",
+          "name": {
+            "en": "Labor force",
+            "fa": "نیروی کار",
+            "fi": "Tyovoima"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "qty_theory",
+      "category": "econ.macro",
+      "name": {
+        "en": "Quantity theory",
+        "fa": "نظریه مقداری پول",
+        "fi": "Maarateoria"
+      },
+      "expr": "M*V = P*Y",
+      "variables": {
+        "M": {
+          "unit": "1",
+          "name": {
+            "en": "Money",
+            "fa": "پول",
+            "fi": "Raha"
+          }
+        },
+        "V": {
+          "unit": "1",
+          "name": {
+            "en": "Velocity",
+            "fa": "گردش",
+            "fi": "Kiertonopeus"
+          }
+        },
+        "P": {
+          "unit": "1",
+          "name": {
+            "en": "Price level",
+            "fa": "سطح قیمت",
+            "fi": "Hintataso"
+          }
+        },
+        "Y": {
+          "unit": "1",
+          "name": {
+            "en": "Output",
+            "fa": "تولید",
+            "fi": "Tuotanto"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "mult_keynes",
+      "category": "econ.macro",
+      "name": {
+        "en": "Simple multiplier",
+        "fa": "ضریب فزاینده",
+        "fi": "Kerroin"
+      },
+      "expr": "k = 1/(1 - mpc)",
+      "variables": {
+        "k": {
+          "unit": "1",
+          "name": {
+            "en": "Multiplier",
+            "fa": "ضریب",
+            "fi": "Kerroin"
+          }
+        },
+        "mpc": {
+          "unit": "1",
+          "name": {
+            "en": "MPC",
+            "fa": "میل نهایی مصرف",
+            "fi": "MPC"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "cobb",
+      "category": "econ.macro",
+      "name": {
+        "en": "Cobb-Douglas",
+        "fa": "کاب داگلاس",
+        "fi": "Cobb-Douglas"
+      },
+      "expr": "Y = A*(K**a)*(L**(1 - a))",
+      "variables": {
+        "Y": {
+          "unit": "1",
+          "name": {
+            "en": "Output",
+            "fa": "تولید",
+            "fi": "Tuotanto"
+          }
+        },
+        "A": {
+          "unit": "1",
+          "name": {
+            "en": "TFP",
+            "fa": "بهره وری",
+            "fi": "TFP"
+          }
+        },
+        "K": {
+          "unit": "1",
+          "name": {
+            "en": "Capital",
+            "fa": "سرمایه",
+            "fi": "Paaoma"
+          }
+        },
+        "L": {
+          "unit": "1",
+          "name": {
+            "en": "Labor",
+            "fa": "کار",
+            "fi": "Tyo"
+          }
+        },
+        "a": {
+          "unit": "1",
+          "name": {
+            "en": "Alpha",
+            "fa": "آلفا",
+            "fi": "Alpha"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "real_wage",
+      "category": "econ.micro",
+      "name": {
+        "en": "Real wage",
+        "fa": "دستمزد واقعی",
+        "fi": "Reaaliansio"
+      },
+      "expr": "w = W/P",
+      "variables": {
+        "w": {
+          "unit": "1",
+          "name": {
+            "en": "Real wage",
+            "fa": "واقعی",
+            "fi": "Reaali"
+          }
+        },
+        "W": {
+          "unit": "1",
+          "name": {
+            "en": "Nominal",
+            "fa": "اسمی",
+            "fi": "Nominaali"
+          }
+        },
+        "P": {
+          "unit": "1",
+          "name": {
+            "en": "Price",
+            "fa": "قیمت",
+            "fi": "Hinta"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "bsa_mosteller",
+      "category": "med.clinic",
+      "name": {
+        "en": "BSA Mosteller",
+        "fa": "سطح بدن موستلر",
+        "fi": "BSA"
+      },
+      "expr": "BSA = sqrt(h*w/3600)",
+      "variables": {
+        "BSA": {
+          "unit": "m^2",
+          "name": {
+            "en": "BSA",
+            "fa": "سطح بدن",
+            "fi": "BSA"
+          }
+        },
+        "h": {
+          "unit": "cm",
+          "name": {
+            "en": "Height",
+            "fa": "قد",
+            "fi": "Pituus"
+          }
+        },
+        "w": {
+          "unit": "kg",
+          "name": {
+            "en": "Weight",
+            "fa": "وزن",
+            "fi": "Paino"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "ibw_devine_m",
+      "category": "med.clinic",
+      "name": {
+        "en": "IBW Devine male",
+        "fa": "وزن ایده آل مرد",
+        "fi": "IBW mies"
+      },
+      "expr": "w = 50 + 0.9*(h - 152.4)",
+      "variables": {
+        "w": {
+          "unit": "kg",
+          "name": {
+            "en": "IBW",
+            "fa": "وزن ایده آل",
+            "fi": "IBW"
+          }
+        },
+        "h": {
+          "unit": "cm",
+          "name": {
+            "en": "Height",
+            "fa": "قد",
+            "fi": "Pituus"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "crcl_cg",
+      "category": "med.clinic",
+      "name": {
+        "en": "Cockcroft-Gault male",
+        "fa": "کراتینین کلیرانس",
+        "fi": "Cockcroft-Gault"
+      },
+      "expr": "CrCl = (140 - age)*w/(72*scr)",
+      "variables": {
+        "CrCl": {
+          "unit": "mL/min",
+          "name": {
+            "en": "CrCl",
+            "fa": "کلیرانس",
+            "fi": "CrCl"
+          }
+        },
+        "age": {
+          "unit": "yr",
+          "name": {
+            "en": "Age",
+            "fa": "سن",
+            "fi": "Ika"
+          }
+        },
+        "w": {
+          "unit": "kg",
+          "name": {
+            "en": "Weight",
+            "fa": "وزن",
+            "fi": "Paino"
+          }
+        },
+        "scr": {
+          "unit": "mg/dL",
+          "name": {
+            "en": "Serum Cr",
+            "fa": "کراتینین سرم",
+            "fi": "Seerumi-Cr"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "infusion",
+      "category": "med.clinic",
+      "name": {
+        "en": "Infusion rate",
+        "fa": "نرخ انفوزیون",
+        "fi": "Infuusionopeus"
+      },
+      "expr": "rate = dose*w/conc",
+      "variables": {
+        "rate": {
+          "unit": "mL/h",
+          "name": {
+            "en": "Rate",
+            "fa": "نرخ",
+            "fi": "Nopeus"
+          }
+        },
+        "dose": {
+          "unit": "mg/kg/h",
+          "name": {
+            "en": "Dose",
+            "fa": "دوز",
+            "fi": "Annos"
+          }
+        },
+        "w": {
+          "unit": "kg",
+          "name": {
+            "en": "Weight",
+            "fa": "وزن",
+            "fi": "Paino"
+          }
+        },
+        "conc": {
+          "unit": "mg/mL",
+          "name": {
+            "en": "Concentration",
+            "fa": "غلظت",
+            "fi": "Pitoisuus"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "ld_vd",
+      "category": "med.clinic",
+      "name": {
+        "en": "Loading dose",
+        "fa": "دوز بارگیری",
+        "fi": "Latausannos"
+      },
+      "expr": "LD = Cp*Vd/F",
+      "variables": {
+        "LD": {
+          "unit": "mg",
+          "name": {
+            "en": "Loading",
+            "fa": "بارگیری",
+            "fi": "Lataus"
+          }
+        },
+        "Cp": {
+          "unit": "mg/L",
+          "name": {
+            "en": "Target conc",
+            "fa": "غلظت هدف",
+            "fi": "Tavoite"
+          }
+        },
+        "Vd": {
+          "unit": "L",
+          "name": {
+            "en": "Volume",
+            "fa": "حجم توزیع",
+            "fi": "Jakautumistilavuus"
+          }
+        },
+        "F": {
+          "unit": "1",
+          "name": {
+            "en": "Bioavailability",
+            "fa": "فراهمی زیستی",
+            "fi": "Hyotyosuus"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "qtc_bazett",
+      "category": "med.clinic",
+      "name": {
+        "en": "QTc Bazett",
+        "fa": "QTc بازت",
+        "fi": "QTc Bazett"
+      },
+      "expr": "QTc = QT/sqrt(RR)",
+      "variables": {
+        "QTc": {
+          "unit": "s",
+          "name": {
+            "en": "QTc",
+            "fa": "QTc",
+            "fi": "QTc"
+          }
+        },
+        "QT": {
+          "unit": "s",
+          "name": {
+            "en": "QT",
+            "fa": "QT",
+            "fi": "QT"
+          }
+        },
+        "RR": {
+          "unit": "s",
+          "name": {
+            "en": "RR interval",
+            "fa": "فاصله RR",
+            "fi": "RR-vali"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "anion_gap",
+      "category": "med.clinic",
+      "name": {
+        "en": "Anion gap",
+        "fa": "گپ آنیونی",
+        "fi": "Anionivaje"
+      },
+      "expr": "AG = Na - (Cl + HCO3)",
+      "variables": {
+        "AG": {
+          "unit": "mmol/L",
+          "name": {
+            "en": "Gap",
+            "fa": "گپ",
+            "fi": "Vaje"
+          }
+        },
+        "Na": {
+          "unit": "mmol/L",
+          "name": {
+            "en": "Na",
+            "fa": "سدیم",
+            "fi": "Na"
+          }
+        },
+        "Cl": {
+          "unit": "mmol/L",
+          "name": {
+            "en": "Cl",
+            "fa": "کلر",
+            "fi": "Cl"
+          }
+        },
+        "HCO3": {
+          "unit": "mmol/L",
+          "name": {
+            "en": "HCO3",
+            "fa": "بی کربنات",
+            "fi": "HCO3"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "fev1_ratio",
+      "category": "med.clinic",
+      "name": {
+        "en": "FEV1/FVC",
+        "fa": "نسبت FEV1",
+        "fi": "FEV1/FVC"
+      },
+      "expr": "r = 100*FEV1/FVC",
+      "variables": {
+        "r": {
+          "unit": "%",
+          "name": {
+            "en": "Ratio",
+            "fa": "نسبت",
+            "fi": "Suhde"
+          }
+        },
+        "FEV1": {
+          "unit": "L",
+          "name": {
+            "en": "FEV1",
+            "fa": "FEV1",
+            "fi": "FEV1"
+          }
+        },
+        "FVC": {
+          "unit": "L",
+          "name": {
+            "en": "FVC",
+            "fa": "FVC",
+            "fi": "FVC"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "parkland",
+      "category": "med.clinic",
+      "name": {
+        "en": "Parkland first 8h",
+        "fa": "پارکلند ۸ ساعت اول",
+        "fi": "Parkland 8h"
+      },
+      "expr": "V = 2*w*tbsa",
+      "variables": {
+        "V": {
+          "unit": "mL",
+          "name": {
+            "en": "Volume 8h",
+            "fa": "حجم ۸ساعت",
+            "fi": "Tilavuus 8h"
+          }
+        },
+        "w": {
+          "unit": "kg",
+          "name": {
+            "en": "Weight",
+            "fa": "وزن",
+            "fi": "Paino"
+          }
+        },
+        "tbsa": {
+          "unit": "%",
+          "name": {
+            "en": "TBSA burned",
+            "fa": "سطح سوختگی",
+            "fi": "Palopinta-ala"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "haversine_d",
+      "category": "geo.earth",
+      "name": {
+        "en": "Haversine distance",
+        "fa": "فاصله دایره عظیمه",
+        "fi": "Haversine"
+      },
+      "expr": "d = 2*R*asin(sqrt(sin((lat2 - lat1)/2)**2 + cos(lat1)*cos(lat2)*sin((lon2 - lon1)/2)**2))",
+      "variables": {
+        "d": {
+          "unit": "km",
+          "name": {
+            "en": "Distance",
+            "fa": "فاصله",
+            "fi": "Etaisyys"
+          }
+        },
+        "R": {
+          "unit": "km",
+          "name": {
+            "en": "Earth radius",
+            "fa": "شعاع زمین",
+            "fi": "Maan sade"
+          }
+        },
+        "lat1": {
+          "unit": "rad",
+          "name": {
+            "en": "lat1",
+            "fa": "عرض ۱",
+            "fi": "lat1"
+          }
+        },
+        "lon1": {
+          "unit": "rad",
+          "name": {
+            "en": "lon1",
+            "fa": "طول ۱",
+            "fi": "lon1"
+          }
+        },
+        "lat2": {
+          "unit": "rad",
+          "name": {
+            "en": "lat2",
+            "fa": "عرض ۲",
+            "fi": "lat2"
+          }
+        },
+        "lon2": {
+          "unit": "rad",
+          "name": {
+            "en": "lon2",
+            "fa": "طول ۲",
+            "fi": "lon2"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "lapse",
+      "category": "geo.earth",
+      "name": {
+        "en": "Dry lapse",
+        "fa": "افتاه خشک",
+        "fi": "Kuiva lapse"
+      },
+      "expr": "T = T0 - 0.0098*h",
+      "variables": {
+        "T": {
+          "unit": "degC",
+          "name": {
+            "en": "T",
+            "fa": "دما",
+            "fi": "T"
+          }
+        },
+        "T0": {
+          "unit": "degC",
+          "name": {
+            "en": "T0",
+            "fa": "دمای سطح",
+            "fi": "T0"
+          }
+        },
+        "h": {
+          "unit": "m",
+          "name": {
+            "en": "Height",
+            "fa": "ارتفاع",
+            "fi": "Korkeus"
+          }
+        }
+      },
+      "source": "phet"
+    },
+    {
+      "id": "hydrostatic_atm",
+      "category": "geo.earth",
+      "name": {
+        "en": "Barometric approx",
+        "fa": "فشار جو تقریبی",
+        "fi": "Barometrinen"
+      },
+      "expr": "P = P0*exp(-M*g*h/(R*T))",
+      "variables": {
+        "P": {
+          "unit": "Pa",
+          "name": {
+            "en": "P",
+            "fa": "فشار",
+            "fi": "P"
+          }
+        },
+        "P0": {
+          "unit": "Pa",
+          "name": {
+            "en": "P0",
+            "fa": "سطح دریا",
+            "fi": "P0"
+          }
+        },
+        "M": {
+          "unit": "kg/mol",
+          "name": {
+            "en": "Molar mass air",
+            "fa": "جرم مولی هوا",
+            "fi": "Ilman M"
+          }
+        },
+        "g": {
+          "unit": "m/s^2",
+          "name": {
+            "en": "g",
+            "fa": "g",
+            "fi": "g"
+          }
+        },
+        "h": {
+          "unit": "m",
+          "name": {
+            "en": "h",
+            "fa": "h",
+            "fi": "h"
+          }
+        },
+        "R": {
+          "unit": "J/(mol*K)",
+          "name": {
+            "en": "R",
+            "fa": "R",
+            "fi": "R"
+          }
+        },
+        "T": {
+          "unit": "K",
+          "name": {
+            "en": "T",
+            "fa": "T",
+            "fi": "T"
+          }
+        }
+      },
+      "source": "crc"
+    },
+    {
+      "id": "coriolis",
+      "category": "geo.earth",
+      "name": {
+        "en": "Coriolis accel",
+        "fa": "شتاب کوریولیس",
+        "fi": "Coriolis"
+      },
+      "expr": "a = 2*omega*v*sin(lat)",
+      "variables": {
+        "a": {
+          "unit": "m/s^2",
+          "name": {
+            "en": "a",
+            "fa": "شتاب",
+            "fi": "a"
+          }
+        },
+        "omega": {
+          "unit": "rad/s",
+          "name": {
+            "en": "Earth spin",
+            "fa": "چرخش زمین",
+            "fi": "Maan pyorinta"
+          }
+        },
+        "v": {
+          "unit": "m/s",
+          "name": {
+            "en": "Speed",
+            "fa": "سرعت",
+            "fi": "Nopeus"
+          }
+        },
+        "lat": {
+          "unit": "rad",
+          "name": {
+            "en": "Latitude",
+            "fa": "عرض جغرافیایی",
+            "fi": "Leveysaste"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "stefan_earth",
+      "category": "geo.earth",
+      "name": {
+        "en": "Blackbody flux",
+        "fa": "شار جسم سیاه",
+        "fi": "Musta kappale"
+      },
+      "expr": "F = sigma*T**4",
+      "variables": {
+        "F": {
+          "unit": "W/m^2",
+          "name": {
+            "en": "Flux",
+            "fa": "شار",
+            "fi": "Vuo"
+          }
+        },
+        "sigma": {
+          "unit": "W/(m^2*K^4)",
+          "name": {
+            "en": "sigma",
+            "fa": "سیگما",
+            "fi": "sigma"
+          }
+        },
+        "T": {
+          "unit": "K",
+          "name": {
+            "en": "T",
+            "fa": "T",
+            "fi": "T"
+          }
+        }
+      },
+      "source": "phet"
+    },
+    {
+      "id": "richer_mag",
+      "category": "geo.earth",
+      "name": {
+        "en": "Local magnitude energy",
+        "fa": "انرژی از بزرگی",
+        "fi": "Magnitudienergia"
+      },
+      "expr": "logE = 4.8 + 1.5*M",
+      "variables": {
+        "logE": {
+          "unit": "1",
+          "name": {
+            "en": "log10 E (J)",
+            "fa": "لگاریتم انرژی",
+            "fi": "log E"
+          }
+        },
+        "M": {
+          "unit": "1",
+          "name": {
+            "en": "Magnitude",
+            "fa": "بزرگی",
+            "fi": "Magnitudi"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "darcy_gnd",
+      "category": "geo.earth",
+      "name": {
+        "en": "Darcy flux",
+        "fa": "شار دارسی",
+        "fi": "Darcy-vuo"
+      },
+      "expr": "q = -K*i",
+      "variables": {
+        "q": {
+          "unit": "m/s",
+          "name": {
+            "en": "Specific discharge",
+            "fa": "دبی ویژه",
+            "fi": "Ominaisvirtaus"
+          }
+        },
+        "K": {
+          "unit": "m/s",
+          "name": {
+            "en": "Conductivity",
+            "fa": "هدایت هیدرولیکی",
+            "fi": "Johtavuus"
+          }
+        },
+        "i": {
+          "unit": "1",
+          "name": {
+            "en": "Gradient",
+            "fa": "گرادیان",
+            "fi": "Gradientti"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "entropy2",
+      "category": "cs.info",
+      "name": {
+        "en": "Binary entropy",
+        "fa": "آنتروپی باینری",
+        "fi": "Binaarientropia"
+      },
+      "expr": "H = -p*log(p)/log(2) - (1 - p)*log(1 - p)/log(2)",
+      "variables": {
+        "H": {
+          "unit": "bit",
+          "name": {
+            "en": "H",
+            "fa": "H",
+            "fi": "H"
+          }
+        },
+        "p": {
+          "unit": "1",
+          "name": {
+            "en": "p",
+            "fa": "p",
+            "fi": "p"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "amdahl",
+      "category": "cs.info",
+      "name": {
+        "en": "Amdahl",
+        "fa": "آمدال",
+        "fi": "Amdahl"
+      },
+      "expr": "S = 1/((1 - p) + p/n)",
+      "variables": {
+        "S": {
+          "unit": "1",
+          "name": {
+            "en": "Speedup",
+            "fa": "شتاب",
+            "fi": "Nopeutus"
+          }
+        },
+        "p": {
+          "unit": "1",
+          "name": {
+            "en": "Parallel fraction",
+            "fa": "سهم موازی",
+            "fi": "Rinnakkaisosuus"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "Processors",
+            "fa": "پردازنده",
+            "fi": "Prosessorit"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "little",
+      "category": "cs.info",
+      "name": {
+        "en": "Little's law",
+        "fa": "قانون لیتل",
+        "fi": "Little"
+      },
+      "expr": "L = lam*W",
+      "variables": {
+        "L": {
+          "unit": "1",
+          "name": {
+            "en": "In system",
+            "fa": "در سیستم",
+            "fi": "Jarjestelmassa"
+          }
+        },
+        "lam": {
+          "unit": "1/s",
+          "name": {
+            "en": "Arrival",
+            "fa": "ورود",
+            "fi": "Saapuminen"
+          }
+        },
+        "W": {
+          "unit": "s",
+          "name": {
+            "en": "Time in system",
+            "fa": "زمان ماندن",
+            "fi": "Viipyaika"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "hit_rate",
+      "category": "cs.info",
+      "name": {
+        "en": "AMAT",
+        "fa": "زمان میانگین حافظه",
+        "fi": "AMAT"
+      },
+      "expr": "t = th + (1 - h)*tm",
+      "variables": {
+        "t": {
+          "unit": "s",
+          "name": {
+            "en": "AMAT",
+            "fa": "AMAT",
+            "fi": "AMAT"
+          }
+        },
+        "th": {
+          "unit": "s",
+          "name": {
+            "en": "Hit time",
+            "fa": "زمان اصابت",
+            "fi": "Osuma-aika"
+          }
+        },
+        "h": {
+          "unit": "1",
+          "name": {
+            "en": "Hit rate",
+            "fa": "نرخ اصابت",
+            "fi": "Osumasuhde"
+          }
+        },
+        "tm": {
+          "unit": "s",
+          "name": {
+            "en": "Miss penalty",
+            "fa": "جریمه فقدان",
+            "fi": "Huti"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "shannon_cap",
+      "category": "cs.info",
+      "name": {
+        "en": "Shannon capacity",
+        "fa": "ظرفیت شانون",
+        "fi": "Shannon"
+      },
+      "expr": "C = B*log(1 + S/N)/log(2)",
+      "variables": {
+        "C": {
+          "unit": "bit/s",
+          "name": {
+            "en": "Capacity",
+            "fa": "ظرفیت",
+            "fi": "Kapasiteetti"
+          }
+        },
+        "B": {
+          "unit": "Hz",
+          "name": {
+            "en": "Bandwidth",
+            "fa": "پهنای باند",
+            "fi": "Kaista"
+          }
+        },
+        "S": {
+          "unit": "1",
+          "name": {
+            "en": "Signal",
+            "fa": "سیگنال",
+            "fi": "Signaali"
+          }
+        },
+        "N": {
+          "unit": "1",
+          "name": {
+            "en": "Noise",
+            "fa": "نویز",
+            "fi": "Kohina"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "big_o_poly",
+      "category": "cs.info",
+      "name": {
+        "en": "Polynomial ops n^k",
+        "fa": "عملیات n به توان k",
+        "fi": "n^k operaatiot"
+      },
+      "expr": "T = n**k",
+      "variables": {
+        "T": {
+          "unit": "1",
+          "name": {
+            "en": "Ops",
+            "fa": "عملیات",
+            "fi": "Operaatiot"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        },
+        "k": {
+          "unit": "1",
+          "name": {
+            "en": "k",
+            "fa": "k",
+            "fi": "k"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "euler_buckle",
+      "category": "eng.civil",
+      "name": {
+        "en": "Euler buckling",
+        "fa": "کمانش اویلر",
+        "fi": "Euler-nurjahdus"
+      },
+      "expr": "P = pi**2*E*I/(K*L)**2",
+      "variables": {
+        "P": {
+          "unit": "N",
+          "name": {
+            "en": "Critical load",
+            "fa": "بار بحرانی",
+            "fi": "Kriittinen kuorma"
+          }
+        },
+        "E": {
+          "unit": "Pa",
+          "name": {
+            "en": "E",
+            "fa": "E",
+            "fi": "E"
+          }
+        },
+        "I": {
+          "unit": "m^4",
+          "name": {
+            "en": "I",
+            "fa": "I",
+            "fi": "I"
+          }
+        },
+        "K": {
+          "unit": "1",
+          "name": {
+            "en": "End factor",
+            "fa": "ضریب انتها",
+            "fi": "Tukikerroin"
+          }
+        },
+        "L": {
+          "unit": "m",
+          "name": {
+            "en": "Length",
+            "fa": "طول",
+            "fi": "Pituus"
+          }
+        }
+      },
+      "source": "crc"
+    },
+    {
+      "id": "beam_ss_mid",
+      "category": "eng.civil",
+      "name": {
+        "en": "SS beam mid deflection",
+        "fa": "خیز وسط تیر ساده",
+        "fi": "Palkin taipuma"
+      },
+      "expr": "d = P*L**3/(48*E*I)",
+      "variables": {
+        "d": {
+          "unit": "m",
+          "name": {
+            "en": "Deflection",
+            "fa": "خیز",
+            "fi": "Taipuma"
+          }
+        },
+        "P": {
+          "unit": "N",
+          "name": {
+            "en": "Load",
+            "fa": "بار",
+            "fi": "Kuorma"
+          }
+        },
+        "L": {
+          "unit": "m",
+          "name": {
+            "en": "Span",
+            "fa": "دهانه",
+            "fi": "Janne"
+          }
+        },
+        "E": {
+          "unit": "Pa",
+          "name": {
+            "en": "E",
+            "fa": "E",
+            "fi": "E"
+          }
+        },
+        "I": {
+          "unit": "m^4",
+          "name": {
+            "en": "I",
+            "fa": "I",
+            "fi": "I"
+          }
+        }
+      },
+      "source": "crc"
+    },
+    {
+      "id": "thin_hoop",
+      "category": "eng.mech",
+      "name": {
+        "en": "Thin cylinder hoop",
+        "fa": "تنش حلقوی جدار نازک",
+        "fi": "Ohut sylinteri"
+      },
+      "expr": "s = p*r/t",
+      "variables": {
+        "s": {
+          "unit": "Pa",
+          "name": {
+            "en": "Hoop stress",
+            "fa": "تنش حلقوی",
+            "fi": "Kehajannitys"
+          }
+        },
+        "p": {
+          "unit": "Pa",
+          "name": {
+            "en": "Pressure",
+            "fa": "فشار",
+            "fi": "Paine"
+          }
+        },
+        "r": {
+          "unit": "m",
+          "name": {
+            "en": "Radius",
+            "fa": "شعاع",
+            "fi": "Sade"
+          }
+        },
+        "t": {
+          "unit": "m",
+          "name": {
+            "en": "Thickness",
+            "fa": "ضخامت",
+            "fi": "Paksuus"
+          }
+        }
+      },
+      "source": "crc"
+    },
+    {
+      "id": "mohr_avg",
+      "category": "eng.mech",
+      "name": {
+        "en": "Mohr center",
+        "fa": "مرکز دایره مور",
+        "fi": "Mohrin keski"
+      },
+      "expr": "savg = (sx + sy)/2",
+      "variables": {
+        "savg": {
+          "unit": "Pa",
+          "name": {
+            "en": "Average",
+            "fa": "متوسط",
+            "fi": "Keski"
+          }
+        },
+        "sx": {
+          "unit": "Pa",
+          "name": {
+            "en": "sx",
+            "fa": "sx",
+            "fi": "sx"
+          }
+        },
+        "sy": {
+          "unit": "Pa",
+          "name": {
+            "en": "sy",
+            "fa": "sy",
+            "fi": "sy"
+          }
+        }
+      },
+      "source": "crc"
+    },
+    {
+      "id": "mohr_r",
+      "category": "eng.mech",
+      "name": {
+        "en": "Mohr radius",
+        "fa": "شعاع مور",
+        "fi": "Mohrin sade"
+      },
+      "expr": "R = sqrt(((sx - sy)/2)**2 + txy**2)",
+      "variables": {
+        "R": {
+          "unit": "Pa",
+          "name": {
+            "en": "Radius",
+            "fa": "شعاع",
+            "fi": "Sade"
+          }
+        },
+        "sx": {
+          "unit": "Pa",
+          "name": {
+            "en": "sx",
+            "fa": "sx",
+            "fi": "sx"
+          }
+        },
+        "sy": {
+          "unit": "Pa",
+          "name": {
+            "en": "sy",
+            "fa": "sy",
+            "fi": "sy"
+          }
+        },
+        "txy": {
+          "unit": "Pa",
+          "name": {
+            "en": "txy",
+            "fa": "برش",
+            "fi": "txy"
+          }
+        }
+      },
+      "source": "crc"
+    },
+    {
+      "id": "power_shaft",
+      "category": "eng.mech",
+      "name": {
+        "en": "Shaft power",
+        "fa": "توان شفت",
+        "fi": "Akseliteho"
+      },
+      "expr": "P = T*w",
+      "variables": {
+        "P": {
+          "unit": "W",
+          "name": {
+            "en": "Power",
+            "fa": "توان",
+            "fi": "Teho"
+          }
+        },
+        "T": {
+          "unit": "N*m",
+          "name": {
+            "en": "Torque",
+            "fa": "گشتاور",
+            "fi": "Momentti"
+          }
+        },
+        "w": {
+          "unit": "rad/s",
+          "name": {
+            "en": "omega",
+            "fa": "امگا",
+            "fi": "omega"
+          }
+        }
+      },
+      "source": "crc"
+    },
+    {
+      "id": "reynolds_pipe",
+      "category": "eng.fluid",
+      "name": {
+        "en": "Pipe Reynolds",
+        "fa": "رینولدز لوله",
+        "fi": "Putken Re"
+      },
+      "expr": "Re = rho*v*D/mu",
+      "variables": {
+        "Re": {
+          "unit": "1",
+          "name": {
+            "en": "Re",
+            "fa": "Re",
+            "fi": "Re"
+          }
+        },
+        "rho": {
+          "unit": "kg/m^3",
+          "name": {
+            "en": "Density",
+            "fa": "چگالی",
+            "fi": "Tiheys"
+          }
+        },
+        "v": {
+          "unit": "m/s",
+          "name": {
+            "en": "v",
+            "fa": "v",
+            "fi": "v"
+          }
+        },
+        "D": {
+          "unit": "m",
+          "name": {
+            "en": "D",
+            "fa": "قطر",
+            "fi": "D"
+          }
+        },
+        "mu": {
+          "unit": "Pa*s",
+          "name": {
+            "en": "mu",
+            "fa": "گرانروی",
+            "fi": "mu"
+          }
+        }
+      },
+      "source": "phet"
+    },
+    {
+      "id": "malus",
+      "category": "phys.em2",
+      "name": {
+        "en": "Malus",
+        "fa": "مالوس",
+        "fi": "Malus"
+      },
+      "expr": "I = I0*cos(theta)**2",
+      "variables": {
+        "I": {
+          "unit": "W/m^2",
+          "name": {
+            "en": "I",
+            "fa": "شدت",
+            "fi": "I"
+          }
+        },
+        "I0": {
+          "unit": "W/m^2",
+          "name": {
+            "en": "I0",
+            "fa": "I0",
+            "fi": "I0"
+          }
+        },
+        "theta": {
+          "unit": "rad",
+          "name": {
+            "en": "Angle",
+            "fa": "زاویه",
+            "fi": "Kulma"
+          }
+        }
+      },
+      "source": "phet"
+    },
+    {
+      "id": "brewster",
+      "category": "phys.em2",
+      "name": {
+        "en": "Brewster",
+        "fa": "بروستر",
+        "fi": "Brewster"
+      },
+      "expr": "th = atan(n2/n1)",
+      "variables": {
+        "th": {
+          "unit": "rad",
+          "name": {
+            "en": "Brewster",
+            "fa": "بروستر",
+            "fi": "Brewster"
+          }
+        },
+        "n2": {
+          "unit": "1",
+          "name": {
+            "en": "n2",
+            "fa": "n2",
+            "fi": "n2"
+          }
+        },
+        "n1": {
+          "unit": "1",
+          "name": {
+            "en": "n1",
+            "fa": "n1",
+            "fi": "n1"
+          }
+        }
+      },
+      "source": "phet"
+    },
+    {
+      "id": "lens_maker",
+      "category": "phys.em2",
+      "name": {
+        "en": "Lens maker",
+        "fa": "سازنده عدسی",
+        "fi": "Linssintekijä"
+      },
+      "expr": "Pwr = (n - 1)*(1/R1 - 1/R2)",
+      "variables": {
+        "Pwr": {
+          "unit": "1/m",
+          "name": {
+            "en": "Power",
+            "fa": "توان عدسی",
+            "fi": "Teho"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        },
+        "R1": {
+          "unit": "m",
+          "name": {
+            "en": "R1",
+            "fa": "R1",
+            "fi": "R1"
+          }
+        },
+        "R2": {
+          "unit": "m",
+          "name": {
+            "en": "R2",
+            "fa": "R2",
+            "fi": "R2"
+          }
+        }
+      },
+      "source": "phet"
+    },
+    {
+      "id": "rydberg",
+      "category": "phys.em2",
+      "name": {
+        "en": "Rydberg H",
+        "fa": "ریدبرگ هیدروژن",
+        "fi": "Rydberg"
+      },
+      "expr": "inv = R*(1/n1**2 - 1/n2**2)",
+      "variables": {
+        "inv": {
+          "unit": "1/m",
+          "name": {
+            "en": "1/lambda",
+            "fa": "۱/طول موج",
+            "fi": "1/lambda"
+          }
+        },
+        "R": {
+          "unit": "1/m",
+          "name": {
+            "en": "Rydberg",
+            "fa": "ریدبرگ",
+            "fi": "Rydberg"
+          }
+        },
+        "n1": {
+          "unit": "1",
+          "name": {
+            "en": "n1",
+            "fa": "n1",
+            "fi": "n1"
+          }
+        },
+        "n2": {
+          "unit": "1",
+          "name": {
+            "en": "n2",
+            "fa": "n2",
+            "fi": "n2"
+          }
+        }
+      },
+      "source": "crc"
+    },
+    {
+      "id": "bragg",
+      "category": "phys.em2",
+      "name": {
+        "en": "Bragg",
+        "fa": "براگ",
+        "fi": "Bragg"
+      },
+      "expr": "n = 2*d*sin(theta)/lam",
+      "variables": {
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        },
+        "d": {
+          "unit": "m",
+          "name": {
+            "en": "Spacing",
+            "fa": "فاصله صفحات",
+            "fi": "Vali"
+          }
+        },
+        "theta": {
+          "unit": "rad",
+          "name": {
+            "en": "Angle",
+            "fa": "زاویه",
+            "fi": "Kulma"
+          }
+        },
+        "lam": {
+          "unit": "m",
+          "name": {
+            "en": "Wavelength",
+            "fa": "طول موج",
+            "fi": "Aallonpituus"
+          }
+        }
+      },
+      "source": "crc"
+    },
+    {
+      "id": "compton",
+      "category": "phys.em2",
+      "name": {
+        "en": "Compton shift",
+        "fa": "شیفت کامپتون",
+        "fi": "Compton"
+      },
+      "expr": "dl = (h/(me*c))*(1 - cos(theta))",
+      "variables": {
+        "dl": {
+          "unit": "m",
+          "name": {
+            "en": "Delta lambda",
+            "fa": "تغییر طول موج",
+            "fi": "dl"
+          }
+        },
+        "h": {
+          "unit": "J*s",
+          "name": {
+            "en": "h",
+            "fa": "h",
+            "fi": "h"
+          }
+        },
+        "me": {
+          "unit": "kg",
+          "name": {
+            "en": "me",
+            "fa": "جرم الکترون",
+            "fi": "me"
+          }
+        },
+        "c": {
+          "unit": "m/s",
+          "name": {
+            "en": "c",
+            "fa": "c",
+            "fi": "c"
+          }
+        },
+        "theta": {
+          "unit": "rad",
+          "name": {
+            "en": "Angle",
+            "fa": "زاویه",
+            "fi": "Kulma"
+          }
+        }
+      },
+      "source": "crc"
+    },
+    {
+      "id": "cyclotron",
+      "category": "phys.em2",
+      "name": {
+        "en": "Cyclotron freq",
+        "fa": "فرکانس سیکلوترون",
+        "fi": "Syklotroni"
+      },
+      "expr": "f = q*B/(2*pi*m)",
+      "variables": {
+        "f": {
+          "unit": "Hz",
+          "name": {
+            "en": "f",
+            "fa": "f",
+            "fi": "f"
+          }
+        },
+        "q": {
+          "unit": "C",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        },
+        "B": {
+          "unit": "T",
+          "name": {
+            "en": "B",
+            "fa": "B",
+            "fi": "B"
+          }
+        },
+        "m": {
+          "unit": "kg",
+          "name": {
+            "en": "m",
+            "fa": "m",
+            "fi": "m"
+          }
+        }
+      },
+      "source": "phet"
+    },
+    {
+      "id": "plasma_f",
+      "category": "phys.em2",
+      "name": {
+        "en": "Electron plasma freq",
+        "fa": "فرکانس پلاسما",
+        "fi": "Plasma"
+      },
+      "expr": "wp = sqrt(n*q**2/(eps*m))",
+      "variables": {
+        "wp": {
+          "unit": "rad/s",
+          "name": {
+            "en": "omega_p",
+            "fa": "امگا p",
+            "fi": "omega_p"
+          }
+        },
+        "n": {
+          "unit": "1/m^3",
+          "name": {
+            "en": "Density",
+            "fa": "چگالی عدد",
+            "fi": "Tiheys"
+          }
+        },
+        "q": {
+          "unit": "C",
+          "name": {
+            "en": "e",
+            "fa": "e",
+            "fi": "e"
+          }
+        },
+        "eps": {
+          "unit": "F/m",
+          "name": {
+            "en": "eps0",
+            "fa": "اپسیلون",
+            "fi": "eps"
+          }
+        },
+        "m": {
+          "unit": "kg",
+          "name": {
+            "en": "me",
+            "fa": "me",
+            "fi": "me"
+          }
+        }
+      },
+      "source": "crc"
+    },
+    {
+      "id": "debroglie_e",
+      "category": "phys.em2",
+      "name": {
+        "en": "e de Broglie from V",
+        "fa": "دوبروی الکترون از ولتاژ",
+        "fi": "de Broglie V"
+      },
+      "expr": "lam = h/sqrt(2*m*q*V)",
+      "variables": {
+        "lam": {
+          "unit": "m",
+          "name": {
+            "en": "lambda",
+            "fa": "طول موج",
+            "fi": "lambda"
+          }
+        },
+        "h": {
+          "unit": "J*s",
+          "name": {
+            "en": "h",
+            "fa": "h",
+            "fi": "h"
+          }
+        },
+        "m": {
+          "unit": "kg",
+          "name": {
+            "en": "m",
+            "fa": "m",
+            "fi": "m"
+          }
+        },
+        "q": {
+          "unit": "C",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        },
+        "V": {
+          "unit": "V",
+          "name": {
+            "en": "V",
+            "fa": "V",
+            "fi": "V"
+          }
+        }
+      },
+      "source": "phet"
+    },
+    {
+      "id": "hh_acid",
+      "category": "chem.eq",
+      "name": {
+        "en": "Henderson-Hasselbalch",
+        "fa": "هندرسون هاسلباخ",
+        "fi": "Henderson-Hasselbalch"
+      },
+      "expr": "pH = pKa + log(A/HA)/log(10)",
+      "variables": {
+        "pH": {
+          "unit": "1",
+          "name": {
+            "en": "pH",
+            "fa": "pH",
+            "fi": "pH"
+          }
+        },
+        "pKa": {
+          "unit": "1",
+          "name": {
+            "en": "pKa",
+            "fa": "pKa",
+            "fi": "pKa"
+          }
+        },
+        "A": {
+          "unit": "mol/L",
+          "name": {
+            "en": "[A-]",
+            "fa": "[A-]",
+            "fi": "[A-]"
+          }
+        },
+        "HA": {
+          "unit": "mol/L",
+          "name": {
+            "en": "[HA]",
+            "fa": "[HA]",
+            "fi": "[HA]"
+          }
+        }
+      },
+      "source": "crc"
+    },
+    {
+      "id": "kw",
+      "category": "chem.eq",
+      "name": {
+        "en": "Kw = [H][OH]",
+        "fa": "حاصل ضرب یونی آب",
+        "fi": "Kw"
+      },
+      "expr": "Kw = H*OH",
+      "variables": {
+        "Kw": {
+          "unit": "mol^2/L^2",
+          "name": {
+            "en": "Kw",
+            "fa": "Kw",
+            "fi": "Kw"
+          }
+        },
+        "H": {
+          "unit": "mol/L",
+          "name": {
+            "en": "[H+]",
+            "fa": "[H+]",
+            "fi": "[H+]"
+          }
+        },
+        "OH": {
+          "unit": "mol/L",
+          "name": {
+            "en": "[OH-]",
+            "fa": "[OH-]",
+            "fi": "[OH-]"
+          }
+        }
+      },
+      "source": "crc"
+    },
+    {
+      "id": "kb_from_ka",
+      "category": "chem.eq",
+      "name": {
+        "en": "Kb from Ka",
+        "fa": "Kb از Ka",
+        "fi": "Kb Ka:sta"
+      },
+      "expr": "Kb = Kw/Ka",
+      "variables": {
+        "Kb": {
+          "unit": "mol/L",
+          "name": {
+            "en": "Kb",
+            "fa": "Kb",
+            "fi": "Kb"
+          }
+        },
+        "Kw": {
+          "unit": "mol^2/L^2",
+          "name": {
+            "en": "Kw",
+            "fa": "Kw",
+            "fi": "Kw"
+          }
+        },
+        "Ka": {
+          "unit": "mol/L",
+          "name": {
+            "en": "Ka",
+            "fa": "Ka",
+            "fi": "Ka"
+          }
+        }
+      },
+      "source": "crc"
+    },
+    {
+      "id": "clausius",
+      "category": "chem.eq",
+      "name": {
+        "en": "Clausius-Clapeyron",
+        "fa": "کلازیوس کلاپیرون",
+        "fi": "Clausius-Clapeyron"
+      },
+      "expr": "lnp = -H/(R*T) + c",
+      "variables": {
+        "lnp": {
+          "unit": "1",
+          "name": {
+            "en": "ln P",
+            "fa": "ln P",
+            "fi": "ln P"
+          }
+        },
+        "H": {
+          "unit": "J/mol",
+          "name": {
+            "en": "Delta Hvap",
+            "fa": "آنتالپی تبخیر",
+            "fi": "Hvap"
+          }
+        },
+        "R": {
+          "unit": "J/(mol*K)",
+          "name": {
+            "en": "R",
+            "fa": "R",
+            "fi": "R"
+          }
+        },
+        "T": {
+          "unit": "K",
+          "name": {
+            "en": "T",
+            "fa": "T",
+            "fi": "T"
+          }
+        },
+        "c": {
+          "unit": "1",
+          "name": {
+            "en": "const",
+            "fa": "ثابت",
+            "fi": "vakio"
+          }
+        }
+      },
+      "source": "crc"
+    },
+    {
+      "id": "nernst_full",
+      "category": "chem.eq",
+      "name": {
+        "en": "Nernst RT/nF",
+        "fa": "نرنست کامل",
+        "fi": "Nernst"
+      },
+      "expr": "E = E0 - (R*T)/(n*F)*log(Q)",
+      "variables": {
+        "E": {
+          "unit": "V",
+          "name": {
+            "en": "E",
+            "fa": "E",
+            "fi": "E"
+          }
+        },
+        "E0": {
+          "unit": "V",
+          "name": {
+            "en": "E0",
+            "fa": "E0",
+            "fi": "E0"
+          }
+        },
+        "R": {
+          "unit": "J/(mol*K)",
+          "name": {
+            "en": "R",
+            "fa": "R",
+            "fi": "R"
+          }
+        },
+        "T": {
+          "unit": "K",
+          "name": {
+            "en": "T",
+            "fa": "T",
+            "fi": "T"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        },
+        "F": {
+          "unit": "C/mol",
+          "name": {
+            "en": "F",
+            "fa": "F",
+            "fi": "F"
+          }
+        },
+        "Q": {
+          "unit": "1",
+          "name": {
+            "en": "Q",
+            "fa": "Q",
+            "fi": "Q"
+          }
+        }
+      },
+      "source": "crc"
+    },
+    {
+      "id": "gamma_half",
+      "category": "dlmf.extra",
+      "name": {
+        "en": "Gamma(1/2)=sqrt(pi)",
+        "fa": "گاما نیم",
+        "fi": "Gamma(1/2)"
+      },
+      "expr": "y = sqrt(pi)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        }
+      },
+      "source": "dlmf"
+    },
+    {
+      "id": "gamma_reflect",
+      "category": "dlmf.extra",
+      "name": {
+        "en": "Reflection piece sin",
+        "fa": "انعکاس گاما سینوس",
+        "fi": "Gamma-heijastus"
+      },
+      "expr": "y = pi/sin(pi*z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      },
+      "source": "dlmf"
+    },
+    {
+      "id": "erf_odd",
+      "category": "dlmf.extra",
+      "name": {
+        "en": "erf odd check",
+        "fa": "فرد بودن erf",
+        "fi": "erf pariton"
+      },
+      "expr": "y = erf(z) + erf(-z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      },
+      "source": "dlmf"
+    },
+    {
+      "id": "bessel_jneg",
+      "category": "dlmf.extra",
+      "name": {
+        "en": "J0 even",
+        "fa": "زوج بودن J0",
+        "fi": "J0 parillinen"
+      },
+      "expr": "y = besselj(0, z) - besselj(0, -z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      },
+      "source": "dlmf"
+    },
+    {
+      "id": "zeta_neg_even",
+      "category": "dlmf.extra",
+      "name": {
+        "en": "zeta(-2) trivial",
+        "fa": "زتا منفی زوج",
+        "fi": "zeta(-2)"
+      },
+      "expr": "y = zeta(-2)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        }
+      },
+      "source": "dlmf"
+    },
+    {
+      "id": "legendre_p0",
+      "category": "dlmf.extra",
+      "name": {
+        "en": "P0 = 1",
+        "fa": "لژاندر صفر",
+        "fi": "P0"
+      },
+      "expr": "y = legendre(0, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      },
+      "source": "dlmf"
+    },
+    {
+      "id": "legendre_p1",
+      "category": "dlmf.extra",
+      "name": {
+        "en": "P1 = z",
+        "fa": "لژاندر یک",
+        "fi": "P1"
+      },
+      "expr": "y = legendre(1, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      },
+      "source": "dlmf"
+    },
+    {
+      "id": "chebyt0",
+      "category": "dlmf.extra",
+      "name": {
+        "en": "T0 = 1",
+        "fa": "چبیشف T0",
+        "fi": "T0"
+      },
+      "expr": "y = chebyshevt(0, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      },
+      "source": "dlmf"
+    },
+    {
+      "id": "incgamma_rel",
+      "category": "dlmf.extra",
+      "name": {
+        "en": "lower+upper gamma",
+        "fa": "گامای ناقص جمع",
+        "fi": "epataaydellinen gamma"
+      },
+      "expr": "y = gamma(a)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "a": {
+          "unit": "1",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        }
+      },
+      "source": "dlmf"
+    },
+    {
+      "id": "dawson_def",
+      "category": "dlmf.extra",
+      "name": {
+        "en": "Dawson via erfi",
+        "fa": "داوسون از erfi",
+        "fi": "Dawson"
+      },
+      "expr": "y = exp(-z**2)*erfi(z)*sqrt(pi)/2",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      },
+      "source": "dlmf"
+    },
+    {
+      "id": "avg_v_const_a",
+      "category": "physics.kinematics",
+      "name": {
+        "en": "Average v const a",
+        "fa": "سرعت متوسط شتاب ثابت",
+        "fi": "Keskinopeus"
+      },
+      "expr": "vavg = (u + v)/2",
+      "variables": {
+        "vavg": {
+          "unit": "m/s",
+          "name": {
+            "en": "Average",
+            "fa": "متوسط",
+            "fi": "Keski"
+          }
+        },
+        "u": {
+          "unit": "m/s",
+          "name": {
+            "en": "u",
+            "fa": "u",
+            "fi": "u"
+          }
+        },
+        "v": {
+          "unit": "m/s",
+          "name": {
+            "en": "v",
+            "fa": "v",
+            "fi": "v"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "time_of_flight",
+      "category": "physics.kinematics",
+      "name": {
+        "en": "Projectile flight time",
+        "fa": "زمان پرواز پرتابه",
+        "fi": "Lentoaika"
+      },
+      "expr": "t = 2*v*sin(theta)/g",
+      "variables": {
+        "t": {
+          "unit": "s",
+          "name": {
+            "en": "t",
+            "fa": "t",
+            "fi": "t"
+          }
+        },
+        "v": {
+          "unit": "m/s",
+          "name": {
+            "en": "v",
+            "fa": "v",
+            "fi": "v"
+          }
+        },
+        "theta": {
+          "unit": "rad",
+          "name": {
+            "en": "theta",
+            "fa": "زاویه",
+            "fi": "kulma"
+          }
+        },
+        "g": {
+          "unit": "m/s^2",
+          "name": {
+            "en": "g",
+            "fa": "g",
+            "fi": "g"
+          }
+        }
+      },
+      "source": "phet"
+    },
+    {
+      "id": "elastic_v1",
+      "category": "physics.dynamics",
+      "name": {
+        "en": "1D elastic v1",
+        "fa": "برخورد کشسان v1",
+        "fi": "Kimmoisa v1"
+      },
+      "expr": "v1 = (u1*(m1 - m2) + 2*m2*u2)/(m1 + m2)",
+      "variables": {
+        "v1": {
+          "unit": "m/s",
+          "name": {
+            "en": "v1",
+            "fa": "v1",
+            "fi": "v1"
+          }
+        },
+        "u1": {
+          "unit": "m/s",
+          "name": {
+            "en": "u1",
+            "fa": "u1",
+            "fi": "u1"
+          }
+        },
+        "u2": {
+          "unit": "m/s",
+          "name": {
+            "en": "u2",
+            "fa": "u2",
+            "fi": "u2"
+          }
+        },
+        "m1": {
+          "unit": "kg",
+          "name": {
+            "en": "m1",
+            "fa": "m1",
+            "fi": "m1"
+          }
+        },
+        "m2": {
+          "unit": "kg",
+          "name": {
+            "en": "m2",
+            "fa": "m2",
+            "fi": "m2"
+          }
+        }
+      },
+      "source": "phet"
+    },
+    {
+      "id": "reduced_m",
+      "category": "physics.dynamics",
+      "name": {
+        "en": "Reduced mass",
+        "fa": "جرم کاهش یافته",
+        "fi": "Redusoitu massa"
+      },
+      "expr": "mu = m1*m2/(m1 + m2)",
+      "variables": {
+        "mu": {
+          "unit": "kg",
+          "name": {
+            "en": "mu",
+            "fa": "مو",
+            "fi": "mu"
+          }
+        },
+        "m1": {
+          "unit": "kg",
+          "name": {
+            "en": "m1",
+            "fa": "m1",
+            "fi": "m1"
+          }
+        },
+        "m2": {
+          "unit": "kg",
+          "name": {
+            "en": "m2",
+            "fa": "m2",
+            "fi": "m2"
+          }
+        }
+      },
+      "source": "crc"
+    },
+    {
+      "id": "stefan",
+      "category": "physics.thermo",
+      "name": {
+        "en": "Stefan-Boltzmann power",
+        "fa": "توان استفان",
+        "fi": "Stefan-Boltzmann"
+      },
+      "expr": "P = e*sigma*A*T**4",
+      "variables": {
+        "P": {
+          "unit": "W",
+          "name": {
+            "en": "Power",
+            "fa": "توان",
+            "fi": "Teho"
+          }
+        },
+        "e": {
+          "unit": "1",
+          "name": {
+            "en": "Emissivity",
+            "fa": "گسیلندگی",
+            "fi": "Emissiivisyys"
+          }
+        },
+        "sigma": {
+          "unit": "W/(m^2*K^4)",
+          "name": {
+            "en": "sigma",
+            "fa": "سیگما",
+            "fi": "sigma"
+          }
+        },
+        "A": {
+          "unit": "m^2",
+          "name": {
+            "en": "Area",
+            "fa": "مساحت",
+            "fi": "Ala"
+          }
+        },
+        "T": {
+          "unit": "K",
+          "name": {
+            "en": "T",
+            "fa": "T",
+            "fi": "T"
+          }
+        }
+      },
+      "source": "crc"
+    },
+    {
+      "id": "wien",
+      "category": "physics.thermo",
+      "name": {
+        "en": "Wien peak",
+        "fa": "وین",
+        "fi": "Wien"
+      },
+      "expr": "lam = b/T",
+      "variables": {
+        "lam": {
+          "unit": "m",
+          "name": {
+            "en": "lambda_max",
+            "fa": "طول موج بیشینه",
+            "fi": "lambda_max"
+          }
+        },
+        "b": {
+          "unit": "m*K",
+          "name": {
+            "en": "Wien b",
+            "fa": "ثابت وین",
+            "fi": "Wien b"
+          }
+        },
+        "T": {
+          "unit": "K",
+          "name": {
+            "en": "T",
+            "fa": "T",
+            "fi": "T"
+          }
+        }
+      },
+      "source": "crc"
+    },
+    {
+      "id": "id_sin3",
+      "category": "spec.elementary",
+      "name": {
+        "en": "sin 3x",
+        "fa": "سینوس سه برابر",
+        "fi": "sin 3x"
+      },
+      "expr": "y = 3*sin(x) - 4*sin(x)**3",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "y",
+            "fa": "y",
+            "fi": "y"
+          }
+        },
+        "x": {
+          "unit": "rad",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      },
+      "source": "mathworld"
+    },
+    {
+      "id": "id_cos3",
+      "category": "spec.elementary",
+      "name": {
+        "en": "cos 3x",
+        "fa": "کسینوس سه برابر",
+        "fi": "cos 3x"
+      },
+      "expr": "y = 4*cos(x)**3 - 3*cos(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "y",
+            "fa": "y",
+            "fi": "y"
+          }
+        },
+        "x": {
+          "unit": "rad",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      },
+      "source": "mathworld"
+    },
+    {
+      "id": "id_tan2",
+      "category": "spec.elementary",
+      "name": {
+        "en": "tan 2x",
+        "fa": "تانژانت دو برابر",
+        "fi": "tan 2x"
+      },
+      "expr": "y = 2*tan(x)/(1 - tan(x)**2)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "y",
+            "fa": "y",
+            "fi": "y"
+          }
+        },
+        "x": {
+          "unit": "rad",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      },
+      "source": "mathworld"
+    },
+    {
+      "id": "id_sinh2",
+      "category": "spec.elementary",
+      "name": {
+        "en": "sinh 2x",
+        "fa": "سینوس هذلولوی ۲",
+        "fi": "sinh 2x"
+      },
+      "expr": "y = 2*sinh(x)*cosh(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "y",
+            "fa": "y",
+            "fi": "y"
+          }
+        },
+        "x": {
+          "unit": "rad",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      },
+      "source": "mathworld"
+    },
+    {
+      "id": "id_cosh2d",
+      "category": "spec.elementary",
+      "name": {
+        "en": "cosh 2x",
+        "fa": "کسینوس هذلولوی ۲",
+        "fi": "cosh 2x"
+      },
+      "expr": "y = cosh(x)**2 + sinh(x)**2",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "y",
+            "fa": "y",
+            "fi": "y"
+          }
+        },
+        "x": {
+          "unit": "rad",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      },
+      "source": "mathworld"
+    },
+    {
+      "id": "id_expmx",
+      "category": "spec.elementary",
+      "name": {
+        "en": "cosh via exp",
+        "fa": "کوش از نمایی",
+        "fi": "cosh via exp"
+      },
+      "expr": "y = (exp(x) + exp(-x))/2",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "y",
+            "fa": "y",
+            "fi": "y"
+          }
+        },
+        "x": {
+          "unit": "rad",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      },
+      "source": "mathworld"
+    },
+    {
+      "id": "id_sinhx_e",
+      "category": "spec.elementary",
+      "name": {
+        "en": "sinh via exp",
+        "fa": "سین هذلولوی از نمایی",
+        "fi": "sinh via exp"
+      },
+      "expr": "y = (exp(x) - exp(-x))/2",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "y",
+            "fa": "y",
+            "fi": "y"
+          }
+        },
+        "x": {
+          "unit": "rad",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      },
+      "source": "mathworld"
+    },
+    {
+      "id": "id_versin",
+      "category": "spec.elementary",
+      "name": {
+        "en": "versine",
+        "fa": "ورسین",
+        "fi": "versine"
+      },
+      "expr": "y = 1 - cos(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "y",
+            "fa": "y",
+            "fi": "y"
+          }
+        },
+        "x": {
+          "unit": "rad",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      },
+      "source": "mathworld"
+    },
+    {
+      "id": "id_havers",
+      "category": "spec.elementary",
+      "name": {
+        "en": "haversine",
+        "fa": "هاورساین",
+        "fi": "haversine"
+      },
+      "expr": "y = (1 - cos(x))/2",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "y",
+            "fa": "y",
+            "fi": "y"
+          }
+        },
+        "x": {
+          "unit": "rad",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      },
+      "source": "mathworld"
+    },
+    {
+      "id": "id_gd_approx",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Gudermannian",
+        "fa": "گودرمن",
+        "fi": "Gudermannian"
+      },
+      "expr": "y = 2*atan(exp(x)) - pi/2",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "y",
+            "fa": "y",
+            "fi": "y"
+          }
+        },
+        "x": {
+          "unit": "rad",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      },
+      "source": "mathworld"
+    },
+    {
+      "id": "se_mean",
+      "category": "math.stats",
+      "name": {
+        "en": "SE of mean",
+        "fa": "خطای معیار میانگین",
+        "fi": "Keskivirhe"
+      },
+      "expr": "se = s/sqrt(n)",
+      "variables": {
+        "se": {
+          "unit": "1",
+          "name": {
+            "en": "SE",
+            "fa": "خطای معیار",
+            "fi": "SE"
+          }
+        },
+        "s": {
+          "unit": "1",
+          "name": {
+            "en": "s",
+            "fa": "s",
+            "fi": "s"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "ci95",
+      "category": "math.stats",
+      "name": {
+        "en": "Approx 95% half-width",
+        "fa": "نصف بازه ۹۵ درصد",
+        "fi": "95% puolivali"
+      },
+      "expr": "h = 1.96*se",
+      "variables": {
+        "h": {
+          "unit": "1",
+          "name": {
+            "en": "Half-width",
+            "fa": "نیم پهنا",
+            "fi": "Puolileveys"
+          }
+        },
+        "se": {
+          "unit": "1",
+          "name": {
+            "en": "SE",
+            "fa": "SE",
+            "fi": "SE"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "pool_p",
+      "category": "math.stats",
+      "name": {
+        "en": "Pooled proportion",
+        "fa": "نسبت ادغام شده",
+        "fi": "Yhdistetty osuus"
+      },
+      "expr": "p = (x1 + x2)/(n1 + n2)",
+      "variables": {
+        "p": {
+          "unit": "1",
+          "name": {
+            "en": "p",
+            "fa": "p",
+            "fi": "p"
+          }
+        },
+        "x1": {
+          "unit": "1",
+          "name": {
+            "en": "successes 1",
+            "fa": "موفقیت ۱",
+            "fi": "onnist1"
+          }
+        },
+        "n1": {
+          "unit": "1",
+          "name": {
+            "en": "n1",
+            "fa": "n1",
+            "fi": "n1"
+          }
+        },
+        "x2": {
+          "unit": "1",
+          "name": {
+            "en": "successes 2",
+            "fa": "موفقیت ۲",
+            "fi": "onnist2"
+          }
+        },
+        "n2": {
+          "unit": "1",
+          "name": {
+            "en": "n2",
+            "fa": "n2",
+            "fi": "n2"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "cohen_d",
+      "category": "math.stats",
+      "name": {
+        "en": "Cohen d two means",
+        "fa": "d کوهن",
+        "fi": "Cohen d"
+      },
+      "expr": "d = (m1 - m2)/s",
+      "variables": {
+        "d": {
+          "unit": "1",
+          "name": {
+            "en": "d",
+            "fa": "d",
+            "fi": "d"
+          }
+        },
+        "m1": {
+          "unit": "1",
+          "name": {
+            "en": "m1",
+            "fa": "m1",
+            "fi": "m1"
+          }
+        },
+        "m2": {
+          "unit": "1",
+          "name": {
+            "en": "m2",
+            "fa": "m2",
+            "fi": "m2"
+          }
+        },
+        "s": {
+          "unit": "1",
+          "name": {
+            "en": "pooled s",
+            "fa": "s ادغام",
+            "fi": "s"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "rss2",
+      "category": "math.stats",
+      "name": {
+        "en": "Two-point SSE",
+        "fa": "مجموع مربعات خطا دو نقطه",
+        "fi": "SSE"
+      },
+      "expr": "S = (y1 - yh1)**2 + (y2 - yh2)**2",
+      "variables": {
+        "S": {
+          "unit": "1",
+          "name": {
+            "en": "SSE",
+            "fa": "SSE",
+            "fi": "SSE"
+          }
+        },
+        "y1": {
+          "unit": "1",
+          "name": {
+            "en": "y1",
+            "fa": "y1",
+            "fi": "y1"
+          }
+        },
+        "yh1": {
+          "unit": "1",
+          "name": {
+            "en": "yhat1",
+            "fa": "پیش بینی ۱",
+            "fi": "yhat1"
+          }
+        },
+        "y2": {
+          "unit": "1",
+          "name": {
+            "en": "y2",
+            "fa": "y2",
+            "fi": "y2"
+          }
+        },
+        "yh2": {
+          "unit": "1",
+          "name": {
+            "en": "yhat2",
+            "fa": "پیش بینی ۲",
+            "fi": "yhat2"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "prism_vol",
+      "category": "math.geometry",
+      "name": {
+        "en": "Prism volume",
+        "fa": "حجم منشور",
+        "fi": "Prism volume"
+      },
+      "expr": "V = B*h",
+      "variables": {
+        "V": {
+          "unit": "m^3",
+          "name": {
+            "en": "V",
+            "fa": "حجم",
+            "fi": "V"
+          }
+        },
+        "B": {
+          "unit": "m^2",
+          "name": {
+            "en": "Base",
+            "fa": "قاعده",
+            "fi": "Kanta"
+          }
+        },
+        "h": {
+          "unit": "m",
+          "name": {
+            "en": "h",
+            "fa": "h",
+            "fi": "h"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "torus_vol",
+      "category": "math.geometry",
+      "name": {
+        "en": "Torus volume",
+        "fa": "حجم چنبره",
+        "fi": "Torus volume"
+      },
+      "expr": "V = 2*pi**2*R*r**2",
+      "variables": {
+        "V": {
+          "unit": "m^3",
+          "name": {
+            "en": "V",
+            "fa": "V",
+            "fi": "V"
+          }
+        },
+        "R": {
+          "unit": "m",
+          "name": {
+            "en": "Major",
+            "fa": "شعاع بزرگ",
+            "fi": "Iso"
+          }
+        },
+        "r": {
+          "unit": "m",
+          "name": {
+            "en": "Minor",
+            "fa": "کوچک",
+            "fi": "Pieni"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "torus_area",
+      "category": "math.geometry",
+      "name": {
+        "en": "Torus area",
+        "fa": "مساحت چنبره",
+        "fi": "Torus area"
+      },
+      "expr": "A = 4*pi**2*R*r",
+      "variables": {
+        "A": {
+          "unit": "m^2",
+          "name": {
+            "en": "A",
+            "fa": "A",
+            "fi": "A"
+          }
+        },
+        "R": {
+          "unit": "m",
+          "name": {
+            "en": "R",
+            "fa": "R",
+            "fi": "R"
+          }
+        },
+        "r": {
+          "unit": "m",
+          "name": {
+            "en": "r",
+            "fa": "r",
+            "fi": "r"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "sector_area",
+      "category": "math.geometry",
+      "name": {
+        "en": "Circular sector",
+        "fa": "قطاع دایره",
+        "fi": "Circular sector"
+      },
+      "expr": "A = r**2*theta/2",
+      "variables": {
+        "A": {
+          "unit": "m^2",
+          "name": {
+            "en": "A",
+            "fa": "A",
+            "fi": "A"
+          }
+        },
+        "r": {
+          "unit": "m",
+          "name": {
+            "en": "r",
+            "fa": "r",
+            "fi": "r"
+          }
+        },
+        "theta": {
+          "unit": "rad",
+          "name": {
+            "en": "theta",
+            "fa": "زاویه",
+            "fi": "kulma"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "arc_len",
+      "category": "math.geometry",
+      "name": {
+        "en": "Arc length",
+        "fa": "طول کمان",
+        "fi": "Arc length"
+      },
+      "expr": "L = r*theta",
+      "variables": {
+        "L": {
+          "unit": "m",
+          "name": {
+            "en": "L",
+            "fa": "L",
+            "fi": "L"
+          }
+        },
+        "r": {
+          "unit": "m",
+          "name": {
+            "en": "r",
+            "fa": "r",
+            "fi": "r"
+          }
+        },
+        "theta": {
+          "unit": "rad",
+          "name": {
+            "en": "theta",
+            "fa": "زاویه",
+            "fi": "kulma"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "cone_lat",
+      "category": "math.geometry",
+      "name": {
+        "en": "Cone lateral",
+        "fa": "جانبی مخروط",
+        "fi": "Cone lateral"
+      },
+      "expr": "A = pi*r*sqrt(r**2 + h**2)",
+      "variables": {
+        "A": {
+          "unit": "m^2",
+          "name": {
+            "en": "A",
+            "fa": "A",
+            "fi": "A"
+          }
+        },
+        "r": {
+          "unit": "m",
+          "name": {
+            "en": "r",
+            "fa": "r",
+            "fi": "r"
+          }
+        },
+        "h": {
+          "unit": "m",
+          "name": {
+            "en": "h",
+            "fa": "h",
+            "fi": "h"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "wye_delta_r",
+      "category": "physics.circuits",
+      "name": {
+        "en": "Equal wye from delta",
+        "fa": "ستاره از مثلث مساوی",
+        "fi": "Y deltasta"
+      },
+      "expr": "Ry = Rd/3",
+      "variables": {
+        "Ry": {
+          "unit": "ohm",
+          "name": {
+            "en": "Ry",
+            "fa": "ستاره",
+            "fi": "Y"
+          }
+        },
+        "Rd": {
+          "unit": "ohm",
+          "name": {
+            "en": "Rd",
+            "fa": "مثلث",
+            "fi": "D"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "q_factor_series",
+      "category": "physics.circuits",
+      "name": {
+        "en": "Series RLC Q",
+        "fa": "ضریب کیفیت سری",
+        "fi": "Q-sarja"
+      },
+      "expr": "Q = (1/R)*sqrt(L/C)",
+      "variables": {
+        "Q": {
+          "unit": "1",
+          "name": {
+            "en": "Q",
+            "fa": "Q",
+            "fi": "Q"
+          }
+        },
+        "R": {
+          "unit": "ohm",
+          "name": {
+            "en": "R",
+            "fa": "R",
+            "fi": "R"
+          }
+        },
+        "L": {
+          "unit": "H",
+          "name": {
+            "en": "L",
+            "fa": "L",
+            "fi": "L"
+          }
+        },
+        "C": {
+          "unit": "F",
+          "name": {
+            "en": "C",
+            "fa": "C",
+            "fi": "C"
+          }
+        }
+      },
+      "source": "phet"
+    },
+    {
+      "id": "f0_lc",
+      "category": "physics.circuits",
+      "name": {
+        "en": "LC resonance",
+        "fa": "تشدید LC",
+        "fi": "LC-resonanssi"
+      },
+      "expr": "f0 = 1/(2*pi*sqrt(L*C))",
+      "variables": {
+        "f0": {
+          "unit": "Hz",
+          "name": {
+            "en": "f0",
+            "fa": "f0",
+            "fi": "f0"
+          }
+        },
+        "L": {
+          "unit": "H",
+          "name": {
+            "en": "L",
+            "fa": "L",
+            "fi": "L"
+          }
+        },
+        "C": {
+          "unit": "F",
+          "name": {
+            "en": "C",
+            "fa": "C",
+            "fi": "C"
+          }
+        }
+      },
+      "source": "phet"
+    },
+    {
+      "id": "energy_L",
+      "category": "physics.circuits",
+      "name": {
+        "en": "Inductor energy",
+        "fa": "انرژی سلف",
+        "fi": "Kelan energia"
+      },
+      "expr": "U = L*I**2/2",
+      "variables": {
+        "U": {
+          "unit": "J",
+          "name": {
+            "en": "U",
+            "fa": "U",
+            "fi": "U"
+          }
+        },
+        "L": {
+          "unit": "H",
+          "name": {
+            "en": "L",
+            "fa": "L",
+            "fi": "L"
+          }
+        },
+        "I": {
+          "unit": "A",
+          "name": {
+            "en": "I",
+            "fa": "I",
+            "fi": "I"
+          }
+        }
+      },
+      "source": "phet"
+    },
+    {
+      "id": "div_v",
+      "category": "physics.circuits",
+      "name": {
+        "en": "Voltage divider",
+        "fa": "مقسم ولتاژ",
+        "fi": "Jannitejako"
+      },
+      "expr": "Vout = Vin*R2/(R1 + R2)",
+      "variables": {
+        "Vout": {
+          "unit": "V",
+          "name": {
+            "en": "Vout",
+            "fa": "خروجی",
+            "fi": "Vout"
+          }
+        },
+        "Vin": {
+          "unit": "V",
+          "name": {
+            "en": "Vin",
+            "fa": "ورودی",
+            "fi": "Vin"
+          }
+        },
+        "R1": {
+          "unit": "ohm",
+          "name": {
+            "en": "R1",
+            "fa": "R1",
+            "fi": "R1"
+          }
+        },
+        "R2": {
+          "unit": "ohm",
+          "name": {
+            "en": "R2",
+            "fa": "R2",
+            "fi": "R2"
+          }
+        }
+      },
+      "source": "phet"
+    },
+    {
+      "id": "q10",
+      "category": "bio.physio",
+      "name": {
+        "en": "Q10 rate",
+        "fa": "ضریب Q10",
+        "fi": "Q10"
+      },
+      "expr": "k2 = k1*q**((T2 - T1)/10)",
+      "variables": {
+        "k2": {
+          "unit": "1/s",
+          "name": {
+            "en": "k2",
+            "fa": "k2",
+            "fi": "k2"
+          }
+        },
+        "k1": {
+          "unit": "1/s",
+          "name": {
+            "en": "k1",
+            "fa": "k1",
+            "fi": "k1"
+          }
+        },
+        "q": {
+          "unit": "1",
+          "name": {
+            "en": "Q10",
+            "fa": "Q10",
+            "fi": "Q10"
+          }
+        },
+        "T2": {
+          "unit": "K",
+          "name": {
+            "en": "T2",
+            "fa": "T2",
+            "fi": "T2"
+          }
+        },
+        "T1": {
+          "unit": "K",
+          "name": {
+            "en": "T1",
+            "fa": "T1",
+            "fi": "T1"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "nernst_k",
+      "category": "bio.physio",
+      "name": {
+        "en": "Nernst K+ 37C",
+        "fa": "نرنست پتاسیم",
+        "fi": "Nernst K"
+      },
+      "expr": "Ek = 61.5*log(Ko/Ki)/log(10)",
+      "variables": {
+        "Ek": {
+          "unit": "mV",
+          "name": {
+            "en": "Ek",
+            "fa": "Ek",
+            "fi": "Ek"
+          }
+        },
+        "Ko": {
+          "unit": "mmol/L",
+          "name": {
+            "en": "K out",
+            "fa": "K بیرون",
+            "fi": "K ulko"
+          }
+        },
+        "Ki": {
+          "unit": "mmol/L",
+          "name": {
+            "en": "K in",
+            "fa": "K درون",
+            "fi": "K sisa"
+          }
+        }
+      },
+      "source": "ee"
+    },
+    {
+      "id": "allometric",
+      "category": "bio.ecology",
+      "name": {
+        "en": "Allometric y=a x^b",
+        "fa": "آلومتریک",
+        "fi": "Allometria"
+      },
+      "expr": "y = a*x**b",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "y",
+            "fa": "y",
+            "fi": "y"
+          }
+        },
+        "a": {
+          "unit": "1",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        },
+        "b": {
+          "unit": "1",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        }
+      },
+      "source": "ee"
     }
   ]
 }

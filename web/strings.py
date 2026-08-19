@@ -36,6 +36,7 @@ UI = {
         "atomic_n": "Z",
         "atomic_m": "Mass",
         "isotopes": "Isotopes",
+        "sources": "Sources",
     },
     "fa": {
         "title": "ماشین حساب اولترا",
@@ -65,6 +66,14 @@ UI = {
         "ready": "آماده",
         "pick": "یک فرمول انتخاب کن.",
         "lang": "زبان",
+        "chem": "شیمی",
+        "elements": "عنصرها",
+        "balance": "موازنه",
+        "molar": "جرم مولی",
+        "atomic_n": "Z",
+        "atomic_m": "جرم",
+        "isotopes": "ایزوتوپ",
+        "sources": "منبع ها",
     },
     "fi": {
         "title": "Ultra-laskin",
@@ -101,6 +110,7 @@ UI = {
         "atomic_n": "Z",
         "atomic_m": "Massa",
         "isotopes": "Isotoopit",
+        "sources": "Lahteet",
     },
 }
 
