@@ -72,6 +72,10 @@ STRINGS = {
         "isotopes": "Isotopes",
         "abundance": "Abundance %",
         "mode_sources": "Sources",
+        "lookup": "Lookup",
+        "lookup_hint": "H2O, Fe, Fe-56, R, g",
+        "insert": "Insert",
+        "lookup_need_field": "Click the field you want, then insert.",
     },
     "fa": {
         "app_title": "ماشین حساب اولترا",
@@ -142,6 +146,10 @@ STRINGS = {
         "isotopes": "ایزوتوپ ها",
         "abundance": "فراوانی ٪",
         "mode_sources": "منبع ها",
+        "lookup": "جستجوی سریع",
+        "lookup_hint": "H2O, Fe, Fe-56, R, g",
+        "insert": "بگذار",
+        "lookup_need_field": "اول خانه را انتخاب کن، بعد بگذار.",
     },
     "fi": {
         "app_title": "Ultra-laskin",
@@ -212,6 +220,10 @@ STRINGS = {
         "isotopes": "Isotoopit",
         "abundance": "Runsaus %",
         "mode_sources": "Lahteet",
+        "lookup": "Haku",
+        "lookup_hint": "H2O, Fe, Fe-56, R, g",
+        "insert": "Lisaa",
+        "lookup_need_field": "Napsauta kenttaa, sitten Lisaa.",
     },
 }
 

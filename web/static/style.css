@@ -28,6 +28,16 @@ button.accent { background: var(--accent); color: var(--ink); }
 button.danger { background: var(--danger); }
 button:hover { filter: brightness(1.08); }
 .lang { margin-inline-start: auto; color: var(--muted); display: flex; gap: 8px; align-items: center; }
+#lookup-bar {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding: 8px 18px; background: var(--panel); border-bottom: 1px solid #333;
+}
+#lookup-label { color: var(--accent); font-weight: 600; font-size: 13px; white-space: nowrap; }
+#lookup-q { width: 180px; background: var(--ink); }
+#lookup-hits { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; min-height: 28px; }
+#lookup-hits button { font-size: 12px; padding: 5px 8px; background: var(--btn2); }
+#lookup-hits button.on { background: var(--ok); }
+#lookup-insert { background: var(--accent); color: var(--ink); }
 main { padding: 16px 18px 32px; }
 .view { display: none; }
 .view.show { display: block; }

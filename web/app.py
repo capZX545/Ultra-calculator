@@ -9,6 +9,7 @@ from flask import Flask, jsonify, render_template, request
 
 import chemtools
 import core
+import lookup
 from strings import UI, ui_text
 
 app = Flask(__name__)
@@ -138,6 +139,13 @@ def api_balance():
 def api_molar():
     body = request.get_json(silent=True) or {}
     return jsonify(chemtools.molar_mass(body.get("formula", "")))
+
+
+@app.get("/api/lookup")
+def api_lookup():
+    q = request.args.get("q", "")
+    lang = request.args.get("lang", "en")
+    return jsonify(lookup.lookup(q, lang))
 
 
 @app.get("/api/sources")

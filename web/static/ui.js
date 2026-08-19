@@ -9,6 +9,8 @@
     strings: {},
     formulas: [],
     current: null,
+    lookupPick: null,
+    lastField: null,
     system: false,
     eqCount: 2,
     unknownCount: 2,
@@ -473,6 +475,72 @@
       setScreen(state.expr);
     }
   });
+
+  let lookupTimer = 0;
+  async function runLookup() {
+    const q = ($("lookup-q") && $("lookup-q").value) || "";
+    const box = $("lookup-hits");
+    if (!box) return;
+    if (!q.trim()) {
+      box.innerHTML = "";
+      state.lookupPick = null;
+      return;
+    }
+    const rows = await get("/api/lookup?lang=" + encodeURIComponent(state.lang) + "&q=" + encodeURIComponent(q));
+    box.innerHTML = "";
+    state.lookupPick = (rows && rows[0]) || null;
+    (rows || []).slice(0, 5).forEach((row, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.textContent = (row.label + "  " + row.text + " " + (row.unit || "")).trim();
+      if (i === 0) b.classList.add("on");
+      b.addEventListener("click", () => {
+        state.lookupPick = row;
+        insertLookup();
+      });
+      box.appendChild(b);
+    });
+  }
+
+  function insertLookup() {
+    const row = state.lookupPick;
+    if (!row) return;
+    const text = String(row.insert || row.text || "");
+    const field = state.lastField;
+    if (field && typeof field.value === "string") {
+      const start = field.selectionStart == null ? field.value.length : field.selectionStart;
+      const end = field.selectionEnd == null ? start : field.selectionEnd;
+      field.value = field.value.slice(0, start) + text + field.value.slice(end);
+      const pos = start + text.length;
+      try { field.setSelectionRange(pos, pos); } catch (err) {}
+      field.focus();
+      return;
+    }
+    if (state.mode === "calc") {
+      state.expr = (state.expr || "") + text;
+      setScreen(state.expr);
+    }
+  }
+
+  document.addEventListener("focusin", (ev) => {
+    const el = ev.target;
+    if (!el || !el.matches) return;
+    if (el.id === "lookup-q") return;
+    if (el.matches("input, textarea")) state.lastField = el;
+  });
+  if ($("lookup-q")) {
+    $("lookup-q").addEventListener("input", () => {
+      clearTimeout(lookupTimer);
+      lookupTimer = setTimeout(runLookup, 120);
+    });
+    $("lookup-q").addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter") {
+        ev.preventDefault();
+        insertLookup();
+      }
+    });
+  }
+  if ($("lookup-insert")) $("lookup-insert").addEventListener("click", insertLookup);
 
   buildKeys();
   buildPoly();

@@ -37,6 +37,10 @@ UI = {
         "atomic_m": "Mass",
         "isotopes": "Isotopes",
         "sources": "Sources",
+        "lookup": "Lookup",
+        "lookup_hint": "H2O, Fe, Fe-56, R, g",
+        "insert": "Insert",
+        "lookup_need_field": "Click the field you want, then insert.",
     },
     "fa": {
         "title": "ماشین حساب اولترا",
@@ -74,6 +78,10 @@ UI = {
         "atomic_m": "جرم",
         "isotopes": "ایزوتوپ",
         "sources": "منبع ها",
+        "lookup": "جستجوی سریع",
+        "lookup_hint": "H2O, Fe, Fe-56, R, g",
+        "insert": "بگذار",
+        "lookup_need_field": "اول خانه را انتخاب کن، بعد بگذار.",
     },
     "fi": {
         "title": "Ultra-laskin",
@@ -111,6 +119,10 @@ UI = {
         "atomic_m": "Massa",
         "isotopes": "Isotoopit",
         "sources": "Lahteet",
+        "lookup": "Haku",
+        "lookup_hint": "H2O, Fe, Fe-56, R, g",
+        "insert": "Lisaa",
+        "lookup_need_field": "Napsauta kenttaa, sitten Lisaa.",
     },
 }
 

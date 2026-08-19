@@ -11,6 +11,7 @@ from tkinter import ttk
 from .chemtools import balance_equation, find_element, list_elements, molar_mass
 from .engine import DesktopEngine
 from .i18n import t
+from .lookup import lookup
 from .sanitize import clean_number
 
 
@@ -34,6 +35,8 @@ class UltraDesktop(tk.Tk):
         self.expr = ""
         self.formula_id = None
         self.var_widgets = {}
+        self.last_target = None
+        self.lookup_pick = None
         self.unknown_var = tk.StringVar(value="")
         self.system_eqs = []
         self.system_unknowns = ["x"]
@@ -152,6 +155,9 @@ class UltraDesktop(tk.Tk):
         self.btn_el.configure(text=self.tr("mode_elements"))
         self.btn_src.configure(text=self.tr("mode_sources"))
         self.lang_lbl.configure(text=self.tr("language"))
+        if hasattr(self, "lookup_lbl"):
+            self.lookup_lbl.configure(text=self.tr("lookup"))
+            self.lookup_insert_btn.configure(text=self.tr("insert"))
         if hasattr(self, "chem_bal_btn"):
             self.chem_bal_btn.configure(text=self.tr("balance"))
             self.chem_mw_btn.configure(text=self.tr("molar"))
@@ -170,6 +176,85 @@ class UltraDesktop(tk.Tk):
         self.n_int_btn.configure(text=self.tr("numeric_integral"))
         self.n_diff_btn.configure(text=self.tr("numeric_diff"))
         self.n_ode_btn.configure(text=self.tr("numeric_ode"))
+
+    def _build_lookup(self) -> None:
+        bar = tk.Frame(self, bg=PANEL)
+        bar.pack(fill="x", padx=12, pady=(0, 4))
+        self.lookup_lbl = tk.Label(bar, bg=PANEL, fg=ACCENT, font=("Segoe UI", 10, "bold"))
+        self.lookup_lbl.pack(side="left", padx=(8, 6))
+        self.lookup_var = tk.StringVar()
+        self.lookup_var.trace_add("write", lambda *_: self._run_lookup())
+        self.lookup_entry = tk.Entry(
+            bar,
+            textvariable=self.lookup_var,
+            bg="#11141a",
+            fg=FG,
+            insertbackground=FG,
+            relief="flat",
+            width=16,
+        )
+        self.lookup_entry.pack(side="left", padx=4, ipady=3)
+        self.lookup_entry.bind("<Return>", lambda e: self._insert_lookup())
+        self.lookup_insert_btn = tk.Button(bar, command=self._insert_lookup)
+        self._paint_btn(self.lookup_insert_btn, ACCENT, "#1c1f24")
+        self.lookup_insert_btn.pack(side="right", padx=6)
+        self.lookup_hits = tk.Frame(bar, bg=PANEL)
+        self.lookup_hits.pack(side="left", fill="x", expand=True, padx=6)
+        self.bind_all("<FocusIn>", self._track_focus)
+
+    def _track_focus(self, ev) -> None:
+        w = ev.widget
+        if w is getattr(self, "lookup_entry", None):
+            return
+        if isinstance(w, (tk.Entry, tk.Text)):
+            self.last_target = w
+
+    def _run_lookup(self) -> None:
+        if not hasattr(self, "lookup_hits"):
+            return
+        rows = lookup(self.lookup_var.get(), self.lang)
+        for child in self.lookup_hits.winfo_children():
+            child.destroy()
+        self.lookup_pick = rows[0] if rows else None
+        for i, row in enumerate(rows[:5]):
+            label = f"{row['label']}  {row['text']} {row.get('unit') or ''}".strip()
+            btn = tk.Button(self.lookup_hits, text=label, command=lambda r=row: self._pick_lookup(r))
+            self._paint_btn(btn, GREEN if i == 0 else BTN2)
+            btn.configure(font=("Segoe UI", 9), padx=6, pady=2)
+            btn.pack(side="left", padx=2)
+
+    def _pick_lookup(self, row: dict) -> None:
+        self.lookup_pick = row
+        self._insert_lookup()
+
+    def _insert_lookup(self) -> None:
+        row = self.lookup_pick
+        if not row:
+            if hasattr(self, "status"):
+                self.status.configure(text=self.tr("lookup_need_field"))
+            return
+        text = str(row.get("insert") or row.get("text") or "")
+        w = self.last_target
+        if w is None:
+            if self.mode == "calc":
+                self.expr += text
+                self._set_display(self.expr)
+            elif hasattr(self, "status"):
+                self.status.configure(text=self.tr("lookup_need_field"))
+            return
+        try:
+            if isinstance(w, tk.Text):
+                w.insert("insert", text)
+                return
+            try:
+                w.delete("sel.first", "sel.last")
+            except tk.TclError:
+                pass
+            w.insert("insert", text)
+        except Exception:
+            if self.mode == "calc":
+                self.expr += text
+                self._set_display(self.expr)
 
     # ---------- calculator ----------
     def _build_calc(self, root: tk.Frame) -> None:

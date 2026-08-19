@@ -67,6 +67,10 @@ You enter coefficients `a6` … `a0`, so up to degree 6.
 - derivative at a point
 - first-order ODE `y' = f(x, y)` with RK4, from an initial condition to a final `x`
 
+### Quick lookup
+
+A small field sits under the top buttons on both programs. Type `H2O`, `Fe`, `Fe-56`, `Ca(OH)2`, or a constant name such as `R` or `g`. The matching molar mass, element mass, isotope mass, or stored constant appears at once. Click a result, or press Insert, and that number is written into the last field you clicked — a formula unknown, a chemistry box, a polynomial coefficient, wherever you need it. If no field is selected, the calculator screen gets the number.
+
 ### Chemistry
 
 This is separate from the named formula list.
