@@ -24,6 +24,8 @@ This is a normal engineering keypad, not just the four operations.
 - Ans
 - trig, hyperbolic, log, exp, roots, absolute value, factorial
 - if you type one equation with a single `=`, it solves for `x`
+- the screen is a real text field. Type the expression with the keyboard. Enter calculates, Esc clears. You do not have to click the keypad.
+- Alt+1 to Alt+7 switch pages. Alt+L or `/` (when you are not already in a field) opens the lookup bar. Enter also runs solve / balance / polynomial evaluate in those pages.
 
 ### Formulas
 
@@ -66,6 +68,17 @@ You enter coefficients `a6` … `a0`, so up to degree 6.
 - definite integral (closed form is shown when it exists)
 - derivative at a point
 - first-order ODE `y' = f(x, y)` with RK4, from an initial condition to a final `x`
+
+### Keyboard
+
+Both programs are meant to be used from the keyboard. You do not have to click every number.
+
+- Click the calculator screen, or just start typing when that page is open. The screen is a normal text field. `sin(30)+sqrt(16)` is a valid thing to type.
+- Enter calculates. Esc clears. Backspace deletes. `^` is treated as `**`.
+- After a result, a digit starts a new expression. `+`, `-`, `*`, `/` continue from that result.
+- Alt+1 Calculator, Alt+2 Formulas, Alt+3 Polynomial, Alt+4 Numerical, Alt+5 Chemistry, Alt+6 Elements, Alt+7 Sources. The desktop app also accepts Ctrl+1 to Ctrl+7.
+- Alt+L focuses the lookup bar. If you are not already in a text field, `/` does the same.
+- In Formulas, type in the search box and press Enter to open the first match. Enter in a value field solves. Enter on a chemistry equation balances it. Enter on polynomial coefficients evaluates.
 
 ### Quick lookup
 

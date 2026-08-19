@@ -44,9 +44,12 @@ main { padding: 16px 18px 32px; }
 .calc-wrap { display: grid; grid-template-columns: 1fr 260px; gap: 16px; }
 #screen {
   background: var(--ink); font: 28px/1.2 Consolas, monospace;
-  text-align: end; padding: 18px 14px; margin-bottom: 10px; min-height: 68px;
-  overflow-x: auto;
+  text-align: end; padding: 18px 14px; margin-bottom: 6px; min-height: 68px;
+  overflow-x: auto; width: 100%; border: 0; border-radius: 4px;
+  color: var(--fg); caret-color: var(--accent);
 }
+#screen:focus { outline: 1px solid var(--accent); }
+#kbd-hint { color: var(--muted); font-size: 12px; margin: 0 0 8px; }
 .keys { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
 .key { padding: 12px 6px; font-family: Consolas, monospace; }
 .row { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; }

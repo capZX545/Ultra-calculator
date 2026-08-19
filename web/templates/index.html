@@ -10,13 +10,13 @@
   <header>
     <h1 id="title">Ultra Calculator</h1>
     <nav>
-      <button data-mode="calc" class="tab on" id="tab-calc">Calculator</button>
-      <button data-mode="formulas" class="tab" id="tab-formulas">Formulas</button>
-      <button data-mode="poly" class="tab" id="tab-poly">Polynomial</button>
-      <button data-mode="numeric" class="tab" id="tab-numeric">Numerical</button>
-      <button data-mode="chem" class="tab" id="tab-chem">Chemistry</button>
-      <button data-mode="elements" class="tab" id="tab-elements">Elements</button>
-      <button data-mode="sources" class="tab" id="tab-sources">Sources</button>
+      <button data-mode="calc" class="tab on" id="tab-calc" title="Alt+1">Calculator</button>
+      <button data-mode="formulas" class="tab" id="tab-formulas" title="Alt+2">Formulas</button>
+      <button data-mode="poly" class="tab" id="tab-poly" title="Alt+3">Polynomial</button>
+      <button data-mode="numeric" class="tab" id="tab-numeric" title="Alt+4">Numerical</button>
+      <button data-mode="chem" class="tab" id="tab-chem" title="Alt+5">Chemistry</button>
+      <button data-mode="elements" class="tab" id="tab-elements" title="Alt+6">Elements</button>
+      <button data-mode="sources" class="tab" id="tab-sources" title="Alt+7">Sources</button>
     </nav>
     <label class="lang">
       <span id="lang-label">Language</span>
@@ -39,12 +39,13 @@
     <section id="view-calc" class="view show">
       <div class="calc-wrap">
         <div class="pad">
-          <div id="screen">0</div>
+          <input id="screen" type="text" inputmode="text" autocomplete="off" spellcheck="false" value="0" aria-label="Expression">
+          <p class="hint" id="kbd-hint"></p>
           <div class="row">
             <button id="btn-deg" type="button">DEG</button>
             <button id="btn-eng" type="button">ENG</button>
-            <button class="key" data-k="AC">AC</button>
-            <button class="key danger" data-k="C">C</button>
+            <button class="key" type="button" data-k="AC">AC</button>
+            <button class="key danger" type="button" data-k="C">C</button>
           </div>
           <div class="keys" id="keys"></div>
         </div>

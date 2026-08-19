@@ -91,6 +91,8 @@ class UltraDesktop(tk.Tk):
         self.lang_lbl = ttk.Label(top, text="")
         self.lang_lbl.pack(side="right", padx=6)
 
+        self._build_lookup()
+
         self.frames = {}
         for name in ("calc", "formulas", "poly", "numeric", "chem", "elements", "sources"):
             fr = tk.Frame(self, bg=BG)
@@ -102,6 +104,7 @@ class UltraDesktop(tk.Tk):
         self._build_chem(self.frames["chem"])
         self._build_elements(self.frames["elements"])
         self._build_sources(self.frames["sources"])
+        self._bind_keys()
         self._set_mode("calc")
 
     def _paint_btn(self, btn: tk.Button, color: str = BTN, fg: str = FG) -> None:
@@ -134,6 +137,7 @@ class UltraDesktop(tk.Tk):
         }
         for key, btn in mapping.items():
             self._paint_btn(btn, ACCENT if key == mode else BTN, "#1c1f24" if key == mode else FG)
+        self.after(20, lambda m=mode: self._focus_mode(m))
 
     def _on_lang(self, _evt=None) -> None:
         self.lang = self.lang_box.get() or "en"
@@ -158,6 +162,8 @@ class UltraDesktop(tk.Tk):
         if hasattr(self, "lookup_lbl"):
             self.lookup_lbl.configure(text=self.tr("lookup"))
             self.lookup_insert_btn.configure(text=self.tr("insert"))
+        if hasattr(self, "kbd_hint"):
+            self.kbd_hint.configure(text=self.tr("kbd_hint"))
         if hasattr(self, "chem_bal_btn"):
             self.chem_bal_btn.configure(text=self.tr("balance"))
             self.chem_mw_btn.configure(text=self.tr("molar"))
@@ -236,9 +242,8 @@ class UltraDesktop(tk.Tk):
         text = str(row.get("insert") or row.get("text") or "")
         w = self.last_target
         if w is None:
-            if self.mode == "calc":
-                self.expr += text
-                self._set_display(self.expr)
+            if self.mode == "calc" and hasattr(self, "display"):
+                self._insert_into_display(text)
             elif hasattr(self, "status"):
                 self.status.configure(text=self.tr("lookup_need_field"))
             return
@@ -253,8 +258,147 @@ class UltraDesktop(tk.Tk):
             w.insert("insert", text)
         except Exception:
             if self.mode == "calc":
-                self.expr += text
-                self._set_display(self.expr)
+                self._insert_into_display(text)
+        if w is getattr(self, "display", None):
+            self.expr = self.display.get()
+
+    def _bind_keys(self) -> None:
+        modes = ["calc", "formulas", "poly", "numeric", "chem", "elements", "sources"]
+        for i, mode in enumerate(modes, 1):
+            self.bind_all(f"<Alt-Key-{i}>", lambda e, m=mode: self._hot_mode(m))
+            self.bind_all(f"<Control-Key-{i}>", lambda e, m=mode: self._hot_mode(m))
+        self.bind_all("<Alt-l>", self._hot_lookup)
+        self.bind_all("<Alt-L>", self._hot_lookup)
+        self.bind_all("<Control-l>", self._hot_lookup)
+        self.bind_all("<Control-L>", self._hot_lookup)
+        self.bind_all("<Key>", self._global_key)
+
+    def _hot_mode(self, mode: str, _ev=None):
+        self._set_mode(mode)
+        return "break"
+
+    def _hot_lookup(self, _ev=None):
+        if hasattr(self, "lookup_entry"):
+            self.lookup_entry.focus_set()
+            self.lookup_entry.selection_range(0, "end")
+        return "break"
+
+    def _focus_mode(self, mode: str) -> None:
+        if mode == "calc" and hasattr(self, "display"):
+            self.display.focus_set()
+            if self.display.get() == "0":
+                self.display.selection_range(0, "end")
+        elif mode == "formulas" and hasattr(self, "search_entry"):
+            self.search_entry.focus_set()
+        elif mode == "poly" and getattr(self, "coeff_entries", None):
+            self.coeff_entries[-1].focus_set()
+        elif mode == "numeric" and hasattr(self, "n_func"):
+            self.n_func.focus_set()
+        elif mode == "chem" and hasattr(self, "chem_eq"):
+            self.chem_eq.focus_set()
+        elif mode == "elements" and hasattr(self, "el_q"):
+            self.el_q.focus_set()
+
+    def _is_typing_widget(self, w) -> bool:
+        return isinstance(w, (tk.Entry, tk.Text, ttk.Entry, ttk.Combobox))
+
+    def _global_key(self, ev):
+        w = ev.widget
+        if self._is_typing_widget(w):
+            return
+        if ev.state & 0x4 or ev.state & 0x8:
+            return
+        if ev.keysym in {"Alt_L", "Alt_R", "Control_L", "Control_R", "Shift_L", "Shift_R", "Super_L", "Super_R"}:
+            return
+        if ev.char == "/" or ev.keysym == "slash":
+            return self._hot_lookup()
+        if self.mode != "calc":
+            return
+        if ev.keysym in {"Return", "KP_Enter"}:
+            self._key("=")
+            return "break"
+        if ev.keysym == "Escape":
+            self._key("AC")
+            return "break"
+        if ev.keysym == "BackSpace":
+            self._key("C")
+            return "break"
+        if ev.char and ev.char.isprintable() and (ev.char.isalnum() or ev.char in ".+-*/()^=%,"):
+            if hasattr(self, "display"):
+                self.display.focus_set()
+                self._insert_into_display("**" if ev.char == "^" else ev.char)
+            return "break"
+
+    def _select_all_display(self, _ev=None):
+        self.display.selection_range(0, "end")
+        self.display.icursor("end")
+        return "break"
+
+    def _on_display_focus(self, _ev=None) -> None:
+        if self.display.get() == "0":
+            self.display.selection_range(0, "end")
+
+    def _sync_expr(self, _ev=None) -> None:
+        if not hasattr(self, "display"):
+            return
+        text = self.display.get()
+        self.expr = "" if text == "0" else text
+
+    def _on_display_key(self, ev):
+        if ev.keysym in {"Return", "KP_Enter"}:
+            self._key("=")
+            return "break"
+        if ev.keysym == "Escape":
+            self._key("AC")
+            return "break"
+        if ev.char == "^":
+            self._insert_into_display("**")
+            return "break"
+        if ev.char and (ev.char.isdigit() or ev.char == ".") and self.display.get() == "0":
+            try:
+                all_sel = (
+                    self.display.selection_present()
+                    and int(self.display.index("sel.first")) == 0
+                    and int(self.display.index("sel.last")) == 1
+                )
+            except (tk.TclError, ValueError):
+                all_sel = False
+            i = int(self.display.index("insert"))
+            if all_sel or i >= 1:
+                if not all_sel:
+                    self.display.delete(0, "end")
+        return None
+
+    def _insert_into_display(self, s: str) -> None:
+        w = self.display
+        try:
+            if w.selection_present():
+                first = int(w.index("sel.first"))
+                last = int(w.index("sel.last"))
+                whole = first == 0 and last == len(w.get())
+                if whole and s and s[0] in "+-*/%":
+                    w.selection_clear()
+                    w.icursor("end")
+                else:
+                    w.delete("sel.first", "sel.last")
+        except (tk.TclError, ValueError):
+            pass
+        cur = w.get()
+        if cur == "0" and s and (s[0].isdigit() or s[0] == "."):
+            w.delete(0, "end")
+        w.insert("insert", s)
+        self.expr = w.get()
+        if self.expr == "0":
+            self.expr = ""
+        w.focus_set()
+
+    def _read_display(self) -> str:
+        try:
+            text = self.display.get().strip()
+        except Exception:
+            text = self.expr
+        self.expr = text
+        return text or "0"
 
     # ---------- calculator ----------
     def _build_calc(self, root: tk.Frame) -> None:
@@ -264,17 +408,39 @@ class UltraDesktop(tk.Tk):
         right.pack(side="right", fill="y", padx=(10, 0))
         right.pack_propagate(False)
 
-        self.display = tk.Label(
+        self.display = tk.Entry(
             left,
-            text="0",
-            anchor="e",
+            justify="right",
             bg="#11141a",
             fg=FG,
+            insertbackground=ACCENT,
+            relief="flat",
             font=("Consolas", 28),
-            padx=14,
-            pady=16,
+            highlightthickness=1,
+            highlightbackground="#11141a",
+            highlightcolor=ACCENT,
         )
-        self.display.pack(fill="x", pady=(0, 8))
+        self.display.insert(0, "0")
+        self.display.pack(fill="x", pady=(0, 4), ipady=14)
+        self.display.bind("<Return>", lambda e: self._key("=") or "break")
+        self.display.bind("<KP_Enter>", lambda e: self._key("=") or "break")
+        self.display.bind("<Escape>", lambda e: self._key("AC") or "break")
+        self.display.bind("<KeyPress>", self._on_display_key)
+        self.display.bind("<KeyRelease>", self._sync_expr)
+        self.display.bind("<FocusIn>", self._on_display_focus)
+        self.display.bind("<Control-a>", self._select_all_display)
+        self.display.bind("<Control-A>", self._select_all_display)
+        self.kbd_hint = tk.Label(
+            left,
+            text="",
+            anchor="w",
+            bg=BG,
+            fg=MUTED,
+            font=("Segoe UI", 9),
+            wraplength=720,
+            justify="left",
+        )
+        self.kbd_hint.pack(fill="x", pady=(0, 6))
         self.status = tk.Label(left, text="", anchor="w", bg=BG, fg=MUTED, font=("Segoe UI", 9))
         self.status.pack(fill="x")
 
@@ -307,7 +473,7 @@ class UltraDesktop(tk.Tk):
                 color = ACCENT if label == "=" else (RED if label in {"AC", "C"} else BTN)
                 btn = tk.Button(grid, text=label, command=lambda s=label: self._key(s))
                 self._paint_btn(btn, color, "#1c1f24" if label == "=" else FG)
-                btn.configure(font=("Consolas", 11), pady=10)
+                btn.configure(font=("Consolas", 11), pady=10, takefocus=0)
                 btn.grid(row=r, column=c, sticky="nsew", padx=3, pady=3)
         for i in range(6):
             grid.columnconfigure(i, weight=1)
@@ -320,6 +486,7 @@ class UltraDesktop(tk.Tk):
         self.history = tk.Listbox(right, bg="#11141a", fg=FG, highlightthickness=0, bd=0, font=("Consolas", 10))
         self.history.pack(fill="both", expand=True, padx=8, pady=8)
         self.history.bind("<Double-Button-1>", self._hist_use)
+        self.history.bind("<Return>", self._hist_use)
 
     def _toggle_angle(self) -> None:
         self.engine.angle = "RAD" if self.engine.angle == "DEG" else "DEG"
@@ -330,7 +497,10 @@ class UltraDesktop(tk.Tk):
         self._paint_btn(self.eng_btn, GREEN if self.engine.eng else BTN2)
 
     def _set_display(self, text: str) -> None:
-        self.display.configure(text=text if text else "0")
+        shown = text if text else "0"
+        self.display.delete(0, "end")
+        self.display.insert(0, shown)
+        self.display.icursor("end")
 
     def _key(self, label: str) -> None:
         mapping = {
@@ -363,38 +533,51 @@ class UltraDesktop(tk.Tk):
         if label == "AC":
             self.expr = ""
             self._set_display("0")
+            self.display.focus_set()
+            self.display.selection_range(0, "end")
             return
-        if label == "C":
-            self.expr = self.expr[:-1]
-            self._set_display(self.expr or "0")
-            return
-        if label == "<-":
-            self.expr = self.expr[:-1]
-            self._set_display(self.expr or "0")
+        if label in {"C", "<-"}:
+            try:
+                if self.display.selection_present():
+                    self.display.delete("sel.first", "sel.last")
+                else:
+                    i = int(self.display.index("insert"))
+                    if i > 0:
+                        self.display.delete(i - 1)
+            except (tk.TclError, ValueError):
+                self.expr = self.expr[:-1]
+                self._set_display(self.expr or "0")
+                return
+            self.expr = self.display.get()
+            if not self.expr:
+                self._set_display("0")
+            self.display.focus_set()
             return
         if label == "+/-":
-            if self.expr.startswith("-(") and self.expr.endswith(")"):
-                self.expr = self.expr[2:-1]
+            current = self._read_display()
+            if current.startswith("-(") and current.endswith(")"):
+                current = current[2:-1]
             else:
-                self.expr = f"-({self.expr or '0'})"
+                current = f"-({current or '0'})"
+            self.expr = current
             self._set_display(self.expr)
+            self.display.focus_set()
             return
         if label == "MC":
             self.engine.memory = 0.0
             return
         if label == "MR":
-            self.expr += format(self.engine.memory, "g")
-            self._set_display(self.expr)
+            self._insert_into_display(format(self.engine.memory, "g"))
             return
         if label == "M+":
-            out = self.engine.evaluate(self.expr or "0")
+            out = self.engine.evaluate(self._read_display() or "0")
             try:
                 self.engine.memory += float(out["value"].real if isinstance(out["value"], complex) else out["value"])
             except Exception:
                 pass
             return
         if label == "M-":
-            out = self.engine.evaluate(self.expr or "0")
+            out = self.engine.evaluate(self._read_display() or "0")
             try:
                 self.engine.memory -= float(out["value"].real if isinstance(out["value"], complex) else out["value"])
             except Exception:
@@ -404,20 +587,23 @@ class UltraDesktop(tk.Tk):
             self._toggle_eng()
             return
         if label == "%":
-            out = self.engine.evaluate(f"({self.expr or '0'})/100")
+            out = self.engine.evaluate(f"({self._read_display() or '0'})/100")
             self.expr = out["text"]
             self._set_display(self.expr)
+            self.display.focus_set()
             return
         if label == "=":
-            out = self.engine.evaluate(self.expr or "0")
+            source = self._read_display() or "0"
+            out = self.engine.evaluate(source)
             shown = out["text"]
-            self.history.insert(0, f"{self.expr} = {shown}")
+            self.history.insert(0, f"{source} = {shown}")
             self.expr = shown
             self._set_display(shown)
             self.status.configure(text=out.get("exact") or self.tr("ready"))
+            self.display.focus_set()
+            self.display.selection_range(0, "end")
             return
-        self.expr += mapping.get(label, label)
-        self._set_display(self.expr)
+        self._insert_into_display(mapping.get(label, label))
 
     def _hist_use(self, _evt=None) -> None:
         sel = self.history.curselection()
@@ -427,6 +613,8 @@ class UltraDesktop(tk.Tk):
         if "=" in line:
             self.expr = line.split("=", 1)[0].strip()
             self._set_display(self.expr)
+            self.display.focus_set()
+            self.display.icursor("end")
 
     # ---------- formulas ----------
     def _build_formulas(self, root: tk.Frame) -> None:
@@ -447,10 +635,13 @@ class UltraDesktop(tk.Tk):
         self.search_lbl.pack(anchor="w")
         self.search_var = tk.StringVar()
         self.search_var.trace_add("write", lambda *_: self._fill_formula_list())
-        tk.Entry(mid, textvariable=self.search_var, bg="#11141a", fg=FG, insertbackground=FG, relief="flat").pack(fill="x", pady=6)
+        self.search_entry = tk.Entry(mid, textvariable=self.search_var, bg="#11141a", fg=FG, insertbackground=FG, relief="flat")
+        self.search_entry.pack(fill="x", pady=6)
+        self.search_entry.bind("<Return>", self._pick_first_formula)
         self.formula_list = tk.Listbox(mid, bg=PANEL, fg=FG, highlightthickness=0, bd=0, font=("Segoe UI", 10))
         self.formula_list.pack(fill="both", expand=True)
         self.formula_list.bind("<<ListboxSelect>>", self._on_formula_pick)
+        self.formula_list.bind("<Return>", self._on_formula_pick)
 
         self.formula_title = tk.Label(right, bg=PANEL, fg=ACCENT, font=("Segoe UI", 14, "bold"), wraplength=480, justify="left")
         self.formula_title.pack(anchor="w", padx=12, pady=(12, 4))
@@ -528,12 +719,30 @@ class UltraDesktop(tk.Tk):
             name = it["name"].get(self.lang) or it["name"].get("en")
             self.formula_list.insert("end", name)
 
+    def _pick_first_formula(self, _evt=None):
+        if not getattr(self, "formula_items", None):
+            return "break"
+        self.formula_list.selection_clear(0, "end")
+        self.formula_list.selection_set(0)
+        self.formula_list.activate(0)
+        self._show_formula(self.formula_items[0]["id"])
+        self._focus_first_var()
+        return "break"
+
+    def _focus_first_var(self) -> None:
+        if self.var_widgets:
+            next(iter(self.var_widgets.values())).focus_set()
+        elif getattr(self, "eq_entries", None):
+            self.eq_entries[0].focus_set()
+
     def _on_formula_pick(self, _evt=None) -> None:
         sel = self.formula_list.curselection()
         if not sel:
             return
         item = self.formula_items[sel[0]]
         self._show_formula(item["id"])
+        if _evt is not None and getattr(_evt, "keysym", "") == "Return":
+            self._focus_first_var()
 
     def _clear_vars(self) -> None:
         for child in self.var_box.winfo_children():
@@ -570,6 +779,7 @@ class UltraDesktop(tk.Tk):
             tk.Label(row, text=f"{name}  {label}  [{unit}]", bg=PANEL, fg=FG, width=36, anchor="w").pack(side="left")
             ent = tk.Entry(row, bg="#11141a", fg=FG, insertbackground=FG, relief="flat", width=16)
             ent.pack(side="right")
+            ent.bind("<Return>", lambda e: self._solve_current() or "break")
             self.var_widgets[name] = ent
         self.formula_result.configure(text="")
 
@@ -587,11 +797,13 @@ class UltraDesktop(tk.Tk):
             ent = tk.Entry(self.var_box, bg="#11141a", fg=FG, insertbackground=FG, relief="flat")
             ent.insert(0, eq)
             ent.pack(fill="x", pady=3)
+            ent.bind("<Return>", lambda e: self._solve_current() or "break")
             self.eq_entries.append(ent)
         tk.Label(self.var_box, text=self.tr("unknown"), bg=PANEL, fg=MUTED).pack(anchor="w", pady=(8, 2))
         self.unk_entry = tk.Entry(self.var_box, bg="#11141a", fg=FG, insertbackground=FG, relief="flat")
         self.unk_entry.insert(0, ", ".join(self.system_unknowns))
         self.unk_entry.pack(fill="x")
+        self.unk_entry.bind("<Return>", lambda e: self._solve_current() or "break")
 
     def _add_eq(self) -> None:
         self.system = True
@@ -657,6 +869,7 @@ class UltraDesktop(tk.Tk):
             ent = tk.Entry(box, width=8, bg="#11141a", fg=FG, insertbackground=FG, relief="flat", justify="center")
             ent.insert(0, "0" if i < 6 else "0")
             ent.pack()
+            ent.bind("<Return>", lambda e: self._poly_eval() or "break")
             self.coeff_entries.append(ent)
         self.coeff_entries[-1].delete(0, "end")
         self.coeff_entries[-1].insert(0, "0")
@@ -668,6 +881,7 @@ class UltraDesktop(tk.Tk):
         self.poly_x = tk.Entry(xr, width=10, bg="#11141a", fg=FG, insertbackground=FG, relief="flat")
         self.poly_x.insert(0, "1")
         self.poly_x.pack(side="left", padx=6)
+        self.poly_x.bind("<Return>", lambda e: self._poly_eval() or "break")
         self.poly_eval_btn = tk.Button(xr, command=self._poly_eval)
         self.poly_root_btn = tk.Button(xr, command=self._poly_roots)
         self._paint_btn(self.poly_eval_btn, ACCENT, "#1c1f24")
@@ -772,6 +986,7 @@ class UltraDesktop(tk.Tk):
         self.chem_eq = tk.Entry(root, bg="#11141a", fg=FG, insertbackground=FG, relief="flat")
         self.chem_eq.insert(0, "C2H6 + O2 = CO2 + H2O")
         self.chem_eq.pack(fill="x", pady=6)
+        self.chem_eq.bind("<Return>", lambda e: self._do_balance() or "break")
         row = tk.Frame(root, bg=BG)
         row.pack(fill="x")
         self.chem_bal_btn = tk.Button(row, command=self._do_balance)
@@ -820,6 +1035,15 @@ class UltraDesktop(tk.Tk):
         for el in self._el_items:
             name = el["name"].get(self.lang) or el["name"]["en"]
             self.el_list.insert("end", f"{el['Z']:3}  {el['symbol']:<3}  {name}")
+
+    def _pick_first_element(self, _evt=None):
+        if not self._el_items:
+            return "break"
+        self.el_list.selection_clear(0, "end")
+        self.el_list.selection_set(0)
+        self.el_list.activate(0)
+        self._show_element()
+        return "break"
 
     def _show_element(self, _evt=None) -> None:
         sel = self.el_list.curselection()

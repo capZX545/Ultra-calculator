@@ -35,6 +35,7 @@
     sqrt:"sqrt(", "n!":"factorial(", abs:"abs(",
     "1/x":"1/(", pi:"pi", e:"e", ans:"ans", EE:"*10**",
   };
+  const MODES = ["calc", "formulas", "poly", "numeric", "chem", "elements", "sources"];
 
   const $ = (id) => document.getElementById(id);
   const screen = $("screen");
@@ -42,7 +43,35 @@
   let memory = 0;
 
   function setScreen(text) {
-    screen.textContent = text || "0";
+    screen.value = text || "0";
+    state.expr = text && text !== "0" ? text : (text || "");
+  }
+
+  function readExpr() {
+    const text = (screen.value || "").trim();
+    state.expr = text;
+    return text || "0";
+  }
+
+  function insertScreen(s) {
+    const el = screen;
+    el.focus();
+    let start = el.selectionStart == null ? el.value.length : el.selectionStart;
+    let end = el.selectionEnd == null ? start : el.selectionEnd;
+    let val = el.value;
+    const whole = start === 0 && end === val.length;
+    if (whole && s && "+-*/%".indexOf(s[0]) >= 0 && val && val !== "0") {
+      start = val.length;
+      end = val.length;
+    } else if (val === "0" && s && /[0-9.]/.test(s[0])) {
+      val = "";
+      start = 0;
+      end = 0;
+    }
+    el.value = val.slice(0, start) + s + val.slice(end);
+    const pos = start + s.length;
+    try { el.setSelectionRange(pos, pos); } catch (err) {}
+    state.expr = el.value === "0" ? "" : el.value;
   }
 
   async function post(url, body) {
@@ -80,6 +109,10 @@
     if ($("tab-sources")) $("tab-sources").textContent = s.sources || "Sources";
     if ($("chem-bal")) $("chem-bal").textContent = s.balance || "Balance";
     if ($("chem-mw")) $("chem-mw").textContent = s.molar || "Molar mass";
+    if ($("lookup-label")) $("lookup-label").textContent = s.lookup || "Lookup";
+    if ($("lookup-insert")) $("lookup-insert").textContent = s.insert || "Insert";
+    if ($("lookup-q") && s.lookup_hint) $("lookup-q").placeholder = s.lookup_hint;
+    if ($("kbd-hint")) $("kbd-hint").textContent = s.kbd_hint || "";
     $("lang-label").textContent = s.lang || "Language";
     $("hist-title").textContent = s.history || "History";
     $("cat-title").textContent = s.search ? " " : " ";
@@ -100,6 +133,23 @@
     document.body.classList.toggle("rtl", state.lang === "fa");
   }
 
+  function focusMode(mode) {
+    if (mode === "calc") {
+      screen.focus();
+      if (screen.value === "0") screen.select();
+    } else if (mode === "formulas" && $("search")) {
+      $("search").focus();
+    } else if (mode === "poly" && $("c6")) {
+      $("c6").focus();
+    } else if (mode === "numeric" && $("n-func")) {
+      $("n-func").focus();
+    } else if (mode === "chem" && $("chem-eq")) {
+      $("chem-eq").focus();
+    } else if (mode === "elements" && $("el-q")) {
+      $("el-q").focus();
+    }
+  }
+
   function showMode(mode) {
     state.mode = mode;
     document.querySelectorAll(".view").forEach((el) => el.classList.remove("show"));
@@ -107,6 +157,7 @@
     document.querySelectorAll(".tab").forEach((el) => {
       el.classList.toggle("on", el.getAttribute("data-mode") === mode);
     });
+    focusMode(mode);
   }
 
   function buildKeys() {
@@ -117,6 +168,7 @@
         const b = document.createElement("button");
         b.type = "button";
         b.className = "key" + (label === "=" ? " accent" : "");
+        b.tabIndex = -1;
         b.textContent = label;
         b.addEventListener("click", () => onKey(label));
         box.appendChild(b);
@@ -128,22 +180,38 @@
     if (label === "AC") {
       state.expr = "";
       setScreen("0");
+      screen.focus();
+      screen.select();
       return;
     }
     if (label === "C") {
-      state.expr = state.expr.slice(0, -1);
-      setScreen(state.expr);
+      const el = screen;
+      el.focus();
+      const start = el.selectionStart == null ? el.value.length : el.selectionStart;
+      const end = el.selectionEnd == null ? start : el.selectionEnd;
+      if (end > start) {
+        el.value = el.value.slice(0, start) + el.value.slice(end);
+        try { el.setSelectionRange(start, start); } catch (err) {}
+      } else if (start > 0) {
+        el.value = el.value.slice(0, start - 1) + el.value.slice(start);
+        try { el.setSelectionRange(start - 1, start - 1); } catch (err) {}
+      }
+      state.expr = el.value;
+      if (!el.value) setScreen("0");
       return;
     }
     if (label === "+/-") {
-      state.expr = state.expr.startsWith("-(") ? state.expr.slice(2, -1) : "-(" + (state.expr || "0") + ")";
+      const current = readExpr();
+      state.expr = current.startsWith("-(") && current.endsWith(")")
+        ? current.slice(2, -1)
+        : "-(" + (current || "0") + ")";
       setScreen(state.expr);
+      screen.focus();
       return;
     }
     if (label === "MC") { memory = 0; return; }
     if (label === "MR") {
-      state.expr += String(memory);
-      setScreen(state.expr);
+      insertScreen(String(memory));
       return;
     }
     if (label === "M+" || label === "M-") {
@@ -153,31 +221,42 @@
       return;
     }
     if (label === "%") {
-      const out = await post("/api/eval", Object.assign(payloadExpr(), { expr: "(" + (state.expr || "0") + ")/100" }));
+      const out = await post("/api/eval", Object.assign(payloadExpr(), { expr: "(" + (readExpr() || "0") + ")/100" }));
       state.expr = out.text;
       setScreen(state.expr);
+      screen.focus();
       return;
     }
     if (label === "=") {
+      const source = readExpr();
       const out = await post("/api/eval", payloadExpr());
       const line = document.createElement("li");
-      line.textContent = (state.expr || "0") + " = " + out.text;
-      line.addEventListener("click", () => {
-        state.expr = (state.expr || "0");
-        setScreen(state.expr);
+      line.textContent = source + " = " + out.text;
+      line.tabIndex = 0;
+      line.addEventListener("click", () => reuseHistory(source));
+      line.addEventListener("keydown", (ev) => {
+        if (ev.key === "Enter") reuseHistory(source);
       });
       history.insertBefore(line, history.firstChild);
       state.expr = out.text;
       state.ans = out.value;
       setScreen(out.text);
+      screen.focus();
+      screen.select();
       return;
     }
-    state.expr += MAP[label] !== undefined ? MAP[label] : label;
+    insertScreen(MAP[label] !== undefined ? MAP[label] : label);
+  }
+
+  function reuseHistory(expr) {
+    state.expr = expr || "0";
     setScreen(state.expr);
+    screen.focus();
+    screen.selectionStart = screen.selectionEnd = screen.value.length;
   }
 
   function payloadExpr() {
-    return { expr: state.expr || "0", angle: state.angle, eng: state.eng, ans: state.ans };
+    return { expr: readExpr() || "0", angle: state.angle, eng: state.eng, ans: state.ans };
   }
 
   async function loadMeta() {
@@ -210,18 +289,31 @@
     state.formulas.forEach((item, i) => {
       const li = document.createElement("li");
       li.textContent = item.name;
-      li.addEventListener("click", () => selectFormula(i, li));
+      li.tabIndex = 0;
+      li.addEventListener("click", () => selectFormula(i, li, false));
+      li.addEventListener("keydown", (ev) => {
+        if (ev.key === "Enter") {
+          ev.preventDefault();
+          selectFormula(i, li, true);
+        }
+      });
       box.appendChild(li);
     });
   }
 
-  function selectFormula(index, li) {
+  function selectFormula(index, li, jump) {
     document.querySelectorAll("#flist li").forEach((n) => n.classList.remove("on"));
     if (li) li.classList.add("on");
     state.current = state.formulas[index];
     $("fname").textContent = state.current.name;
     $("fexpr").textContent = state.current.expr;
     renderFields();
+    if (jump) focusFirstVar();
+  }
+
+  function focusFirstVar() {
+    const inp = document.querySelector("#fields input[data-var], #fields input.eq");
+    if (inp) inp.focus();
   }
 
   function renderFields() {
@@ -358,6 +450,17 @@
     $("n-out").textContent = text;
   }
 
+  function isTypingField(el) {
+    return !!(el && el.matches && el.matches("input, textarea, select"));
+  }
+
+  function focusLookup() {
+    if ($("lookup-q")) {
+      $("lookup-q").focus();
+      $("lookup-q").select();
+    }
+  }
+
   document.querySelectorAll(".tab").forEach((btn) => {
     btn.addEventListener("click", () => showMode(btn.getAttribute("data-mode")));
   });
@@ -375,6 +478,13 @@
   });
   $("category").addEventListener("change", loadFormulas);
   $("search").addEventListener("input", loadFormulas);
+  $("search").addEventListener("keydown", (ev) => {
+    if (ev.key === "Enter") {
+      ev.preventDefault();
+      const first = $("flist").querySelector("li");
+      if (first) selectFormula(0, first, true);
+    }
+  });
   $("btn-single").addEventListener("click", () => {
     state.system = false;
     $("btn-single").classList.add("on");
@@ -426,6 +536,14 @@
       $("chem-out").textContent = t;
     });
   }
+  if ($("chem-eq")) {
+    $("chem-eq").addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter") {
+        ev.preventDefault();
+        $("chem-bal").click();
+      }
+    });
+  }
 
   async function loadElements() {
     if (!$("el-list")) return;
@@ -435,7 +553,8 @@
     (rows || []).forEach((el) => {
       const li = document.createElement("li");
       li.textContent = el.Z + "  " + el.symbol + "  " + el.name;
-      li.addEventListener("click", () => {
+      li.tabIndex = 0;
+      const open = () => {
         document.querySelectorAll("#el-list li").forEach((n) => n.classList.remove("on"));
         li.classList.add("on");
         let t = el.symbol + "  " + el.name + "\nZ = " + el.Z + "\nmass = " + el.mass + "\ngroup = " + el.group + "\n\n";
@@ -445,11 +564,27 @@
           t += "  " + el.symbol + "-" + iso.A + "   " + iso.mass + " u   " + ab + "\n";
         });
         $("el-out").textContent = t;
+      };
+      li.addEventListener("click", open);
+      li.addEventListener("keydown", (ev) => {
+        if (ev.key === "Enter") {
+          ev.preventDefault();
+          open();
+        }
       });
       box.appendChild(li);
     });
   }
-  if ($("el-q")) $("el-q").addEventListener("input", loadElements);
+  if ($("el-q")) {
+    $("el-q").addEventListener("input", loadElements);
+    $("el-q").addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter") {
+        ev.preventDefault();
+        const first = $("el-list") && $("el-list").querySelector("li");
+        if (first) first.click();
+      }
+    });
+  }
 
   async function loadSources() {
     if (!$("src-out")) return;
@@ -465,14 +600,97 @@
     $("src-out").textContent = t;
   }
 
+  if ($("fields")) {
+    $("fields").addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter" && ev.target && ev.target.matches("input")) {
+        ev.preventDefault();
+        solveNow();
+      }
+    });
+  }
+  if ($("coeffs")) {
+    $("coeffs").addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter" && ev.target && ev.target.matches("input")) {
+        ev.preventDefault();
+        doPoly("eval");
+      }
+    });
+  }
+  if ($("poly-x")) {
+    $("poly-x").addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter") {
+        ev.preventDefault();
+        doPoly("eval");
+      }
+    });
+  }
+
+  screen.addEventListener("focus", () => {
+    if (screen.value === "0") screen.select();
+  });
+  screen.addEventListener("input", () => {
+    state.expr = screen.value === "0" ? "" : screen.value;
+  });
+  screen.addEventListener("keydown", (ev) => {
+    if (ev.key === "Enter") {
+      ev.preventDefault();
+      onKey("=");
+      return;
+    }
+    if (ev.key === "Escape") {
+      ev.preventDefault();
+      onKey("AC");
+      return;
+    }
+    if (ev.key === "^") {
+      ev.preventDefault();
+      insertScreen("**");
+    }
+  });
+
+  document.querySelectorAll("[data-k]").forEach((b) => {
+    b.tabIndex = -1;
+    b.addEventListener("click", () => onKey(b.getAttribute("data-k")));
+  });
+
   document.addEventListener("keydown", (ev) => {
+    if (ev.altKey && !ev.ctrlKey && !ev.metaKey) {
+      const n = ev.key;
+      if (n >= "1" && n <= "7") {
+        ev.preventDefault();
+        showMode(MODES[Number(n) - 1]);
+        return;
+      }
+      if (n === "l" || n === "L") {
+        ev.preventDefault();
+        focusLookup();
+        return;
+      }
+    }
+    if (isTypingField(ev.target)) return;
+    if (ev.key === "/" || ev.key === "Slash") {
+      ev.preventDefault();
+      focusLookup();
+      return;
+    }
     if (state.mode !== "calc") return;
-    if (ev.key === "Enter") { ev.preventDefault(); onKey("="); return; }
-    if (ev.key === "Backspace") { ev.preventDefault(); onKey("C"); return; }
-    if (ev.key === "Escape") { onKey("AC"); return; }
-    if ("0123456789.+-*/()".indexOf(ev.key) >= 0) {
-      state.expr += ev.key;
-      setScreen(state.expr);
+    if (ev.key === "Enter") {
+      ev.preventDefault();
+      onKey("=");
+      return;
+    }
+    if (ev.key === "Escape") {
+      onKey("AC");
+      return;
+    }
+    if (ev.key === "Backspace") {
+      ev.preventDefault();
+      onKey("C");
+      return;
+    }
+    if (ev.key.length === 1 && !ev.ctrlKey && !ev.metaKey && !ev.altKey) {
+      ev.preventDefault();
+      insertScreen(ev.key === "^" ? "**" : ev.key);
     }
   });
 
@@ -507,6 +725,10 @@
     if (!row) return;
     const text = String(row.insert || row.text || "");
     const field = state.lastField;
+    if (field && field.id === "screen") {
+      insertScreen(text);
+      return;
+    }
     if (field && typeof field.value === "string") {
       const start = field.selectionStart == null ? field.value.length : field.selectionStart;
       const end = field.selectionEnd == null ? start : field.selectionEnd;
@@ -516,10 +738,7 @@
       field.focus();
       return;
     }
-    if (state.mode === "calc") {
-      state.expr = (state.expr || "") + text;
-      setScreen(state.expr);
-    }
+    if (state.mode === "calc") insertScreen(text);
   }
 
   document.addEventListener("focusin", (ev) => {
@@ -546,4 +765,5 @@
   buildPoly();
   loadMeta();
   loadSources();
+  screen.focus();
 })();

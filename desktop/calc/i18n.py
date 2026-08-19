@@ -76,6 +76,7 @@ STRINGS = {
         "lookup_hint": "H2O, Fe, Fe-56, R, g",
         "insert": "Insert",
         "lookup_need_field": "Click the field you want, then insert.",
+        "kbd_hint": "Type in the screen. Enter calculates. Esc clears. Alt+1 to Alt+7 switch pages. Alt+L or / opens lookup. You do not have to use the mouse.",
     },
     "fa": {
         "app_title": "ماشین حساب اولترا",
@@ -150,6 +151,7 @@ STRINGS = {
         "lookup_hint": "H2O, Fe, Fe-56, R, g",
         "insert": "بگذار",
         "lookup_need_field": "اول خانه را انتخاب کن، بعد بگذار.",
+        "kbd_hint": "توی صفحه تایپ کن. Enter حساب می‌کند. Esc پاک می‌کند. Alt+1 تا Alt+7 صفحه را عوض می‌کند. Alt+L یا / جستجوی سریع است. لازم نیست با موس بنویسی.",
     },
     "fi": {
         "app_title": "Ultra-laskin",
@@ -224,6 +226,7 @@ STRINGS = {
         "lookup_hint": "H2O, Fe, Fe-56, R, g",
         "insert": "Lisaa",
         "lookup_need_field": "Napsauta kenttaa, sitten Lisaa.",
+        "kbd_hint": "Kirjoita nayttoon. Enter laskee. Esc tyhjentaa. Alt+1–7 vaihtaa sivua. Alt+L tai / avaa haun. Hiirta ei tarvita.",
     },
 }
 
