@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ultra Calculator</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <h1 id="title">Ultra Calculator</h1>
+    <nav>
+      <button data-mode="calc" class="tab on" id="tab-calc">Calculator</button>
+      <button data-mode="formulas" class="tab" id="tab-formulas">Formulas</button>
+      <button data-mode="poly" class="tab" id="tab-poly">Polynomial</button>
+      <button data-mode="numeric" class="tab" id="tab-numeric">Numerical</button>
+    </nav>
+    <label class="lang">
+      <span id="lang-label">Language</span>
+      <select id="lang">
+        <option value="en">en</option>
+        <option value="fa">fa</option>
+        <option value="fi">fi</option>
+      </select>
+    </label>
+  </header>
+
+  <main>
+    <section id="view-calc" class="view show">
+      <div class="calc-wrap">
+        <div class="pad">
+          <div id="screen">0</div>
+          <div class="row">
+            <button id="btn-deg" type="button">DEG</button>
+            <button id="btn-eng" type="button">ENG</button>
+            <button class="key" data-k="AC">AC</button>
+            <button class="key danger" data-k="C">C</button>
+          </div>
+          <div class="keys" id="keys"></div>
+        </div>
+        <aside>
+          <h2 id="hist-title">History</h2>
+          <ul id="history"></ul>
+        </aside>
+      </div>
+    </section>
+
+    <section id="view-formulas" class="view">
+      <div class="formula-grid">
+        <div>
+          <h2 id="cat-title">Categories</h2>
+          <select id="category" size="18"></select>
+        </div>
+        <div>
+          <h2 id="search-title">Search</h2>
+          <input id="search" type="search" autocomplete="off">
+          <ul id="flist"></ul>
+        </div>
+        <div class="solver">
+          <h2 id="fname">—</h2>
+          <pre id="fexpr"></pre>
+          <div class="row">
+            <button id="btn-single" class="on" type="button">One unknown</button>
+            <button id="btn-system" type="button">Several equations</button>
+            <button id="btn-add" type="button">Add</button>
+            <button id="btn-del" type="button">Remove</button>
+          </div>
+          <div id="fields"></div>
+          <button id="btn-solve" class="accent" type="button">Solve</button>
+          <pre id="fresult"></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-poly" class="view">
+      <p class="hint">a6 x^6 + a5 x^5 + a4 x^4 + a3 x^3 + a2 x^2 + a1 x + a0</p>
+      <div class="coeffs" id="coeffs"></div>
+      <div class="row">
+        <label>x <input id="poly-x" value="1"></label>
+        <button id="poly-eval" class="accent" type="button">Evaluate</button>
+        <button id="poly-roots" type="button">Roots</button>
+      </div>
+      <pre id="poly-out"></pre>
+    </section>
+
+    <section id="view-numeric" class="view">
+      <label>f(x) or f(x,y) <input id="n-func" value="x**2"></label>
+      <label>a / x0 <input id="n-a" value="0"></label>
+      <label>b / x1 <input id="n-b" value="1"></label>
+      <label>y0 <input id="n-y0" value="1"></label>
+      <label>steps <input id="n-steps" value="40"></label>
+      <div class="row">
+        <button id="n-root" type="button">Root</button>
+        <button id="n-int" type="button">Integral</button>
+        <button id="n-der" type="button">Derivative</button>
+        <button id="n-ode" type="button">ODE</button>
+      </div>
+      <pre id="n-out"></pre>
+    </section>
+  </main>
+  <script src="/static/ui.js"></script>
+</body>
+</html>
