@@ -8,3 +8,8 @@ venv/
 bin/
 android/.buildozer/
 android/bin/
+phone/local.properties
+phone/.gradle/
+phone/app/build/
+phone/build/
+.gradle/

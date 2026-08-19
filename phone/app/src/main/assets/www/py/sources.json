@@ -1,0 +1,121 @@
+{
+  "sources": {
+    "ee": {
+      "name": {
+        "en": "Equation Encyclopedia",
+        "fa": "دانشنامه معادلات",
+        "fi": "Equation Encyclopedia"
+      },
+      "url": "https://www.equationencyclopedia.com/",
+      "note": {
+        "en": "Public catalog on the site lists 889 named equations (the 3000 figure counts rearrangements). We do not copy their copyrighted pages, games, or practice text. Named textbook equations in those subjects are implemented here and actually solve. Word-only reaction schemes use the chemistry balancer. Joke pages were skipped.",
+        "fa": "فهرست عمومی سایت ۸۸۹ معادله نام‌دار است؛ رقم ۳۰۰۰ بیشتر آرایش مجدد همان‌هاست. متن، بازی و تمرین آن‌ها کپی نشد. معادله‌های استاندارد همان موضوع‌ها این‌جا حل می‌شوند. واکنش‌های فقط نوشتاری را موازنه‌گر شیمی انجام می‌دهد.",
+        "fi": "Julkinen luettelo: 889 nimettya yhtaloa (3000 sisaltaa uudelleenjarjestelyt). Sivujen teksteja ei kopioitu. Oppikirjayhtalot lasketaan tassa."
+      }
+    },
+    "mathworld": {
+      "name": {
+        "en": "Wolfram MathWorld",
+        "fa": "مث ورلد ولفرام",
+        "fi": "Wolfram MathWorld"
+      },
+      "url": "https://mathworld.wolfram.com/",
+      "note": {
+        "en": "Encyclopedia of named objects. We evaluate the named functions; we do not copy 10,000 articles.",
+        "fa": "دانشنامه اشیای نام دار. مقالات کپی نشد.",
+        "fi": "Nimetyt oliot. Artikkelit eivat ole kopio."
+      }
+    },
+    "dlmf": {
+      "name": {
+        "en": "NIST DLMF",
+        "fa": "کتابخانه دیجیتال توابع NIST",
+        "fi": "NIST DLMF"
+      },
+      "url": "https://dlmf.nist.gov/",
+      "note": {
+        "en": "Chapters 4-28 drive the special-function engine (gamma, Bessel, hypergeometric, elliptic, zeta, orthogonal polynomials).",
+        "fa": "فصل‌های ۴ تا ۲۸ موتور توابع خاص را می‌سازند.",
+        "fi": "Luvut 4-28 ohjaavat erikoisfunktioita."
+      }
+    },
+    "crc": {
+      "name": {
+        "en": "CRC Handbook style constants",
+        "fa": "ثابت‌ها به سبک CRC / CODATA",
+        "fi": "CRC / CODATA"
+      },
+      "url": "https://physics.nist.gov/constants",
+      "note": {
+        "en": "CRC itself is a paid book. Public CODATA / NIST constants and standard engineering identities are used instead of copying handbook pages.",
+        "fa": "خود CRC کتاب پولی است. ثابت‌های عمومی CODATA و اتحادهای استاندارد استفاده شد.",
+        "fi": "CRC on maksullinen. Julkiset CODATA-vakiot kaytossa."
+      }
+    },
+    "phet": {
+      "name": {
+        "en": "PhET-style lab formulas",
+        "fa": "فرمول آزمایشگاه به سبک PhET",
+        "fi": "PhET-tyyliset"
+      },
+      "url": "https://phet.colorado.edu/",
+      "note": {
+        "en": "PhET is interactive simulations, not a formula dump. Equations those labs teach (circuits, gases, waves, optics, collisions) are implemented here.",
+        "fa": "PhET شبیه‌سازی است نه فهرست فرمول. معادله‌های همان آزمایش‌ها پیاده شد.",
+        "fi": "PhET on simulaatio. Labrojen yhtalot toteutettu."
+      }
+    },
+    "arxiv": {
+      "name": {
+        "en": "arXiv",
+        "fa": "آرشیو arXiv",
+        "fi": "arXiv"
+      },
+      "url": "https://arxiv.org/",
+      "note": {
+        "en": "Open preprint archive, not a handbook. Not scraped. Use it to read new papers; this app keeps stable textbook formulas.",
+        "fa": "آرشیو پیش‌چاپ است نه هندبوک. مقالات استخراج نشد.",
+        "fi": "Preprint-arkisto, ei kasikirja."
+      }
+    },
+    "wolfram_fn": {
+      "name": {
+        "en": "Wolfram Functions Site",
+        "fa": "سایت توابع ولفرام",
+        "fi": "Wolfram Functions"
+      },
+      "url": "https://functions.wolfram.com/",
+      "note": {
+        "en": "307,409 identities are series/integral catalogs. Families are evaluated with SymPy/SciPy instead of storing every line.",
+        "fa": "۳۰۷ هزار اتحاد کاتالوگ سری است. خانواده‌ها با موتور محاسبه می‌شوند.",
+        "fi": "307k identiteettia. Perheet lasketaan moottorilla."
+      }
+    },
+    "algo": {
+      "name": {
+        "en": "Algorithms and computer algebra",
+        "fa": "الگوریتم و جبر رایانه ای",
+        "fi": "Algoritmit ja CAS"
+      },
+      "url": "https://docs.scipy.org/doc/scipy/reference/",
+      "note": {
+        "en": "Named algorithms on the Algorithms page are implemented with SymPy and SciPy and actually run. This is not a copy of 50,000 encyclopedia identities.",
+        "fa": "الگوریتم‌های صفحه الگوریتم با SymPy و SciPy اجرا می‌شوند. پنجاه هزار اتحاد دانشنامه کپی نشد.",
+        "fi": "Algoritmisivun menetelmat lasketaan SymPylla ja SciPylla. 50 000 identiteettia ei kopioitu."
+      }
+    },
+    "std": {
+      "name": {
+        "en": "Standard STEM textbooks",
+        "fa": "کتاب‌های استاندارد",
+        "fi": "Standardikirjat"
+      },
+      "url": "",
+      "note": {
+        "en": "Common syllabus formulas.",
+        "fa": "فرمول سرفصل رایج.",
+        "fi": "Yleiset kaavat."
+      }
+    }
+  }
+}

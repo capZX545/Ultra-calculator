@@ -4,7 +4,8 @@ This repository is three calculators that do the same job. One opens as a deskto
 
 - `desktop` — window app (tkinter)
 - `web` — browser app (Flask)
-- `android` — phone app (Kivy). Run it in Pydroid 3, or pack an APK with Buildozer.
+- `phone` — Android app. Install `UltraCalculator.apk`. You do not need Pydroid.
+- `android` — Kivy copy of the same engine, if you want to pack it another way
 
 The interface is English, Persian, and Finnish. Menus, buttons, messages, and formula names come from translation files. They are not hardcoded. Persian is right-to-left in the web app.
 
@@ -34,13 +35,9 @@ python3 run.py
 
 The web server listens on `0.0.0.0:5000`. Open that port in a browser.
 
-Android / phone layout (Kivy). On a computer it opens a tall window so you can try it. On a phone, copy the `android` folder into Pydroid 3 and run `run.py`. To make an installable APK on Linux: `cd android` then `buildozer android debug`.
+There is also a real Android app. Install `UltraCalculator.apk` on the phone. You do not need Pydroid. The first launch needs internet so the engine can load.
 
-```
-cd android
-pip install -r requirements.txt
-python3 run.py
-```
+The project that builds that APK is in `phone/`.
 
 ---
 

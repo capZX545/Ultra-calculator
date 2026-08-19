@@ -1,0 +1,2 @@
+rootProject.name = "UltraCalculator"
+include ":app"
