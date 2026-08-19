@@ -8,6 +8,8 @@
     ans: 0,
     strings: {},
     formulas: [],
+    algos: [],
+    currentAlgo: null,
     current: null,
     lookupPick: null,
     lastField: null,
@@ -35,7 +37,7 @@
     sqrt:"sqrt(", "n!":"factorial(", abs:"abs(",
     "1/x":"1/(", pi:"pi", e:"e", ans:"ans", EE:"*10**",
   };
-  const MODES = ["calc", "formulas", "poly", "numeric", "chem", "elements", "sources"];
+  const MODES = ["calc", "formulas", "poly", "numeric", "algo", "chem", "elements", "sources"];
 
   const $ = (id) => document.getElementById(id);
   const screen = $("screen");
@@ -104,6 +106,10 @@
     $("tab-formulas").textContent = s.formulas || "Formulas";
     $("tab-poly").textContent = s.poly || "Polynomial";
     $("tab-numeric").textContent = s.numeric || "Numerical";
+    if ($("tab-algo")) $("tab-algo").textContent = s.algo || "Algorithms";
+    if ($("btn-arun")) $("btn-arun").textContent = s.run || "Run";
+    if ($("algo-search-title")) $("algo-search-title").textContent = s.search || "Search";
+    if ($("ahint")) $("ahint").textContent = s.algo_hint || "";
     if ($("tab-chem")) $("tab-chem").textContent = s.chem || "Chemistry";
     if ($("tab-elements")) $("tab-elements").textContent = s.elements || "Elements";
     if ($("tab-sources")) $("tab-sources").textContent = s.sources || "Sources";
@@ -143,6 +149,8 @@
       $("c6").focus();
     } else if (mode === "numeric" && $("n-func")) {
       $("n-func").focus();
+    } else if (mode === "algo" && $("algo-search")) {
+      $("algo-search").focus();
     } else if (mode === "chem" && $("chem-eq")) {
       $("chem-eq").focus();
     } else if (mode === "elements" && $("el-q")) {
@@ -518,6 +526,30 @@
   $("n-der").addEventListener("click", () => doNumeric("deriv"));
   $("n-ode").addEventListener("click", () => doNumeric("ode"));
 
+  if ($("algo-search")) $("algo-search").addEventListener("input", loadAlgos);
+  if ($("algo-cat")) $("algo-cat").addEventListener("change", () => {
+    if ($("algo-cat")) $("algo-cat").dataset.ready = "1";
+    loadAlgos();
+  });
+  if ($("algo-search")) {
+    $("algo-search").addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter") {
+        ev.preventDefault();
+        const first = $("alist") && $("alist").querySelector("li");
+        if (first) first.click();
+      }
+    });
+  }
+  if ($("btn-arun")) $("btn-arun").addEventListener("click", runAlgoNow);
+  if ($("afields")) {
+    $("afields").addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter" && ev.target && ev.target.matches("input")) {
+        ev.preventDefault();
+        runAlgoNow();
+      }
+    });
+  }
+
   if ($("chem-bal")) {
     $("chem-bal").addEventListener("click", async () => {
       const out = await post("/api/balance", { eq: $("chem-eq").value });
@@ -543,6 +575,84 @@
         $("chem-bal").click();
       }
     });
+  }
+
+  async function loadAlgos() {
+    if (!$("alist")) return;
+    const q = ($("algo-search") && $("algo-search").value) || "";
+    const cat = ($("algo-cat") && $("algo-cat").value) || "";
+    const data = await get("/api/algos?lang=" + encodeURIComponent(state.lang) + "&q=" + encodeURIComponent(q) + "&category=" + encodeURIComponent(cat));
+    const sel = $("algo-cat");
+    if (sel && !sel.dataset.ready) {
+      sel.innerHTML = "";
+      const all = document.createElement("option");
+      all.value = "";
+      all.textContent = "—";
+      sel.appendChild(all);
+      ((data && data.categories) || []).forEach((c) => {
+        const opt = document.createElement("option");
+        opt.value = c.id;
+        opt.textContent = (c.id.split(".")[1] || c.id) + " / " + c.label;
+        sel.appendChild(opt);
+      });
+      sel.dataset.ready = "1";
+    }
+    state.algos = (data && data.items) || [];
+    const box = $("alist");
+    box.innerHTML = "";
+    state.algos.forEach((item, i) => {
+      const li = document.createElement("li");
+      li.textContent = item.name;
+      li.tabIndex = 0;
+      li.addEventListener("click", () => selectAlgo(i, li));
+      li.addEventListener("keydown", (ev) => {
+        if (ev.key === "Enter") {
+          ev.preventDefault();
+          selectAlgo(i, li);
+        }
+      });
+      box.appendChild(li);
+    });
+  }
+
+  function selectAlgo(index, li) {
+    document.querySelectorAll("#alist li").forEach((n) => n.classList.remove("on"));
+    if (li) li.classList.add("on");
+    state.currentAlgo = state.algos[index];
+    $("aname").textContent = state.currentAlgo.name;
+    const box = $("afields");
+    box.innerHTML = "";
+    const params = state.currentAlgo.params || {};
+    Object.keys(params).forEach((name) => {
+      const meta = params[name];
+      const row = document.createElement("div");
+      row.className = "field";
+      const lab = document.createElement("span");
+      const nm = (meta.name && (meta.name[state.lang] || meta.name.en)) || name;
+      lab.textContent = name + "  " + nm;
+      const input = document.createElement("input");
+      input.dataset.param = name;
+      input.value = meta.default || "";
+      row.appendChild(lab);
+      row.appendChild(input);
+      box.appendChild(row);
+    });
+    const first = box.querySelector("input");
+    if (first) first.focus();
+    $("aresult").textContent = "";
+  }
+
+  async function runAlgoNow() {
+    if (!state.currentAlgo) {
+      $("aresult").textContent = (state.strings.pick_algo || "Pick an algorithm.");
+      return;
+    }
+    const values = {};
+    document.querySelectorAll("#afields input[data-param]").forEach((el) => {
+      values[el.dataset.param] = el.value;
+    });
+    const out = await post("/api/algo", { id: state.currentAlgo.id, values: values, eng: state.eng });
+    $("aresult").textContent = (out.text || "0") + (out.detail ? "\n" + out.detail : "");
   }
 
   async function loadElements() {
@@ -656,7 +766,7 @@
   document.addEventListener("keydown", (ev) => {
     if (ev.altKey && !ev.ctrlKey && !ev.metaKey) {
       const n = ev.key;
-      if (n >= "1" && n <= "7") {
+      if (n >= "1" && n <= "8") {
         ev.preventDefault();
         showMode(MODES[Number(n) - 1]);
         return;

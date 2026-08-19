@@ -38,8 +38,9 @@ def fix_expr(raw, implicit=False):
         return "0"
     text = text.translate(DIGITS).translate(OPS)
     text = text.replace("π", "pi").replace("√", "sqrt").replace("^", "**")
-    text = re.sub(r"(\d),(\d)", r"\1.\2", text)
     text = re.sub(r"\s+", "", text)
+    if text.count(",") == 1 and not re.search(r"[A-Za-z_]", text):
+        text = text.replace(",", ".")
     text = re.sub(r"[^0-9A-Za-z_+\-*/().,=<>!]", "", text)
     if implicit:
         text = re.sub(r"(\d)([A-Za-z_])", r"\1*\2", text)

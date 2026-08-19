@@ -7,6 +7,7 @@ from pathlib import Path
 
 from flask import Flask, jsonify, render_template, request
 
+import algorithms
 import chemtools
 import core
 import lookup
@@ -139,6 +140,22 @@ def api_balance():
 def api_molar():
     body = request.get_json(silent=True) or {}
     return jsonify(chemtools.molar_mass(body.get("formula", "")))
+
+
+@app.get("/api/algos")
+def api_algos():
+    lang = request.args.get("lang", "en")
+    query = request.args.get("q", "")
+    category = request.args.get("category") or None
+    cats, _, _ = algorithms.catalog()
+    labeled = [{"id": key, "label": names.get(lang) or names.get("en")} for key, names in sorted(cats.items())]
+    return jsonify({"categories": labeled, "items": algorithms.list_algos(query, lang, category)})
+
+
+@app.post("/api/algo")
+def api_algo():
+    body = request.get_json(silent=True) or {}
+    return jsonify(algorithms.run_algo(body.get("id"), body.get("values") or {}, eng=bool(body.get("eng"))))
 
 
 @app.get("/api/lookup")

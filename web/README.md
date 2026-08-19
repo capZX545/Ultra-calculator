@@ -20,6 +20,7 @@ Needs Flask, numpy, scipy, sympy.
 - **Formulas** — 2031 formulas in 101 categories. One unknown, or several equations
 - **Polynomial** — up to degree 6, value, roots, derivative, integral
 - **Numerical** — root, integral, derivative, first-order ODE
+- **Algorithms** — 130 named methods. The screen also accepts `diff`, `integrate`, `summation`, `limit`, `factor`, `solveeq`
 - **Chemistry** — balancer and molar mass
 - **Elements** — full periodic table with isotopes
 - **Sources** — links and notes

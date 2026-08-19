@@ -63,6 +63,13 @@ aside h2, h2 { font-size: 14px; color: var(--accent); margin: 0 0 8px; }
 #flist li { padding: 6px 8px; cursor: pointer; }
 #flist li:hover, #flist li.on { background: var(--btn2); }
 .solver { background: var(--panel); padding: 14px; }
+#alist { list-style: none; margin: 8px 0 0; padding: 0; overflow: auto; height: 480px; background: var(--panel); }
+#alist li { padding: 6px 8px; cursor: pointer; }
+#alist li:hover, #alist li.on { background: var(--btn2); }
+#algo-cat { width: 100%; height: 480px; background: var(--panel); color: var(--fg); }
+#afields .field { grid-template-columns: 1fr 180px; }
+#afields input { background: var(--ink); width: 100%; }
+#aresult { background: var(--ink); padding: 10px; min-height: 80px; font-family: Consolas, monospace; white-space: pre-wrap; }
 #fexpr, #fresult, #poly-out, #n-out {
   background: var(--ink); padding: 10px; min-height: 48px; overflow: auto;
   font-family: Consolas, monospace; white-space: pre-wrap;

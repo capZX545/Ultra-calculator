@@ -19,6 +19,51 @@ from clean import fix_expr, fix_number
 
 
 TRANS = standard_transformations + (implicit_multiplication_application,)
+
+
+def _cas_integrate(*args):
+    try:
+        if len(args) == 4:
+            return sp.integrate(args[0], (args[1], args[2], args[3]))
+        if len(args) == 2:
+            return sp.integrate(args[0], args[1])
+        return sp.integrate(*args)
+    except Exception:
+        return sp.Integer(0)
+
+
+def _cas_sum(*args):
+    try:
+        if len(args) == 4:
+            return sp.summation(args[0], (args[1], args[2], args[3]))
+        return sp.summation(*args)
+    except Exception:
+        return sp.Integer(0)
+
+
+def _cas_prod(*args):
+    try:
+        if len(args) == 4:
+            return sp.product(args[0], (args[1], args[2], args[3]))
+        return sp.product(*args)
+    except Exception:
+        return sp.Integer(0)
+
+
+def _cas_solve(*args):
+    try:
+        return sp.solve(*args)
+    except Exception:
+        return []
+
+
+def _cas_series(*args):
+    try:
+        return sp.series(*args)
+    except Exception:
+        return sp.Integer(0)
+
+
 NS = {
     "pi": sp.pi,
     "sqrt": sp.sqrt,
@@ -118,6 +163,19 @@ NS = {
     "sign": sp.sign,
     "Min": sp.Min,
     "Max": sp.Max,
+    "diff": sp.diff,
+    "integrate": _cas_integrate,
+    "summation": _cas_sum,
+    "product": _cas_prod,
+    "limit": sp.limit,
+    "series": _cas_series,
+    "factor": sp.factor,
+    "expand": sp.expand,
+    "simplify": sp.simplify,
+    "apart": sp.apart,
+    "together": sp.together,
+    "cancel": sp.cancel,
+    "solveeq": _cas_solve,
 }
 CALC_NS = dict(NS)
 CALC_NS.update({"pi": sp.pi, "e": sp.E, "oo": sp.oo, "j": sp.I})
@@ -221,14 +279,42 @@ def eval_line(text, angle="DEG", eng=False, ans=0):
         if "=" in cleaned and cleaned.count("=") == 1:
             left, right = cleaned.split("=")
             return solve_one(left, right, ["x"], eng)
-        expr = to_sym(cleaned, calc=True).subs({"ans": ans, "ANS": ans})
-        if angle == "DEG":
+        expr = to_sym(cleaned, calc=True)
+        if isinstance(expr, (list, tuple, sp.Tuple)):
+            text = ", ".join(str(v) for v in expr)
+            return {"ok": True, "value": 0, "text": text, "exact": text}
+        expr = expr.subs({"ans": ans, "ANS": ans})
+        if angle == "DEG" and not getattr(expr, "free_symbols", None):
             expr = expr.replace(
                 lambda e: e.func in (sp.sin, sp.cos, sp.tan),
                 lambda e: e.func(e.args[0] * sp.pi / 180),
             )
-        value = _num(sp.simplify(expr))
-        return {"ok": True, "value": value if not isinstance(value, complex) else [value.real, value.imag], "text": pretty(value, eng), "exact": str(sp.simplify(expr))}
+        if isinstance(expr, (list, tuple, sp.Tuple)):
+            text = ", ".join(str(v) for v in expr)
+            return {"ok": True, "value": 0, "text": text, "exact": text}
+        try:
+            expr = expr.doit()
+        except Exception:
+            pass
+        keep = cleaned.startswith(("factor(", "expand(", "apart(", "together(", "series(", "simplify(", "cancel("))
+        if keep:
+            simp = expr
+        else:
+            try:
+                simp = sp.simplify(expr)
+            except Exception:
+                simp = expr
+        if isinstance(simp, (list, tuple, sp.Tuple)):
+            text = ", ".join(str(v) for v in simp)
+            return {"ok": True, "value": 0, "text": text, "exact": text}
+        if isinstance(simp, sp.MatrixBase):
+            text = str(simp)
+            return {"ok": True, "value": 0, "text": text, "exact": text}
+        if getattr(simp, "free_symbols", None):
+            text = str(simp)
+            return {"ok": True, "value": 0, "text": text, "exact": text}
+        value = _num(simp)
+        return {"ok": True, "value": value if not isinstance(value, complex) else [value.real, value.imag], "text": pretty(value, eng), "exact": str(simp)}
     except Exception:
         return {"ok": True, "value": 0, "text": "0", "exact": "0"}
 

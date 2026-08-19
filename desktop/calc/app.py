@@ -8,6 +8,7 @@ from pathlib import Path
 import tkinter as tk
 from tkinter import ttk
 
+from .algorithms import catalog as algo_catalog, list_algos, run_algo
 from .chemtools import balance_equation, find_element, list_elements, molar_mass
 from .engine import DesktopEngine
 from .i18n import t
@@ -78,10 +79,11 @@ class UltraDesktop(tk.Tk):
         self.btn_form = tk.Button(top, command=lambda: self._set_mode("formulas"))
         self.btn_poly = tk.Button(top, command=lambda: self._set_mode("poly"))
         self.btn_num = tk.Button(top, command=lambda: self._set_mode("numeric"))
+        self.btn_algo = tk.Button(top, command=lambda: self._set_mode("algo"))
         self.btn_chem = tk.Button(top, command=lambda: self._set_mode("chem"))
         self.btn_el = tk.Button(top, command=lambda: self._set_mode("elements"))
         self.btn_src = tk.Button(top, command=lambda: self._set_mode("sources"))
-        for b in (self.btn_calc, self.btn_form, self.btn_poly, self.btn_num, self.btn_chem, self.btn_el, self.btn_src):
+        for b in (self.btn_calc, self.btn_form, self.btn_poly, self.btn_num, self.btn_algo, self.btn_chem, self.btn_el, self.btn_src):
             self._paint_btn(b, BTN)
             b.pack(side="left", padx=3)
         self.lang_box = ttk.Combobox(top, values=["en", "fa", "fi"], width=6, state="readonly")
@@ -94,13 +96,14 @@ class UltraDesktop(tk.Tk):
         self._build_lookup()
 
         self.frames = {}
-        for name in ("calc", "formulas", "poly", "numeric", "chem", "elements", "sources"):
+        for name in ("calc", "formulas", "poly", "numeric", "algo", "chem", "elements", "sources"):
             fr = tk.Frame(self, bg=BG)
             self.frames[name] = fr
         self._build_calc(self.frames["calc"])
         self._build_formulas(self.frames["formulas"])
         self._build_poly(self.frames["poly"])
         self._build_numeric(self.frames["numeric"])
+        self._build_algo(self.frames["algo"])
         self._build_chem(self.frames["chem"])
         self._build_elements(self.frames["elements"])
         self._build_sources(self.frames["sources"])
@@ -131,6 +134,7 @@ class UltraDesktop(tk.Tk):
             "formulas": self.btn_form,
             "poly": self.btn_poly,
             "numeric": self.btn_num,
+            "algo": self.btn_algo,
             "chem": self.btn_chem,
             "elements": self.btn_el,
             "sources": self.btn_src,
@@ -148,6 +152,8 @@ class UltraDesktop(tk.Tk):
             self._show_formula(self.formula_id)
         if hasattr(self, "el_list"):
             self._fill_elements()
+        if hasattr(self, "algo_list"):
+            self._fill_algos()
 
     def _refresh_texts(self) -> None:
         self.title(self.tr("app_title"))
@@ -155,6 +161,13 @@ class UltraDesktop(tk.Tk):
         self.btn_form.configure(text=self.tr("mode_formulas"))
         self.btn_poly.configure(text=self.tr("mode_poly"))
         self.btn_num.configure(text=self.tr("mode_numeric"))
+        if hasattr(self, "btn_algo"):
+            self.btn_algo.configure(text=self.tr("mode_algo"))
+        if hasattr(self, "algo_run_btn"):
+            self.algo_run_btn.configure(text=self.tr("run"))
+        if hasattr(self, "algo_search_lbl"):
+            self.algo_search_lbl.configure(text=self.tr("search"))
+            self.algo_cat_lbl.configure(text=self.tr("categories"))
         self.btn_chem.configure(text=self.tr("mode_chem"))
         self.btn_el.configure(text=self.tr("mode_elements"))
         self.btn_src.configure(text=self.tr("mode_sources"))
@@ -294,6 +307,8 @@ class UltraDesktop(tk.Tk):
             self.coeff_entries[-1].focus_set()
         elif mode == "numeric" and hasattr(self, "n_func"):
             self.n_func.focus_set()
+        elif mode == "algo" and hasattr(self, "algo_search"):
+            self.algo_search.focus_set()
         elif mode == "chem" and hasattr(self, "chem_eq"):
             self.chem_eq.focus_set()
         elif mode == "elements" and hasattr(self, "el_q"):
@@ -980,6 +995,126 @@ class UltraDesktop(tk.Tk):
             lines.append(f"{xv:10.5g}   {yv:10.5g}")
         self.n_out.delete("1.0", "end")
         self.n_out.insert("1.0", "\n".join(lines))
+
+    def _build_algo(self, root: tk.Frame) -> None:
+        left = tk.Frame(root, bg=BG, width=240)
+        left.pack(side="left", fill="y")
+        mid = tk.Frame(root, bg=BG, width=280)
+        mid.pack(side="left", fill="both", expand=False, padx=8)
+        right = tk.Frame(root, bg=PANEL)
+        right.pack(side="left", fill="both", expand=True)
+
+        self.algo_cat_lbl = tk.Label(left, bg=BG, fg=ACCENT, font=("Segoe UI", 11, "bold"))
+        self.algo_cat_lbl.pack(anchor="w")
+        self.algo_cats = tk.Listbox(left, bg=PANEL, fg=FG, highlightthickness=0, bd=0, font=("Segoe UI", 10), width=30)
+        self.algo_cats.pack(fill="both", expand=True, pady=6)
+        self.algo_cats.bind("<<ListboxSelect>>", lambda e: self._fill_algos())
+
+        self.algo_search_lbl = tk.Label(mid, bg=BG, fg=ACCENT, font=("Segoe UI", 11, "bold"))
+        self.algo_search_lbl.pack(anchor="w")
+        self.algo_q = tk.StringVar()
+        self.algo_q.trace_add("write", lambda *_: self._fill_algos())
+        self.algo_search = tk.Entry(mid, textvariable=self.algo_q, bg="#11141a", fg=FG, insertbackground=FG, relief="flat")
+        self.algo_search.pack(fill="x", pady=6)
+        self.algo_search.bind("<Return>", self._pick_first_algo)
+        self.algo_list = tk.Listbox(mid, bg=PANEL, fg=FG, highlightthickness=0, bd=0, font=("Segoe UI", 10))
+        self.algo_list.pack(fill="both", expand=True)
+        self.algo_list.bind("<<ListboxSelect>>", self._on_algo_pick)
+        self.algo_list.bind("<Return>", self._on_algo_pick)
+
+        self.algo_title = tk.Label(right, bg=PANEL, fg=ACCENT, font=("Segoe UI", 14, "bold"), wraplength=480, justify="left")
+        self.algo_title.pack(anchor="w", padx=12, pady=(12, 4))
+        self.algo_hint = tk.Label(right, bg=PANEL, fg=MUTED, font=("Segoe UI", 9), wraplength=480, justify="left")
+        self.algo_hint.pack(anchor="w", padx=12)
+        self.algo_box = tk.Frame(right, bg=PANEL)
+        self.algo_box.pack(fill="both", expand=True, padx=12, pady=8)
+        bot = tk.Frame(right, bg=PANEL)
+        bot.pack(fill="x", padx=12, pady=8)
+        self.algo_run_btn = tk.Button(bot, command=self._run_algo)
+        self._paint_btn(self.algo_run_btn, ACCENT, "#1c1f24")
+        self.algo_run_btn.pack(side="left")
+        self.algo_out = tk.Text(right, bg="#11141a", fg=FG, relief="flat", height=10, font=("Consolas", 12))
+        self.algo_out.pack(fill="both", expand=True, padx=12, pady=(0, 12))
+        self.algo_id = None
+        self.algo_fields = {}
+        self.algo_items = []
+        self._fill_algo_cats()
+        self._fill_algos()
+
+    def _fill_algo_cats(self) -> None:
+        cats, _, _ = algo_catalog()
+        self.algo_cats.delete(0, "end")
+        self.algo_cat_keys = ["all"]
+        self.algo_cats.insert("end", "—")
+        for key in sorted(cats):
+            names = cats[key]
+            label = names.get(self.lang) or names.get("en") or key
+            self.algo_cat_keys.append(key)
+            self.algo_cats.insert("end", f"{key.split('.', 1)[-1]} / {label}")
+
+    def _selected_algo_cat(self) -> str | None:
+        sel = self.algo_cats.curselection()
+        if not sel:
+            return None
+        key = self.algo_cat_keys[sel[0]]
+        return None if key == "all" else key
+
+    def _fill_algos(self) -> None:
+        q = self.algo_q.get() if hasattr(self, "algo_q") else ""
+        cat = self._selected_algo_cat() if hasattr(self, "algo_cats") else None
+        items = list_algos(q, self.lang, cat)
+        self.algo_items = items
+        self.algo_list.delete(0, "end")
+        for it in items:
+            self.algo_list.insert("end", it["name"])
+
+    def _pick_first_algo(self, _evt=None):
+        if not self.algo_items:
+            return "break"
+        self.algo_list.selection_clear(0, "end")
+        self.algo_list.selection_set(0)
+        self.algo_list.activate(0)
+        self._show_algo(self.algo_items[0])
+        return "break"
+
+    def _on_algo_pick(self, _evt=None) -> None:
+        sel = self.algo_list.curselection()
+        if not sel:
+            return
+        self._show_algo(self.algo_items[sel[0]])
+
+    def _show_algo(self, item: dict) -> None:
+        self.algo_id = item["id"]
+        self.algo_title.configure(text=item["name"])
+        self.algo_hint.configure(text=self.tr("algo_hint"))
+        for child in self.algo_box.winfo_children():
+            child.destroy()
+        self.algo_fields = {}
+        for name, meta in (item.get("params") or {}).items():
+            row = tk.Frame(self.algo_box, bg=PANEL)
+            row.pack(fill="x", pady=3)
+            label = (meta.get("name") or {}).get(self.lang) or (meta.get("name") or {}).get("en") or name
+            tk.Label(row, text=f"{name}  {label}", bg=PANEL, fg=FG, width=28, anchor="w").pack(side="left")
+            ent = tk.Entry(row, bg="#11141a", fg=FG, insertbackground=FG, relief="flat")
+            ent.insert(0, str(meta.get("default") or ""))
+            ent.pack(side="left", fill="x", expand=True)
+            ent.bind("<Return>", lambda e: self._run_algo() or "break")
+            self.algo_fields[name] = ent
+        self.algo_out.delete("1.0", "end")
+        if self.algo_fields:
+            next(iter(self.algo_fields.values())).focus_set()
+
+    def _run_algo(self) -> None:
+        if not self.algo_id:
+            self.algo_out.delete("1.0", "end")
+            self.algo_out.insert("1.0", self.tr("pick_algo"))
+            return
+        values = {name: ent.get() for name, ent in self.algo_fields.items()}
+        out = run_algo(self.algo_id, values, self.engine.eng)
+        text = out.get("text") or "0"
+        extra = out.get("detail") or ""
+        self.algo_out.delete("1.0", "end")
+        self.algo_out.insert("1.0", text + (("\n" + extra) if extra else ""))
 
     def _build_chem(self, root: tk.Frame) -> None:
         tk.Label(root, text="H2 + O2 = H2O    |    Ca(OH)2", bg=BG, fg=MUTED).pack(anchor="w")

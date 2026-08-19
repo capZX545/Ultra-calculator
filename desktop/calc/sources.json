@@ -91,6 +91,19 @@
         "fi": "307k identiteettia. Perheet lasketaan moottorilla."
       }
     },
+    "algo": {
+      "name": {
+        "en": "Algorithms and computer algebra",
+        "fa": "الگوریتم و جبر رایانه ای",
+        "fi": "Algoritmit ja CAS"
+      },
+      "url": "https://docs.scipy.org/doc/scipy/reference/",
+      "note": {
+        "en": "Named algorithms on the Algorithms page are implemented with SymPy and SciPy and actually run. This is not a copy of 50,000 encyclopedia identities.",
+        "fa": "الگوریتم‌های صفحه الگوریتم با SymPy و SciPy اجرا می‌شوند. پنجاه هزار اتحاد دانشنامه کپی نشد.",
+        "fi": "Algoritmisivun menetelmat lasketaan SymPylla ja SciPylla. 50 000 identiteettia ei kopioitu."
+      }
+    },
     "std": {
       "name": {
         "en": "Standard STEM textbooks",

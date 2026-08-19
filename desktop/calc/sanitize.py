@@ -80,8 +80,9 @@ def clean_expression(raw: str, implicit: bool = False) -> str:
     text = text.translate(_DIGIT_MAP)
     for src, dst in _OP_MAP.items():
         text = text.replace(src, dst)
-    text = re.sub(r"(\d),(\d)", r"\1.\2", text)
     text = re.sub(r"\s+", "", text)
+    if text.count(",") == 1 and not re.search(r"[A-Za-z_]", text):
+        text = text.replace(",", ".")
     text = text.replace("**", "^").replace("^", "**")
     text = re.sub(r"[^0-9A-Za-z_+\-*/().,=<>!]", "", text)
     if implicit:

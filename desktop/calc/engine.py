@@ -18,6 +18,51 @@ from .sanitize import clean_expression, clean_number
 
 
 _TRANSFORMS = standard_transformations + (implicit_multiplication_application,)
+
+
+def _cas_integrate(*args):
+    try:
+        if len(args) == 4:
+            return sp.integrate(args[0], (args[1], args[2], args[3]))
+        if len(args) == 2:
+            return sp.integrate(args[0], args[1])
+        return sp.integrate(*args)
+    except Exception:
+        return sp.Integer(0)
+
+
+def _cas_sum(*args):
+    try:
+        if len(args) == 4:
+            return sp.summation(args[0], (args[1], args[2], args[3]))
+        return sp.summation(*args)
+    except Exception:
+        return sp.Integer(0)
+
+
+def _cas_prod(*args):
+    try:
+        if len(args) == 4:
+            return sp.product(args[0], (args[1], args[2], args[3]))
+        return sp.product(*args)
+    except Exception:
+        return sp.Integer(0)
+
+
+def _cas_solve(*args):
+    try:
+        return sp.solve(*args)
+    except Exception:
+        return []
+
+
+def _cas_series(*args):
+    try:
+        return sp.series(*args)
+    except Exception:
+        return sp.Integer(0)
+
+
 _FUNCS = {
     "pi": sp.pi,
     "sqrt": sp.sqrt,
@@ -118,6 +163,19 @@ _FUNCS = {
     "max": sp.Max,
     "Min": sp.Min,
     "Max": sp.Max,
+    "diff": sp.diff,
+    "integrate": _cas_integrate,
+    "summation": _cas_sum,
+    "product": _cas_prod,
+    "limit": sp.limit,
+    "series": _cas_series,
+    "factor": sp.factor,
+    "expand": sp.expand,
+    "simplify": sp.simplify,
+    "apart": sp.apart,
+    "together": sp.together,
+    "cancel": sp.cancel,
+    "solveeq": _cas_solve,
 }
 _CALC_CONST = {"pi": sp.pi, "e": sp.E, "oo": sp.oo, "j": sp.I}
 
@@ -227,20 +285,48 @@ class DesktopEngine:
                 left, right = cleaned.split("=")
                 return self.solve_equation(left, right, ["x"])
             expr = self.parse(cleaned, calc=True)
+            if isinstance(expr, (list, tuple, sp.Tuple)):
+                text = ", ".join(str(v) for v in expr)
+                return {"ok": True, "value": 0.0, "text": text, "exact": text}
             expr = expr.subs({"ans": self.ans, "ANS": self.ans})
-            if self.angle == "DEG":
+            if self.angle == "DEG" and not getattr(expr, "free_symbols", None):
                 expr = expr.replace(
                     lambda e: e.func in (sp.sin, sp.cos, sp.tan),
                     lambda e: e.func(e.args[0] * sp.pi / 180),
                 )
-            value = sp.N(sp.simplify(expr))
+            if isinstance(expr, (list, tuple, sp.Tuple)):
+                text = ", ".join(str(v) for v in expr)
+                return {"ok": True, "value": 0.0, "text": text, "exact": text}
+            try:
+                expr = expr.doit()
+            except Exception:
+                pass
+            keep = cleaned.startswith(("factor(", "expand(", "apart(", "together(", "series(", "simplify(", "cancel("))
+            if keep:
+                simp = expr
+            else:
+                try:
+                    simp = sp.simplify(expr)
+                except Exception:
+                    simp = expr
+            if isinstance(simp, (list, tuple, sp.Tuple)):
+                text = ", ".join(str(v) for v in simp)
+                return {"ok": True, "value": 0.0, "text": text, "exact": text}
+            if isinstance(simp, sp.MatrixBase):
+                text = str(simp)
+                return {"ok": True, "value": 0.0, "text": text, "exact": text}
+            frees = getattr(simp, "free_symbols", None)
+            if frees:
+                text = str(simp)
+                return {"ok": True, "value": 0.0, "text": text, "exact": text}
+            value = sp.N(simp)
             num = _as_float(value)
             self.ans = num.real if isinstance(num, complex) and abs(num.imag) < 1e-12 else num
             return {
                 "ok": True,
                 "value": num,
                 "text": format_number(num, self.eng),
-                "exact": str(sp.simplify(expr)),
+                "exact": str(simp),
             }
         except Exception:
             return {"ok": True, "value": 0.0, "text": "0", "exact": "0"}

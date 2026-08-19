@@ -14,9 +14,10 @@
       <button data-mode="formulas" class="tab" id="tab-formulas" title="Alt+2">Formulas</button>
       <button data-mode="poly" class="tab" id="tab-poly" title="Alt+3">Polynomial</button>
       <button data-mode="numeric" class="tab" id="tab-numeric" title="Alt+4">Numerical</button>
-      <button data-mode="chem" class="tab" id="tab-chem" title="Alt+5">Chemistry</button>
-      <button data-mode="elements" class="tab" id="tab-elements" title="Alt+6">Elements</button>
-      <button data-mode="sources" class="tab" id="tab-sources" title="Alt+7">Sources</button>
+      <button data-mode="algo" class="tab" id="tab-algo" title="Alt+5">Algorithms</button>
+      <button data-mode="chem" class="tab" id="tab-chem" title="Alt+6">Chemistry</button>
+      <button data-mode="elements" class="tab" id="tab-elements" title="Alt+7">Elements</button>
+      <button data-mode="sources" class="tab" id="tab-sources" title="Alt+8">Sources</button>
     </nav>
     <label class="lang">
       <span id="lang-label">Language</span>
@@ -107,6 +108,27 @@
         <button id="n-ode" type="button">ODE</button>
       </div>
       <pre id="n-out"></pre>
+    </section>
+
+    <section id="view-algo" class="view">
+      <div class="formula-grid">
+        <div>
+          <h2 id="algo-cat-title">Categories</h2>
+          <select id="algo-cat" size="18"></select>
+        </div>
+        <div>
+          <h2 id="algo-search-title">Search</h2>
+          <input id="algo-search" type="search" autocomplete="off">
+          <ul id="alist"></ul>
+        </div>
+        <div class="solver">
+          <h2 id="aname">—</h2>
+          <p class="hint" id="ahint"></p>
+          <div id="afields"></div>
+          <button id="btn-arun" class="accent" type="button">Run</button>
+          <pre id="aresult"></pre>
+        </div>
+      </div>
     </section>
 
     <section id="view-chem" class="view">

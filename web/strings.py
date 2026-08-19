@@ -7,6 +7,9 @@ UI = {
         "formulas": "Formulas",
         "poly": "Polynomial",
         "numeric": "Numerical",
+        "algo": "Algorithms",
+        "pick_algo": "Pick an algorithm.",
+        "algo_hint": "Fill the fields and press Enter. Matrices: 1, 2; 3, 4. Lists: 1, 2, 3.",
         "search": "Search",
         "solve": "Solve",
         "unknown": "Unknown",
@@ -41,7 +44,7 @@ UI = {
         "lookup_hint": "H2O, Fe, Fe-56, R, g",
         "insert": "Insert",
         "lookup_need_field": "Click the field you want, then insert.",
-        "kbd_hint": "Type in the screen. Enter calculates. Esc clears. Alt+1 to Alt+7 switch pages. Alt+L or / opens lookup. You do not have to use the mouse.",
+        "kbd_hint": "Type in the screen. Enter calculates. Esc clears. Alt+1 to Alt+8 switch pages. You can type summation(k,k,1,100), diff(x**3,x), integrate(x**2,x,0,1).",
     },
     "fa": {
         "title": "ماشین حساب اولترا",
@@ -49,6 +52,9 @@ UI = {
         "formulas": "فرمول ها",
         "poly": "چندجمله ای",
         "numeric": "عددی",
+        "algo": "الگوریتم ها",
+        "pick_algo": "یک الگوریتم انتخاب کن.",
+        "algo_hint": "خانه‌ها را پر کن و Enter بزن. ماتریس: 1, 2; 3, 4.",
         "search": "جستجو",
         "solve": "حل",
         "unknown": "مجهول",
@@ -83,7 +89,7 @@ UI = {
         "lookup_hint": "H2O, Fe, Fe-56, R, g",
         "insert": "بگذار",
         "lookup_need_field": "اول خانه را انتخاب کن، بعد بگذار.",
-        "kbd_hint": "توی صفحه تایپ کن. Enter حساب می‌کند. Esc پاک می‌کند. Alt+1 تا Alt+7 صفحه را عوض می‌کند. Alt+L یا / جستجوی سریع است. لازم نیست با موس بنویسی.",
+        "kbd_hint": "توی صفحه تایپ کن. Enter حساب می‌کند. Esc پاک می‌کند. Alt+1 تا Alt+8 صفحه را عوض می‌کند. می‌توانی بنویسی summation(k,k,1,100) یا diff(x**3,x).",
     },
     "fi": {
         "title": "Ultra-laskin",
@@ -125,7 +131,7 @@ UI = {
         "lookup_hint": "H2O, Fe, Fe-56, R, g",
         "insert": "Lisaa",
         "lookup_need_field": "Napsauta kenttaa, sitten Lisaa.",
-        "kbd_hint": "Kirjoita nayttoon. Enter laskee. Esc tyhjentaa. Alt+1–7 vaihtaa sivua. Alt+L tai / avaa haun. Hiirta ei tarvita.",
+        "kbd_hint": "Kirjoita nayttoon. Enter laskee. Esc tyhjentaa. Alt+1–8 vaihtaa sivua. Voit kirjoittaa summation(k,k,1,100) tai diff(x**3,x).",
     },
 }
 
