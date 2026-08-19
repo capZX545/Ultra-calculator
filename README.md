@@ -1,177 +1,128 @@
 # Ultra Calculator
 
-این مخزن دو برنامهٔ جدا است که یک کار را می‌کنند: حساب کردن. یکی روی میزکار باز می‌شود، یکی توی مرورگر. کدشان به هم وصل نیست. هیچ‌کدام از پوشهٔ دیگری چیزی import نمی‌کند. هر کدام موتور خودش، فایل فرمول خودش، جدول تناوبی خودش و ترجمهٔ خودش را دارد. فهرست فرمول‌ها یکی است؛ اگر فرمولی این‌جا باشد، توی هر دو هست.
+This repo is two programs that do the same job: they calculate. One opens as a desktop window. The other runs in a browser. The two codebases are not linked. Neither folder imports the other. Each one has its own engine, its own formula file, its own periodic table, and its own translation files. The formula list is the same. If a formula is here, it is in both programs.
 
-- `desktop` — برنامهٔ پنجره‌ای با tkinter
-- `web` — برنامهٔ مرورگر با Flask
+- `desktop` — window app (tkinter)
+- `web` — browser app (Flask)
 
-زبان رابط: انگلیسی، فارسی، فنلاندی. منوها، دکمه‌ها، پیام‌ها و اسم فرمول‌ها از فایل ترجمه می‌آیند، توی کد سخت نشده‌اند. فارسی توی وب راست‌چین است.
+The interface is English, Persian, and Finnish. Menus, buttons, messages, and formula names come from translation files. They are not hardcoded. Persian is right-to-left in the web app.
 
-ورودی خراب برنامه را نمی‌خواباند. خطا را می‌گیرد و یک نتیجهٔ قابل نمایش می‌دهد؛ stack trace به کاربر نشان داده نمی‌شود.
+Bad input does not crash the program. Errors are caught and a usable result is shown. The user never sees a stack trace.
 
 ---
 
-## چه کارهایی می‌کند
+## What it does
 
-### ماشین حساب مهندسی
+### Engineering calculator
 
-صفحه کلید معمولی مهندسی است، نه فقط چهار عمل اصلی.
+This is a normal engineering keypad, not just the four operations.
 
-- درجه یا رادیان
-- نماد مهندسی (ENG)
-- حافظه: MC، MR، M+، M−
-- تاریخچه
+- degrees or radians
+- engineering notation (ENG)
+- memory: MC, MR, M+, M−
+- history
 - Ans
-- توابع مثلثاتی، هذلولوی، لگاریتم، نمایی، ریشه، قدر مطلق، فاکتوریل
-- اگر یک معادله با یک مساوی بنویسی، برای `x` حل می‌کند
+- trig, hyperbolic, log, exp, roots, absolute value, factorial
+- if you type one equation with a single `=`, it solves for `x`
 
-### فرمول‌ها
+### Formulas
 
-الان **۲۰۳۱ فرمول نام‌دار** توی **۱۰۱ دسته** است. این‌ها فقط اسم نیستند؛ مقدار مجهول را حساب می‌کنند.
+There are **2031 named formulas** in **101 categories**. These are not a list of names. They compute the missing value.
 
-پیش‌فرض یک مجهول است. خانه‌های معلوم را پر می‌کنی، یکی را خالی می‌گذاری یا مجهول را انتخاب می‌کنی، دکمهٔ حل را می‌زنی. اگر معادله از نوع `y = f(...)` باشد و `y` مجهول باشد، طرف راست مستقیم حساب می‌شود. وگرنه معادله برای همان مجهول حل می‌شود.
+The default is one unknown. Fill the known fields, leave one empty or pick the unknown, press solve. If the formula is `y = f(...)` and `y` is the unknown, the right-hand side is evaluated directly. Otherwise the equation is solved for that unknown.
 
-اگر چند معادله با چند مجهول لازم داری، حالت دستگاه را روشن کن. معادله و مجهول را می‌شود اضافه یا کم کرد.
+If you need several equations and several unknowns, switch to system mode. You can add or remove equations and unknowns.
 
-جستجو روی اسم، شناسه، دسته و خود عبارت کار می‌کند. زبان اسم فرمول با زبان رابط عوض می‌شود.
+Search looks at the name, the id, the category, and the expression itself. Formula names follow the interface language.
 
-موضوع‌هایی که پوشش داده شده:
+Subjects covered:
 
-- ریاضی: جبر، هندسه، هندسهٔ مختصاتی، مثلثات، حسابان، جبر خطی، آمار، احتمال، ترکیبیات، دنباله و سری، اعداد مختلط، نظریهٔ اعداد، عدم قطعیت اندازه‌گیری
-- ریاضی مهندسی: معادلهٔ دیفرانسیل معمولی و جزئی، لاپلاس، فوریه، حساب برداری، روش عددی، آنالیز مختلط
-- توابع خاص: گاما، بتا، خطا، بسل، فوق‌هندسی، انتگرال و تابع بیضوی، زتا و پلی‌لگاریتم، چندجمله‌ای متعامد، ماتیو، ثابت‌های نام‌دار
-- فیزیک: سینماتیک، دینامیک، کار و انرژی، دوران، گرانش، نوسان، امواج، سیالات، ترمودینامیک، مدار، الکتروستاتیک، مغناطیس، اپتیک، فیزیک مدرن، هسته‌ای، نجوم، آکوستیک
-- شیمی: استوکیومتری، محلول، گاز، اسید و باز، سینتیک، تعادل، ترمودینامیک شیمیایی، الکتروشیمی، خواص کولیگاتیو، محاسبهٔ آلی، ثابت‌های CODATA
-- زیست: ژنتیک، بوم‌شناسی، فیزیولوژی، آنزیم، آزمایشگاه، گیاه
-- پزشکی و دارو: فرمول بالینی، فارماکوکینتیک، تناسب و تغذیه
-- مهندسی: استاتیک و مقاومت، عمران، طراحی ماشین، سیالات، انتقال حرارت، برق، کنترل، سیگنال، ساخت، هوافضا، مهندسی شیمی
-- اقتصاد و مالی: خرد، کلان، بهره و وام، سرمایه‌گذاری، بازار
-- زمین: اقلیم و زمین، ژئوتکنیک
-- رایانه، جمعیت‌شناسی، روان‌فیزیک، آکوستیک موسیقی، رایانش کوانتومی، مقدارهای روزمره
+- Math: algebra, geometry, coordinate geometry, trigonometry, calculus, linear algebra, statistics, probability, combinatorics, sequences and series, complex numbers, number theory, measurement uncertainty
+- Engineering math: ordinary and partial differential equations, Laplace, Fourier, vector calculus, numerical methods, complex analysis
+- Special functions: gamma, beta, error function, Bessel, hypergeometric, elliptic integrals and functions, zeta and polylog, orthogonal polynomials, Mathieu, named constants
+- Physics: kinematics, dynamics, work and energy, rotation, gravity, oscillations, waves, fluids, thermodynamics, circuits, electrostatics, magnetism, optics, modern physics, nuclear, astronomy, acoustics
+- Chemistry: stoichiometry, solutions, gases, acids and bases, kinetics, equilibrium, chemical thermodynamics, electrochemistry, colligative properties, organic calculations, CODATA constants
+- Biology: genetics, ecology, physiology, enzymes, lab work, plants
+- Medicine: clinical formulas, pharmacokinetics, fitness and nutrition
+- Engineering: statics and strength, civil, machine design, fluids, heat transfer, electrical, control, signals, manufacturing, aerospace, chemical engineering
+- Economics and finance: micro, macro, interest and loans, investment, markets
+- Earth: climate and earth science, geotechnics
+- Computing, demography, psychophysics, musical acoustics, quantum computing, everyday quantities
 
-ثابت‌های فیزیکی استاندارد (نور، پلانک، بار الکترون، بولتزمن، آووگادرو، R، g، G، ε0، μ0 و بقیه) هم به‌صورت فرمول قابل استفاده‌اند.
+Standard physical constants (speed of light, Planck, elementary charge, Boltzmann, Avogadro, R, g, G, ε0, μ0, and the rest) are also stored as usable formulas.
 
-### چندجمله‌ای
+### Polynomials
 
-ضریب‌های `a6` تا `a0` را می‌دهی، یعنی تا درجهٔ ۶.
+You enter coefficients `a6` … `a0`, so up to degree 6.
 
-- مقدار در یک `x`
-- ریشه‌ها
-- مشتق (ضریب‌ها)
-- انتگرال (ضریب‌ها)
+- value at a given `x`
+- roots
+- derivative (coefficients)
+- integral (coefficients)
 
-### عددی
+### Numerical
 
-- پیدا کردن ریشه توی یک بازه
-- انتگرال عددی (اگر فرم بسته باشد همان را هم می‌دهد)
-- مشتق در یک نقطه
-- معادلهٔ دیفرانسیل مرتبهٔ اول `y' = f(x, y)` با روش RK4، از یک شرط اولیه تا یک `x` نهایی
+- root on an interval
+- definite integral (closed form is shown when it exists)
+- derivative at a point
+- first-order ODE `y' = f(x, y)` with RK4, from an initial condition to a final `x`
 
-### شیمی
+### Chemistry
 
-جدا از فهرست فرمول‌ها است.
+This is separate from the named formula list.
 
-- موازنهٔ معادله. مثال: `H2+O2=H2O` می‌شود `2 H2 + O2 = 2 H2O`. برای `Fe+O2=Fe2O3` و سوختن هم کار می‌کند.
-- جرم مولی. مثال: آب ۱۸٫۰۱۵، `Ca(OH)2` حدود ۷۴٫۰۹۲. پرانتز و ضریب را می‌فهمد.
+- Equation balancer. Example: `H2+O2=H2O` becomes `2 H2 + O2 = 2 H2O`. Iron rusting and combustion work the same way.
+- Molar mass. Example: water is 18.015, `Ca(OH)2` is about 74.092. Parentheses and subscripts are handled.
 
-واکنش‌هایی که فقط شکل شیمیایی دارند همین‌جا موازنه می‌شوند؛ لازم نیست برای هر واکنش یک فرمول جدا باشد.
+Reactions that are only a chemical equation belong here. They do not need a separate named formula.
 
-### عنصرها
+### Elements
 
-هر ۱۱۸ عنصر:
+All 118 elements:
 
-- عدد اتمی
-- نماد
-- اسم (سه زبان)
-- جرم اتمی
-- گروه
-- ایزوتوپ‌های مهم با عدد جرمی، جرم و فراوانی (اگر معلوم باشد)
+- atomic number
+- symbol
+- name (three languages)
+- atomic mass
+- group
+- important isotopes, with mass number, mass, and abundance when it is known
 
-جستجو روی اسم و نماد کار می‌کند.
+Search works on name and symbol.
 
-### منبع‌ها
+### Sources
 
-یک زبانه توضیح می‌دهد این فرمول‌ها از کجا آمده‌اند و از کجا نیامده‌اند. لینک‌ها این‌ها هستند:
+One tab explains where the formulas come from and what was not copied. The links are:
 
-- Equation Encyclopedia — نقشهٔ موضوعی و معادله‌های استاندارد همان سرفصل‌ها، نه کپی متن و تمرین آن برنامه
-- Wolfram MathWorld — توابع نام‌دار حساب می‌شوند؛ مقاله‌ها کپی نشده
-- NIST DLMF — موتور توابع خاص
-- ثابت‌های عمومی CODATA / NIST به‌جای رونویسی CRC
-- معادله‌هایی که آزمایشگاه‌های PhET درس می‌دهند
-- arXiv فقط به‌عنوان آرشیو مقاله، استخراج نشده
-- سایت توابع ولفرام — خانواده‌ها با SymPy و SciPy حساب می‌شوند، نه ذخیرهٔ سیصد هزار خط اتحاد
+- Equation Encyclopedia — subject map and standard textbook equations in those subjects, not a copy of their pages or practice problems
+- Wolfram MathWorld — named functions are evaluated; the articles were not copied
+- NIST DLMF — drives the special-function engine
+- Public CODATA / NIST constants instead of copying CRC handbook pages
+- Equations taught by PhET-style labs
+- arXiv as a paper archive only, not scraped
+- Wolfram Functions Site — families are evaluated with SymPy and SciPy, not stored as 300,000 identity lines
 
 ---
 
-## دو برنامه، یک پوشش
+## Two programs, same coverage
 
-عمداً دو کد جدا نوشتم. اگر یکی خراب شود، آن یکی همان فرمول‌ها را دارد.
+I wrote two separate codebases on purpose. If one breaks, the other still has the same formulas.
 
-| | دسکتاپ | وب |
+| | Desktop | Web |
 |---|---|---|
-| ورود | `cd desktop` بعد `python3 run.py` | `cd web` بعد `python3 run.py` بعد مرورگر روی پورت ۵۰۰۰ |
-| ظاهر | پنجرهٔ tkinter | Flask + HTML |
-| ماشین حساب | هست | هست |
-| فرمول / دستگاه معادلات | هست | هست |
-| چندجمله‌ای تا درجه ۶ | هست | هست |
-| عددی و RK4 | هست | هست |
-| موازنه و جرم مولی | هست | هست |
-| جدول تناوبی | هست | هست |
-| منبع‌ها | هست | هست |
-| en / fa / fi | هست | هست |
+| Start | `cd desktop` then `python3 run.py` | `cd web` then `python3 run.py`, open port 5000 |
+| UI | tkinter window | Flask + HTML |
+| Calculator | yes | yes |
+| Formulas / systems | yes | yes |
+| Polynomials to degree 6 | yes | yes |
+| Numerical + RK4 | yes | yes |
+| Balance and molar mass | yes | yes |
+| Periodic table | yes | yes |
+| Sources | yes | yes |
+| en / fa / fi | yes | yes |
 
-وابستگی دسکتاپ: `numpy`، `scipy`، `sympy`. پایتون ۳٫۱۰ به بالا.
+Desktop depends on `numpy`, `scipy`, `sympy`. Python 3.10 or newer.
 
-وابستگی وب: همان‌ها به‌اضافهٔ `flask`.
-
-```
-cd desktop
-pip install -r requirements.txt
-python3 run.py
-```
-
-```
-cd web
-pip install -r requirements.txt
-python3 run.py
-```
-
-وب روی `0.0.0.0:5000` گوش می‌دهد.
-
----
-
-## English
-
-Two separate programs that do the same job. They do not import each other. Each folder has its own engine, its own formula file, its own periodic table, and its own translations. Formula IDs match.
-
-- `desktop` — tkinter window
-- `web` — Flask in the browser
-
-Interface languages: English, Persian, Finnish. Labels come from translation files. Persian is right-to-left on the web.
-
-Bad input does not crash the program. The user does not see a stack trace.
-
-### What it does
-
-**Engineering calculator.** Degrees or radians, engineering notation, memory, history, Ans, the usual scientific functions. A single `=` equation is solved for `x`.
-
-**Formulas.** 2031 named formulas in 101 categories. They compute. Default is one unknown: fill the known fields, leave one empty or pick the unknown, press solve. You can switch to a system, then add or remove equations and unknowns. Search uses the name, id, category, and expression.
-
-Coverage includes algebra, geometry, trigonometry, calculus, linear algebra, statistics, probability, combinatorics, sequences, complex numbers, number theory, measurement uncertainty, ODE/PDE, Laplace, Fourier, vector calculus, numerical methods, special functions (gamma, Bessel, hypergeometric, elliptic, zeta, orthogonal polynomials), most of introductory and engineering physics, chemistry, biology, clinical and pharmacokinetic formulas, fitness, civil / mechanical / electrical / chemical / aerospace engineering, heat transfer, control, signals, manufacturing, finance, economics, earth science, geotechnics, computing, demography, psychophysics, musical acoustics, quantum computing, everyday unit conversions, and CODATA constants.
-
-**Polynomials** through degree 6: value, roots, derivative, integral.
-
-**Numerical:** root on an interval, definite integral, derivative at a point, first-order ODE with RK4.
-
-**Chemistry tab:** balance equations (`H2+O2=H2O` → `2 H2 + O2 = 2 H2O`) and molar mass (`H2O` → 18.015). Word-only reaction schemes belong here, not in the named list.
-
-**Elements:** all 118, with Z, mass, and important isotopes.
-
-**Sources tab:** subject map and public constants. Not a dump of Equation Encyclopedia, MathWorld, DLMF, CRC, PhET, arXiv, or the Wolfram Functions Site.
-
-### Run
-
-Python 3.10+. Desktop needs numpy, scipy, sympy. Web needs those plus Flask.
+Web needs those plus `flask`.
 
 ```
 cd desktop
@@ -185,4 +136,4 @@ pip install -r requirements.txt
 python3 run.py
 ```
 
-Web listens on `0.0.0.0:5000`.
+The web server listens on `0.0.0.0:5000`.

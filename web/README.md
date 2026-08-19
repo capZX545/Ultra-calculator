@@ -1,34 +1,8 @@
-# Ultra Calculator — وب
+# Ultra Calculator — web
 
-برنامهٔ مرورگر. از پوشهٔ `desktop` چیزی برنمی‌دارد. پوشش فرمول و قابلیت‌ها با دسکتاپ یکی است.
+Standalone browser program. It does not import anything from the `desktop` folder. Formula coverage and features match the desktop program.
 
-## اجرا
-
-```
-cd web
-pip install -r requirements.txt
-python3 run.py
-```
-
-بعد برو به `http://127.0.0.1:5000`. سرور روی `0.0.0.0:5000` گوش می‌دهد.
-
-نیاز: Flask، numpy، scipy، sympy.
-
-## بخش‌ها
-
-- **ماشین حساب** — صفحه کلید مهندسی، درجه یا رادیان، ENG، حافظه، تاریخچه
-- **فرمول‌ها** — ۲۰۳۱ فرمول در ۱۰۱ دسته. یک مجهول یا چند معادله
-- **چندجمله‌ای** — تا درجهٔ ۶، مقدار و ریشه و مشتق و انتگرال
-- **عددی** — ریشه، انتگرال، مشتق، ODE مرتبهٔ اول
-- **شیمی** — موازنه و جرم مولی
-- **عنصرها** — جدول تناوبی کامل با ایزوتوپ
-- **منبع‌ها** — لینک و توضیح منبع‌ها
-
-زبان: en / fa / fi. فارسی راست‌چین است.
-
----
-
-Standalone web program. It does not import the `desktop` folder.
+## Run
 
 ```
 cd web
@@ -36,4 +10,18 @@ pip install -r requirements.txt
 python3 run.py
 ```
 
-Open `http://127.0.0.1:5000`. Same coverage as the desktop program: calculator, 2031 formulas in 101 categories, polynomials to degree 6, numerical methods, chemistry balancer, periodic table, sources. English, Persian, Finnish.
+Then open `http://127.0.0.1:5000`. The server listens on `0.0.0.0:5000`.
+
+Needs Flask, numpy, scipy, sympy.
+
+## Modes
+
+- **Calculator** — engineering keypad, degrees or radians, ENG, memory, history
+- **Formulas** — 2031 formulas in 101 categories. One unknown, or several equations
+- **Polynomial** — up to degree 6, value, roots, derivative, integral
+- **Numerical** — root, integral, derivative, first-order ODE
+- **Chemistry** — balancer and molar mass
+- **Elements** — full periodic table with isotopes
+- **Sources** — links and notes
+
+Languages: en / fa / fi. Persian is right-to-left.
