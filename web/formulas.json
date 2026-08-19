@@ -12919,7 +12919,7 @@
         "fa": "بتا",
         "fi": "Beta"
       },
-      "expr": "y = beta(a, b)",
+      "expr": "y = betafn(a, b)",
       "variables": {
         "y": {
           "unit": "1",
@@ -12991,7 +12991,7 @@
         "fa": "تابع خطا",
         "fi": "Virhefunktio"
       },
-      "expr": "y = erf(z)",
+      "expr": "y = erisingf(z)",
       "variables": {
         "y": {
           "unit": "1",
@@ -13455,7 +13455,7 @@
         "fa": "فاکتوریل بالارونده",
         "fi": "Nouseva kertoma"
       },
-      "expr": "y = rf(a, n)",
+      "expr": "y = risingf(a, n)",
       "variables": {
         "y": {
           "unit": "1",
@@ -19384,7 +19384,7 @@
         "fa": "فرد بودن erf",
         "fi": "erf pariton"
       },
-      "expr": "y = erf(z) + erf(-z)",
+      "expr": "y = erisingf(z) + erisingf(-z)",
       "variables": {
         "y": {
           "unit": "1",
