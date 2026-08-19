@@ -397,7 +397,7 @@ If one breaks, the other still has the same formulas.
 | en / fa / fi | yes | yes |
 | Persian right-to-left | — | yes |
 
-Android is a third copy, not a wrapper around the other two. Same 5196 formulas. Same balancer, periodic table, algorithms, lookup, and teacher steps. Details are in `android/README.md`.
+Android is a third copy in `phone/`. Install `UltraCalculator.apk` on the phone. Same 5196 formulas, balancer, periodic table, algorithms, lookup, and teacher steps.
 
 ---
 
