@@ -5,7 +5,7 @@ Two separate programs. They do not import each other. Each folder has its own fo
 - `desktop` — window application (tkinter)
 - `web` — browser application (Flask)
 
-Both contain the same 961 named formulas (encyclopedia subject map, special functions, physics, chemistry, biology, engineering, finance, medicine, music, quantum computing), plus:
+Both contain the same 2031 named formulas (encyclopedia subject map, special functions, physics, chemistry, biology, engineering, finance, medicine, music, quantum computing), plus:
 
 - engineering keypad
 - solve any one unknown in a formula
