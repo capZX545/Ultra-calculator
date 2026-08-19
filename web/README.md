@@ -1,8 +1,8 @@
-# Ultra Calculator — web
+# Ultra Calculator — وب
 
-Standalone web program. It does not import anything from the `desktop` folder.
+برنامهٔ مرورگر. از پوشهٔ `desktop` چیزی برنمی‌دارد. پوشش فرمول و قابلیت‌ها با دسکتاپ یکی است.
 
-## Run
+## اجرا
 
 ```
 cd web
@@ -10,16 +10,30 @@ pip install -r requirements.txt
 python3 run.py
 ```
 
-Then open http://127.0.0.1:5000
+بعد برو به `http://127.0.0.1:5000`. سرور روی `0.0.0.0:5000` گوش می‌دهد.
 
-## Modes
+نیاز: Flask، numpy، scipy، sympy.
 
-Same coverage as the desktop program:
+## بخش‌ها
 
-- Engineering calculator
-- 2031 formulas in 101 categories
-- One unknown by default, or a system of equations
-- Polynomials up to degree 6
-- Numerical root, integral, derivative, first-order ODE
+- **ماشین حساب** — صفحه کلید مهندسی، درجه یا رادیان، ENG، حافظه، تاریخچه
+- **فرمول‌ها** — ۲۰۳۱ فرمول در ۱۰۱ دسته. یک مجهول یا چند معادله
+- **چندجمله‌ای** — تا درجهٔ ۶، مقدار و ریشه و مشتق و انتگرال
+- **عددی** — ریشه، انتگرال، مشتق، ODE مرتبهٔ اول
+- **شیمی** — موازنه و جرم مولی
+- **عنصرها** — جدول تناوبی کامل با ایزوتوپ
+- **منبع‌ها** — لینک و توضیح منبع‌ها
 
-Languages: English, Persian, Finnish.
+زبان: en / fa / fi. فارسی راست‌چین است.
+
+---
+
+Standalone web program. It does not import the `desktop` folder.
+
+```
+cd web
+pip install -r requirements.txt
+python3 run.py
+```
+
+Open `http://127.0.0.1:5000`. Same coverage as the desktop program: calculator, 2031 formulas in 101 categories, polynomials to degree 6, numerical methods, chemistry balancer, periodic table, sources. English, Persian, Finnish.
