@@ -88,20 +88,191 @@ If you need several equations and several unknowns, switch to system mode. You c
 
 Search looks at the name, the id, the category, and the expression itself. Formula names follow the interface language.
 
-Subjects in the catalog:
+Here is the count for every category. Desktop and web have the same numbers. They add up to 5196.
 
-- Math: algebra, geometry, coordinate geometry, trigonometry, calculus, linear algebra, statistics, probability, combinatorics, sequences and series, finite series, complex numbers, number theory, measurement uncertainty, financial math
-- Engineering math: ordinary and partial differential equations, Laplace, Fourier, vector calculus, numerical methods, complex analysis
-- Special functions: elementary functions, gamma / beta / erf, Bessel, hypergeometric, elliptic integrals and functions, zeta and polylog, orthogonal polynomials, Mathieu, integer and number-theory functions, named constants, complex components
-- Physics: kinematics, dynamics, work and energy, rotation, gravity, oscillations, waves, fluids, thermodynamics, circuits, electrostatics, magnetism, optics, applied optics, modern physics, nuclear, astronomy, acoustics, semiconductors, radiation dose
-- Chemistry: stoichiometry, solutions, gases, acids and bases, buffers and titration, kinetics, equilibrium, chemical thermodynamics, electrochemistry, colligative properties, organic calculations, spectroscopy, CODATA constants
-- Biology: genetics, ecology, physiology, enzymes, lab work, plants
-- Medicine: clinical formulas, pharmacokinetics, lab medicine, fitness and nutrition
-- Engineering: statics and strength, civil, steel, concrete, surveying, machine design, materials, welding, fluids, pipes and pumps, heat transfer, HVAC and psychrometrics, electrical, motors, electric power, control, signals, manufacturing, aerospace, chemical engineering, industrial operations
-- Economics and finance: micro, macro, interest and loans, investment, markets
-- Earth and environment: climate, geotechnics, water, weather
-- Other applied: computing, networks, demography, psychophysics, musical acoustics, quantum computing, travel and navigation, photography exposure, agriculture, everyday quantities
-- Unit conversions: length, mass, time, force, energy, power, pressure, volume, area, speed, angle, frequency, data, activity, dose, and related pairs
+**Math (771)**
+
+| Category | Formulas |
+|---|---:|
+| Geometry | 143 |
+| Financial math | 113 |
+| Statistics | 101 |
+| Algebra | 96 |
+| Calculus | 61 |
+| Trigonometry | 54 |
+| Probability | 53 |
+| Linear algebra | 43 |
+| Combinatorics | 19 |
+| Complex numbers | 19 |
+| Number theory | 18 |
+| Finite series | 16 |
+| Coordinate geometry | 15 |
+| Sequences and series | 13 |
+| Measurement uncertainty | 7 |
+
+**Engineering math (62)**
+
+| Category | Formulas |
+|---|---:|
+| Numerical methods | 21 |
+| Ordinary differential equations | 11 |
+| Laplace transform | 10 |
+| Vector calculus | 10 |
+| Fourier analysis | 6 |
+| Partial differential equations | 3 |
+| Complex analysis | 1 |
+
+**Special functions (154)**
+
+| Category | Formulas |
+|---|---:|
+| Elementary functions | 51 |
+| Gamma, beta, erf | 28 |
+| Bessel-type functions | 17 |
+| Hypergeometric functions | 12 |
+| Named constants | 10 |
+| DLMF extra identities | 10 |
+| Zeta and polylog | 7 |
+| Orthogonal polynomials | 5 |
+| Elliptic integrals | 3 |
+| Complex components | 3 |
+| Elliptic functions | 2 |
+| Generalized functions | 2 |
+| Mathieu functions | 2 |
+| Integer functions | 1 |
+| Number theory functions | 1 |
+
+**Physics (489)**
+
+| Category | Formulas |
+|---|---:|
+| Thermodynamics | 45 |
+| Circuits | 44 |
+| Optics | 39 |
+| Dynamics | 36 |
+| Modern physics | 32 |
+| Kinematics | 29 |
+| Work and energy | 28 |
+| Fluids | 28 |
+| Waves | 23 |
+| Rotation | 22 |
+| Physical constants | 22 |
+| Astronomy | 20 |
+| Electrostatics | 20 |
+| Magnetism | 20 |
+| Gravitation | 14 |
+| Acoustics | 14 |
+| Nuclear | 13 |
+| Oscillations | 12 |
+| More EM / quantum | 12 |
+| Semiconductors | 6 |
+| Applied optics | 5 |
+| Radiation dose | 5 |
+
+**Chemistry (207)**
+
+| Category | Formulas |
+|---|---:|
+| Solutions | 27 |
+| Acids and bases | 25 |
+| Gases | 22 |
+| Kinetics | 22 |
+| More chemical thermo | 20 |
+| Stoichiometry | 17 |
+| Equilibrium extra | 17 |
+| Organic calculations | 14 |
+| Electrochemistry | 13 |
+| Stoichiometry extra | 11 |
+| Colligative properties | 8 |
+| Buffers and titration | 4 |
+| Spectroscopy | 4 |
+| Chemical thermodynamics | 3 |
+
+**Biology (126)**
+
+| Category | Formulas |
+|---|---:|
+| Ecology | 36 |
+| Physiology | 34 |
+| Genetics | 25 |
+| Lab and biotech | 21 |
+| Enzymes | 7 |
+| Plant physiology | 3 |
+
+**Medicine and health (90)**
+
+| Category | Formulas |
+|---|---:|
+| Fitness and nutrition | 40 |
+| Clinical formulas | 33 |
+| Pharmacokinetics | 16 |
+| Lab medicine | 1 |
+
+**Engineering (433)**
+
+| Category | Formulas |
+|---|---:|
+| HVAC | 82 |
+| Electrical engineering | 44 |
+| Machine design | 33 |
+| Heat transfer extra | 31 |
+| Pipes and pumps | 29 |
+| Electric power | 28 |
+| Aerospace | 20 |
+| Engineering fluids | 19 |
+| Steel design | 19 |
+| Control | 16 |
+| Civil / structures | 15 |
+| Signals | 15 |
+| Statics and strength | 15 |
+| Chemical engineering | 14 |
+| Manufacturing | 9 |
+| Industrial operations | 7 |
+| Heat transfer | 6 |
+| Psychrometrics | 6 |
+| Materials | 6 |
+| Motors and machines | 6 |
+| Surveying | 6 |
+| Concrete | 4 |
+| Welding | 3 |
+
+**Economics and finance (95)**
+
+| Category | Formulas |
+|---|---:|
+| Investment | 23 |
+| Market formulas | 21 |
+| Interest and loans | 19 |
+| Macroeconomics | 18 |
+| Microeconomics | 14 |
+
+**Earth and environment (78)**
+
+| Category | Formulas |
+|---|---:|
+| Earth and climate | 39 |
+| Geotechnics | 22 |
+| Water and environment | 9 |
+| Weather and climate | 8 |
+
+**Other applied (175)**
+
+| Category | Formulas |
+|---|---:|
+| Everyday quantities | 67 |
+| Computing formulas | 24 |
+| Psychophysics | 20 |
+| Musical acoustics | 17 |
+| Quantum computing | 15 |
+| Travel and navigation | 10 |
+| Demography | 9 |
+| Agriculture | 5 |
+| Photography exposure | 5 |
+| Networks and info | 3 |
+
+**Unit conversions (2516)**
+
+Length, mass, time, force, energy, power, pressure, volume, area, speed, angle, frequency, data, activity, dose, and related pairs. This is the largest category because each pair is a working formula, not a note.
 
 Standard physical constants (speed of light, Planck, elementary charge, Boltzmann, Avogadro, R, g, G, ε0, μ0, and the rest) are stored as usable formulas, not as decoration.
 
