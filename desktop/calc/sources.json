@@ -8,9 +8,9 @@
       },
       "url": "https://www.equationencyclopedia.com/",
       "note": {
-        "en": "Subject map used: math, physics, chemistry, biology, engineering, finance, economics, medicine. Their full 3000-page library is copyrighted; we implement standard textbook equations in those subjects, not a scrape of their text.",
-        "fa": "نقشه موضوعی استفاده شد. کتابخانه کامل آن‌ها کپی نشد.",
-        "fi": "Aihekartta kaytettiin. Kirjastoa ei kopioitu."
+        "en": "Public catalog on the site lists 889 named equations (the 3000 figure counts rearrangements). We do not copy their copyrighted pages, games, or practice text. Named textbook equations in those subjects are implemented here and actually solve. Word-only reaction schemes use the chemistry balancer. Joke pages were skipped.",
+        "fa": "فهرست عمومی سایت ۸۸۹ معادله نام‌دار است؛ رقم ۳۰۰۰ بیشتر آرایش مجدد همان‌هاست. متن، بازی و تمرین آن‌ها کپی نشد. معادله‌های استاندارد همان موضوع‌ها این‌جا حل می‌شوند. واکنش‌های فقط نوشتاری را موازنه‌گر شیمی انجام می‌دهد.",
+        "fi": "Julkinen luettelo: 889 nimettya yhtaloa (3000 sisaltaa uudelleenjarjestelyt). Sivujen teksteja ei kopioitu. Oppikirjayhtalot lasketaan tassa."
       }
     },
     "mathworld": {

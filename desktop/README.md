@@ -15,7 +15,7 @@ Needs Python 3.10 or newer.
 ## Modes
 
 - Calculator: engineering keypad, memory, degrees or radians, engineering notation
-- Formulas: 286 formulas in 49 categories, one unknown by default
+- Formulas: 961 formulas in 91 categories, one unknown by default
 - System of equations: add or remove equations and unknowns
 - Polynomial: coefficients a6 ... a0, value, roots, derivative, integral
 - Numerical: root, integral, derivative, first-order ODE (RK4)

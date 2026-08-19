@@ -17,7 +17,7 @@ Then open http://127.0.0.1:5000
 Same coverage as the desktop program:
 
 - Engineering calculator
-- 286 formulas in 49 categories
+- 961 formulas in 91 categories
 - One unknown by default, or a system of equations
 - Polynomials up to degree 6
 - Numerical root, integral, derivative, first-order ODE
