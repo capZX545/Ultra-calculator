@@ -96,7 +96,7 @@ def lookup(query: str, lang: str = "en") -> list[dict]:
                 extra,
             )
 
-    if re.search(r"[A-Z]", q) and not q.isdigit():
+    if re.search(r"[A-Z]", q) and not q.isdigit() and "-" not in q:
         formula = q.split("=")[0].split("+")[0].strip()
         mw = molar_mass(formula)
         mass = mw.get("mass") or 0
