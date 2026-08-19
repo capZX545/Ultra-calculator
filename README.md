@@ -44,7 +44,7 @@ python3 run.py
 
 ---
 
-## What both programs can do
+## What the programs can do
 
 There are eight pages: Calculator, Formulas, Polynomial, Numerical, Algorithms, Chemistry, Elements, and Sources.
 

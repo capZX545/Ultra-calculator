@@ -801,4 +801,3 @@ class UltraAndroid(App):
 
 if __name__ == "__main__":
     UltraAndroid().run()
-).run()
