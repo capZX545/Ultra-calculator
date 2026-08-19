@@ -15,6 +15,7 @@ from sympy.parsing.sympy_parser import (
 )
 
 from .sanitize import clean_expression, clean_number
+from . import teach
 
 
 _TRANSFORMS = standard_transformations + (implicit_multiplication_application,)
@@ -278,16 +279,18 @@ class DesktopEngine:
                 reps[fn] = lambda z, f=fn: f(z * sp.pi / 180)
         return expr.replace(lambda e: e.func in {sp.sin, sp.cos, sp.tan}, lambda e: e.func(e.args[0] * sp.pi / 180))
 
-    def evaluate(self, text: str) -> dict:
+    def evaluate(self, text: str, lang: str = "en") -> dict:
+        raw = text
         try:
             cleaned = clean_expression(text)
             if "=" in cleaned and cleaned.count("=") == 1:
                 left, right = cleaned.split("=")
-                return self.solve_equation(left, right, ["x"])
+                return self.solve_equation(left, right, ["x"], lang=lang)
             expr = self.parse(cleaned, calc=True)
             if isinstance(expr, (list, tuple, sp.Tuple)):
-                text = ", ".join(str(v) for v in expr)
-                return {"ok": True, "value": 0.0, "text": text, "exact": text}
+                shown = ", ".join(str(v) for v in expr)
+                steps = teach.steps_eval(lang, raw, cleaned, shown, shown, self.angle, cas=True)
+                return {"ok": True, "value": 0.0, "text": shown, "exact": shown, "steps": steps}
             expr = expr.subs({"ans": self.ans, "ANS": self.ans})
             if self.angle == "DEG" and not getattr(expr, "free_symbols", None):
                 expr = expr.replace(
@@ -295,8 +298,9 @@ class DesktopEngine:
                     lambda e: e.func(e.args[0] * sp.pi / 180),
                 )
             if isinstance(expr, (list, tuple, sp.Tuple)):
-                text = ", ".join(str(v) for v in expr)
-                return {"ok": True, "value": 0.0, "text": text, "exact": text}
+                shown = ", ".join(str(v) for v in expr)
+                steps = teach.steps_eval(lang, raw, cleaned, shown, shown, self.angle, cas=True)
+                return {"ok": True, "value": 0.0, "text": shown, "exact": shown, "steps": steps}
             try:
                 expr = expr.doit()
             except Exception:
@@ -310,28 +314,35 @@ class DesktopEngine:
                 except Exception:
                     simp = expr
             if isinstance(simp, (list, tuple, sp.Tuple)):
-                text = ", ".join(str(v) for v in simp)
-                return {"ok": True, "value": 0.0, "text": text, "exact": text}
+                shown = ", ".join(str(v) for v in simp)
+                steps = teach.steps_eval(lang, raw, cleaned, shown, shown, self.angle, cas=True)
+                return {"ok": True, "value": 0.0, "text": shown, "exact": shown, "steps": steps}
             if isinstance(simp, sp.MatrixBase):
-                text = str(simp)
-                return {"ok": True, "value": 0.0, "text": text, "exact": text}
+                shown = str(simp)
+                steps = teach.steps_eval(lang, raw, cleaned, shown, shown, self.angle, cas=True)
+                return {"ok": True, "value": 0.0, "text": shown, "exact": shown, "steps": steps}
             frees = getattr(simp, "free_symbols", None)
             if frees:
-                text = str(simp)
-                return {"ok": True, "value": 0.0, "text": text, "exact": text}
+                shown = str(simp)
+                steps = teach.steps_eval(lang, raw, cleaned, shown, shown, self.angle, cas=keep)
+                return {"ok": True, "value": 0.0, "text": shown, "exact": shown, "steps": steps}
             value = sp.N(simp)
             num = _as_float(value)
             self.ans = num.real if isinstance(num, complex) and abs(num.imag) < 1e-12 else num
+            shown = format_number(num, self.eng)
+            exact = str(simp)
+            steps = teach.steps_eval(lang, raw, cleaned, exact, shown, self.angle, cas=keep)
             return {
                 "ok": True,
                 "value": num,
-                "text": format_number(num, self.eng),
-                "exact": str(simp),
+                "text": shown,
+                "exact": exact,
+                "steps": steps,
             }
         except Exception:
-            return {"ok": True, "value": 0.0, "text": "0", "exact": "0"}
+            return {"ok": True, "value": 0.0, "text": "0", "exact": "0", "steps": []}
 
-    def solve_equation(self, left: str, right: str, unknowns: list[str]) -> dict:
+    def solve_equation(self, left: str, right: str, unknowns: list[str], lang: str = "en") -> dict:
         try:
             L = self.parse(left)
             R = self.parse(right)
@@ -355,19 +366,22 @@ class DesktopEngine:
                 pretty.append(row)
             if pretty:
                 self.ans = last.real if isinstance(last, complex) and abs(last.imag) < 1e-12 else last
+            text = pretty[0][unknowns[0]] if pretty and unknowns[0] in pretty[0] else "0"
+            steps = teach.steps_equation(lang, left, right, unknowns, text, bool(pretty))
             return {
                 "ok": True,
                 "solutions": pretty,
-                "text": pretty[0][unknowns[0]] if pretty and unknowns[0] in pretty[0] else "0",
+                "text": text,
                 "value": last,
+                "steps": steps,
             }
         except Exception:
-            return {"ok": True, "solutions": [], "text": "0", "value": 0.0}
+            return {"ok": True, "solutions": [], "text": "0", "value": 0.0, "steps": []}
 
-    def solve_formula(self, formula_id: str, values: dict, unknown: str | None) -> dict:
+    def solve_formula(self, formula_id: str, values: dict, unknown: str | None, lang: str = "en") -> dict:
         item = self.by_id.get(formula_id)
         if not item:
-            return {"ok": True, "text": "0", "value": 0.0, "unknown": unknown or ""}
+            return {"ok": True, "text": "0", "value": 0.0, "unknown": unknown or "", "steps": []}
         expr = item["expr"]
         names = list(item["variables"].keys())
         known = {}
@@ -432,22 +446,41 @@ class DesktopEngine:
             num = _as_float(sp.N(picked))
             self.ans = num.real if isinstance(num, complex) and abs(num.imag) < 1e-12 else num
             unit = item["variables"].get(target, {}).get("unit", "")
+            shown = format_number(num, self.eng)
+            alls = [format_number(_as_float(sp.N(s)), self.eng) for s in sols[:6]]
+            mode = "left" if L == sym else ("right" if R == sym else "solve")
+            plugged = ""
+            symbolic = ""
+            try:
+                if mode == "left":
+                    plugged = str(R.subs(mapping))
+                elif mode == "right":
+                    plugged = str(L.subs(mapping))
+                elif sols:
+                    symbolic = str(sols[0])
+                    plugged = str(eq)
+            except Exception:
+                pass
+            steps = teach.steps_formula(lang, expr, target, known, mode, plugged, symbolic, shown, unit, alls)
             return {
                 "ok": True,
                 "unknown": target,
                 "value": num,
-                "text": format_number(num, self.eng),
+                "text": shown,
                 "unit": unit,
-                "all": [format_number(_as_float(sp.N(s)), self.eng) for s in sols[:6]],
+                "all": alls,
+                "steps": steps,
             }
         except Exception:
-            return {"ok": True, "unknown": target, "value": 0.0, "text": "0", "unit": "", "all": ["0"]}
+            return {"ok": True, "unknown": target, "value": 0.0, "text": "0", "unit": "", "all": ["0"], "steps": []}
 
-    def solve_system(self, equations: list[str], unknowns: list[str]) -> dict:
+    def solve_system(self, equations: list[str], unknowns: list[str], lang: str = "en") -> dict:
         try:
             eqs = []
+            shown_eqs = []
             for raw in equations:
                 text = clean_expression(raw)
+                shown_eqs.append(text)
                 if "=" in text:
                     a, b = text.split("=", 1)
                     eqs.append(self.parse(a) - self.parse(b))
@@ -466,9 +499,10 @@ class DesktopEngine:
             for sol in sols[:6]:
                 row = {str(k): format_number(_as_float(sp.N(v)), self.eng) for k, v in sol.items()}
                 rows.append(row)
-            return {"ok": True, "solutions": rows, "text": str(rows[0] if rows else {})}
+            steps = teach.steps_system(lang, shown_eqs, unknowns, rows)
+            return {"ok": True, "solutions": rows, "text": str(rows[0] if rows else {}), "steps": steps}
         except Exception:
-            return {"ok": True, "solutions": [], "text": "{}"}
+            return {"ok": True, "solutions": [], "text": "{}", "steps": []}
 
     def polynomial(self, coeffs: list[float], x: float | None = None) -> dict:
         c = list(coeffs[:7])

@@ -249,6 +249,7 @@
       state.expr = out.text;
       state.ans = out.value;
       setScreen(out.text);
+      showSteps("calc-steps", out.steps || []);
       screen.focus();
       screen.select();
       return;
@@ -264,7 +265,14 @@
   }
 
   function payloadExpr() {
-    return { expr: readExpr() || "0", angle: state.angle, eng: state.eng, ans: state.ans };
+    return { expr: readExpr() || "0", angle: state.angle, eng: state.eng, ans: state.ans, lang: state.lang };
+
+  function showSteps(id, lines) {
+    const el = $(id);
+    if (!el) return;
+    const rows = lines || [];
+    el.textContent = rows.map((s, i) => (i + 1) + ") " + s).join("\n");
+  }
   }
 
   async function loadMeta() {
@@ -373,7 +381,7 @@
     if (state.system) {
       const eqs = Array.from(document.querySelectorAll("#fields .eq")).map((el) => el.value);
       const unks = ($("unks") ? $("unks").value : "x").split(/[,\s;]+/).filter(Boolean);
-      const out = await post("/api/system", { equations: eqs, unknowns: unks, eng: state.eng });
+      const out = await post("/api/system", { equations: eqs, unknowns: unks, eng: state.eng, lang: state.lang });
       if (out.solutions && out.solutions.length) {
         $("fresult").textContent = out.solutions.map((sol, i) => {
           return (i + 1) + ") " + Object.keys(sol).map((k) => k + " = " + sol[k]).join("   ");
@@ -381,6 +389,7 @@
       } else {
         $("fresult").textContent = "0";
       }
+      showSteps("fsteps", out.steps || []);
       return;
     }
     if (!state.current) {
@@ -427,16 +436,19 @@
       coeffs: polyCoeffs(),
       x: kind === "eval" ? $("poly-x").value : null,
       eng: state.eng,
+      lang: state.lang,
     });
+    const teach = (out.steps || []).map((s, i) => (i + 1) + ") " + s).join("\n");
     if (kind === "roots") {
-      $("poly-out").textContent = (out.roots || []).join("\n") || "0";
+      $("poly-out").textContent = ((out.roots || []).join("\n") || "0") + (teach ? "\n\n" + teach : "");
       return;
     }
     $("poly-out").textContent =
       "p(x) = " + out.value_text + "\n" +
       "degree = " + out.degree + "\n" +
       "derivative coeffs: " + (out.derivative || []).join(", ") + "\n" +
-      "integral coeffs: " + (out.integral || []).join(", ");
+      "integral coeffs: " + (out.integral || []).join(", ") +
+      (teach ? "\n\n" + teach : "");
   }
 
   async function doNumeric(kind) {
@@ -448,12 +460,16 @@
       y0: $("n-y0").value,
       steps: $("n-steps").value,
       eng: state.eng,
+      lang: state.lang,
     });
     let text = out.text || "0";
     if (out.exact) text += "\n" + out.exact;
     if (out.path) {
       text += "\n";
       out.path.slice(-20).forEach((p) => { text += "\n" + p[0] + "   " + p[1]; });
+    }
+    if (out.steps && out.steps.length) {
+      text += "\n\n" + out.steps.map((s, i) => (i + 1) + ") " + s).join("\n");
     }
     $("n-out").textContent = text;
   }
@@ -559,12 +575,13 @@
   if ($("chem-mw")) {
     $("chem-mw").addEventListener("click", async () => {
       const raw = $("chem-eq").value.split("=")[0].split("+")[0].trim();
-      const out = await post("/api/molar", { formula: raw });
+      const out = await post("/api/molar", { formula: raw, lang: state.lang });
       let t = (out.text || "0") + " g/mol\n";
       const d = out.detail || {};
       Object.keys(d).forEach((k) => {
         if (d[k] && d[k].count) t += k + ": " + d[k].count + " x " + d[k].mass + " = " + d[k].contrib + "\n";
       });
+      if (out.steps && out.steps.length) t += "\n" + out.steps.map((s, i) => (i + 1) + ") " + s).join("\n");
       $("chem-out").textContent = t;
     });
   }

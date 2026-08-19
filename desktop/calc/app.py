@@ -14,6 +14,7 @@ from .engine import DesktopEngine
 from .i18n import t
 from .lookup import lookup
 from .sanitize import clean_number
+from . import teach
 
 
 BG = "#1c1f24"
@@ -276,7 +277,7 @@ class UltraDesktop(tk.Tk):
             self.expr = self.display.get()
 
     def _bind_keys(self) -> None:
-        modes = ["calc", "formulas", "poly", "numeric", "chem", "elements", "sources"]
+        modes = ["calc", "formulas", "poly", "numeric", "algo", "chem", "elements", "sources"]
         for i, mode in enumerate(modes, 1):
             self.bind_all(f"<Alt-Key-{i}>", lambda e, m=mode: self._hot_mode(m))
             self.bind_all(f"<Control-Key-{i}>", lambda e, m=mode: self._hot_mode(m))
@@ -458,6 +459,9 @@ class UltraDesktop(tk.Tk):
         self.kbd_hint.pack(fill="x", pady=(0, 6))
         self.status = tk.Label(left, text="", anchor="w", bg=BG, fg=MUTED, font=("Segoe UI", 9))
         self.status.pack(fill="x")
+        self.calc_steps = tk.Text(left, bg=PANEL, fg=FG, relief="flat", height=6, font=("Segoe UI", 10), wrap="word")
+        self.calc_steps.pack(fill="x", pady=(4, 0))
+        self.calc_steps.insert("1.0", "")
 
         bar = tk.Frame(left, bg=BG)
         bar.pack(fill="x", pady=6)
@@ -609,12 +613,13 @@ class UltraDesktop(tk.Tk):
             return
         if label == "=":
             source = self._read_display() or "0"
-            out = self.engine.evaluate(source)
+            out = self.engine.evaluate(source, lang=self.lang)
             shown = out["text"]
             self.history.insert(0, f"{source} = {shown}")
             self.expr = shown
             self._set_display(shown)
             self.status.configure(text=out.get("exact") or self.tr("ready"))
+            self._show_steps(self.calc_steps, out.get("steps") or [])
             self.display.focus_set()
             self.display.selection_range(0, "end")
             return
@@ -689,7 +694,9 @@ class UltraDesktop(tk.Tk):
         self.del_eq_btn.pack(side="left")
 
         self.formula_result = tk.Label(right, bg=PANEL, fg=FG, font=("Consolas", 16), wraplength=500, justify="left")
-        self.formula_result.pack(anchor="w", padx=12, pady=(0, 12))
+        self.formula_result.pack(anchor="w", padx=12, pady=(0, 4))
+        self.formula_steps = tk.Text(right, bg="#11141a", fg=FG, relief="flat", height=10, font=("Segoe UI", 10), wrap="word")
+        self.formula_steps.pack(fill="both", expand=True, padx=12, pady=(0, 12))
 
         self._fill_categories()
         self._fill_formula_list()
@@ -847,7 +854,7 @@ class UltraDesktop(tk.Tk):
             unknowns = [p.strip() for p in raw.replace(";", ",").split(",") if p.strip()] or ["x"]
             self.system_eqs = eqs
             self.system_unknowns = unknowns
-            out = self.engine.solve_system(eqs, unknowns)
+            out = self.engine.solve_system(eqs, unknowns, lang=self.lang)
             if out["solutions"]:
                 lines = []
                 for i, sol in enumerate(out["solutions"], 1):
@@ -856,13 +863,14 @@ class UltraDesktop(tk.Tk):
                 self.formula_result.configure(text="\n".join(lines))
             else:
                 self.formula_result.configure(text="0")
+            self._show_steps(self.formula_steps, out.get("steps") or [])
             return
         if not self.formula_id:
             self.formula_result.configure(text=self.tr("pick_formula"))
             return
         values = {name: ent.get() for name, ent in self.var_widgets.items()}
         unknown = self.unknown_var.get() or None
-        out = self.engine.solve_formula(self.formula_id, values, unknown)
+        out = self.engine.solve_formula(self.formula_id, values, unknown, lang=self.lang)
         extra = ""
         if out.get("all") and len(out["all"]) > 1:
             extra = "  |  " + ", ".join(out["all"][1:])
@@ -870,6 +878,7 @@ class UltraDesktop(tk.Tk):
         self.formula_result.configure(
             text=f"{self.tr('solved_for')} {out.get('unknown')} = {out.get('text')} {unit}{extra}"
         )
+        self._show_steps(self.formula_steps, out.get("steps") or [])
 
     # ---------- polynomial ----------
     def _build_poly(self, root: tk.Frame) -> None:
@@ -912,6 +921,15 @@ class UltraDesktop(tk.Tk):
             vals.append(clean_number(ent.get(), 0.0) or 0.0)
         return vals
 
+    def _show_steps(self, box, lines) -> None:
+        if box is None:
+            return
+        try:
+            box.delete("1.0", "end")
+            box.insert("1.0", teach.format_steps(list(lines or [])))
+        except Exception:
+            pass
+
     def _poly_eval(self) -> None:
         x = clean_number(self.poly_x.get(), 0.0) or 0.0
         out = self.engine.polynomial(self._poly_coeffs(), x)
@@ -924,13 +942,15 @@ class UltraDesktop(tk.Tk):
             f"{self.tr('integral')}: {integ} + C\n"
         )
         self.poly_out.delete("1.0", "end")
-        self.poly_out.insert("1.0", text)
+        extra = teach.format_steps(teach.steps_poly(self.lang, "eval", x, out["value_text"], out["degree"], None))
+        self.poly_out.insert("1.0", text + "\n" + extra)
 
     def _poly_roots(self) -> None:
         out = self.engine.polynomial(self._poly_coeffs(), None)
         lines = [self.tr("roots") + ":"] + [f"  {r}" for r in out["roots"]] or ["  0"]
         self.poly_out.delete("1.0", "end")
-        self.poly_out.insert("1.0", "\n".join(lines))
+        extra = teach.format_steps(teach.steps_poly(self.lang, "roots", None, "", None, out["roots"]))
+        self.poly_out.insert("1.0", "\n".join(lines) + "\n\n" + extra)
 
     # ---------- numeric ----------
     def _build_numeric(self, root: tk.Frame) -> None:
@@ -967,7 +987,8 @@ class UltraDesktop(tk.Tk):
         b = clean_number(self.n_b.get(), 1.0) or 1.0
         out = self.engine.numeric_root(self.n_func.get(), a, b)
         self.n_out.delete("1.0", "end")
-        self.n_out.insert("1.0", f"root = {out['text']}")
+        extra = teach.format_steps(teach.steps_numeric(self.lang, "root", a, b, None, out["text"]))
+        self.n_out.insert("1.0", f"root = {out['text']}\n\n{extra}")
 
     def _do_int(self) -> None:
         a = clean_number(self.n_a.get(), 0.0) or 0.0
@@ -975,14 +996,16 @@ class UltraDesktop(tk.Tk):
         out = self.engine.numeric_integral(self.n_func.get(), a, b)
         extra = f"\nexact: {out['exact']}" if out.get("exact") else ""
         self.n_out.delete("1.0", "end")
-        self.n_out.insert("1.0", f"integral = {out['text']}{extra}")
+        teach_l = teach.format_steps(teach.steps_numeric(self.lang, "integral", a, b, None, out["text"]))
+        self.n_out.insert("1.0", f"integral = {out['text']}{extra}\n\n{teach_l}")
 
     def _do_diff(self) -> None:
         x0 = clean_number(self.n_a.get(), 0.0) or 0.0
         out = self.engine.numeric_derivative(self.n_func.get(), x0)
         extra = f"\n{out.get('exact','')}"
         self.n_out.delete("1.0", "end")
-        self.n_out.insert("1.0", f"d/dx = {out['text']}{extra}")
+        teach_l = teach.format_steps(teach.steps_numeric(self.lang, "deriv", x0, None, None, out["text"]))
+        self.n_out.insert("1.0", f"d/dx = {out['text']}{extra}\n\n{teach_l}")
 
     def _do_ode(self) -> None:
         x0 = clean_number(self.n_a.get(), 0.0) or 0.0
@@ -994,7 +1017,8 @@ class UltraDesktop(tk.Tk):
         for xv, yv in out.get("path", [])[-20:]:
             lines.append(f"{xv:10.5g}   {yv:10.5g}")
         self.n_out.delete("1.0", "end")
-        self.n_out.insert("1.0", "\n".join(lines))
+        teach_l = teach.format_steps(teach.steps_numeric(self.lang, "ode", x0, x1, y0, out["text"]))
+        self.n_out.insert("1.0", "\n".join(lines) + "\n\n" + teach_l)
 
     def _build_algo(self, root: tk.Frame) -> None:
         left = tk.Frame(root, bg=BG, width=240)
@@ -1136,7 +1160,10 @@ class UltraDesktop(tk.Tk):
     def _do_balance(self) -> None:
         out = balance_equation(self.chem_eq.get())
         self.chem_out.delete("1.0", "end")
-        self.chem_out.insert("1.0", out.get("text") or "")
+        raw = self.chem_eq.get()
+        shown = out.get("text") or ""
+        extra = teach.format_steps(teach.steps_chem(self.lang, raw, shown, False))
+        self.chem_out.insert("1.0", shown + "\n\n" + extra)
 
     def _do_molar(self) -> None:
         out = molar_mass(self.chem_eq.get().split("=")[0].split("+")[0].strip())

@@ -50,6 +50,10 @@ main { padding: 16px 18px 32px; }
 }
 #screen:focus { outline: 1px solid var(--accent); }
 #kbd-hint { color: var(--muted); font-size: 12px; margin: 0 0 8px; }
+#calc-steps, #fsteps {
+  background: var(--ink); padding: 10px; min-height: 72px; margin: 8px 0;
+  font: 13px/1.45 "Segoe UI", Tahoma, sans-serif; white-space: pre-wrap; color: var(--fg);
+}
 .keys { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
 .key { padding: 12px 6px; font-family: Consolas, monospace; }
 .row { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; }

@@ -17,7 +17,7 @@ Needs numpy, scipy, sympy.
 ## Modes
 
 - **Calculator** — engineering keypad, memory, degrees or radians, engineering notation, history. The screen is a text field. Type with the keyboard. Enter calculates, Esc clears. Alt+1–7 switch pages, Alt+L opens lookup.
-- **Formulas** — 2031 formulas in 101 categories. Default is one unknown. You can build a system and add or remove equations and unknowns
+- **Formulas** — 5196 formulas in 126 categories. Solve shows the steps. Default is one unknown. You can build a system and add or remove equations and unknowns
 - **Polynomial** — coefficients a6 to a0, value, roots, derivative, integral
 - **Numerical** — root, integral, derivative, first-order ODE with RK4
 - **Algorithms** — 130 named methods (number theory, linear algebra, roots, integrals, ODE, statistics, distributions, FFT). The calculator screen also accepts `diff`, `integrate`, `summation`, `limit`, `factor`, `solveeq`

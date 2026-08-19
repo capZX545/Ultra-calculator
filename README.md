@@ -24,6 +24,7 @@ This is a normal engineering keypad, not just the four operations.
 - Ans
 - trig, hyperbolic, log, exp, roots, absolute value, factorial
 - if you type one equation with a single `=`, it solves for `x`
+- after Enter, a short teacher-style walkthrough appears under the screen
 - the screen is a real text field. Type the expression with the keyboard. Enter calculates, Esc clears. You do not have to click the keypad.
 - Alt+1 to Alt+8 switch pages. Alt+L or `/` (when you are not already in a field) opens the lookup bar. Enter also runs solve / balance / polynomial evaluate / algorithm run in those pages.
 
@@ -61,7 +62,7 @@ I did not paste 50,000 encyclopedia pages into the program. That would be a dump
 
 ### Formulas
 
-There are **2031 named formulas** in **101 categories**. These are not a list of names. They compute the missing value.
+There are **5196 named formulas** in **126 categories**. These are not a list of names. They compute the missing value. After you solve, the program writes the steps like a teacher: the equation, what is unknown, what you already know, the substitution, then the number.
 
 The default is one unknown. Fill the known fields, leave one empty or pick the unknown, press solve. If the formula is `y = f(...)` and `y` is the unknown, the right-hand side is evaluated directly. Otherwise the equation is solved for that unknown.
 

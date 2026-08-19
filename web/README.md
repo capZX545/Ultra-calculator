@@ -17,7 +17,7 @@ Needs Flask, numpy, scipy, sympy.
 ## Modes
 
 - **Calculator** — engineering keypad, degrees or radians, ENG, memory, history. The screen is a text field. Type with the keyboard. Enter calculates, Esc clears. Alt+1–7 switch pages, Alt+L opens lookup.
-- **Formulas** — 2031 formulas in 101 categories. One unknown, or several equations
+- **Formulas** — 5196 formulas in 126 categories. Solve shows the steps. One unknown, or several equations
 - **Polynomial** — up to degree 6, value, roots, derivative, integral
 - **Numerical** — root, integral, derivative, first-order ODE
 - **Algorithms** — 130 named methods. The screen also accepts `diff`, `integrate`, `summation`, `limit`, `factor`, `solveeq`

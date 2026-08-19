@@ -15,6 +15,7 @@ from sympy.parsing.sympy_parser import (
     standard_transformations,
 )
 
+import teach
 from clean import fix_expr, fix_number
 
 
@@ -273,16 +274,17 @@ def list_formulas(query="", lang="en", category=None):
     return out
 
 
-def eval_line(text, angle="DEG", eng=False, ans=0):
+def eval_line(text, angle="DEG", eng=False, ans=0, lang="en"):
+    raw = text
     try:
         cleaned = fix_expr(text)
         if "=" in cleaned and cleaned.count("=") == 1:
             left, right = cleaned.split("=")
-            return solve_one(left, right, ["x"], eng)
+            return solve_one(left, right, ["x"], eng, lang=lang)
         expr = to_sym(cleaned, calc=True)
         if isinstance(expr, (list, tuple, sp.Tuple)):
-            text = ", ".join(str(v) for v in expr)
-            return {"ok": True, "value": 0, "text": text, "exact": text}
+            shown = ", ".join(str(v) for v in expr)
+            return {"ok": True, "value": 0, "text": shown, "exact": shown, "steps": teach.steps_eval(lang, raw, cleaned, shown, shown, angle, True)}
         expr = expr.subs({"ans": ans, "ANS": ans})
         if angle == "DEG" and not getattr(expr, "free_symbols", None):
             expr = expr.replace(
@@ -290,8 +292,8 @@ def eval_line(text, angle="DEG", eng=False, ans=0):
                 lambda e: e.func(e.args[0] * sp.pi / 180),
             )
         if isinstance(expr, (list, tuple, sp.Tuple)):
-            text = ", ".join(str(v) for v in expr)
-            return {"ok": True, "value": 0, "text": text, "exact": text}
+            shown = ", ".join(str(v) for v in expr)
+            return {"ok": True, "value": 0, "text": shown, "exact": shown, "steps": teach.steps_eval(lang, raw, cleaned, shown, shown, angle, True)}
         try:
             expr = expr.doit()
         except Exception:
@@ -305,21 +307,29 @@ def eval_line(text, angle="DEG", eng=False, ans=0):
             except Exception:
                 simp = expr
         if isinstance(simp, (list, tuple, sp.Tuple)):
-            text = ", ".join(str(v) for v in simp)
-            return {"ok": True, "value": 0, "text": text, "exact": text}
+            shown = ", ".join(str(v) for v in simp)
+            return {"ok": True, "value": 0, "text": shown, "exact": shown, "steps": teach.steps_eval(lang, raw, cleaned, shown, shown, angle, True)}
         if isinstance(simp, sp.MatrixBase):
-            text = str(simp)
-            return {"ok": True, "value": 0, "text": text, "exact": text}
+            shown = str(simp)
+            return {"ok": True, "value": 0, "text": shown, "exact": shown, "steps": teach.steps_eval(lang, raw, cleaned, shown, shown, angle, True)}
         if getattr(simp, "free_symbols", None):
-            text = str(simp)
-            return {"ok": True, "value": 0, "text": text, "exact": text}
+            shown = str(simp)
+            return {"ok": True, "value": 0, "text": shown, "exact": shown, "steps": teach.steps_eval(lang, raw, cleaned, shown, shown, angle, keep)}
         value = _num(simp)
-        return {"ok": True, "value": value if not isinstance(value, complex) else [value.real, value.imag], "text": pretty(value, eng), "exact": str(simp)}
+        shown = pretty(value, eng)
+        exact = str(simp)
+        return {
+            "ok": True,
+            "value": value if not isinstance(value, complex) else [value.real, value.imag],
+            "text": shown,
+            "exact": exact,
+            "steps": teach.steps_eval(lang, raw, cleaned, exact, shown, angle, keep),
+        }
     except Exception:
-        return {"ok": True, "value": 0, "text": "0", "exact": "0"}
+        return {"ok": True, "value": 0, "text": "0", "exact": "0", "steps": []}
 
 
-def solve_one(left, right, unknowns, eng=False):
+def solve_one(left, right, unknowns, eng=False, lang="en"):
     try:
         eq = to_sym(left) - to_sym(right)
         symbols = [sp.Symbol(n) for n in unknowns]
@@ -331,12 +341,12 @@ def solve_one(left, right, unknowns, eng=False):
                 sols = []
         rows = [{str(k): pretty(_num(sp.N(v)), eng) for k, v in sol.items()} for sol in sols[:8]]
         text = rows[0].get(unknowns[0], "0") if rows else "0"
-        return {"ok": True, "solutions": rows, "text": text}
+        return {"ok": True, "solutions": rows, "text": text, "steps": teach.steps_equation(lang, left, right, unknowns, text, bool(rows))}
     except Exception:
-        return {"ok": True, "solutions": [], "text": "0"}
+        return {"ok": True, "solutions": [], "text": "0", "steps": []}
 
 
-def solve_named(fid, values, unknown=None, eng=False):
+def solve_named(fid, values, unknown=None, eng=False, lang="en"):
     _, _, index = catalog()
     item = index.get(fid)
     if not item:
@@ -398,16 +408,34 @@ def solve_named(fid, values, unknown=None, eng=False):
                     sols = [0]
         nums = [pretty(_num(sp.N(s)), eng) for s in sols[:6]]
         unit = item["variables"].get(target, {}).get("unit", "")
-        return {"ok": True, "unknown": target, "text": nums[0] if nums else "0", "unit": unit, "all": nums}
+        mode = "left" if L == sym else ("right" if R == sym else "solve")
+        plugged = ""
+        symbolic = ""
+        try:
+            if mode == "left":
+                plugged = str(R.subs(mapping))
+            elif mode == "right":
+                plugged = str(L.subs(mapping))
+            elif sols:
+                symbolic = str(sols[0])
+                plugged = str(eq)
+        except Exception:
+            pass
+        steps = teach.steps_formula(
+            lang, item["expr"], target, known, mode, plugged, symbolic, nums[0] if nums else "0", unit, nums
+        )
+        return {"ok": True, "unknown": target, "text": nums[0] if nums else "0", "unit": unit, "all": nums, "steps": steps}
     except Exception:
-        return {"ok": True, "unknown": target, "text": "0", "unit": "", "all": ["0"]}
+        return {"ok": True, "unknown": target, "text": "0", "unit": "", "all": ["0"], "steps": []}
 
 
-def solve_many(equations, unknowns, eng=False):
+def solve_many(equations, unknowns, eng=False, lang="en"):
     try:
         eqs = []
+        shown = []
         for raw in equations:
             text = fix_expr(raw)
+            shown.append(text)
             if "=" in text:
                 a, b = text.split("=", 1)
                 eqs.append(to_sym(a) - to_sym(b))
@@ -422,9 +450,9 @@ def solve_many(equations, unknowns, eng=False):
             except Exception:
                 sols = []
         rows = [{str(k): pretty(_num(sp.N(v)), eng) for k, v in sol.items()} for sol in sols[:6]]
-        return {"ok": True, "solutions": rows}
+        return {"ok": True, "solutions": rows, "steps": teach.steps_system(lang, shown, unknowns, rows)}
     except Exception:
-        return {"ok": True, "solutions": []}
+        return {"ok": True, "solutions": [], "steps": []}
 
 
 def poly_work(coeffs, x=None, eng=False):

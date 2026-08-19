@@ -11,6 +11,7 @@ import algorithms
 import chemtools
 import core
 import lookup
+import teach
 from strings import UI, ui_text
 
 app = Flask(__name__)
@@ -48,6 +49,7 @@ def api_eval():
             angle=body.get("angle", "DEG"),
             eng=bool(body.get("eng")),
             ans=body.get("ans", 0),
+            lang=body.get("lang", "en"),
         )
     )
 
@@ -61,6 +63,7 @@ def api_solve():
             body.get("values") or {},
             unknown=body.get("unknown"),
             eng=bool(body.get("eng")),
+            lang=body.get("lang", "en"),
         )
     )
 
@@ -73,6 +76,7 @@ def api_system():
             body.get("equations") or ["x=0"],
             body.get("unknowns") or ["x"],
             eng=bool(body.get("eng")),
+            lang=body.get("lang", "en"),
         )
     )
 
@@ -80,7 +84,13 @@ def api_system():
 @app.post("/api/poly")
 def api_poly():
     body = request.get_json(silent=True) or {}
-    return jsonify(core.poly_work(body.get("coeffs") or [0] * 7, body.get("x"), bool(body.get("eng"))))
+    out = core.poly_work(body.get("coeffs") or [0] * 7, body.get("x"), bool(body.get("eng")))
+    lang = body.get("lang", "en")
+    if body.get("x") is None:
+        out["steps"] = teach.steps_poly(lang, "roots", None, "", out.get("degree"), out.get("roots") or [])
+    else:
+        out["steps"] = teach.steps_poly(lang, "eval", body.get("x"), out.get("value_text") or "0", out.get("degree"), None)
+    return jsonify(out)
 
 
 @app.post("/api/numeric")
@@ -133,13 +143,17 @@ def api_element():
 @app.post("/api/balance")
 def api_balance():
     body = request.get_json(silent=True) or {}
-    return jsonify(chemtools.balance_equation(body.get("eq", "")))
+    out = chemtools.balance_equation(body.get("eq", ""))
+    out["steps"] = teach.steps_chem(body.get("lang", "en"), body.get("eq", ""), out.get("text") or "", False)
+    return jsonify(out)
 
 
 @app.post("/api/molar")
 def api_molar():
     body = request.get_json(silent=True) or {}
-    return jsonify(chemtools.molar_mass(body.get("formula", "")))
+    out = chemtools.molar_mass(body.get("formula", ""))
+    out["steps"] = teach.steps_chem(body.get("lang", "en"), body.get("formula", ""), out.get("text") or "0", True)
+    return jsonify(out)
 
 
 @app.get("/api/algos")
