@@ -5,6 +5,7 @@ from __future__ import annotations
 import tkinter as tk
 from tkinter import ttk
 
+from .chemtools import balance_equation, find_element, list_elements, molar_mass
 from .engine import DesktopEngine
 from .i18n import t
 from .sanitize import clean_number
@@ -71,9 +72,11 @@ class UltraDesktop(tk.Tk):
         self.btn_form = tk.Button(top, command=lambda: self._set_mode("formulas"))
         self.btn_poly = tk.Button(top, command=lambda: self._set_mode("poly"))
         self.btn_num = tk.Button(top, command=lambda: self._set_mode("numeric"))
-        for b in (self.btn_calc, self.btn_form, self.btn_poly, self.btn_num):
-            self._paint_btn(b, ACCENT if False else BTN)
-            b.pack(side="left", padx=4)
+        self.btn_chem = tk.Button(top, command=lambda: self._set_mode("chem"))
+        self.btn_el = tk.Button(top, command=lambda: self._set_mode("elements"))
+        for b in (self.btn_calc, self.btn_form, self.btn_poly, self.btn_num, self.btn_chem, self.btn_el):
+            self._paint_btn(b, BTN)
+            b.pack(side="left", padx=3)
         self.lang_box = ttk.Combobox(top, values=["en", "fa", "fi"], width=6, state="readonly")
         self.lang_box.set("en")
         self.lang_box.bind("<<ComboboxSelected>>", self._on_lang)
@@ -82,13 +85,15 @@ class UltraDesktop(tk.Tk):
         self.lang_lbl.pack(side="right", padx=6)
 
         self.frames = {}
-        for name in ("calc", "formulas", "poly", "numeric"):
+        for name in ("calc", "formulas", "poly", "numeric", "chem", "elements"):
             fr = tk.Frame(self, bg=BG)
             self.frames[name] = fr
         self._build_calc(self.frames["calc"])
         self._build_formulas(self.frames["formulas"])
         self._build_poly(self.frames["poly"])
         self._build_numeric(self.frames["numeric"])
+        self._build_chem(self.frames["chem"])
+        self._build_elements(self.frames["elements"])
         self._set_mode("calc")
 
     def _paint_btn(self, btn: tk.Button, color: str = BTN, fg: str = FG) -> None:
@@ -115,6 +120,8 @@ class UltraDesktop(tk.Tk):
             "formulas": self.btn_form,
             "poly": self.btn_poly,
             "numeric": self.btn_num,
+            "chem": self.btn_chem,
+            "elements": self.btn_el,
         }
         for key, btn in mapping.items():
             self._paint_btn(btn, ACCENT if key == mode else BTN, "#1c1f24" if key == mode else FG)
@@ -126,6 +133,8 @@ class UltraDesktop(tk.Tk):
         self._fill_formula_list()
         if self.formula_id:
             self._show_formula(self.formula_id)
+        if hasattr(self, "el_list"):
+            self._fill_elements()
 
     def _refresh_texts(self) -> None:
         self.title(self.tr("app_title"))
@@ -133,7 +142,12 @@ class UltraDesktop(tk.Tk):
         self.btn_form.configure(text=self.tr("mode_formulas"))
         self.btn_poly.configure(text=self.tr("mode_poly"))
         self.btn_num.configure(text=self.tr("mode_numeric"))
+        self.btn_chem.configure(text=self.tr("mode_chem"))
+        self.btn_el.configure(text=self.tr("mode_elements"))
         self.lang_lbl.configure(text=self.tr("language"))
+        if hasattr(self, "chem_bal_btn"):
+            self.chem_bal_btn.configure(text=self.tr("balance"))
+            self.chem_mw_btn.configure(text=self.tr("molar"))
         self.angle_btn.configure(text=self.tr("deg") if self.engine.angle == "DEG" else self.tr("rad"))
         self.eng_btn.configure(text=self.tr("eng"))
         self.search_lbl.configure(text=self.tr("search"))

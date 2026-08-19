@@ -29,6 +29,13 @@ UI = {
         "ready": "Ready",
         "pick": "Pick a formula.",
         "lang": "Language",
+        "chem": "Chemistry",
+        "elements": "Elements",
+        "balance": "Balance",
+        "molar": "Molar mass",
+        "atomic_n": "Z",
+        "atomic_m": "Mass",
+        "isotopes": "Isotopes",
     },
     "fa": {
         "title": "ماشین حساب اولترا",
@@ -87,6 +94,13 @@ UI = {
         "ready": "Valmis",
         "pick": "Valitse kaava.",
         "lang": "Kieli",
+        "chem": "Kemia",
+        "elements": "Alkuaineet",
+        "balance": "Tasapainota",
+        "molar": "Moolimassa",
+        "atomic_n": "Z",
+        "atomic_m": "Massa",
+        "isotopes": "Isotoopit",
     },
 }
 

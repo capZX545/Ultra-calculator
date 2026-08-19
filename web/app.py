@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from flask import Flask, jsonify, render_template, request
 
+import chemtools
 import core
 from strings import UI, ui_text
 
@@ -94,6 +95,46 @@ def api_numeric():
     if kind == "ode":
         return jsonify(core.n_ode(func, a, y0, b, steps, eng))
     return jsonify(core.n_root(func, a, b, eng))
+
+
+@app.get("/api/elements")
+def api_elements():
+    q = request.args.get("q", "")
+    lang = request.args.get("lang", "en")
+    rows = []
+    for el in chemtools.list_elements(q):
+        rows.append(
+            {
+                "Z": el["Z"],
+                "symbol": el["symbol"],
+                "name": el["name"].get(lang) or el["name"]["en"],
+                "mass": el["mass"],
+                "group": el["group"],
+                "isotopes": el["isotopes"],
+                "names": el["name"],
+            }
+        )
+    return jsonify(rows)
+
+
+@app.get("/api/element")
+def api_element():
+    el = chemtools.find_element(request.args.get("q", ""))
+    if not el:
+        return jsonify({})
+    return jsonify(el)
+
+
+@app.post("/api/balance")
+def api_balance():
+    body = request.get_json(silent=True) or {}
+    return jsonify(chemtools.balance_equation(body.get("eq", "")))
+
+
+@app.post("/api/molar")
+def api_molar():
+    body = request.get_json(silent=True) or {}
+    return jsonify(chemtools.molar_mass(body.get("formula", "")))
 
 
 def main():

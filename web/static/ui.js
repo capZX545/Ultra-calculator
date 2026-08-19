@@ -73,6 +73,10 @@
     $("tab-formulas").textContent = s.formulas || "Formulas";
     $("tab-poly").textContent = s.poly || "Polynomial";
     $("tab-numeric").textContent = s.numeric || "Numerical";
+    if ($("tab-chem")) $("tab-chem").textContent = s.chem || "Chemistry";
+    if ($("tab-elements")) $("tab-elements").textContent = s.elements || "Elements";
+    if ($("chem-bal")) $("chem-bal").textContent = s.balance || "Balance";
+    if ($("chem-mw")) $("chem-mw").textContent = s.molar || "Molar mass";
     $("lang-label").textContent = s.lang || "Language";
     $("hist-title").textContent = s.history || "History";
     $("cat-title").textContent = s.search ? " " : " ";
@@ -190,6 +194,7 @@
       sel.appendChild(opt);
     });
     await loadFormulas();
+    if ($("el-q")) loadElements();
   }
 
   async function loadFormulas() {

@@ -30,7 +30,7 @@ def fix_number(raw, fallback=None):
         return fallback
 
 
-def fix_expr(raw):
+def fix_expr(raw, implicit=False):
     if raw is None:
         return "0"
     text = unicodedata.normalize("NFKC", str(raw)).strip()
@@ -38,11 +38,12 @@ def fix_expr(raw):
         return "0"
     text = text.translate(DIGITS).translate(OPS)
     text = text.replace("π", "pi").replace("√", "sqrt").replace("^", "**")
-    text = text.replace(",", ".")
+    text = re.sub(r"(\d),(\d)", r"\1.\2", text)
     text = re.sub(r"\s+", "", text)
-    text = re.sub(r"[^0-9A-Za-z_+\-*/().=<>!]", "", text)
-    text = re.sub(r"(\d)([A-Za-z_(])", r"\1*\2", text)
-    text = re.sub(r"(\))(\d|[A-Za-z_(])", r"\1*\2", text)
+    text = re.sub(r"[^0-9A-Za-z_+\-*/().,=<>!]", "", text)
+    if implicit:
+        text = re.sub(r"(\d)([A-Za-z_])", r"\1*\2", text)
+        text = re.sub(r"(\))(\d|[A-Za-z_(])", r"\1*\2", text)
     opens, closes = text.count("("), text.count(")")
     if opens > closes:
         text += ")" * (opens - closes)

@@ -244,6 +244,106 @@
       "en": "Physical constants",
       "fa": "ثابت های فیزیکی",
       "fi": "Fysikaaliset vakiot"
+    },
+    "spec.elementary": {
+      "en": "Elementary functions",
+      "fa": "توابع مقدماتی",
+      "fi": "Alkeisfunktiot"
+    },
+    "spec.hyper": {
+      "en": "Hypergeometric functions",
+      "fa": "توابع فوق هندسی",
+      "fi": "Hypergeometriset"
+    },
+    "spec.elliptic_fn": {
+      "en": "Elliptic functions",
+      "fa": "توابع بیضوی",
+      "fi": "Elliptiset funktiot"
+    },
+    "spec.bessel": {
+      "en": "Bessel-type functions",
+      "fa": "توابع نوع بسل",
+      "fi": "Bessel-tyyppiset"
+    },
+    "spec.gamma": {
+      "en": "Gamma, beta, erf",
+      "fa": "گاما بتا خطا",
+      "fi": "Gamma, beta, erf"
+    },
+    "spec.poly": {
+      "en": "Orthogonal polynomials",
+      "fa": "چندجمله ای های متعامد",
+      "fi": "Ortogonaaliset polynomit"
+    },
+    "spec.integer": {
+      "en": "Integer functions",
+      "fa": "توابع صحیح",
+      "fi": "Kokonaislukufunktiot"
+    },
+    "spec.zeta": {
+      "en": "Zeta and polylog",
+      "fa": "زتا و پلی لگاریتم",
+      "fi": "Zeta ja polylogi"
+    },
+    "spec.elliptic_int": {
+      "en": "Elliptic integrals",
+      "fa": "انتگرال های بیضوی",
+      "fi": "Elliptiset integraalit"
+    },
+    "spec.number": {
+      "en": "Number theory functions",
+      "fa": "توابع نظریه اعداد",
+      "fi": "Lukuteoriafunktiot"
+    },
+    "spec.const": {
+      "en": "Named constants",
+      "fa": "ثابت های نام دار",
+      "fi": "Nimetyt vakiot"
+    },
+    "spec.complex": {
+      "en": "Complex components",
+      "fa": "مؤلفه های مختلط",
+      "fi": "Kompleksikomponentit"
+    },
+    "spec.mathieu": {
+      "en": "Mathieu functions",
+      "fa": "توابع ماتیو",
+      "fi": "Mathieu-funktiot"
+    },
+    "spec.generalized": {
+      "en": "Generalized functions",
+      "fa": "توابع تعمیم یافته",
+      "fi": "Yleistetyt funktiot"
+    },
+    "chem.balance": {
+      "en": "Stoichiometry extra",
+      "fa": "استوکیومتری بیشتر",
+      "fi": "Stokiometria"
+    },
+    "chem.thermo2": {
+      "en": "More chemical thermo",
+      "fa": "ترمو شیمی بیشتر",
+      "fi": "Lisaa kemian termo"
+    },
+    "physics.astro": {
+      "en": "Astronomy",
+      "fa": "نجوم",
+      "fi": "Astronomia"
+    },
+    "physics.nuclear": {
+      "en": "Nuclear",
+      "fa": "هسته ای",
+      "fi": "Ydinfysiikka"
+    },
+    "eng.control": {
+      "en": "Control",
+      "fa": "کنترل",
+      "fi": "Saato"
+    },
+    "eng.signal": {
+      "en": "Signals",
+      "fa": "سیگنال",
+      "fi": "Signaalit"
     }
   },
   "formulas": [
@@ -11555,6 +11655,4882 @@
             "en": "F",
             "fa": "F",
             "fi": "F"
+          }
+        }
+      }
+    },
+    {
+      "id": "sqrt_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Square root",
+        "fa": "ریشه دوم",
+        "fi": "Neliojuuri"
+      },
+      "expr": "y = sqrt(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "cbrt_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Cube root",
+        "fa": "ریشه سوم",
+        "fi": "Kuutiojuuri"
+      },
+      "expr": "y = cbrt(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "exp_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Exponential",
+        "fa": "نمایی",
+        "fi": "Eksponentti"
+      },
+      "expr": "y = exp(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "ln_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Natural log",
+        "fa": "لگاریتم طبیعی",
+        "fi": "Luonnollinen log"
+      },
+      "expr": "y = ln(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "log10_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Log10",
+        "fa": "لگاریتم ۱۰",
+        "fi": "Log10"
+      },
+      "expr": "y = log10(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "log2_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Log2",
+        "fa": "لگاریتم ۲",
+        "fi": "Log2"
+      },
+      "expr": "y = log2(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "sin_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Sine (rad)",
+        "fa": "سینوس رادیان",
+        "fi": "Sini (rad)"
+      },
+      "expr": "y = sin(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "cos_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Cosine (rad)",
+        "fa": "کسینوس رادیان",
+        "fi": "Kosini (rad)"
+      },
+      "expr": "y = cos(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "tan_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Tangent (rad)",
+        "fa": "تانژانت رادیان",
+        "fi": "Tangentti (rad)"
+      },
+      "expr": "y = tan(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "asin_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Arcsine",
+        "fa": "آرک سینوس",
+        "fi": "Arkussini"
+      },
+      "expr": "y = asin(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "acos_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Arccosine",
+        "fa": "آرک کسینوس",
+        "fi": "Arkuskosini"
+      },
+      "expr": "y = acos(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "atan_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Arctangent",
+        "fa": "آرک تانژانت",
+        "fi": "Arkustangentti"
+      },
+      "expr": "y = atan(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "sinh_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Sinh",
+        "fa": "سینوس هذلولوی",
+        "fi": "Sinh"
+      },
+      "expr": "y = sinh(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "cosh_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Cosh",
+        "fa": "کسینوس هذلولوی",
+        "fi": "Cosh"
+      },
+      "expr": "y = cosh(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "tanh_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Tanh",
+        "fa": "تانژانت هذلولوی",
+        "fi": "Tanh"
+      },
+      "expr": "y = tanh(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "asinh_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Arcsinh",
+        "fa": "آرک سینوس هذلولوی",
+        "fi": "Arcsinh"
+      },
+      "expr": "y = asinh(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "acosh_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Arccosh",
+        "fa": "آرک کسینوس هذلولوی",
+        "fi": "Arccosh"
+      },
+      "expr": "y = acosh(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "atanh_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Arctanh",
+        "fa": "آرک تانژانت هذلولوی",
+        "fi": "Arctanh"
+      },
+      "expr": "y = atanh(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "sinc_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Sinc",
+        "fa": "سینک",
+        "fi": "Sinc"
+      },
+      "expr": "y = sinc(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "lambert_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Lambert W",
+        "fa": "لامبرت W",
+        "fi": "Lambert W"
+      },
+      "expr": "y = LambertW(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "abs_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Absolute value",
+        "fa": "قدر مطلق",
+        "fi": "Itseisarvo"
+      },
+      "expr": "y = abs(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "sign_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Sign",
+        "fa": "علامت",
+        "fi": "Merkki"
+      },
+      "expr": "y = sign(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "floor_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Floor",
+        "fa": "جزء صحیح",
+        "fi": "Lattia"
+      },
+      "expr": "y = floor(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "ceil_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Ceiling",
+        "fa": "سقف",
+        "fi": "Katto"
+      },
+      "expr": "y = ceiling(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "pow_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Power",
+        "fa": "توان",
+        "fi": "Potenssi"
+      },
+      "expr": "y = x**a",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        },
+        "a": {
+          "unit": "1",
+          "name": {
+            "en": "Exponent",
+            "fa": "نما",
+            "fi": "Eksponentti"
+          }
+        }
+      }
+    },
+    {
+      "id": "log_base",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Log arbitrary base",
+        "fa": "لگاریتم پایه دلخواه",
+        "fi": "Logaritmi kannalla"
+      },
+      "expr": "y = log(x)/log(b)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        },
+        "b": {
+          "unit": "1",
+          "name": {
+            "en": "Base",
+            "fa": "پایه",
+            "fi": "Kanta"
+          }
+        }
+      }
+    },
+    {
+      "id": "expm1",
+      "category": "spec.elementary",
+      "name": {
+        "en": "exp(x)-1",
+        "fa": "e^x - 1",
+        "fi": "e^x - 1"
+      },
+      "expr": "y = exp(x) - 1",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "sin2_id",
+      "category": "spec.elementary",
+      "name": {
+        "en": "sin^2 + cos^2",
+        "fa": "اتحاد فیثاغورس مثلثاتی",
+        "fi": "Pythagoras trig"
+      },
+      "expr": "y = sin(x)**2 + cos(x)**2",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "cosh2_id",
+      "category": "spec.elementary",
+      "name": {
+        "en": "cosh^2 - sinh^2",
+        "fa": "اتحاد هذلولوی",
+        "fi": "Hyperbolinen identiteetti"
+      },
+      "expr": "y = cosh(x)**2 - sinh(x)**2",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "euler_cis",
+      "category": "spec.elementary",
+      "name": {
+        "en": "cis real part",
+        "fa": "جزء حقیقی e^{ix}",
+        "fi": "cis reaaliosa"
+      },
+      "expr": "y = exp(0)*cos(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "double_sin",
+      "category": "spec.elementary",
+      "name": {
+        "en": "sin 2x",
+        "fa": "سینوس دو برابر",
+        "fi": "sin 2x"
+      },
+      "expr": "y = 2*sin(x)*cos(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "half_angle_sin",
+      "category": "spec.elementary",
+      "name": {
+        "en": "sin(x/2) from cos",
+        "fa": "سینوس نصف زاویه",
+        "fi": "Puolikulman sini"
+      },
+      "expr": "y = sqrt((1 - cos(x))/2)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "sec_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Secant",
+        "fa": "سکانت",
+        "fi": "Sekantti"
+      },
+      "expr": "y = 1/cos(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "csc_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Cosecant",
+        "fa": "کسکانت",
+        "fi": "Kosekantti"
+      },
+      "expr": "y = 1/sin(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "cot_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Cotangent",
+        "fa": "کتانژانت",
+        "fi": "Kotangentti"
+      },
+      "expr": "y = cos(x)/sin(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "sech_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Sech",
+        "fa": "سکانت هذلولوی",
+        "fi": "Sech"
+      },
+      "expr": "y = 1/cosh(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "csch_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Csch",
+        "fa": "کسکانت هذلولوی",
+        "fi": "Csch"
+      },
+      "expr": "y = 1/sinh(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "coth_eval",
+      "category": "spec.elementary",
+      "name": {
+        "en": "Coth",
+        "fa": "کتانژانت هذلولوی",
+        "fi": "Coth"
+      },
+      "expr": "y = cosh(x)/sinh(x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "gamma_eval",
+      "category": "spec.gamma",
+      "name": {
+        "en": "Gamma",
+        "fa": "گاما",
+        "fi": "Gamma"
+      },
+      "expr": "y = gamma(z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "gamma_recur",
+      "category": "spec.gamma",
+      "name": {
+        "en": "Gamma(z+1) = z Gamma(z)",
+        "fa": "بازگشت گاما",
+        "fi": "Gamma-rekursio"
+      },
+      "expr": "y = z*gamma(z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "loggamma_eval",
+      "category": "spec.gamma",
+      "name": {
+        "en": "Log Gamma",
+        "fa": "لگاریتم گاما",
+        "fi": "Log-gamma"
+      },
+      "expr": "y = loggamma(z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "digamma_eval",
+      "category": "spec.gamma",
+      "name": {
+        "en": "Digamma",
+        "fa": "دیگاما",
+        "fi": "Digamma"
+      },
+      "expr": "y = digamma(z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "beta_eval",
+      "category": "spec.gamma",
+      "name": {
+        "en": "Beta",
+        "fa": "بتا",
+        "fi": "Beta"
+      },
+      "expr": "y = beta(a, b)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "a": {
+          "unit": "1",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "b": {
+          "unit": "1",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        }
+      }
+    },
+    {
+      "id": "beta_gamma",
+      "category": "spec.gamma",
+      "name": {
+        "en": "Beta via Gamma",
+        "fa": "بتا از گاما",
+        "fi": "Beta gammasta"
+      },
+      "expr": "y = gamma(a)*gamma(b)/gamma(a + b)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "a": {
+          "unit": "1",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "b": {
+          "unit": "1",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        }
+      }
+    },
+    {
+      "id": "erf_eval",
+      "category": "spec.gamma",
+      "name": {
+        "en": "Error function",
+        "fa": "تابع خطا",
+        "fi": "Virhefunktio"
+      },
+      "expr": "y = erf(z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "erfc_eval",
+      "category": "spec.gamma",
+      "name": {
+        "en": "Complementary erf",
+        "fa": "تابع خطای مکمل",
+        "fi": "Erfc"
+      },
+      "expr": "y = erfc(z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "erfi_eval",
+      "category": "spec.gamma",
+      "name": {
+        "en": "Imaginary erf",
+        "fa": "تابع خطای موهومی",
+        "fi": "Erfi"
+      },
+      "expr": "y = erfi(z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "fact_eval",
+      "category": "spec.gamma",
+      "name": {
+        "en": "Factorial via Gamma",
+        "fa": "فاکتوریل از گاما",
+        "fi": "Kertoma gammasta"
+      },
+      "expr": "y = gamma(n + 1)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "fact2_eval",
+      "category": "spec.gamma",
+      "name": {
+        "en": "Double factorial",
+        "fa": "فاکتوریل مضاعف",
+        "fi": "Kaksoiskertoma"
+      },
+      "expr": "y = factorial2(n)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "binom_eval",
+      "category": "spec.gamma",
+      "name": {
+        "en": "Binomial",
+        "fa": "ضریب دوجمله ای",
+        "fi": "Binomikerroin"
+      },
+      "expr": "y = binomial(n, k)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        },
+        "k": {
+          "unit": "1",
+          "name": {
+            "en": "k",
+            "fa": "k",
+            "fi": "k"
+          }
+        }
+      }
+    },
+    {
+      "id": "harmonic_eval",
+      "category": "spec.gamma",
+      "name": {
+        "en": "Harmonic number",
+        "fa": "عدد هارمونیک",
+        "fi": "Harmoninen luku"
+      },
+      "expr": "y = harmonic(n)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "catalan_n",
+      "category": "spec.gamma",
+      "name": {
+        "en": "Catalan number",
+        "fa": "عدد کاتالان",
+        "fi": "Catalanin luku"
+      },
+      "expr": "y = catalan(n)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "fresnel_s",
+      "category": "spec.gamma",
+      "name": {
+        "en": "Fresnel S",
+        "fa": "فرنل S",
+        "fi": "Fresnel S"
+      },
+      "expr": "y = fresnels(z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "fresnel_c",
+      "category": "spec.gamma",
+      "name": {
+        "en": "Fresnel C",
+        "fa": "فرنل C",
+        "fi": "Fresnel C"
+      },
+      "expr": "y = fresnelc(z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "ei_eval",
+      "category": "spec.gamma",
+      "name": {
+        "en": "Exponential integral Ei",
+        "fa": "انتگرال نمایی Ei",
+        "fi": "Ei"
+      },
+      "expr": "y = Ei(z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "si_eval",
+      "category": "spec.gamma",
+      "name": {
+        "en": "Sine integral",
+        "fa": "انتگرال سینوس",
+        "fi": "Si"
+      },
+      "expr": "y = Si(z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "ci_eval",
+      "category": "spec.gamma",
+      "name": {
+        "en": "Cosine integral",
+        "fa": "انتگرال کسینوس",
+        "fi": "Ci"
+      },
+      "expr": "y = Ci(z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "shi_eval",
+      "category": "spec.gamma",
+      "name": {
+        "en": "Sinh integral",
+        "fa": "انتگرال سینوس هذلولوی",
+        "fi": "Shi"
+      },
+      "expr": "y = Shi(z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "chi_eval",
+      "category": "spec.gamma",
+      "name": {
+        "en": "Cosh integral",
+        "fa": "انتگرال کسینوس هذلولوی",
+        "fi": "Chi"
+      },
+      "expr": "y = Chi(z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "expint_eval",
+      "category": "spec.gamma",
+      "name": {
+        "en": "En(z)",
+        "fa": "انتگرال نمایی En",
+        "fi": "En"
+      },
+      "expr": "y = expint(n, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "rf_eval",
+      "category": "spec.gamma",
+      "name": {
+        "en": "Rising factorial",
+        "fa": "فاکتوریل بالارونده",
+        "fi": "Nouseva kertoma"
+      },
+      "expr": "y = rf(a, n)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "a": {
+          "unit": "1",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "ff_eval",
+      "category": "spec.gamma",
+      "name": {
+        "en": "Falling factorial",
+        "fa": "فاکتوریل پایین رونده",
+        "fi": "Laskeva kertoma"
+      },
+      "expr": "y = ff(a, n)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "a": {
+          "unit": "1",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "besselj_eval",
+      "category": "spec.bessel",
+      "name": {
+        "en": "Bessel J",
+        "fa": "بسل J",
+        "fi": "Bessel J"
+      },
+      "expr": "y = besselj(nu, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "nu": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "bessely_eval",
+      "category": "spec.bessel",
+      "name": {
+        "en": "Bessel Y",
+        "fa": "بسل Y",
+        "fi": "Bessel Y"
+      },
+      "expr": "y = bessely(nu, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "nu": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "besseli_eval",
+      "category": "spec.bessel",
+      "name": {
+        "en": "Modified Bessel I",
+        "fa": "بسل اصلاح شده I",
+        "fi": "Bessel I"
+      },
+      "expr": "y = besseli(nu, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "nu": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "besselk_eval",
+      "category": "spec.bessel",
+      "name": {
+        "en": "Modified Bessel K",
+        "fa": "بسل اصلاح شده K",
+        "fi": "Bessel K"
+      },
+      "expr": "y = besselk(nu, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "nu": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "sph_jn",
+      "category": "spec.bessel",
+      "name": {
+        "en": "Spherical Bessel j",
+        "fa": "بسل کروی j",
+        "fi": "Pallobessel j"
+      },
+      "expr": "y = jn(n, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "sph_yn",
+      "category": "spec.bessel",
+      "name": {
+        "en": "Spherical Bessel y",
+        "fa": "بسل کروی y",
+        "fi": "Pallobessel y"
+      },
+      "expr": "y = yn(n, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "hankel1_eval",
+      "category": "spec.bessel",
+      "name": {
+        "en": "Hankel H1",
+        "fa": "هنکل ۱",
+        "fi": "Hankel 1"
+      },
+      "expr": "y = hankel1(nu, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "nu": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "hankel2_eval",
+      "category": "spec.bessel",
+      "name": {
+        "en": "Hankel H2",
+        "fa": "هنکل ۲",
+        "fi": "Hankel 2"
+      },
+      "expr": "y = hankel2(nu, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "nu": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "airyai_eval",
+      "category": "spec.bessel",
+      "name": {
+        "en": "Airy Ai",
+        "fa": "ایری Ai",
+        "fi": "Airy Ai"
+      },
+      "expr": "y = airyai(z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "airybi_eval",
+      "category": "spec.bessel",
+      "name": {
+        "en": "Airy Bi",
+        "fa": "ایری Bi",
+        "fi": "Airy Bi"
+      },
+      "expr": "y = airybi(z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "airyaip_eval",
+      "category": "spec.bessel",
+      "name": {
+        "en": "Airy Ai'",
+        "fa": "مشتق ایری Ai",
+        "fi": "Airy Ai'"
+      },
+      "expr": "y = airyaiprime(z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "airybip_eval",
+      "category": "spec.bessel",
+      "name": {
+        "en": "Airy Bi'",
+        "fa": "مشتق ایری Bi",
+        "fi": "Airy Bi'"
+      },
+      "expr": "y = airybiprime(z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "struveh_eval",
+      "category": "spec.bessel",
+      "name": {
+        "en": "Struve H",
+        "fa": "استرووه H",
+        "fi": "Struve H"
+      },
+      "expr": "y = struveh(nu, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "nu": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "struvel_eval",
+      "category": "spec.bessel",
+      "name": {
+        "en": "Struve L",
+        "fa": "استرووه L",
+        "fi": "Struve L"
+      },
+      "expr": "y = struvel(nu, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "nu": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "besselj0",
+      "category": "spec.bessel",
+      "name": {
+        "en": "J0",
+        "fa": "J0",
+        "fi": "J0"
+      },
+      "expr": "y = besselj(0, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "besselj1",
+      "category": "spec.bessel",
+      "name": {
+        "en": "J1",
+        "fa": "J1",
+        "fi": "J1"
+      },
+      "expr": "y = besselj(1, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "hyp0f1_eval",
+      "category": "spec.hyper",
+      "name": {
+        "en": "0F1",
+        "fa": "0F1",
+        "fi": "0F1"
+      },
+      "expr": "y = hyp0f1(b, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "b": {
+          "unit": "1",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "hyp1f1_eval",
+      "category": "spec.hyper",
+      "name": {
+        "en": "1F1 Kummer",
+        "fa": "1F1",
+        "fi": "1F1"
+      },
+      "expr": "y = hyp1f1(a, b, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "a": {
+          "unit": "1",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "b": {
+          "unit": "1",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "hyp2f1_eval",
+      "category": "spec.hyper",
+      "name": {
+        "en": "2F1 Gauss",
+        "fa": "2F1 گاوس",
+        "fi": "2F1"
+      },
+      "expr": "y = hyp2f1(a, b, c, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "a": {
+          "unit": "1",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "b": {
+          "unit": "1",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        },
+        "c": {
+          "unit": "1",
+          "name": {
+            "en": "c",
+            "fa": "c",
+            "fi": "c"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "hermite_g",
+      "category": "spec.hyper",
+      "name": {
+        "en": "Hermite H_n",
+        "fa": "هرمیت",
+        "fi": "Hermite"
+      },
+      "expr": "y = hermite(n, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "laguerre_g",
+      "category": "spec.hyper",
+      "name": {
+        "en": "Laguerre L_n",
+        "fa": "لاگر",
+        "fi": "Laguerre"
+      },
+      "expr": "y = laguerre(n, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "alaguerre_g",
+      "category": "spec.hyper",
+      "name": {
+        "en": "Associated Laguerre",
+        "fa": "لاگر وابسته",
+        "fi": "Liittyva Laguerre"
+      },
+      "expr": "y = assoc_laguerre(n, k, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        },
+        "k": {
+          "unit": "1",
+          "name": {
+            "en": "k",
+            "fa": "k",
+            "fi": "k"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "legendre_g",
+      "category": "spec.hyper",
+      "name": {
+        "en": "Legendre P_n",
+        "fa": "لژاندر",
+        "fi": "Legendre"
+      },
+      "expr": "y = legendre(n, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "alegendre_g",
+      "category": "spec.hyper",
+      "name": {
+        "en": "Associated Legendre",
+        "fa": "لژاندر وابسته",
+        "fi": "Liittyva Legendre"
+      },
+      "expr": "y = assoc_legendre(n, m, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        },
+        "m": {
+          "unit": "1",
+          "name": {
+            "en": "m",
+            "fa": "m",
+            "fi": "m"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "chebyt",
+      "category": "spec.hyper",
+      "name": {
+        "en": "Chebyshev T",
+        "fa": "چبیشف T",
+        "fi": "Tshebyshov T"
+      },
+      "expr": "y = chebyshevt(n, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "chebyu",
+      "category": "spec.hyper",
+      "name": {
+        "en": "Chebyshev U",
+        "fa": "چبیشف U",
+        "fi": "Tshebyshov U"
+      },
+      "expr": "y = chebyshevu(n, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "gegenbauer_g",
+      "category": "spec.hyper",
+      "name": {
+        "en": "Gegenbauer",
+        "fa": "گگن باوئر",
+        "fi": "Gegenbauer"
+      },
+      "expr": "y = gegenbauer(n, a, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        },
+        "a": {
+          "unit": "1",
+          "name": {
+            "en": "alpha",
+            "fa": "آلفا",
+            "fi": "alpha"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "jacobi_g",
+      "category": "spec.hyper",
+      "name": {
+        "en": "Jacobi P",
+        "fa": "یاکوبی",
+        "fi": "Jacobi"
+      },
+      "expr": "y = jacobi(n, a, b, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        },
+        "a": {
+          "unit": "1",
+          "name": {
+            "en": "alpha",
+            "fa": "آلفا",
+            "fi": "alpha"
+          }
+        },
+        "b": {
+          "unit": "1",
+          "name": {
+            "en": "beta",
+            "fa": "بتا",
+            "fi": "beta"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "bern_poly",
+      "category": "spec.poly",
+      "name": {
+        "en": "Bernoulli B_n",
+        "fa": "برنولی",
+        "fi": "Bernoulli"
+      },
+      "expr": "y = bernoulli(n)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        }
+      }
+    },
+    {
+      "id": "euler_poly",
+      "category": "spec.poly",
+      "name": {
+        "en": "Euler E_n",
+        "fa": "اویلر عددی",
+        "fi": "Euler-luku"
+      },
+      "expr": "y = euler(n)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        }
+      }
+    },
+    {
+      "id": "bell_n",
+      "category": "spec.poly",
+      "name": {
+        "en": "Bell number",
+        "fa": "عدد بل",
+        "fi": "Bellin luku"
+      },
+      "expr": "y = bell(n)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        }
+      }
+    },
+    {
+      "id": "fib_n",
+      "category": "spec.poly",
+      "name": {
+        "en": "Fibonacci",
+        "fa": "فیبوناچی",
+        "fi": "Fibonacci"
+      },
+      "expr": "y = fibonacci(n)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        }
+      }
+    },
+    {
+      "id": "lucas_n",
+      "category": "spec.poly",
+      "name": {
+        "en": "Lucas",
+        "fa": "لوکاس",
+        "fi": "Lucas"
+      },
+      "expr": "y = lucas(n)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "Order",
+            "fa": "مرتبه",
+            "fi": "Jarjestys"
+          }
+        }
+      }
+    },
+    {
+      "id": "ellipk",
+      "category": "spec.elliptic_int",
+      "name": {
+        "en": "Complete K(m)",
+        "fa": "انتگرال بیضوی کامل K",
+        "fi": "Taydellinen K"
+      },
+      "expr": "y = elliptic_k(m)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "m": {
+          "unit": "1",
+          "name": {
+            "en": "Parameter m",
+            "fa": "پارامتر m",
+            "fi": "m"
+          }
+        }
+      }
+    },
+    {
+      "id": "ellipse",
+      "category": "spec.elliptic_int",
+      "name": {
+        "en": "Complete E(m)",
+        "fa": "انتگرال بیضوی کامل E",
+        "fi": "Taydellinen E"
+      },
+      "expr": "y = elliptic_e(m)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "m": {
+          "unit": "1",
+          "name": {
+            "en": "m",
+            "fa": "m",
+            "fi": "m"
+          }
+        }
+      }
+    },
+    {
+      "id": "ellipf",
+      "category": "spec.elliptic_int",
+      "name": {
+        "en": "Incomplete F(phi|m)",
+        "fa": "انتگرال بیضوی ناقص F",
+        "fi": "Epataydellinen F"
+      },
+      "expr": "y = elliptic_f(phi, m)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "phi": {
+          "unit": "rad",
+          "name": {
+            "en": "Amplitude",
+            "fa": "دامنه",
+            "fi": "Amplitudi"
+          }
+        },
+        "m": {
+          "unit": "1",
+          "name": {
+            "en": "m",
+            "fa": "m",
+            "fi": "m"
+          }
+        }
+      }
+    },
+    {
+      "id": "agm",
+      "category": "spec.elliptic_fn",
+      "name": {
+        "en": "AGM two terms start",
+        "fa": "شروع میانگین حسابی هندسی",
+        "fi": "AGM alku"
+      },
+      "expr": "a1 = (a + b)/2",
+      "variables": {
+        "a1": {
+          "unit": "1",
+          "name": {
+            "en": "Next arithmetic",
+            "fa": "میانگین حسابی بعد",
+            "fi": "Seuraava A"
+          }
+        },
+        "a": {
+          "unit": "1",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "b": {
+          "unit": "1",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        }
+      }
+    },
+    {
+      "id": "agm_g",
+      "category": "spec.elliptic_fn",
+      "name": {
+        "en": "AGM geometric step",
+        "fa": "گام هندسی AGM",
+        "fi": "AGM G"
+      },
+      "expr": "g1 = sqrt(a*b)",
+      "variables": {
+        "g1": {
+          "unit": "1",
+          "name": {
+            "en": "Next geometric",
+            "fa": "میانگین هندسی بعد",
+            "fi": "Seuraava G"
+          }
+        },
+        "a": {
+          "unit": "1",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "b": {
+          "unit": "1",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        }
+      }
+    },
+    {
+      "id": "zeta_eval",
+      "category": "spec.zeta",
+      "name": {
+        "en": "Riemann zeta",
+        "fa": "زتا ریمان",
+        "fi": "Riemannin zeta"
+      },
+      "expr": "y = zeta(s)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "s": {
+          "unit": "1",
+          "name": {
+            "en": "s",
+            "fa": "s",
+            "fi": "s"
+          }
+        }
+      }
+    },
+    {
+      "id": "eta_eval",
+      "category": "spec.zeta",
+      "name": {
+        "en": "Dirichlet eta",
+        "fa": "اتا دیریکله",
+        "fi": "Dirichlet eta"
+      },
+      "expr": "y = dirichlet_eta(s)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "s": {
+          "unit": "1",
+          "name": {
+            "en": "s",
+            "fa": "s",
+            "fi": "s"
+          }
+        }
+      }
+    },
+    {
+      "id": "polylog_eval",
+      "category": "spec.zeta",
+      "name": {
+        "en": "Polylog",
+        "fa": "پلی لگاریتم",
+        "fi": "Polylogi"
+      },
+      "expr": "y = polylog(s, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "s": {
+          "unit": "1",
+          "name": {
+            "en": "s",
+            "fa": "s",
+            "fi": "s"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "zeta2",
+      "category": "spec.zeta",
+      "name": {
+        "en": "zeta(2) = pi^2/6",
+        "fa": "زتا ۲",
+        "fi": "zeta(2)"
+      },
+      "expr": "y = pi**2/6",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        }
+      }
+    },
+    {
+      "id": "zeta4",
+      "category": "spec.zeta",
+      "name": {
+        "en": "zeta(4) = pi^4/90",
+        "fa": "زتا ۴",
+        "fi": "zeta(4)"
+      },
+      "expr": "y = pi**4/90",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        }
+      }
+    },
+    {
+      "id": "mod_eval",
+      "category": "spec.integer",
+      "name": {
+        "en": "Modulo",
+        "fa": "باقی مانده",
+        "fi": "Modulo"
+      },
+      "expr": "y = Mod(a, m)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "a": {
+          "unit": "1",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "m": {
+          "unit": "1",
+          "name": {
+            "en": "m",
+            "fa": "m",
+            "fi": "m"
+          }
+        }
+      }
+    },
+    {
+      "id": "gcd_eval",
+      "category": "spec.number",
+      "name": {
+        "en": "GCD two args via sympy",
+        "fa": "ب م م",
+        "fi": "SYD"
+      },
+      "expr": "y = a",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "a": {
+          "unit": "1",
+          "name": {
+            "en": "placeholder use numeric tab",
+            "fa": "از بخش عددی",
+            "fi": "kayta numeerista"
+          }
+        }
+      }
+    },
+    {
+      "id": "re_eval",
+      "category": "spec.complex",
+      "name": {
+        "en": "Real part of x+iy",
+        "fa": "جزء حقیقی",
+        "fi": "Reaaliosa"
+      },
+      "expr": "y = x",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "Real",
+            "fa": "حقیقی",
+            "fi": "Reaali"
+          }
+        }
+      }
+    },
+    {
+      "id": "im_mod",
+      "category": "spec.complex",
+      "name": {
+        "en": "Modulus",
+        "fa": "قدر مطلق مختلط",
+        "fi": "Moduli"
+      },
+      "expr": "y = sqrt(x**2 + t**2)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "Re",
+            "fa": "حقیقی",
+            "fi": "Re"
+          }
+        },
+        "t": {
+          "unit": "1",
+          "name": {
+            "en": "Im",
+            "fa": "موهومی",
+            "fi": "Im"
+          }
+        }
+      }
+    },
+    {
+      "id": "arg_eval",
+      "category": "spec.complex",
+      "name": {
+        "en": "Argument",
+        "fa": "آرگومان",
+        "fi": "Argumentti"
+      },
+      "expr": "y = atan2(t, x)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "t": {
+          "unit": "1",
+          "name": {
+            "en": "Im",
+            "fa": "موهومی",
+            "fi": "Im"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "Re",
+            "fa": "حقیقی",
+            "fi": "Re"
+          }
+        }
+      }
+    },
+    {
+      "id": "pi_eval",
+      "category": "spec.const",
+      "name": {
+        "en": "Pi",
+        "fa": "پی",
+        "fi": "Pii"
+      },
+      "expr": "y = pi",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        }
+      }
+    },
+    {
+      "id": "e_eval",
+      "category": "spec.const",
+      "name": {
+        "en": "e",
+        "fa": "e",
+        "fi": "e"
+      },
+      "expr": "y = exp(1)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        }
+      }
+    },
+    {
+      "id": "golden",
+      "category": "spec.const",
+      "name": {
+        "en": "Golden ratio",
+        "fa": "نسبت طلایی",
+        "fi": "Kultainen leikkaus"
+      },
+      "expr": "y = (1 + sqrt(5))/2",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        }
+      }
+    },
+    {
+      "id": "euler_gamma",
+      "category": "spec.const",
+      "name": {
+        "en": "Euler-Mascheroni approx",
+        "fa": "ثابت اویلر تقریبی",
+        "fi": "Euler-Mascheroni"
+      },
+      "expr": "y = 0.5772156649015329",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        }
+      }
+    },
+    {
+      "id": "catalan_c",
+      "category": "spec.const",
+      "name": {
+        "en": "Catalan constant",
+        "fa": "ثابت کاتالان",
+        "fi": "Catalanin vakio"
+      },
+      "expr": "y = 0.915965594177219",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        }
+      }
+    },
+    {
+      "id": "ln2",
+      "category": "spec.const",
+      "name": {
+        "en": "ln 2",
+        "fa": "ln 2",
+        "fi": "ln 2"
+      },
+      "expr": "y = ln(2)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        }
+      }
+    },
+    {
+      "id": "ln10",
+      "category": "spec.const",
+      "name": {
+        "en": "ln 10",
+        "fa": "ln 10",
+        "fi": "ln 10"
+      },
+      "expr": "y = ln(10)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        }
+      }
+    },
+    {
+      "id": "sqrt2",
+      "category": "spec.const",
+      "name": {
+        "en": "sqrt 2",
+        "fa": "رادیکال ۲",
+        "fi": "sqrt 2"
+      },
+      "expr": "y = sqrt(2)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        }
+      }
+    },
+    {
+      "id": "sqrt3",
+      "category": "spec.const",
+      "name": {
+        "en": "sqrt 3",
+        "fa": "رادیکال ۳",
+        "fi": "sqrt 3"
+      },
+      "expr": "y = sqrt(3)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        }
+      }
+    },
+    {
+      "id": "degree_rad",
+      "category": "spec.const",
+      "name": {
+        "en": "1 degree in rad",
+        "fa": "یک درجه به رادیان",
+        "fi": "Yksi aste rad"
+      },
+      "expr": "y = pi/180",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        }
+      }
+    },
+    {
+      "id": "heaviside_step",
+      "category": "spec.generalized",
+      "name": {
+        "en": "Unit step as sign form",
+        "fa": "پله از علامت",
+        "fi": "Yksikkoaskel"
+      },
+      "expr": "y = (sign(x) + 1)/2",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "rect_pulse",
+      "category": "spec.generalized",
+      "name": {
+        "en": "Rect |x|<1/2",
+        "fa": "پالس مستطیلی",
+        "fi": "Suorakulmio"
+      },
+      "expr": "y = (sign(x + 1/2) - sign(x - 1/2))/2",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "mathieuc_eval",
+      "category": "spec.mathieu",
+      "name": {
+        "en": "Mathieu C",
+        "fa": "ماتیو C",
+        "fi": "Mathieu C"
+      },
+      "expr": "y = mathieuc(a, q, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "a": {
+          "unit": "1",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "q": {
+          "unit": "1",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "mathieus_eval",
+      "category": "spec.mathieu",
+      "name": {
+        "en": "Mathieu S",
+        "fa": "ماتیو S",
+        "fi": "Mathieu S"
+      },
+      "expr": "y = mathieus(a, q, z)",
+      "variables": {
+        "y": {
+          "unit": "1",
+          "name": {
+            "en": "Value",
+            "fa": "مقدار",
+            "fi": "Arvo"
+          }
+        },
+        "a": {
+          "unit": "1",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "q": {
+          "unit": "1",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        },
+        "z": {
+          "unit": "1",
+          "name": {
+            "en": "z",
+            "fa": "z",
+            "fi": "z"
+          }
+        }
+      }
+    },
+    {
+      "id": "kepler3",
+      "category": "physics.astro",
+      "name": {
+        "en": "Kepler III (solar)",
+        "fa": "کپلر ۳",
+        "fi": "Kepler III"
+      },
+      "expr": "T = 2*pi*sqrt(a**3/(G*M))",
+      "variables": {
+        "T": {
+          "unit": "s",
+          "name": {
+            "en": "Period",
+            "fa": "دوره",
+            "fi": "Jakso"
+          }
+        },
+        "a": {
+          "unit": "m",
+          "name": {
+            "en": "Semi-major",
+            "fa": "نیم قطر بزرگ",
+            "fi": "Isoakseli"
+          }
+        },
+        "G": {
+          "unit": "N*m^2/kg^2",
+          "name": {
+            "en": "G",
+            "fa": "G",
+            "fi": "G"
+          }
+        },
+        "M": {
+          "unit": "kg",
+          "name": {
+            "en": "Central mass",
+            "fa": "جرم مرکزی",
+            "fi": "Keskuskappale"
+          }
+        }
+      }
+    },
+    {
+      "id": "hubble",
+      "category": "physics.astro",
+      "name": {
+        "en": "Hubble",
+        "fa": "هابل",
+        "fi": "Hubble"
+      },
+      "expr": "v = H0*d",
+      "variables": {
+        "v": {
+          "unit": "km/s",
+          "name": {
+            "en": "Recession",
+            "fa": "سرعت دور شدن",
+            "fi": "Loittonemisnopeus"
+          }
+        },
+        "H0": {
+          "unit": "km/s/Mpc",
+          "name": {
+            "en": "H0",
+            "fa": "H0",
+            "fi": "H0"
+          }
+        },
+        "d": {
+          "unit": "Mpc",
+          "name": {
+            "en": "Distance",
+            "fa": "فاصله",
+            "fi": "Etaisyys"
+          }
+        }
+      }
+    },
+    {
+      "id": "mag_flux",
+      "category": "physics.astro",
+      "name": {
+        "en": "Pogson magnitude",
+        "fa": "قدر پوگسون",
+        "fi": "Pogsonin magnitudi"
+      },
+      "expr": "dm = -2.5*log(F1/F0)/log(10)",
+      "variables": {
+        "dm": {
+          "unit": "1",
+          "name": {
+            "en": "Delta mag",
+            "fa": "اختلاف قدر",
+            "fi": "Magnitudiero"
+          }
+        },
+        "F1": {
+          "unit": "1",
+          "name": {
+            "en": "Flux 1",
+            "fa": "شار ۱",
+            "fi": "Vuo 1"
+          }
+        },
+        "F0": {
+          "unit": "1",
+          "name": {
+            "en": "Flux 0",
+            "fa": "شار ۰",
+            "fi": "Vuo 0"
+          }
+        }
+      }
+    },
+    {
+      "id": "schwarz",
+      "category": "physics.astro",
+      "name": {
+        "en": "Schwarzschild radius",
+        "fa": "شعاع شوارتزشیلد",
+        "fi": "Schwarzschildin sade"
+      },
+      "expr": "rs = 2*G*M/c**2",
+      "variables": {
+        "rs": {
+          "unit": "m",
+          "name": {
+            "en": "rs",
+            "fa": "rs",
+            "fi": "rs"
+          }
+        },
+        "G": {
+          "unit": "N*m^2/kg^2",
+          "name": {
+            "en": "G",
+            "fa": "G",
+            "fi": "G"
+          }
+        },
+        "M": {
+          "unit": "kg",
+          "name": {
+            "en": "M",
+            "fa": "M",
+            "fi": "M"
+          }
+        },
+        "c": {
+          "unit": "m/s",
+          "name": {
+            "en": "c",
+            "fa": "c",
+            "fi": "c"
+          }
+        }
+      }
+    },
+    {
+      "id": "binding",
+      "category": "physics.nuclear",
+      "name": {
+        "en": "Mass defect energy",
+        "fa": "انرژی نقص جرم",
+        "fi": "Massavaje"
+      },
+      "expr": "E = dm*c**2",
+      "variables": {
+        "E": {
+          "unit": "J",
+          "name": {
+            "en": "Energy",
+            "fa": "انرژی",
+            "fi": "Energia"
+          }
+        },
+        "dm": {
+          "unit": "kg",
+          "name": {
+            "en": "Mass defect",
+            "fa": "نقص جرم",
+            "fi": "Massavaje"
+          }
+        },
+        "c": {
+          "unit": "m/s",
+          "name": {
+            "en": "c",
+            "fa": "c",
+            "fi": "c"
+          }
+        }
+      }
+    },
+    {
+      "id": "activity",
+      "category": "physics.nuclear",
+      "name": {
+        "en": "Activity",
+        "fa": "فعالیت",
+        "fi": "Aktiivisuus"
+      },
+      "expr": "A = lam*N",
+      "variables": {
+        "A": {
+          "unit": "Bq",
+          "name": {
+            "en": "Activity",
+            "fa": "فعالیت",
+            "fi": "Aktiivisuus"
+          }
+        },
+        "lam": {
+          "unit": "1/s",
+          "name": {
+            "en": "Decay const",
+            "fa": "ثابت واپاشی",
+            "fi": "Hajoamisvakio"
+          }
+        },
+        "N": {
+          "unit": "1",
+          "name": {
+            "en": "Nuclei",
+            "fa": "هسته",
+            "fi": "Ytimet"
+          }
+        }
+      }
+    },
+    {
+      "id": "decay_const",
+      "category": "physics.nuclear",
+      "name": {
+        "en": "Decay constant",
+        "fa": "ثابت واپاشی از نیمه عمر",
+        "fi": "Hajoamisvakio"
+      },
+      "expr": "lam = log(2)/th",
+      "variables": {
+        "lam": {
+          "unit": "1/s",
+          "name": {
+            "en": "lambda",
+            "fa": "لاندا",
+            "fi": "lambda"
+          }
+        },
+        "th": {
+          "unit": "s",
+          "name": {
+            "en": "Half-life",
+            "fa": "نیمه عمر",
+            "fi": "Puoliintuminen"
+          }
+        }
+      }
+    },
+    {
+      "id": "be_per_a",
+      "category": "physics.nuclear",
+      "name": {
+        "en": "BE per nucleon",
+        "fa": "انرژی بستگی هر نوکلئون",
+        "fi": "Sidosenergia / A"
+      },
+      "expr": "b = BE/A",
+      "variables": {
+        "b": {
+          "unit": "J",
+          "name": {
+            "en": "per nucleon",
+            "fa": "هر نوکلئون",
+            "fi": "per nukleoni"
+          }
+        },
+        "BE": {
+          "unit": "J",
+          "name": {
+            "en": "Total BE",
+            "fa": "کل",
+            "fi": "Yhteensa"
+          }
+        },
+        "A": {
+          "unit": "1",
+          "name": {
+            "en": "Mass number",
+            "fa": "عدد جرمی",
+            "fi": "Massaluku"
+          }
+        }
+      }
+    },
+    {
+      "id": "raoult",
+      "category": "chem.thermo2",
+      "name": {
+        "en": "Raoult",
+        "fa": "رول",
+        "fi": "Raoult"
+      },
+      "expr": "p = x*pstar",
+      "variables": {
+        "p": {
+          "unit": "Pa",
+          "name": {
+            "en": "Partial pressure",
+            "fa": "فشار جزئی",
+            "fi": "Osapaine"
+          }
+        },
+        "x": {
+          "unit": "1",
+          "name": {
+            "en": "Mole fraction",
+            "fa": "کسر مولی",
+            "fi": "Mooliosuus"
+          }
+        },
+        "pstar": {
+          "unit": "Pa",
+          "name": {
+            "en": "Vapor pressure",
+            "fa": "فشار بخار خالص",
+            "fi": "Hoyrynpaine"
+          }
+        }
+      }
+    },
+    {
+      "id": "henry",
+      "category": "chem.thermo2",
+      "name": {
+        "en": "Henry",
+        "fa": "هنری",
+        "fi": "Henry"
+      },
+      "expr": "p = kH*c",
+      "variables": {
+        "p": {
+          "unit": "Pa",
+          "name": {
+            "en": "Partial pressure",
+            "fa": "فشار جزئی",
+            "fi": "Osapaine"
+          }
+        },
+        "kH": {
+          "unit": "Pa*L/mol",
+          "name": {
+            "en": "Henry const",
+            "fa": "ثابت هنری",
+            "fi": "Henryn vakio"
+          }
+        },
+        "c": {
+          "unit": "mol/L",
+          "name": {
+            "en": "Concentration",
+            "fa": "غلظت",
+            "fi": "Pitoisuus"
+          }
+        }
+      }
+    },
+    {
+      "id": "vanthoff",
+      "category": "chem.thermo2",
+      "name": {
+        "en": "van 't Hoff i",
+        "fa": "ونت هوف",
+        "fi": "van 't Hoff"
+      },
+      "expr": "pi = i*c*R*T",
+      "variables": {
+        "pi": {
+          "unit": "Pa",
+          "name": {
+            "en": "Osmotic",
+            "fa": "اسمزی",
+            "fi": "Osmoottinen"
+          }
+        },
+        "i": {
+          "unit": "1",
+          "name": {
+            "en": "van 't Hoff i",
+            "fa": "i",
+            "fi": "i"
+          }
+        },
+        "c": {
+          "unit": "mol/m^3",
+          "name": {
+            "en": "c",
+            "fa": "c",
+            "fi": "c"
+          }
+        },
+        "R": {
+          "unit": "J/(mol*K)",
+          "name": {
+            "en": "R",
+            "fa": "R",
+            "fi": "R"
+          }
+        },
+        "T": {
+          "unit": "K",
+          "name": {
+            "en": "T",
+            "fa": "T",
+            "fi": "T"
+          }
+        }
+      }
+    },
+    {
+      "id": "hess",
+      "category": "chem.thermo2",
+      "name": {
+        "en": "Hess two-step",
+        "fa": "هس دو مرحله",
+        "fi": "Hess"
+      },
+      "expr": "H = H1 + H2",
+      "variables": {
+        "H": {
+          "unit": "J/mol",
+          "name": {
+            "en": "Total",
+            "fa": "کل",
+            "fi": "Yhteensa"
+          }
+        },
+        "H1": {
+          "unit": "J/mol",
+          "name": {
+            "en": "Step 1",
+            "fa": "مرحله ۱",
+            "fi": "Vaihe 1"
+          }
+        },
+        "H2": {
+          "unit": "J/mol",
+          "name": {
+            "en": "Step 2",
+            "fa": "مرحله ۲",
+            "fi": "Vaihe 2"
+          }
+        }
+      }
+    },
+    {
+      "id": "eq_kc",
+      "category": "chem.thermo2",
+      "name": {
+        "en": "Kc two species",
+        "fa": "ثابت تعادل دو گونه",
+        "fi": "Kc"
+      },
+      "expr": "Kc = C**c * D**d / (A**a * B**b)",
+      "variables": {
+        "Kc": {
+          "unit": "1",
+          "name": {
+            "en": "Kc",
+            "fa": "Kc",
+            "fi": "Kc"
+          }
+        },
+        "A": {
+          "unit": "mol/L",
+          "name": {
+            "en": "[A]",
+            "fa": "[A]",
+            "fi": "[A]"
+          }
+        },
+        "a": {
+          "unit": "1",
+          "name": {
+            "en": "coeff A",
+            "fa": "ضریب A",
+            "fi": "kerroin A"
+          }
+        },
+        "B": {
+          "unit": "mol/L",
+          "name": {
+            "en": "[B]",
+            "fa": "[B]",
+            "fi": "[B]"
+          }
+        },
+        "b": {
+          "unit": "1",
+          "name": {
+            "en": "coeff B",
+            "fa": "ضریب B",
+            "fi": "kerroin B"
+          }
+        },
+        "C": {
+          "unit": "mol/L",
+          "name": {
+            "en": "[C]",
+            "fa": "[C]",
+            "fi": "[C]"
+          }
+        },
+        "c": {
+          "unit": "1",
+          "name": {
+            "en": "coeff C",
+            "fa": "ضریب C",
+            "fi": "kerroin C"
+          }
+        },
+        "D": {
+          "unit": "mol/L",
+          "name": {
+            "en": "[D]",
+            "fa": "[D]",
+            "fi": "[D]"
+          }
+        },
+        "d": {
+          "unit": "1",
+          "name": {
+            "en": "coeff D",
+            "fa": "ضریب D",
+            "fi": "kerroin D"
+          }
+        }
+      }
+    },
+    {
+      "id": "percent_yield",
+      "category": "chem.balance",
+      "name": {
+        "en": "Percent yield",
+        "fa": "بازده درصدی",
+        "fi": "Saantoprosentti"
+      },
+      "expr": "p = 100*actual/theoretical",
+      "variables": {
+        "p": {
+          "unit": "%",
+          "name": {
+            "en": "Yield",
+            "fa": "بازده",
+            "fi": "Saanto"
+          }
+        },
+        "actual": {
+          "unit": "g",
+          "name": {
+            "en": "Actual",
+            "fa": "عملی",
+            "fi": "Todellinen"
+          }
+        },
+        "theoretical": {
+          "unit": "g",
+          "name": {
+            "en": "Theoretical",
+            "fa": "نظری",
+            "fi": "Teoreettinen"
+          }
+        }
+      }
+    },
+    {
+      "id": "limiting",
+      "category": "chem.balance",
+      "name": {
+        "en": "Moles from mass",
+        "fa": "مول از جرم",
+        "fi": "Moolit massasta"
+      },
+      "expr": "n = m/M",
+      "variables": {
+        "n": {
+          "unit": "mol",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        },
+        "m": {
+          "unit": "g",
+          "name": {
+            "en": "Mass",
+            "fa": "جرم",
+            "fi": "Massa"
+          }
+        },
+        "M": {
+          "unit": "g/mol",
+          "name": {
+            "en": "Molar mass",
+            "fa": "جرم مولی",
+            "fi": "Moolimassa"
+          }
+        }
+      }
+    },
+    {
+      "id": "ppm",
+      "category": "chem.balance",
+      "name": {
+        "en": "ppm mass",
+        "fa": "ppm جرمی",
+        "fi": "ppm"
+      },
+      "expr": "ppm = 1e6*msolute/msoln",
+      "variables": {
+        "ppm": {
+          "unit": "1",
+          "name": {
+            "en": "ppm",
+            "fa": "ppm",
+            "fi": "ppm"
+          }
+        },
+        "msolute": {
+          "unit": "g",
+          "name": {
+            "en": "Solute",
+            "fa": "حل شونده",
+            "fi": "Liuennut"
+          }
+        },
+        "msoln": {
+          "unit": "g",
+          "name": {
+            "en": "Solution",
+            "fa": "محلول",
+            "fi": "Liuos"
+          }
+        }
+      }
+    },
+    {
+      "id": "normality",
+      "category": "chem.balance",
+      "name": {
+        "en": "Normality",
+        "fa": "نرمالیته",
+        "fi": "Normaalisuus"
+      },
+      "expr": "N = n*eq/V",
+      "variables": {
+        "N": {
+          "unit": "eq/L",
+          "name": {
+            "en": "Normality",
+            "fa": "نرمالیته",
+            "fi": "Normaalisuus"
+          }
+        },
+        "n": {
+          "unit": "mol",
+          "name": {
+            "en": "Moles",
+            "fa": "مول",
+            "fi": "Moolit"
+          }
+        },
+        "eq": {
+          "unit": "1",
+          "name": {
+            "en": "Equivalents per mole",
+            "fa": "هم ارز در مول",
+            "fi": "Ekv/mooli"
+          }
+        },
+        "V": {
+          "unit": "L",
+          "name": {
+            "en": "Volume",
+            "fa": "حجم",
+            "fi": "Tilavuus"
+          }
+        }
+      }
+    },
+    {
+      "id": "hardy_q",
+      "category": "bio.genetics",
+      "name": {
+        "en": "q from recessive",
+        "fa": "q از فنوتیپ مغلوب",
+        "fi": "q resessiivisesta"
+      },
+      "expr": "q = sqrt(q2)",
+      "variables": {
+        "q": {
+          "unit": "1",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        },
+        "q2": {
+          "unit": "1",
+          "name": {
+            "en": "aa frequency",
+            "fa": "فراوانی aa",
+            "fi": "aa-frekvenssi"
+          }
+        }
+      }
+    },
+    {
+      "id": "chi_hw",
+      "category": "bio.genetics",
+      "name": {
+        "en": "Expected AA",
+        "fa": "انتظار AA",
+        "fi": "Odotettu AA"
+      },
+      "expr": "Eaa = p**2 * N",
+      "variables": {
+        "Eaa": {
+          "unit": "1",
+          "name": {
+            "en": "Expected",
+            "fa": "انتظار",
+            "fi": "Odotettu"
+          }
+        },
+        "p": {
+          "unit": "1",
+          "name": {
+            "en": "p",
+            "fa": "p",
+            "fi": "p"
+          }
+        },
+        "N": {
+          "unit": "1",
+          "name": {
+            "en": "Total",
+            "fa": "کل",
+            "fi": "Yhteensa"
+          }
+        }
+      }
+    },
+    {
+      "id": "gen_time",
+      "category": "bio.ecology",
+      "name": {
+        "en": "Generations",
+        "fa": "تعداد نسل",
+        "fi": "Sukupolvet"
+      },
+      "expr": "n = t/g",
+      "variables": {
+        "n": {
+          "unit": "1",
+          "name": {
+            "en": "Generations",
+            "fa": "نسل",
+            "fi": "Sukupolvet"
+          }
+        },
+        "t": {
+          "unit": "h",
+          "name": {
+            "en": "Time",
+            "fa": "زمان",
+            "fi": "Aika"
+          }
+        },
+        "g": {
+          "unit": "h",
+          "name": {
+            "en": "Generation time",
+            "fa": "زمان نسل",
+            "fi": "Sukupolviaika"
+          }
+        }
+      }
+    },
+    {
+      "id": "od600",
+      "category": "bio.lab",
+      "name": {
+        "en": "Cells from OD600 Ecoli",
+        "fa": "تخمین سلول از OD",
+        "fi": "Solut OD:sta"
+      },
+      "expr": "N = OD * 8e8",
+      "variables": {
+        "N": {
+          "unit": "1/mL",
+          "name": {
+            "en": "Cells/mL",
+            "fa": "سلول در میلی لیتر",
+            "fi": "Solua/ml"
+          }
+        },
+        "OD": {
+          "unit": "1",
+          "name": {
+            "en": "OD600",
+            "fa": "OD600",
+            "fi": "OD600"
+          }
+        }
+      }
+    },
+    {
+      "id": "pid_p",
+      "category": "eng.control",
+      "name": {
+        "en": "P term",
+        "fa": "جمله تناسبی",
+        "fi": "P-termi"
+      },
+      "expr": "u = Kp*err",
+      "variables": {
+        "u": {
+          "unit": "1",
+          "name": {
+            "en": "Output",
+            "fa": "خروجی",
+            "fi": "Ulostulo"
+          }
+        },
+        "Kp": {
+          "unit": "1",
+          "name": {
+            "en": "Kp",
+            "fa": "Kp",
+            "fi": "Kp"
+          }
+        },
+        "err": {
+          "unit": "1",
+          "name": {
+            "en": "Error",
+            "fa": "خطا",
+            "fi": "Virhe"
+          }
+        }
+      }
+    },
+    {
+      "id": "pid_i",
+      "category": "eng.control",
+      "name": {
+        "en": "I term rectangular",
+        "fa": "جمله انتگرال",
+        "fi": "I-termi"
+      },
+      "expr": "ui = Ki*err*dt",
+      "variables": {
+        "ui": {
+          "unit": "1",
+          "name": {
+            "en": "Integral piece",
+            "fa": "جزء انتگرال",
+            "fi": "Integraalipala"
+          }
+        },
+        "Ki": {
+          "unit": "1",
+          "name": {
+            "en": "Ki",
+            "fa": "Ki",
+            "fi": "Ki"
+          }
+        },
+        "err": {
+          "unit": "1",
+          "name": {
+            "en": "Error",
+            "fa": "خطا",
+            "fi": "Virhe"
+          }
+        },
+        "dt": {
+          "unit": "s",
+          "name": {
+            "en": "dt",
+            "fa": "dt",
+            "fi": "dt"
+          }
+        }
+      }
+    },
+    {
+      "id": "wn_2nd",
+      "category": "eng.control",
+      "name": {
+        "en": "Natural freq 2nd order",
+        "fa": "فرکانس طبیعی مرتبه ۲",
+        "fi": "Luonnollinen taajuus"
+      },
+      "expr": "wn = sqrt(k/m)",
+      "variables": {
+        "wn": {
+          "unit": "rad/s",
+          "name": {
+            "en": "wn",
+            "fa": "wn",
+            "fi": "wn"
+          }
+        },
+        "k": {
+          "unit": "N/m",
+          "name": {
+            "en": "k",
+            "fa": "k",
+            "fi": "k"
+          }
+        },
+        "m": {
+          "unit": "kg",
+          "name": {
+            "en": "m",
+            "fa": "m",
+            "fi": "m"
+          }
+        }
+      }
+    },
+    {
+      "id": "fs_nyquist",
+      "category": "eng.signal",
+      "name": {
+        "en": "Nyquist",
+        "fa": "نایکوئیست",
+        "fi": "Nyquist"
+      },
+      "expr": "fn = fs/2",
+      "variables": {
+        "fn": {
+          "unit": "Hz",
+          "name": {
+            "en": "Nyquist",
+            "fa": "نایکوئیست",
+            "fi": "Nyquist"
+          }
+        },
+        "fs": {
+          "unit": "Hz",
+          "name": {
+            "en": "Sample rate",
+            "fa": "نرخ نمونه",
+            "fi": "Naytteenottotaajuus"
+          }
+        }
+      }
+    },
+    {
+      "id": "db_power",
+      "category": "eng.signal",
+      "name": {
+        "en": "dB power",
+        "fa": "دسی بل توان",
+        "fi": "dB teho"
+      },
+      "expr": "L = 10*log(P/P0)/log(10)",
+      "variables": {
+        "L": {
+          "unit": "dB",
+          "name": {
+            "en": "Level",
+            "fa": "تراز",
+            "fi": "Taso"
+          }
+        },
+        "P": {
+          "unit": "W",
+          "name": {
+            "en": "P",
+            "fa": "P",
+            "fi": "P"
+          }
+        },
+        "P0": {
+          "unit": "W",
+          "name": {
+            "en": "P0",
+            "fa": "P0",
+            "fi": "P0"
+          }
+        }
+      }
+    },
+    {
+      "id": "db_volt",
+      "category": "eng.signal",
+      "name": {
+        "en": "dB amplitude",
+        "fa": "دسی بل دامنه",
+        "fi": "dB amplitudi"
+      },
+      "expr": "L = 20*log(V/V0)/log(10)",
+      "variables": {
+        "L": {
+          "unit": "dB",
+          "name": {
+            "en": "Level",
+            "fa": "تراز",
+            "fi": "Taso"
+          }
+        },
+        "V": {
+          "unit": "V",
+          "name": {
+            "en": "V",
+            "fa": "V",
+            "fi": "V"
+          }
+        },
+        "V0": {
+          "unit": "V",
+          "name": {
+            "en": "V0",
+            "fa": "V0",
+            "fi": "V0"
+          }
+        }
+      }
+    },
+    {
+      "id": "rc_fc",
+      "category": "eng.signal",
+      "name": {
+        "en": "RC cutoff",
+        "fa": "فرکانس قطع RC",
+        "fi": "RC-rajataajuus"
+      },
+      "expr": "fc = 1/(2*pi*R*C)",
+      "variables": {
+        "fc": {
+          "unit": "Hz",
+          "name": {
+            "en": "fc",
+            "fa": "fc",
+            "fi": "fc"
+          }
+        },
+        "R": {
+          "unit": "ohm",
+          "name": {
+            "en": "R",
+            "fa": "R",
+            "fi": "R"
+          }
+        },
+        "C": {
+          "unit": "F",
+          "name": {
+            "en": "C",
+            "fa": "C",
+            "fi": "C"
+          }
+        }
+      }
+    },
+    {
+      "id": "period_sample",
+      "category": "eng.signal",
+      "name": {
+        "en": "Samples per period",
+        "fa": "نمونه در دوره",
+        "fi": "Naytteita jaksossa"
+      },
+      "expr": "N = fs/f0",
+      "variables": {
+        "N": {
+          "unit": "1",
+          "name": {
+            "en": "N",
+            "fa": "N",
+            "fi": "N"
+          }
+        },
+        "fs": {
+          "unit": "Hz",
+          "name": {
+            "en": "fs",
+            "fa": "fs",
+            "fi": "fs"
+          }
+        },
+        "f0": {
+          "unit": "Hz",
+          "name": {
+            "en": "f0",
+            "fa": "f0",
+            "fi": "f0"
           }
         }
       }

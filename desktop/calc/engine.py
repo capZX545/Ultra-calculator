@@ -49,7 +49,67 @@ _FUNCS = {
     "ceiling": sp.ceiling,
     "erf": sp.erf,
     "erfc": sp.erfc,
+    "erfi": sp.erfi,
     "gamma": sp.gamma,
+    "loggamma": sp.loggamma,
+    "digamma": sp.digamma,
+    "polygamma": sp.polygamma,
+    "beta": sp.beta,
+    "besselj": sp.besselj,
+    "bessely": sp.bessely,
+    "besseli": sp.besseli,
+    "besselk": sp.besselk,
+    "hankel1": sp.hankel1,
+    "hankel2": sp.hankel2,
+    "jn": sp.jn,
+    "yn": sp.yn,
+    "airyai": sp.airyai,
+    "airybi": sp.airybi,
+    "airyaiprime": sp.airyaiprime,
+    "airybiprime": sp.airybiprime,
+    "struveh": lambda nu, z: __import__("scipy.special", fromlist=["struve"]).struve(float(nu), float(z)),
+    "struvel": lambda nu, z: __import__("scipy.special", fromlist=["modstruve"]).modstruve(float(nu), float(z)),
+    "elliptic_k": sp.elliptic_k,
+    "elliptic_e": sp.elliptic_e,
+    "elliptic_f": sp.elliptic_f,
+    "elliptic_pi": sp.elliptic_pi,
+    "zeta": sp.zeta,
+    "dirichlet_eta": sp.dirichlet_eta,
+    "polylog": sp.polylog,
+    "harmonic": sp.harmonic,
+    "hermite": sp.hermite,
+    "laguerre": sp.laguerre,
+    "assoc_laguerre": sp.assoc_laguerre,
+    "legendre": sp.legendre,
+    "assoc_legendre": sp.assoc_legendre,
+    "chebyshevt": sp.chebyshevt,
+    "chebyshevu": sp.chebyshevu,
+    "gegenbauer": sp.gegenbauer,
+    "jacobi": sp.jacobi,
+    "hyper": sp.hyper,
+    "hyp0f1": lambda b, z: sp.hyper((), (b,), z),
+    "hyp1f1": lambda a, b, z: sp.hyper((a,), (b,), z),
+    "hyp2f1": lambda a, b, c, z: sp.hyper((a, b), (c,), z),
+    "meijerg": sp.meijerg,
+    "expint": sp.expint,
+    "Ei": sp.Ei,
+    "Si": sp.Si,
+    "Ci": sp.Ci,
+    "Shi": sp.Shi,
+    "Chi": sp.Chi,
+    "fresnels": sp.fresnels,
+    "fresnelc": sp.fresnelc,
+    "factorial2": sp.factorial2,
+    "fibonacci": sp.fibonacci,
+    "lucas": sp.lucas,
+    "catalan": sp.catalan,
+    "euler": sp.euler,
+    "bernoulli": sp.bernoulli,
+    "bell": sp.bell,
+    "rf": sp.rf,
+    "ff": sp.ff,
+    "sinc": sp.sinc,
+    "LambertW": sp.LambertW,
     "re": sp.re,
     "im": sp.im,
     "arg": sp.arg,
@@ -121,7 +181,7 @@ class DesktopEngine:
         self.memory = 0.0
 
     def parse(self, text: str, calc: bool = False):
-        cleaned = clean_expression(text)
+        cleaned = clean_expression(text, implicit=calc)
         local = dict(_FUNCS)
         if calc:
             local.update(_CALC_CONST)
@@ -255,9 +315,25 @@ class DesktopEngine:
                 left, right = expr, "0"
             L = self.parse(left)
             R = self.parse(right)
-            eq = (L - R).subs({sp.Symbol(k): v for k, v in known.items()})
+            mapping = {sp.Symbol(k): v for k, v in known.items()}
+            eq = (L - R).subs(mapping)
             sym = sp.Symbol(target)
-            sols = sp.solve(eq, sym)
+            sols = []
+            if L == sym:
+                try:
+                    sols = [sp.N(R.subs(mapping))]
+                except Exception:
+                    sols = []
+            elif R == sym:
+                try:
+                    sols = [sp.N(L.subs(mapping))]
+                except Exception:
+                    sols = []
+            if not sols:
+                try:
+                    sols = list(sp.solve(eq, sym) or [])
+                except Exception:
+                    sols = []
             if not sols:
                 try:
                     sols = [sp.nsolve(eq, sym, 1.0)]

@@ -14,6 +14,8 @@
       <button data-mode="formulas" class="tab" id="tab-formulas">Formulas</button>
       <button data-mode="poly" class="tab" id="tab-poly">Polynomial</button>
       <button data-mode="numeric" class="tab" id="tab-numeric">Numerical</button>
+      <button data-mode="chem" class="tab" id="tab-chem">Chemistry</button>
+      <button data-mode="elements" class="tab" id="tab-elements">Elements</button>
     </nav>
     <label class="lang">
       <span id="lang-label">Language</span>
@@ -96,6 +98,24 @@
         <button id="n-ode" type="button">ODE</button>
       </div>
       <pre id="n-out"></pre>
+    </section>
+
+    <section id="view-chem" class="view">
+      <p class="hint">H2 + O2 = H2O &nbsp; | &nbsp; Fe2(SO4)3 &nbsp; | &nbsp; C2H6 + O2 = CO2 + H2O</p>
+      <input id="chem-eq" value="C2H6 + O2 = CO2 + H2O">
+      <div class="row">
+        <button id="chem-bal" class="accent" type="button">Balance</button>
+        <button id="chem-mw" type="button">Molar mass</button>
+      </div>
+      <pre id="chem-out"></pre>
+    </section>
+
+    <section id="view-elements" class="view">
+      <input id="el-q" placeholder="Fe / 26 / iron">
+      <div class="el-grid">
+        <ul id="el-list"></ul>
+        <pre id="el-out"></pre>
+      </div>
     </section>
   </main>
   <script src="/static/ui.js"></script>

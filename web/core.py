@@ -49,7 +49,69 @@ NS = {
     "floor": sp.floor,
     "ceiling": sp.ceiling,
     "erf": sp.erf,
+    "erfc": sp.erfc,
+    "erfi": sp.erfi,
     "gamma": sp.gamma,
+    "loggamma": sp.loggamma,
+    "digamma": sp.digamma,
+    "polygamma": sp.polygamma,
+    "beta": sp.beta,
+    "besselj": sp.besselj,
+    "bessely": sp.bessely,
+    "besseli": sp.besseli,
+    "besselk": sp.besselk,
+    "hankel1": sp.hankel1,
+    "hankel2": sp.hankel2,
+    "jn": sp.jn,
+    "yn": sp.yn,
+    "airyai": sp.airyai,
+    "airybi": sp.airybi,
+    "airyaiprime": sp.airyaiprime,
+    "airybiprime": sp.airybiprime,
+    "struveh": lambda nu, z: __import__("scipy.special", fromlist=["struve"]).struve(float(nu), float(z)),
+    "struvel": lambda nu, z: __import__("scipy.special", fromlist=["modstruve"]).modstruve(float(nu), float(z)),
+    "elliptic_k": sp.elliptic_k,
+    "elliptic_e": sp.elliptic_e,
+    "elliptic_f": sp.elliptic_f,
+    "elliptic_pi": sp.elliptic_pi,
+    "zeta": sp.zeta,
+    "dirichlet_eta": sp.dirichlet_eta,
+    "polylog": sp.polylog,
+    "harmonic": sp.harmonic,
+    "hermite": sp.hermite,
+    "laguerre": sp.laguerre,
+    "assoc_laguerre": sp.assoc_laguerre,
+    "legendre": sp.legendre,
+    "assoc_legendre": sp.assoc_legendre,
+    "chebyshevt": sp.chebyshevt,
+    "chebyshevu": sp.chebyshevu,
+    "gegenbauer": sp.gegenbauer,
+    "jacobi": sp.jacobi,
+    "hyper": sp.hyper,
+    "hyp0f1": lambda b, z: sp.hyper((), (b,), z),
+    "hyp1f1": lambda a, b, z: sp.hyper((a,), (b,), z),
+    "hyp2f1": lambda a, b, c, z: sp.hyper((a, b), (c,), z),
+    "expint": sp.expint,
+    "Ei": sp.Ei,
+    "Si": sp.Si,
+    "Ci": sp.Ci,
+    "Shi": sp.Shi,
+    "Chi": sp.Chi,
+    "fresnels": sp.fresnels,
+    "fresnelc": sp.fresnelc,
+    "factorial2": sp.factorial2,
+    "fibonacci": sp.fibonacci,
+    "lucas": sp.lucas,
+    "catalan": sp.catalan,
+    "euler": sp.euler,
+    "bernoulli": sp.bernoulli,
+    "bell": sp.bell,
+    "rf": sp.rf,
+    "ff": sp.ff,
+    "sinc": sp.sinc,
+    "LambertW": sp.LambertW,
+    "mathieuc": getattr(sp, "mathieuc", lambda a, q, z: 0),
+    "mathieus": getattr(sp, "mathieus", lambda a, q, z: 0),
     "re": sp.re,
     "im": sp.im,
     "arg": sp.arg,
@@ -97,7 +159,7 @@ def pretty(value, eng=False):
 
 
 def to_sym(text, calc=False):
-    cleaned = fix_expr(text)
+    cleaned = fix_expr(text, implicit=calc)
     local = dict(CALC_NS if calc else NS)
     trans = TRANS if calc else standard_transformations
     gdict = {"Symbol": sp.Symbol, "Integer": sp.Integer, "Float": sp.Float, "Rational": sp.Rational}
@@ -159,7 +221,7 @@ def eval_line(text, angle="DEG", eng=False, ans=0):
         if "=" in cleaned and cleaned.count("=") == 1:
             left, right = cleaned.split("=")
             return solve_one(left, right, ["x"], eng)
-        expr = to_sym(cleaned).subs({"ans": ans, "ANS": ans})
+        expr = to_sym(cleaned, calc=True).subs({"ans": ans, "ANS": ans})
         if angle == "DEG":
             expr = expr.replace(
                 lambda e: e.func in (sp.sin, sp.cos, sp.tan),
@@ -220,9 +282,27 @@ def solve_named(fid, values, unknown=None, eng=False):
         return {"ok": True, "text": "0", "unknown": "", "unit": "", "all": []}
     try:
         left, right = item["expr"].split("=", 1) if "=" in item["expr"] else (item["expr"], "0")
-        eq = (to_sym(left) - to_sym(right)).subs({sp.Symbol(k): v for k, v in known.items()})
+        L = to_sym(left)
+        R = to_sym(right)
+        mapping = {sp.Symbol(k): v for k, v in known.items()}
+        eq = (L - R).subs(mapping)
         sym = sp.Symbol(target)
-        sols = sp.solve(eq, sym)
+        sols = []
+        if L == sym:
+            try:
+                sols = [sp.N(R.subs(mapping))]
+            except Exception:
+                sols = []
+        elif R == sym:
+            try:
+                sols = [sp.N(L.subs(mapping))]
+            except Exception:
+                sols = []
+        if not sols:
+            try:
+                sols = list(sp.solve(eq, sym) or [])
+            except Exception:
+                sols = []
         if not sols:
             for guess in (1.0, 0.0, -1.0, 10.0):
                 try:
