@@ -153,6 +153,18 @@
     <section id="view-sources" class="view">
       <pre id="src-out"></pre>
     </section>
+    <section id="view-problems" class="view">
+      <p class="hint" id="prob-hint"></p>
+      <textarea id="prob-text">2*x + 3 = 11</textarea>
+      <div class="row">
+        <label id="prob-unk-label">Unknown <input id="prob-unk" value="x"></label>
+        <label id="prob-at-label">at <input id="prob-at" value=""></label>
+        <button id="prob-solve" class="accent" type="button">Solve</button>
+        <button id="prob-inv" type="button">Inverse</button>
+      </div>
+      <pre id="prob-out"></pre>
+      <pre id="prob-steps"></pre>
+    </section>
   </main>
   <script src="pyodide/pyodide.js"></script>
   <script src="ui.js"></script>
