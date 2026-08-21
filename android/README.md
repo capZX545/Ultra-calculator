@@ -48,5 +48,7 @@ The APK lands in `bin/`. Copy it to the phone and install it. The first build do
 - **Elements** — all 118, with isotopes.
 - **Sources** — where the formulas come from.
 - **Problems** — type an equation and solve it, or find the inverse function / inverse at a value / inverse of a matrix.
+- **Circuits** — netlist MNA, AC, Thevenin, diode / BJT / MOSFET, `.tran`.
+- **Graph / Matrix / Stats / Triangle** — same engines as the other copies.
 
-Lookup sits under the top buttons. Type `H2O` or `Fe-56` or `g` and Insert puts the number into the last field you tapped.
+Lookup sits under the top buttons. Type `H2O` or `Fe-56` or `g` and Insert puts the number into the last field you tapped. Units work on the keypad (`12 V / 2 kohm`).

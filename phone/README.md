@@ -1,23 +1,21 @@
 # Ultra Calculator — Android app
 
-This is a normal Android app. Install the APK. Numpy, sympy, and the formula engine are already inside that file. You do not install Pydroid, pip, numpy, or sympy yourself.
+Install `UltraCalculator.apk`. Numpy, sympy, and the formula engine are already inside that file. You do not install Pydroid or pip.
 
-## Install
+versionName 1.3, versionCode 4, `org.capzx545.ultracalculator`, minSdk 24. The APK is debug-signed. Uninstall an older build if the installer refuses it.
 
-1. Put `UltraCalculator.apk` on the phone (from the repo root, or from this folder after you build).
-2. Open the file and allow installs from this source if Android asks.
-3. Open Ultra Calculator from the app list.
+The keypad opens at once. Pyodide 0.26.4 plus the numpy / sympy wheels load from assets in the background. No network is required to start.
 
-The keypad opens at once. The math engine (numpy / sympy) loads in the background from files already inside the APK. No internet is required to start.
+Same pages as desktop and web. The WebView can show the graph SVG.
 
 ## Build
 
-Needs JDK 17 and the Android SDK.
+JDK 17, Android SDK, AGP 7.4.2, Gradle 7.6.3, compileSdk 33.
 
 ```
 cd phone
-# set sdk.dir in local.properties
+# sdk.dir in local.properties — do not commit that file
 gradle :app:assembleDebug
 ```
 
-Output: `app/build/outputs/apk/debug/app-debug.apk`
+`aaptOptions { noCompress "wasm", "whl", "zip" }`.
