@@ -39,7 +39,7 @@
     sqrt:"sqrt(", "n!":"factorial(", abs:"abs(",
     "1/x":"1/(", pi:"pi", e:"e", ans:"ans", EE:"*10**",
   };
-  const MODES = ["calc", "formulas", "poly", "numeric", "algo", "chem", "elements", "sources", "problems"];
+  const MODES = ["calc", "formulas", "poly", "numeric", "algo", "chem", "elements", "sources", "problems", "circuits"];
 
   const $ = (id) => document.getElementById(id);
   const screen = $("screen");
@@ -116,6 +116,15 @@
     if ($("tab-elements")) $("tab-elements").textContent = s.elements || "Elements";
     if ($("tab-sources")) $("tab-sources").textContent = s.sources || "Sources";
     if ($("tab-problems")) $("tab-problems").textContent = s.problems || "Problems";
+    if ($("tab-circuits")) $("tab-circuits").textContent = s.circuits || "Circuits";
+    if ($("cir-solve")) $("cir-solve").textContent = s.solve || "Solve";
+    if ($("cir-inv")) $("cir-inv").textContent = s.inverse || "Inverse";
+    if ($("cir-hint")) $("cir-hint").textContent = s.circuit_hint || "";
+    if ($("cir-freq-label")) {
+      const inp = $("cir-freq");
+      $("cir-freq-label").textContent = (s.circuit_freq || "f (Hz)") + " ";
+      if (inp) $("cir-freq-label").appendChild(inp);
+    }
     if ($("prob-solve")) $("prob-solve").textContent = s.solve || "Solve";
     if ($("prob-inv")) $("prob-inv").textContent = s.inverse || "Inverse";
     if ($("prob-hint")) $("prob-hint").textContent = s.problem_hint || "";
@@ -173,6 +182,8 @@
       $("el-q").focus();
     } else if (mode === "problems" && $("prob-text")) {
       $("prob-text").focus();
+    } else if (mode === "circuits" && $("cir-text")) {
+      $("cir-text").focus();
     }
   }
 
@@ -838,6 +849,11 @@
         showMode(MODES[Number(n) - 1]);
         return;
       }
+      if (n === "0") {
+        ev.preventDefault();
+        showMode("circuits");
+        return;
+      }
       if (n === "l" || n === "L") {
         ev.preventDefault();
         focusLookup();
@@ -974,6 +990,28 @@
       if (ev.key === "Enter") {
         ev.preventDefault();
         runProblem("inverse");
+      }
+    });
+  }
+
+  async function runCircuit(mode) {
+    const out = await post("/api/circuit", {
+      text: ($("cir-text") && $("cir-text").value) || "",
+      mode: mode || "solve",
+      freq: ($("cir-freq") && $("cir-freq").value) || "",
+      lang: state.lang,
+      eng: state.eng,
+    });
+    if ($("cir-out")) $("cir-out").textContent = out.text || "0";
+    showSteps("cir-steps", out.steps || []);
+  }
+  if ($("cir-solve")) $("cir-solve").addEventListener("click", () => runCircuit("solve"));
+  if ($("cir-inv")) $("cir-inv").addEventListener("click", () => runCircuit("inverse"));
+  if ($("cir-text")) {
+    $("cir-text").addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter" && (ev.ctrlKey || ev.metaKey)) {
+        ev.preventDefault();
+        runCircuit(ev.shiftKey ? "inverse" : "solve");
       }
     });
   }

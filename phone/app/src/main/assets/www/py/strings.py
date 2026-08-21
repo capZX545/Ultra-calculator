@@ -54,6 +54,9 @@ UI = {
         "inverse": "Inverse",
         "at_value": "at",
         "problem_hint": "Type an equation such as 2*x+3=11 or x**2-5*x+6=0. Solve finds the unknown. Inverse finds the inverse function. Fill at to evaluate the inverse at that value. Matrices: 1, 2; 3, 4.",
+        "circuits": "Circuits",
+        "circuit_freq": "f (Hz)",
+        "circuit_hint": "Type a netlist (node 0 is ground): V1 1 0 12 / R1 1 2 1k / R2 2 0 2k. Or series 1k 2k, parallel 1k 1k, divider 12 1k 2k, V=12 R=1k.",
     },
     "fa": {
         "title": "ماشین حساب اولترا",
@@ -109,6 +112,9 @@ UI = {
         "inverse": "حل عکس",
         "at_value": "در",
         "problem_hint": "معادله را بنویس، مثلاً 2*x+3=11 یا x**2-5*x+6=0. حل، مجهول را پیدا می‌کند. حل عکس، تابع وارون را می‌دهد. اگر «در» را پر کنی، وارون را در همان نقطه حساب می‌کند. ماتریس: 1, 2; 3, 4.",
+        "circuits": "مدارها",
+        "circuit_freq": "f (هرتز)",
+        "circuit_hint": "نت‌لیست بنویس (گره ۰ زمین است): V1 1 0 12 سپس R1 1 2 1k سپس R2 2 0 2k. یا series 1k 2k یا V=12 R=1k.",
     },
     "fi": {
         "title": "Ultra-laskin",

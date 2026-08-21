@@ -43,7 +43,7 @@ The project that builds that APK is in `phone/`.
 
 ## What the programs can do
 
-There are nine pages: Calculator, Formulas, Polynomial, Numerical, Algorithms, Chemistry, Elements, Sources, and Problems.
+There are ten pages: Calculator, Formulas, Polynomial, Numerical, Algorithms, Chemistry, Elements, Sources, Problems, and Circuits.
 
 ### Calculator
 
@@ -294,6 +294,27 @@ A separate page takes an equation you type and actually solves it.
 - Steps appear under the answer, in the language you picked.
 - Bad input does not crash. The page shows `0` and a short note.
 
+### Circuits
+
+A separate page reads a circuit and computes voltages and currents. It is not a picture of a schematic. You type the circuit and it solves it.
+
+- Netlist, node `0` is ground. Example:
+
+```
+V1 1 0 12
+R1 1 2 1k
+R2 2 0 2k
+```
+
+That is 12 V, then 1 kΩ to node 2, then 2 kΩ to ground. The answer is `V(2)=8 V` and `I=4 mA`.
+
+- Components: `R` resistor, `C` capacitor, `L` inductor, `V` voltage source, `I` current source. Values take `k`, `m`, `u`, `n`, `p`, `meg`.
+- Shortcuts if you do not want a netlist: `series 1k 2k 3k`, `parallel 1k 1k`, `divider 12 1k 2k`, `V=12 R=1k`, `R=1k C=1u`.
+- AC: fill **f (Hz)** or write `.ac 50`. Capacitors and inductors then use impedance.
+- Inverse: put `?` on one resistor and `.eq V(2)=4`, then Inverse. It finds that resistor.
+- Thevenin between two nodes: `.thevenin 2 0`.
+- Bad input does not crash. The page shows `0`.
+
 ### Polynomials
 
 You enter coefficients `a6` … `a0`, so up to degree 6.
@@ -338,7 +359,7 @@ Both programs are meant to be used from the keyboard. You do not have to click e
 
 - Click the calculator screen, or just start typing when that page is open.
 - Enter calculates. Esc clears.
-- Alt+1 Calculator, Alt+2 Formulas, Alt+3 Polynomial, Alt+4 Numerical, Alt+5 Algorithms, Alt+6 Chemistry, Alt+7 Elements, Alt+8 Sources, Alt+9 Problems. The desktop app also accepts Ctrl+1 to Ctrl+9.
+- Alt+1 Calculator, Alt+2 Formulas, Alt+3 Polynomial, Alt+4 Numerical, Alt+5 Algorithms, Alt+6 Chemistry, Alt+7 Elements, Alt+8 Sources, Alt+9 Problems, Alt+0 Circuits. The desktop app also accepts Ctrl+1 to Ctrl+9 and Ctrl+0.
 - Alt+L focuses the lookup bar. If you are not already in a text field, `/` does the same. Desktop also accepts Ctrl+L.
 - In Formulas, type in the search box and press Enter to open the first match. Enter in a value field solves. Enter on a chemistry equation balances it. Enter on polynomial coefficients evaluates. Enter on an algorithm runs it.
 
@@ -407,6 +428,7 @@ If one breaks, the other still has the same formulas.
 | Periodic table | yes | yes |
 | Sources | yes | yes |
 | Problems / inverse | yes | yes |
+| Circuits | yes | yes |
 | en / fa / fi | yes | yes |
 | Persian right-to-left | — | yes |
 

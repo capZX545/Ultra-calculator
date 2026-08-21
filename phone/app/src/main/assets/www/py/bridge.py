@@ -8,6 +8,7 @@ import algorithms
 import chemtools
 import core
 import lookup
+import circuits
 import problems
 import strings
 import teach
@@ -169,6 +170,14 @@ def _route(path, query, body):
             mode=body.get("mode") or "solve",
             unknown=body.get("unknown") or "x",
             at=body.get("at") or "",
+            lang=body.get("lang") or "en",
+            eng=bool(body.get("eng")),
+        )
+    if path == "/api/circuit":
+        return circuits.run(
+            body.get("text") or "",
+            mode=body.get("mode") or "solve",
+            freq=body.get("freq") or "",
             lang=body.get("lang") or "en",
             eng=bool(body.get("eng")),
         )

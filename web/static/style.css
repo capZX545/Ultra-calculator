@@ -114,6 +114,15 @@ aside h2, h2 { font-size: 14px; color: var(--accent); margin: 0 0 8px; }
 #prob-steps { font: 13px/1.45 "Segoe UI", Tahoma, sans-serif; min-height: 120px; }
 #view-problems label { color: var(--muted); display: flex; align-items: center; gap: 8px; }
 #prob-unk, #prob-at { width: 80px; background: var(--ink); }
+#cir-text {
+  width: 100%; min-height: 140px; background: var(--ink); color: var(--fg);
+  font: 15px/1.4 Consolas, monospace; padding: 12px; margin: 8px 0;
+}
+#cir-out, #cir-steps {
+  background: var(--ink); padding: 10px; min-height: 56px; overflow: auto;
+  font-family: Consolas, monospace; white-space: pre-wrap; margin: 8px 0;
+}
+#cir-freq { width: 90px; background: var(--ink); }
 #chem-out, #el-out { min-height: 220px; }
 .el-grid { display: grid; grid-template-columns: 280px 1fr; gap: 12px; min-height: 480px; }
 #el-list { list-style: none; margin: 0; padding: 0; background: var(--panel); overflow: auto; }

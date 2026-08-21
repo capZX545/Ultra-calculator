@@ -54,6 +54,9 @@ UI = {
         "inverse": "Inverse",
         "at_value": "at",
         "problem_hint": "Type 2*x+3=11 or x**2-5*x+6=0. Solve finds the unknown. Inverse finds the inverse function. Fill at to evaluate it there. Matrices: 1, 2; 3, 4.",
+        "circuits": "Circuits",
+        "circuit_freq": "f (Hz)",
+        "circuit_hint": "Netlist: V1 1 0 12 / R1 1 2 1k / R2 2 0 2k. Or series 1k 2k, parallel 1k 1k, divider 12 1k 2k, V=12 R=1k.",
     },
     "fa": {
         "title": "ماشین حساب اولترا",
@@ -109,6 +112,9 @@ UI = {
         "inverse": "حل عکس",
         "at_value": "در",
         "problem_hint": "معادله را بنویس، مثلاً 2*x+3=11. حل، مجهول را پیدا می‌کند. حل عکس، تابع وارون را می‌دهد.",
+        "circuits": "مدارها",
+        "circuit_freq": "f (هرتز)",
+        "circuit_hint": "نت‌لیست: V1 1 0 12 سپس R1 1 2 1k سپس R2 2 0 2k. یا series 1k 2k یا V=12 R=1k.",
     },
     "fi": {
         "title": "Ultra-laskin",
@@ -157,6 +163,9 @@ UI = {
         "clear": "AC",
         "equals": "=",
         "steps": "Askeleet",
+        "circuits": "Piirit",
+        "circuit_freq": "f (Hz)",
+        "circuit_hint": "Nettilista: V1 1 0 12 / R1 1 2 1k / R2 2 0 2k.",
     },
 }
 

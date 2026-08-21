@@ -25,6 +25,7 @@ Needs Flask, numpy, scipy, sympy.
 - **Elements** — full periodic table with isotopes
 - **Sources** — links and notes
 - **Problems** — type an equation and solve it, or find the inverse function / inverse at a value / inverse of a matrix
+- **Circuits** — read a netlist or a shortcut and compute voltages and currents
 
 ## Keyboard and lookup
 

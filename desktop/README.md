@@ -25,6 +25,7 @@ Needs numpy, scipy, sympy.
 - **Elements** — all 118 elements, atomic number, mass, important isotopes
 - **Sources** — where the formulas come from, and what was not copied
 - **Problems** — type an equation and solve it, or find the inverse function / inverse at a value / inverse of a matrix
+- **Circuits** — read a netlist or a shortcut (series, parallel, divider, Ohm, RC) and compute voltages and currents
 
 ## Keyboard and lookup
 

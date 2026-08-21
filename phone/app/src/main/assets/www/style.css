@@ -139,6 +139,15 @@ aside h2, h2 { font-size: 14px; color: var(--accent); margin: 0 0 8px; }
   #cat-list, #flist, #alist, #algo-cat { height: 200px; }
   #screen { font-size: 24px; min-height: 60px; }
 }
+#cir-text {
+  width: 100%; min-height: 140px; background: var(--ink); color: var(--fg);
+  font: 15px/1.4 Consolas, monospace; padding: 12px; margin: 8px 0;
+}
+#cir-out, #cir-steps {
+  background: var(--ink); padding: 10px; min-height: 56px; overflow: auto;
+  font-family: Consolas, monospace; white-space: pre-wrap; margin: 8px 0;
+}
+#cir-freq { width: 90px; background: var(--ink); }
 #boot {
   position: fixed; inset: 0; background: #1c1f24; z-index: 50;
   display: flex; align-items: center; justify-content: center;

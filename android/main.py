@@ -24,6 +24,7 @@ import algorithms
 import chemtools
 import core
 import lookup
+import circuits
 import problems
 import teach
 from strings import ui_text
@@ -219,6 +220,7 @@ class UltraAndroid(App):
         self.sm.add_widget(self._edetail_screen())
         self.sm.add_widget(self._sources_screen())
         self.sm.add_widget(self._problems_screen())
+        self.sm.add_widget(self._circuits_screen())
         root.add_widget(self.sm)
 
         self._paint_nav()
@@ -249,6 +251,7 @@ class UltraAndroid(App):
             ("elements", "elements"),
             ("sources", "sources"),
             ("problems", "problems"),
+            ("circuits", "circuits"),
         ]
         for mode, key in items:
             b = DarkButton(text=self.tr(key), accent=(self.mode == mode))
@@ -269,6 +272,7 @@ class UltraAndroid(App):
             "elements": "elements",
             "sources": "sources",
             "problems": "problems",
+            "circuits": "circuits",
         }
         self.sm.current = mapping.get(mode, "calc")
         self._paint_nav()
@@ -825,6 +829,50 @@ class UltraAndroid(App):
         box.add_widget(self.prob_steps)
         sc.add_widget(box)
         return sc
+
+    def _circuits_screen(self):
+        sc = Screen(name="circuits")
+        box = BoxLayout(orientation="vertical", spacing=dp(6))
+        self.cir_hint = Label(
+            text=self.tr("circuit_hint"),
+            color=MUTED,
+            font_size=dp(12),
+            size_hint_y=None,
+            height=dp(72),
+            text_size=(dp(360), dp(72)),
+            valign="top",
+            halign="left",
+        )
+        box.add_widget(self.cir_hint)
+        self.cir_text = DarkInput(text="V1 1 0 12\nR1 1 2 1k\nR2 2 0 2k", multiline=True, height=dp(110))
+        box.add_widget(self.cir_text)
+        self.cir_freq = DarkInput(text="", hint_text=self.tr("circuit_freq"))
+        box.add_widget(self.cir_freq)
+        btns = BoxLayout(size_hint_y=None, height=dp(42), spacing=dp(6))
+        b1 = DarkButton(text=self.tr("solve"), accent=True)
+        b1.bind(on_release=lambda *_: self._run_circuit("solve"))
+        b2 = DarkButton(text=self.tr("inverse"))
+        b2.bind(on_release=lambda *_: self._run_circuit("inverse"))
+        btns.add_widget(b1)
+        btns.add_widget(b2)
+        box.add_widget(btns)
+        self.cir_out = Label(text="", color=FG, font_size=dp(14), size_hint_y=None, height=dp(64),
+                             text_size=(dp(360), dp(64)), valign="top", halign="left")
+        box.add_widget(self.cir_out)
+        self.cir_steps = Label(text="", color=MUTED, font_size=dp(12), text_size=(dp(360), dp(180)), valign="top")
+        box.add_widget(self.cir_steps)
+        sc.add_widget(box)
+        return sc
+
+    def _run_circuit(self, mode: str):
+        try:
+            raw = self.cir_text.text if self.cir_text else ""
+            freq = self.cir_freq.text if self.cir_freq else ""
+            out = circuits.run(raw, mode=mode, freq=freq, lang=self.lang, eng=self.eng)
+        except Exception:
+            out = {"text": "0", "steps": []}
+        self.cir_out.text = out.get("text") or "0"
+        self.cir_steps.text = fmt_steps(out.get("steps") or [])
 
     def _run_problem(self, mode: str):
         try:

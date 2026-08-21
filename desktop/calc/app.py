@@ -13,6 +13,7 @@ from .chemtools import balance_equation, find_element, list_elements, molar_mass
 from .engine import DesktopEngine
 from .i18n import t
 from .lookup import lookup
+from .circuits import run as run_circuit
 from .problems import run as run_problem
 from .sanitize import clean_number
 from . import teach
@@ -88,7 +89,8 @@ class UltraDesktop(tk.Tk):
         self.btn_el = tk.Button(top, command=lambda: self._set_mode("elements"))
         self.btn_src = tk.Button(top, command=lambda: self._set_mode("sources"))
         self.btn_prob = tk.Button(top, command=lambda: self._set_mode("problems"))
-        for b in (self.btn_calc, self.btn_form, self.btn_poly, self.btn_num, self.btn_algo, self.btn_chem, self.btn_el, self.btn_src, self.btn_prob):
+        self.btn_cir = tk.Button(top, command=lambda: self._set_mode("circuits"))
+        for b in (self.btn_calc, self.btn_form, self.btn_poly, self.btn_num, self.btn_algo, self.btn_chem, self.btn_el, self.btn_src, self.btn_prob, self.btn_cir):
             self._paint_btn(b, BTN)
             b.pack(side="left", padx=3)
         self.lang_box = ttk.Combobox(top, values=["en", "fa", "fi"], width=6, state="readonly")
@@ -101,7 +103,7 @@ class UltraDesktop(tk.Tk):
         self._build_lookup()
 
         self.frames = {}
-        for name in ("calc", "formulas", "poly", "numeric", "algo", "chem", "elements", "sources", "problems"):
+        for name in ("calc", "formulas", "poly", "numeric", "algo", "chem", "elements", "sources", "problems", "circuits"):
             fr = tk.Frame(self, bg=BG)
             self.frames[name] = fr
         self._build_calc(self.frames["calc"])
@@ -113,6 +115,7 @@ class UltraDesktop(tk.Tk):
         self._build_elements(self.frames["elements"])
         self._build_sources(self.frames["sources"])
         self._build_problems(self.frames["problems"])
+        self._build_circuits(self.frames["circuits"])
         self._bind_keys()
         self._set_mode("calc")
 
@@ -145,6 +148,7 @@ class UltraDesktop(tk.Tk):
             "elements": self.btn_el,
             "sources": self.btn_src,
             "problems": self.btn_prob,
+            "circuits": self.btn_cir,
         }
         for key, btn in mapping.items():
             self._paint_btn(btn, ACCENT if key == mode else BTN, "#1c1f24" if key == mode else FG)
@@ -187,6 +191,13 @@ class UltraDesktop(tk.Tk):
             self.prob_unk_lbl.configure(text=self.tr("unknown"))
             self.prob_at_lbl.configure(text=self.tr("at_value"))
             self.prob_hint.configure(text=self.tr("problem_hint"))
+        if hasattr(self, "btn_cir"):
+            self.btn_cir.configure(text=self.tr("mode_circuits"))
+        if hasattr(self, "cir_solve_btn"):
+            self.cir_solve_btn.configure(text=self.tr("solve"))
+            self.cir_inv_btn.configure(text=self.tr("inverse"))
+            self.cir_freq_lbl.configure(text=self.tr("circuit_freq"))
+            self.cir_hint.configure(text=self.tr("circuit_hint"))
         self.lang_lbl.configure(text=self.tr("language"))
         if hasattr(self, "lookup_lbl"):
             self.lookup_lbl.configure(text=self.tr("lookup"))
@@ -300,6 +311,8 @@ class UltraDesktop(tk.Tk):
         for i, mode in enumerate(modes, 1):
             self.bind_all(f"<Alt-Key-{i}>", lambda e, m=mode: self._hot_mode(m))
             self.bind_all(f"<Control-Key-{i}>", lambda e, m=mode: self._hot_mode(m))
+        self.bind_all("<Alt-Key-0>", lambda e: self._hot_mode("circuits"))
+        self.bind_all("<Control-Key-0>", lambda e: self._hot_mode("circuits"))
         self.bind_all("<Alt-l>", self._hot_lookup)
         self.bind_all("<Alt-L>", self._hot_lookup)
         self.bind_all("<Control-l>", self._hot_lookup)
@@ -335,6 +348,8 @@ class UltraDesktop(tk.Tk):
             self.el_q.focus_set()
         elif mode == "problems" and hasattr(self, "prob_text"):
             self.prob_text.focus_set()
+        elif mode == "circuits" and hasattr(self, "cir_text"):
+            self.cir_text.focus_set()
 
     def _is_typing_widget(self, w) -> bool:
         return isinstance(w, (tk.Entry, tk.Text, ttk.Entry, ttk.Combobox))
@@ -1327,6 +1342,40 @@ class UltraDesktop(tk.Tk):
             out = {"text": "0", "steps": []}
         self.prob_result.configure(text=out.get("text") or "0")
         self._show_steps(self.prob_steps, out.get("steps") or [])
+
+    def _build_circuits(self, root: tk.Frame) -> None:
+        self.cir_hint = tk.Label(root, bg=BG, fg=MUTED, wraplength=900, justify="left", font=("Segoe UI", 10))
+        self.cir_hint.pack(fill="x", pady=(0, 6))
+        self.cir_text = tk.Text(root, bg="#11141a", fg=FG, insertbackground=FG, relief="flat", height=10, font=("Consolas", 13), wrap="word")
+        self.cir_text.pack(fill="x", pady=4)
+        self.cir_text.insert("1.0", "V1 1 0 12\nR1 1 2 1k\nR2 2 0 2k")
+        row = tk.Frame(root, bg=BG)
+        row.pack(fill="x", pady=6)
+        self.cir_freq_lbl = tk.Label(row, bg=BG, fg=MUTED)
+        self.cir_freq_lbl.pack(side="left")
+        self.cir_freq = tk.Entry(row, width=10, bg="#11141a", fg=FG, insertbackground=FG, relief="flat")
+        self.cir_freq.pack(side="left", padx=6)
+        self.cir_solve_btn = tk.Button(row, command=lambda: self._run_circuit("solve"))
+        self.cir_inv_btn = tk.Button(row, command=lambda: self._run_circuit("inverse"))
+        self._paint_btn(self.cir_solve_btn, ACCENT, "#1c1f24")
+        self._paint_btn(self.cir_inv_btn, BTN2)
+        self.cir_solve_btn.pack(side="left", padx=6)
+        self.cir_inv_btn.pack(side="left", padx=4)
+        self.cir_result = tk.Label(root, bg=PANEL, fg=FG, font=("Consolas", 14), wraplength=900, justify="left", anchor="w")
+        self.cir_result.pack(fill="x", pady=8, ipady=10)
+        self.cir_steps = tk.Text(root, bg=PANEL, fg=FG, relief="flat", height=12, font=("Segoe UI", 10), wrap="word")
+        self.cir_steps.pack(fill="both", expand=True)
+        self.cir_text.bind("<Control-Return>", lambda e: self._run_circuit("solve") or "break")
+
+    def _run_circuit(self, mode: str) -> None:
+        try:
+            raw = self.cir_text.get("1.0", "end").strip()
+            freq = (self.cir_freq.get() or "").strip()
+            out = run_circuit(raw, mode=mode, freq=freq, lang=self.lang, eng=self.engine.eng)
+        except Exception:
+            out = {"text": "0", "steps": []}
+        self.cir_result.configure(text=out.get("text") or "0")
+        self._show_steps(self.cir_steps, out.get("steps") or [])
 
     def _build_sources(self, root: tk.Frame) -> None:
         box = tk.Text(root, bg=PANEL, fg=FG, relief="flat", font=("Segoe UI", 11), wrap="word")

@@ -11,6 +11,7 @@ import algorithms
 import chemtools
 import core
 import lookup
+import circuits
 import problems
 import teach
 from strings import UI, ui_text
@@ -233,6 +234,20 @@ def api_lookup():
 def api_sources():
     path = Path(__file__).with_name("sources.json")
     return jsonify(json.loads(path.read_text(encoding="utf-8")))
+
+
+@app.post("/api/circuit")
+def api_circuit():
+    body = request.get_json(silent=True) or {}
+    return jsonify(
+        circuits.run(
+            body.get("text") or "",
+            mode=body.get("mode") or "solve",
+            freq=body.get("freq") or "",
+            lang=body.get("lang") or "en",
+            eng=bool(body.get("eng")),
+        )
+    )
 
 
 @app.post("/api/problem")

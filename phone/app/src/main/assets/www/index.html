@@ -26,6 +26,7 @@
       <button data-mode="elements" class="tab" id="tab-elements">Elements</button>
       <button data-mode="sources" class="tab" id="tab-sources">Sources</button>
       <button data-mode="problems" class="tab" id="tab-problems">Problems</button>
+      <button data-mode="circuits" class="tab" id="tab-circuits">Circuits</button>
     </nav>
     <label class="lang">
       <span id="lang-label">Language</span>
@@ -164,6 +165,19 @@
       </div>
       <pre id="prob-out"></pre>
       <pre id="prob-steps"></pre>
+    </section>
+    <section id="view-circuits" class="view">
+      <p class="hint" id="cir-hint"></p>
+      <textarea id="cir-text">V1 1 0 12
+R1 1 2 1k
+R2 2 0 2k</textarea>
+      <div class="row">
+        <label id="cir-freq-label">f (Hz) <input id="cir-freq" value=""></label>
+        <button id="cir-solve" class="accent" type="button">Solve</button>
+        <button id="cir-inv" type="button">Inverse</button>
+      </div>
+      <pre id="cir-out"></pre>
+      <pre id="cir-steps"></pre>
     </section>
   </main>
   <script src="pyodide/pyodide.js"></script>
