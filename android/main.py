@@ -26,6 +26,12 @@ import core
 import lookup
 import circuits
 import problems
+import graphs
+import matrixlab
+import statsdata
+import triangle
+import sessionstore
+import latexout
 import teach
 from strings import ui_text
 
@@ -221,6 +227,10 @@ class UltraAndroid(App):
         self.sm.add_widget(self._sources_screen())
         self.sm.add_widget(self._problems_screen())
         self.sm.add_widget(self._circuits_screen())
+        self.sm.add_widget(self._graph_screen())
+        self.sm.add_widget(self._matrix_screen())
+        self.sm.add_widget(self._stats_screen())
+        self.sm.add_widget(self._triangle_screen())
         root.add_widget(self.sm)
 
         self._paint_nav()
@@ -252,6 +262,10 @@ class UltraAndroid(App):
             ("sources", "sources"),
             ("problems", "problems"),
             ("circuits", "circuits"),
+            ("graph", "graph"),
+            ("matrix", "matrix"),
+            ("stats", "stats"),
+            ("triangle", "triangle"),
         ]
         for mode, key in items:
             b = DarkButton(text=self.tr(key), accent=(self.mode == mode))
@@ -562,7 +576,7 @@ class UltraAndroid(App):
         for w in (self.n_func, self.n_a, self.n_b, self.n_y0):
             box.add_widget(w)
         row = BoxLayout(size_hint_y=None, height=dp(42), spacing=dp(4))
-        for kind, key in (("root", "root"), ("integral", "integral"), ("deriv", "deriv"), ("ode", "ode")):
+        for kind, key in (("root", "root"), ("integral", "integral"), ("deriv", "deriv"), ("ode", "ode"), ("ode2", "ode2"), ("odesys", "odesys")):
             b = DarkButton(text=self.tr(key))
             b.bind(on_release=lambda _w, k=kind: self._numeric(k))
             row.add_widget(b)
@@ -884,6 +898,103 @@ class UltraAndroid(App):
             out = {"text": "0", "steps": []}
         self.prob_out.text = out.get("text") or "0"
         self.prob_steps.text = fmt_steps(out.get("steps") or [])
+
+    def _graph_screen(self):
+        sc = Screen(name="graph")
+        box = BoxLayout(orientation="vertical", spacing=dp(6))
+        self.graph_text = DarkInput(text="sin(x)", multiline=True, height=dp(90))
+        box.add_widget(self.graph_text)
+        row = BoxLayout(size_hint_y=None, height=dp(42), spacing=dp(4))
+        for kind, key in (("func", "plot"), ("param", "parametric"), ("bode", "bode")):
+            b = DarkButton(text=self.tr(key) if key != "parametric" else "Param")
+            b.bind(on_release=lambda _w, k=kind: self._run_graph(k))
+            row.add_widget(b)
+        box.add_widget(row)
+        self.graph_out = Label(text="", color=FG, font_size=dp(13), text_size=(dp(360), dp(280)), valign="top")
+        box.add_widget(self.graph_out)
+        sc.add_widget(box)
+        return sc
+
+    def _run_graph(self, kind):
+        try:
+            out = graphs.run(kind, self.graph_text.text, circuit=self.graph_text.text, data=self.graph_text.text, lang=self.lang, eng=self.eng)
+        except Exception:
+            out = {"text": "0"}
+        self.graph_out.text = (out.get("text") or "0") + "\n" + (out.get("svg") or "")[:400]
+
+    def _matrix_screen(self):
+        sc = Screen(name="matrix")
+        box = BoxLayout(orientation="vertical", spacing=dp(6))
+        self.mat_a = DarkInput(text="1, 2; 3, 4", multiline=True, height=dp(70))
+        self.mat_b = DarkInput(text="5; 6", multiline=True, height=dp(50))
+        box.add_widget(self.mat_a)
+        box.add_widget(self.mat_b)
+        row = BoxLayout(size_hint_y=None, height=dp(42), spacing=dp(4))
+        for op, key in (("det", "det"), ("inv", "invm"), ("eig", "eig"), ("solve", "solve")):
+            b = DarkButton(text=self.tr(key) if key in ("det", "invm") else op)
+            b.bind(on_release=lambda _w, o=op: self._run_matrix(o))
+            row.add_widget(b)
+        box.add_widget(row)
+        self.mat_out = Label(text="", color=FG, font_size=dp(14), text_size=(dp(360), dp(220)), valign="top")
+        box.add_widget(self.mat_out)
+        sc.add_widget(box)
+        return sc
+
+    def _run_matrix(self, op):
+        try:
+            out = matrixlab.run(op, self.mat_a.text, self.mat_b.text, eng=self.eng, lang=self.lang)
+        except Exception:
+            out = {"text": "0"}
+        self.mat_out.text = out.get("text") or "0"
+
+    def _stats_screen(self):
+        sc = Screen(name="stats")
+        box = BoxLayout(orientation="vertical", spacing=dp(6))
+        self.stats_text = DarkInput(text="1\n2\n3\n4\n5", multiline=True, height=dp(120))
+        box.add_widget(self.stats_text)
+        b = DarkButton(text=self.tr("run"), accent=True)
+        b.bind(on_release=lambda *_: self._run_stats())
+        box.add_widget(b)
+        self.stats_out = Label(text="", color=FG, font_size=dp(13), text_size=(dp(360), dp(280)), valign="top")
+        box.add_widget(self.stats_out)
+        sc.add_widget(box)
+        return sc
+
+    def _run_stats(self):
+        try:
+            out = statsdata.run(self.stats_text.text, eng=self.eng, lang=self.lang)
+        except Exception:
+            out = {"text": "0"}
+        self.stats_out.text = out.get("text") or "0"
+
+    def _triangle_screen(self):
+        sc = Screen(name="triangle")
+        box = BoxLayout(orientation="vertical", spacing=dp(6))
+        self.tri_in = {}
+        grid = GridLayout(cols=3, spacing=dp(4), size_hint_y=None, height=dp(90))
+        for name, default in (("a", "3"), ("b", "4"), ("c", "5"), ("A", ""), ("B", ""), ("C", "")):
+            cell = BoxLayout(orientation="vertical")
+            cell.add_widget(Label(text=name, color=MUTED, size_hint_y=None, height=dp(18)))
+            inp = DarkInput(text=default, height=dp(36))
+            self.tri_in[name] = inp
+            cell.add_widget(inp)
+            grid.add_widget(cell)
+        box.add_widget(grid)
+        b = DarkButton(text=self.tr("solve"), accent=True)
+        b.bind(on_release=lambda *_: self._run_triangle())
+        box.add_widget(b)
+        self.tri_out = Label(text="", color=FG, font_size=dp(13), text_size=(dp(360), dp(280)), valign="top")
+        box.add_widget(self.tri_out)
+        sc.add_widget(box)
+        return sc
+
+    def _run_triangle(self):
+        values = {k: inp.text for k, inp in self.tri_in.items()}
+        try:
+            out = triangle.run(values, lang=self.lang, eng=self.eng)
+        except Exception:
+            out = {"text": "0"}
+        self.tri_out.text = out.get("text") or "0"
 
     # ----- sources -----
     def _sources_screen(self):

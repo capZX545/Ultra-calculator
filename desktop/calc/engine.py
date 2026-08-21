@@ -286,6 +286,13 @@ class DesktopEngine:
     def evaluate(self, text: str, lang: str = "en") -> dict:
         raw = text
         try:
+            try:
+                from .units import try_eval as _units_eval
+                u = _units_eval(text, eng=self.eng, lang=lang)
+                if u is not None:
+                    return u
+            except Exception:
+                pass
             cleaned = clean_expression(text)
             if "=" in cleaned and cleaned.count("=") == 1:
                 left, right = cleaned.split("=")

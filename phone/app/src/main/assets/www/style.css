@@ -18,7 +18,7 @@ header {
   padding: 12px 18px; border-bottom: 1px solid #333;
 }
 h1 { font-size: 18px; margin: 0; color: var(--accent); font-weight: 600; }
-nav { display: flex; gap: 6px; flex: 1; }
+nav { display: flex; gap: 6px; flex: 1; flex-wrap: wrap; }
 .tab, button, select, input {
   background: var(--btn); color: var(--fg); border: 0; border-radius: 4px;
   padding: 8px 12px; font: inherit;
@@ -114,31 +114,6 @@ aside h2, h2 { font-size: 14px; color: var(--accent); margin: 0 0 8px; }
 #prob-steps { font: 13px/1.45 "Segoe UI", Tahoma, sans-serif; min-height: 120px; }
 #view-problems label { color: var(--muted); display: flex; align-items: center; gap: 8px; }
 #prob-unk, #prob-at { width: 80px; background: var(--ink); }
-#chem-out, #el-out { min-height: 220px; }
-.el-grid { display: grid; grid-template-columns: 280px 1fr; gap: 12px; min-height: 480px; }
-#el-list { list-style: none; margin: 0; padding: 0; background: var(--panel); overflow: auto; }
-#el-list li { padding: 6px 8px; cursor: pointer; font-family: Consolas, monospace; font-size: 13px; }
-#el-list li:hover, #el-list li.on { background: var(--btn2); }
-@media (max-width: 900px) {
-  .el-grid { grid-template-columns: 1fr; }
-}
-@media (max-width: 900px) {
-  .calc-wrap, .formula-grid { grid-template-columns: 1fr; }
-  #cat-list, #flist { height: 220px; }
-}
-
-@media (max-width: 900px) {
-  header { flex-wrap: wrap; gap: 8px; padding: 10px 12px; }
-  h1 { width: 100%; font-size: 16px; }
-  nav { overflow-x: auto; flex-wrap: nowrap; width: 100%; padding-bottom: 4px; }
-  .tab { flex: 0 0 auto; padding: 10px 12px; }
-  .lang { margin-inline-start: 0; }
-  main { padding: 12px 12px 28px; }
-  .keys { grid-template-columns: repeat(4, 1fr); }
-  .key { padding: 16px 6px; font-size: 16px; }
-  #cat-list, #flist, #alist, #algo-cat { height: 200px; }
-  #screen { font-size: 24px; min-height: 60px; }
-}
 #cir-text {
   width: 100%; min-height: 140px; background: var(--ink); color: var(--fg);
   font: 15px/1.4 Consolas, monospace; padding: 12px; margin: 8px 0;
@@ -148,6 +123,33 @@ aside h2, h2 { font-size: 14px; color: var(--accent); margin: 0 0 8px; }
   font-family: Consolas, monospace; white-space: pre-wrap; margin: 8px 0;
 }
 #cir-freq { width: 90px; background: var(--ink); }
+#chem-out, #el-out { min-height: 220px; }
+.el-grid { display: grid; grid-template-columns: 280px 1fr; gap: 12px; min-height: 480px; }
+#el-list { list-style: none; margin: 0; padding: 0; background: var(--panel); overflow: auto; }
+#el-list li { padding: 6px 8px; cursor: pointer; font-family: Consolas, monospace; font-size: 13px; }
+#el-list li:hover, #el-list li.on { background: var(--btn2); }
+@media (max-width: 900px) {
+  .el-grid { grid-template-columns: 1fr; }
+}
+.svg-box { background: var(--ink); padding: 8px; margin: 8px 0; overflow: auto; min-height: 80px; }
+.svg-box svg { max-width: 100%; height: auto; display: block; }
+#graph-text, #mat-a, #mat-b, #stats-text {
+  width: 100%; min-height: 90px; background: var(--ink); color: var(--fg);
+  font: 15px/1.4 Consolas, monospace; padding: 12px; margin: 8px 0;
+}
+#mat-a, #mat-b { min-height: 72px; }
+#graph-out, #mat-out, #mat-steps, #stats-out, #tri-out, #tri-steps {
+  background: var(--ink); padding: 10px; min-height: 48px; overflow: auto;
+  font-family: Consolas, monospace; white-space: pre-wrap; margin: 8px 0;
+}
+#btn-save, #btn-load, #btn-latex { font-size: 12px; }
+.tri-fields input { width: 80px; background: var(--ink); }
+@media (max-width: 900px) {
+  .calc-wrap, .formula-grid { grid-template-columns: 1fr; }
+  #cat-list, #flist { height: 220px; }
+}
+
+nav { flex-wrap: wrap; }
 #boot {
   position: fixed; inset: 0; background: #1c1f24; z-index: 50;
   display: flex; align-items: center; justify-content: center;
@@ -161,3 +163,10 @@ aside h2, h2 { font-size: 14px; color: var(--accent); margin: 0 0 8px; }
 .boot-card { text-align: center; padding: 24px; }
 .boot-card h1 { color: #c4a35a; margin-bottom: 12px; }
 #boot-msg { color: #9aa3ad; }
+@media (max-width: 900px) {
+  header { flex-wrap: wrap; gap: 8px; padding: 10px 12px; }
+  h1 { width: 100%; font-size: 16px; }
+  nav { overflow-x: auto; flex-wrap: nowrap; width: 100%; padding-bottom: 4px; }
+  .tab { flex: 0 0 auto; padding: 10px 12px; }
+  .keys { grid-template-columns: repeat(4, 1fr); }
+}

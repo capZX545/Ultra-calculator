@@ -131,6 +131,19 @@ aside h2, h2 { font-size: 14px; color: var(--accent); margin: 0 0 8px; }
 @media (max-width: 900px) {
   .el-grid { grid-template-columns: 1fr; }
 }
+.svg-box { background: var(--ink); padding: 8px; margin: 8px 0; overflow: auto; min-height: 80px; }
+.svg-box svg { max-width: 100%; height: auto; display: block; }
+#graph-text, #mat-a, #mat-b, #stats-text {
+  width: 100%; min-height: 90px; background: var(--ink); color: var(--fg);
+  font: 15px/1.4 Consolas, monospace; padding: 12px; margin: 8px 0;
+}
+#mat-a, #mat-b { min-height: 72px; }
+#graph-out, #mat-out, #mat-steps, #stats-out, #tri-out, #tri-steps {
+  background: var(--ink); padding: 10px; min-height: 48px; overflow: auto;
+  font-family: Consolas, monospace; white-space: pre-wrap; margin: 8px 0;
+}
+#btn-save, #btn-load, #btn-latex { font-size: 12px; }
+.tri-fields input { width: 80px; background: var(--ink); }
 @media (max-width: 900px) {
   .calc-wrap, .formula-grid { grid-template-columns: 1fr; }
   #cat-list, #flist { height: 220px; }

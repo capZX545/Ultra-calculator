@@ -43,7 +43,7 @@ The project that builds that APK is in `phone/`.
 
 ## What the programs can do
 
-There are ten pages: Calculator, Formulas, Polynomial, Numerical, Algorithms, Chemistry, Elements, Sources, Problems, and Circuits.
+There are fourteen pages: Calculator, Formulas, Polynomial, Numerical, Algorithms, Chemistry, Elements, Sources, Problems, Circuits, Graph, Matrix, Stats, and Triangle.
 
 ### Calculator
 
@@ -359,7 +359,7 @@ Both programs are meant to be used from the keyboard. You do not have to click e
 
 - Click the calculator screen, or just start typing when that page is open.
 - Enter calculates. Esc clears.
-- Alt+1 Calculator, Alt+2 Formulas, Alt+3 Polynomial, Alt+4 Numerical, Alt+5 Algorithms, Alt+6 Chemistry, Alt+7 Elements, Alt+8 Sources, Alt+9 Problems, Alt+0 Circuits. The desktop app also accepts Ctrl+1 to Ctrl+9 and Ctrl+0.
+- Alt+1 Calculator, Alt+2 Formulas, Alt+3 Polynomial, Alt+4 Numerical, Alt+5 Algorithms, Alt+6 Chemistry, Alt+7 Elements, Alt+8 Sources, Alt+9 Problems, Alt+0 Circuits, Alt+G Graph, Alt+M Matrix, Alt+D Stats, Alt+T Triangle. The desktop app also accepts Ctrl+1 to Ctrl+9 and Ctrl+0.
 - Alt+L focuses the lookup bar. If you are not already in a text field, `/` does the same. Desktop also accepts Ctrl+L.
 - In Formulas, type in the search box and press Enter to open the first match. Enter in a value field solves. Enter on a chemistry equation balances it. Enter on polynomial coefficients evaluates. Enter on an algorithm runs it.
 
@@ -429,6 +429,9 @@ If one breaks, the other still has the same formulas.
 | Sources | yes | yes |
 | Problems / inverse | yes | yes |
 | Circuits | yes | yes |
+| Graph / matrix / stats / triangle | yes | yes |
+| Units on the keypad | yes | yes |
+| Save / LaTeX | yes | yes |
 | en / fa / fi | yes | yes |
 | Persian right-to-left | — | yes |
 

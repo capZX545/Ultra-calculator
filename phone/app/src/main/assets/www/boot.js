@@ -58,6 +58,8 @@
     const files = [
       "clean.py", "teach.py", "chemtools.py", "core.py",
       "lookup.py", "algorithms.py", "strings.py", "problems.py", "circuits.py", "bridge.py",
+      "units.py", "graphs.py", "matrixlab.py", "statsdata.py", "triangle.py",
+      "searchall.py", "latexout.py", "sessionstore.py",
       "formulas.json", "elements.json", "sources.json",
     ];
     for (let i = 0; i < files.length; i += 1) {
@@ -69,7 +71,7 @@
       pyodide.FS.writeFile(name, text);
     }
     say("Starting…");
-    pyodide.runPython("import bridge, core, chemtools, algorithms, lookup, problems, circuits");
+    pyodide.runPython("import bridge, core, chemtools, algorithms, lookup, problems, circuits, units, graphs, matrixlab, statsdata, triangle, searchall, latexout");
     window.pyodide = pyodide;
     window.pyodideReady = true;
     if (typeof window.onEngineReady === "function") {

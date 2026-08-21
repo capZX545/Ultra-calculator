@@ -18,6 +18,8 @@
     system: false,
     eqCount: 2,
     unknownCount: 2,
+    favorites: [],
+    lastLatex: "",
   };
 
   const KEYS = [
@@ -39,7 +41,7 @@
     sqrt:"sqrt(", "n!":"factorial(", abs:"abs(",
     "1/x":"1/(", pi:"pi", e:"e", ans:"ans", EE:"*10**",
   };
-  const MODES = ["calc", "formulas", "poly", "numeric", "algo", "chem", "elements", "sources", "problems", "circuits"];
+  const MODES = ["calc", "formulas", "poly", "numeric", "algo", "chem", "elements", "sources", "problems", "circuits", "graph", "matrix", "stats", "triangle"];
 
   const $ = (id) => document.getElementById(id);
   const screen = $("screen");
@@ -80,70 +82,17 @@
 
   function jsEval(body) {
     const angle = (body && body.angle) || "DEG";
-    const eng = !!(body && body.eng);
     let expr = String((body && body.expr) || "0");
-    expr = expr.replace(/[۰۱۲۳۴۵۶۷۸۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d));
-    expr = expr.replace(/[٠١٢٣٤٥٦٧٨٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d));
     expr = expr.replace(/π/g, "pi").replace(/×/g, "*").replace(/÷/g, "/").replace(/−/g, "-").replace(/\^/g, "**");
-    const stripped = expr.replace(/\*\*/g, "^").replace(/\s+/g, "");
-    if (!/^[0-9A-Za-z_+\-*/%().,^]+$/.test(stripped)) {
-      return { ok: true, text: "0", value: 0 };
-    }
-    const toR = (x) => (angle === "DEG" ? Number(x) * Math.PI / 180 : Number(x));
-    const fromR = (x) => (angle === "DEG" ? Number(x) * 180 / Math.PI : Number(x));
-    const fact = (n) => {
-      n = Math.floor(Number(n));
-      if (n < 0 || n > 170) return NaN;
-      let a = 1;
-      for (let i = 2; i <= n; i += 1) a *= i;
-      return a;
-    };
-    const ns = {
-      sin: (x) => Math.sin(toR(x)),
-      cos: (x) => Math.cos(toR(x)),
-      tan: (x) => Math.tan(toR(x)),
-      asin: (x) => fromR(Math.asin(Number(x))),
-      acos: (x) => fromR(Math.acos(Number(x))),
-      atan: (x) => fromR(Math.atan(Number(x))),
-      sinh: Math.sinh,
-      cosh: Math.cosh,
-      tanh: Math.tanh,
-      ln: Math.log,
-      log: Math.log,
-      log10: Math.log10,
-      log2: Math.log2,
-      exp: Math.exp,
-      sqrt: Math.sqrt,
-      abs: Math.abs,
-      factorial: fact,
-      pi: Math.PI,
-      e: Math.E,
-      ans: Number(state.ans) || 0,
-    };
     try {
-      const fn = new Function(
-        "sin", "cos", "tan", "asin", "acos", "atan", "sinh", "cosh", "tanh",
-        "ln", "log", "log10", "log2", "exp", "sqrt", "abs", "factorial", "pi", "e", "ans",
-        "return (" + expr + ");"
-      );
-      let v = fn(
-        ns.sin, ns.cos, ns.tan, ns.asin, ns.acos, ns.atan, ns.sinh, ns.cosh, ns.tanh,
-        ns.ln, ns.log, ns.log10, ns.log2, ns.exp, ns.sqrt, ns.abs, ns.factorial, ns.pi, ns.e, ns.ans
-      );
-      if (typeof v === "number" && !Number.isFinite(v)) v = 0;
-      let text;
-      if (typeof v !== "number") text = String(v);
-      else if (Math.abs(v) < 1e-15) text = "0";
-      else if (eng && v !== 0) {
-        const exp = Math.floor(Math.log10(Math.abs(v)) / 3) * 3;
-        text = (v / Math.pow(10, exp)).toPrecision(8).replace(/\.?0+$/, "") + "e" + (exp >= 0 ? "+" : "") + exp;
-      } else text = String(parseFloat(v.toPrecision(12)));
-      return { ok: true, text: text, value: v, steps: [] };
+      const fn = new Function("sin","cos","tan","sqrt","abs","pi","e","ans","log","exp","return (" + expr + ");");
+      let v = fn(Math.sin, Math.cos, Math.tan, Math.sqrt, Math.abs, Math.PI, Math.E, Number(state.ans)||0, Math.log, Math.exp);
+      if (typeof v !== "number" || !Number.isFinite(v)) v = 0;
+      return { ok: true, text: String(v), value: v, steps: [] };
     } catch (err) {
       return { ok: true, text: "0", value: 0, steps: [] };
     }
   }
-
   async function pyCall(path, query, body) {
     if (window.pyodideReady && window.pyodide) {
       try {
@@ -157,19 +106,15 @@
       }
     }
     if (path === "/api/eval") return jsEval(body || {});
-    if (path === "/api/meta") {
-      return { strings: state.strings || {}, categories: [], total: 0, languages: ["en", "fa", "fi"] };
-    }
+    if (path === "/api/meta") return { strings: state.strings || {}, categories: [], total: 0, languages: ["en", "fa", "fi"] };
     return { ok: true, text: "0", solutions: [] };
   }
-
   async function post(url, body) {
     const u = new URL(url, "https://local.invalid/");
     const query = {};
     u.searchParams.forEach((v, k) => { query[k] = v; });
     return pyCall(u.pathname, query, body || {});
   }
-
   async function get(url) {
     const u = new URL(url, "https://local.invalid/");
     const query = {};
@@ -194,6 +139,32 @@
     if ($("tab-sources")) $("tab-sources").textContent = s.sources || "Sources";
     if ($("tab-problems")) $("tab-problems").textContent = s.problems || "Problems";
     if ($("tab-circuits")) $("tab-circuits").textContent = s.circuits || "Circuits";
+    if ($("tab-graph")) $("tab-graph").textContent = s.graph || "Graph";
+    if ($("tab-matrix")) $("tab-matrix").textContent = s.matrix || "Matrix";
+    if ($("tab-stats")) $("tab-stats").textContent = s.stats || "Stats";
+    if ($("tab-triangle")) $("tab-triangle").textContent = s.triangle || "Triangle";
+    if ($("graph-plot")) $("graph-plot").textContent = s.plot || "Plot";
+    if ($("graph-param")) $("graph-param").textContent = s.parametric || "Parametric";
+    if ($("graph-data")) $("graph-data").textContent = s.data || "Data";
+    if ($("graph-bode")) $("graph-bode").textContent = s.bode || "Bode";
+    if ($("graph-hint")) $("graph-hint").textContent = s.graph_hint || "";
+    if ($("matrix-hint")) $("matrix-hint").textContent = s.matrix_hint || "";
+    if ($("stats-hint")) $("stats-hint").textContent = s.stats_hint || "";
+    if ($("tri-hint")) $("tri-hint").textContent = s.triangle_hint || "";
+    if ($("mat-det")) $("mat-det").textContent = s.det || "det";
+    if ($("mat-inv")) $("mat-inv").textContent = s.invm || "Inverse";
+    if ($("mat-t")) $("mat-t").textContent = s.trans || "Transpose";
+    if ($("mat-eig")) $("mat-eig").textContent = s.eig || "Eigen";
+    if ($("mat-rref")) $("mat-rref").textContent = s.rref || "RREF";
+    if ($("mat-mul")) $("mat-mul").textContent = s.mul || "Multiply";
+    if ($("mat-solve")) $("mat-solve").textContent = s.solve_axb || "Solve Ax=b";
+    if ($("stats-run")) $("stats-run").textContent = s.run || "Run";
+    if ($("tri-solve")) $("tri-solve").textContent = s.solve || "Solve";
+    if ($("n-ode2")) $("n-ode2").textContent = s.ode2 || "ODE 2nd";
+    if ($("n-odesys")) $("n-odesys").textContent = s.odesys || "ODE system";
+    if ($("btn-save")) $("btn-save").textContent = s.save || "Save";
+    if ($("btn-load")) $("btn-load").textContent = s.load || "Load";
+    if ($("btn-latex")) $("btn-latex").textContent = s.latex || "LaTeX";
     if ($("cir-solve")) $("cir-solve").textContent = s.solve || "Solve";
     if ($("cir-inv")) $("cir-inv").textContent = s.inverse || "Inverse";
     if ($("cir-hint")) $("cir-hint").textContent = s.circuit_hint || "";
@@ -261,6 +232,14 @@
       $("prob-text").focus();
     } else if (mode === "circuits" && $("cir-text")) {
       $("cir-text").focus();
+    } else if (mode === "graph" && $("graph-text")) {
+      $("graph-text").focus();
+    } else if (mode === "matrix" && $("mat-a")) {
+      $("mat-a").focus();
+    } else if (mode === "stats" && $("stats-text")) {
+      $("stats-text").focus();
+    } else if (mode === "triangle" && $("tri-a")) {
+      $("tri-a").focus();
     }
   }
 
@@ -356,6 +335,7 @@
       state.ans = out.value;
       setScreen(out.text);
       showSteps("calc-steps", out.steps || []);
+      state.lastLatex = out.latex || out.exact || out.text || source;
       screen.focus();
       screen.select();
       return;
@@ -595,6 +575,7 @@
       a: $("n-a").value,
       b: $("n-b").value,
       y0: $("n-y0").value,
+      yp0: ($("n-yp0") && $("n-yp0").value) || "0",
       steps: $("n-steps").value,
       eng: state.eng,
       lang: state.lang,
@@ -677,6 +658,8 @@
   $("n-int").addEventListener("click", () => doNumeric("integral"));
   $("n-der").addEventListener("click", () => doNumeric("deriv"));
   $("n-ode").addEventListener("click", () => doNumeric("ode"));
+  if ($("n-ode2")) $("n-ode2").addEventListener("click", () => doNumeric("ode2"));
+  if ($("n-odesys")) $("n-odesys").addEventListener("click", () => doNumeric("odesys"));
 
   if ($("algo-search")) $("algo-search").addEventListener("input", loadAlgos);
   if ($("algo-cat")) $("algo-cat").addEventListener("change", () => {
@@ -936,6 +919,10 @@
         focusLookup();
         return;
       }
+      if (n === "g" || n === "G") { ev.preventDefault(); showMode("graph"); return; }
+      if (n === "m" || n === "M") { ev.preventDefault(); showMode("matrix"); return; }
+      if (n === "d" || n === "D") { ev.preventDefault(); showMode("stats"); return; }
+      if (n === "t" || n === "T") { ev.preventDefault(); showMode("triangle"); return; }
     }
     if (isTypingField(ev.target)) return;
     if (ev.key === "/" || ev.key === "Slash") {
@@ -975,9 +962,11 @@
       return;
     }
     const rows = await get("/api/lookup?lang=" + encodeURIComponent(state.lang) + "&q=" + encodeURIComponent(q));
+    const fav = (state.favorites || []).map((f) => (f.kind || "") + ":" + (f.id || "")).join(",");
+    const found = await get("/api/search?lang=" + encodeURIComponent(state.lang) + "&q=" + encodeURIComponent(q) + "&fav=" + encodeURIComponent(fav));
     box.innerHTML = "";
     state.lookupPick = (rows && rows[0]) || null;
-    (rows || []).slice(0, 5).forEach((row, i) => {
+    (rows || []).slice(0, 4).forEach((row, i) => {
       const b = document.createElement("button");
       b.type = "button";
       b.textContent = (row.label + "  " + row.text + " " + (row.unit || "")).trim();
@@ -985,6 +974,34 @@
       b.addEventListener("click", () => {
         state.lookupPick = row;
         insertLookup();
+      });
+      box.appendChild(b);
+    });
+    ((found && found.hits) || []).slice(0, 6).forEach((hit) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.textContent = (hit.star ? "* " : "") + (hit.title || hit.id || "");
+      b.title = hit.kind || "";
+      b.addEventListener("click", () => {
+        if (hit.go) showMode(hit.go);
+        if (hit.kind === "cas" && hit.extra) insertScreen(hit.extra);
+        if (hit.kind === "circuit" && hit.extra && $("cir-text")) {
+          showMode("circuits");
+          $("cir-text").value = hit.extra;
+        }
+        if (hit.kind === "formula" && $("search")) {
+          $("search").value = hit.title || "";
+          loadFormulas();
+        }
+      });
+      b.addEventListener("contextmenu", (ev) => {
+        ev.preventDefault();
+        const key = { kind: hit.kind, id: hit.id };
+        const i = (state.favorites || []).findIndex((f) => f.kind === key.kind && f.id === key.id);
+        if (i >= 0) state.favorites.splice(i, 1);
+        else state.favorites.push(key);
+        try { localStorage.setItem("ultra-fav", JSON.stringify(state.favorites)); } catch (err) {}
+        runLookup();
       });
       box.appendChild(b);
     });
@@ -1092,6 +1109,122 @@
       }
     });
   }
+
+
+  async function runGraph(kind) {
+    const out = await post("/api/graph", {
+      kind: kind || "func",
+      funcs: ($("graph-text") && $("graph-text").value) || "",
+      data: ($("graph-text") && $("graph-text").value) || "",
+      circuit: ($("graph-text") && $("graph-text").value) || "",
+      xmin: ($("graph-xmin") && $("graph-xmin").value) || "-10",
+      xmax: ($("graph-xmax") && $("graph-xmax").value) || "10",
+      node: ($("graph-node") && $("graph-node").value) || "2",
+      lang: state.lang,
+      eng: state.eng,
+    });
+    if ($("graph-out")) $("graph-out").textContent = out.text || "0";
+    if ($("graph-svg")) $("graph-svg").innerHTML = out.svg || "";
+    state.lastLatex = out.latex || out.text || "";
+  }
+  if ($("graph-plot")) $("graph-plot").addEventListener("click", () => runGraph("func"));
+  if ($("graph-param")) $("graph-param").addEventListener("click", () => runGraph("param"));
+  if ($("graph-data")) $("graph-data").addEventListener("click", () => runGraph("data"));
+  if ($("graph-bode")) $("graph-bode").addEventListener("click", () => runGraph("bode"));
+
+  async function runMatrix(op) {
+    const out = await post("/api/matrix", {
+      op: op,
+      a: ($("mat-a") && $("mat-a").value) || "",
+      b: ($("mat-b") && $("mat-b").value) || "",
+      eng: state.eng,
+      lang: state.lang,
+    });
+    if ($("mat-out")) $("mat-out").textContent = out.text || "0";
+    showSteps("mat-steps", out.steps || []);
+    state.lastLatex = out.latex || out.text || "";
+  }
+  [["mat-det","det"],["mat-inv","inv"],["mat-t","t"],["mat-eig","eig"],["mat-rref","rref"],["mat-mul","mul"],["mat-solve","solve"],["mat-rank","rank"]].forEach((pair) => {
+    if ($(pair[0])) $(pair[0]).addEventListener("click", () => runMatrix(pair[1]));
+  });
+
+  async function runStats() {
+    const out = await post("/api/stats", { text: ($("stats-text") && $("stats-text").value) || "", lang: state.lang, eng: state.eng });
+    if ($("stats-out")) $("stats-out").textContent = out.text || "0";
+    if ($("stats-svg")) $("stats-svg").innerHTML = out.svg || "";
+    state.lastLatex = out.latex || out.text || "";
+  }
+  if ($("stats-run")) $("stats-run").addEventListener("click", runStats);
+
+  async function runTriangle() {
+    const values = {
+      a: ($("tri-a") && $("tri-a").value) || "",
+      b: ($("tri-b") && $("tri-b").value) || "",
+      c: ($("tri-c") && $("tri-c").value) || "",
+      A: ($("tri-A") && $("tri-A").value) || "",
+      B: ($("tri-B") && $("tri-B").value) || "",
+      C: ($("tri-C") && $("tri-C").value) || "",
+    };
+    const out = await post("/api/triangle", { values: values, lang: state.lang, eng: state.eng });
+    if ($("tri-out")) $("tri-out").textContent = out.text || "0";
+    showSteps("tri-steps", out.steps || []);
+    state.lastLatex = out.latex || out.text || "";
+  }
+  if ($("tri-solve")) $("tri-solve").addEventListener("click", runTriangle);
+
+  function sessionPayload() {
+    const hist = [];
+    if (history) Array.from(history.querySelectorAll("li")).forEach((li) => hist.push(li.textContent));
+    return {
+      lang: state.lang, angle: state.angle, eng: state.eng, history: hist.slice(0, 80),
+      circuit: ($("cir-text") && $("cir-text").value) || "",
+      problem: ($("prob-text") && $("prob-text").value) || "",
+      graph: ($("graph-text") && $("graph-text").value) || "",
+      matrix: ($("mat-a") && $("mat-a").value) || "",
+      stats: ($("stats-text") && $("stats-text").value) || "",
+      favorites: state.favorites || [],
+    };
+  }
+  function applySession(data) {
+    if (!data || typeof data !== "object") return;
+    if (data.lang && $("lang")) { $("lang").value = data.lang; state.lang = data.lang; }
+    if (data.circuit && $("cir-text")) $("cir-text").value = data.circuit;
+    if (data.problem && $("prob-text")) $("prob-text").value = data.problem;
+    if (data.graph && $("graph-text")) $("graph-text").value = data.graph;
+    if (data.matrix && $("mat-a")) $("mat-a").value = data.matrix;
+    if (data.stats && $("stats-text")) $("stats-text").value = data.stats;
+    if (Array.isArray(data.favorites)) state.favorites = data.favorites;
+    applyStrings();
+  }
+  async function saveSession() {
+    const data = sessionPayload();
+    try { localStorage.setItem("ultra-session", JSON.stringify(data)); } catch (err) {}
+    await post("/api/session", data);
+    if ($("kbd-hint")) $("kbd-hint").textContent = state.strings.session_saved || "Session saved.";
+  }
+  async function loadSession() {
+    let data = null;
+    try { data = JSON.parse(localStorage.getItem("ultra-session") || "null"); } catch (err) { data = null; }
+    if (!data) data = await get("/api/session");
+    applySession(data);
+    loadMeta();
+  }
+  if ($("btn-save")) $("btn-save").addEventListener("click", saveSession);
+  if ($("btn-load")) $("btn-load").addEventListener("click", loadSession);
+  async function copyLatex() {
+    const src = state.lastLatex || readExpr() || "0";
+    const out = await post("/api/latex", { text: src, exact: src });
+    const tex = out.latex || out.text || src;
+    try { await navigator.clipboard.writeText(tex); } catch (err) {}
+    if ($("kbd-hint")) $("kbd-hint").textContent = (state.strings.copy_latex || "LaTeX") + "  " + tex;
+  }
+  if ($("btn-latex")) $("btn-latex").addEventListener("click", copyLatex);
+  try {
+    const raw = localStorage.getItem("ultra-session");
+    if (raw) applySession(JSON.parse(raw));
+    const fav = localStorage.getItem("ultra-fav");
+    if (fav) state.favorites = JSON.parse(fav);
+  } catch (err) {}
 
   window.startApp = function () {
     if (window._appStarted) return;

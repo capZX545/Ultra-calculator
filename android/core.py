@@ -1,4 +1,5 @@
-"""Android calculation core. Independent of desktop and web."""
+"""Web calculation core. Functions only. Does not import desktop code."""
+
 from __future__ import annotations
 
 import json
@@ -276,6 +277,13 @@ def list_formulas(query="", lang="en", category=None):
 def eval_line(text, angle="DEG", eng=False, ans=0, lang="en"):
     raw = text
     try:
+        try:
+            import units as _units
+            u = _units.try_eval(text, eng=eng, lang=lang)
+            if u is not None:
+                return u
+        except Exception:
+            pass
         cleaned = fix_expr(text)
         if "=" in cleaned and cleaned.count("=") == 1:
             left, right = cleaned.split("=")
@@ -491,29 +499,12 @@ def n_root(func, a, b, eng=False):
         lo, hi = (a, b) if a <= b else (b, a)
         if lo == hi:
             hi = lo + 1
-        try:
-            from scipy.optimize import brentq, newton
+        from scipy.optimize import brentq, newton
 
-            try:
-                root = float(brentq(f, lo, hi))
-            except Exception:
-                root = float(newton(f, (lo + hi) / 2))
+        try:
+            root = float(brentq(f, lo, hi))
         except Exception:
-            a0, b0 = lo, hi
-            fa, fb = f(a0), f(b0)
-            if fa * fb > 0:
-                mid = (a0 + b0) / 2
-                return {"ok": True, "text": pretty(mid, eng)}
-            for _ in range(60):
-                mid = (a0 + b0) / 2
-                fm = f(mid)
-                if abs(fm) < 1e-12:
-                    break
-                if fa * fm <= 0:
-                    b0, fb = mid, fm
-                else:
-                    a0, fa = mid, fm
-            root = float(mid)
+            root = float(newton(f, (lo + hi) / 2))
         return {"ok": True, "text": pretty(root, eng)}
     except Exception:
         return {"ok": True, "text": "0"}
@@ -529,20 +520,12 @@ def n_integral(func, a, b, eng=False):
                 raise ValueError
             return {"ok": True, "text": pretty(_num(sp.N(exact)), eng), "exact": str(exact)}
         except Exception:
+            from scipy.integrate import quad
+
             def f(z):
                 return float(sp.N(expr.subs(x, z)))
 
-            try:
-                from scipy.integrate import quad
-
-                val, _ = quad(f, a, b, limit=80)
-            except Exception:
-                n = 200
-                h = (b - a) / n
-                s = 0.5 * (f(a) + f(b))
-                for i in range(1, n):
-                    s += f(a + i * h)
-                val = s * h
+            val, _ = quad(f, a, b, limit=80)
             return {"ok": True, "text": pretty(float(val), eng), "exact": ""}
     except Exception:
         return {"ok": True, "text": "0", "exact": ""}
@@ -582,5 +565,107 @@ def n_ode(func, x0, y0, x1, steps=40, eng=False):
                 break
             path.append([x, y])
         return {"ok": True, "text": pretty(y, eng), "path": path[-80:]}
+    except Exception:
+        return {"ok": True, "text": "0", "path": []}
+
+
+def _split_y0(raw):
+    text = str(raw or "0")
+    parts = []
+    for p in text.replace(";", ",").split(","):
+        p = p.strip()
+        if not p:
+            continue
+        n = fix_number(p)
+        parts.append(0.0 if n is None else float(n))
+    return parts or [0.0]
+
+
+def n_ode2(func, x0, y0, yp0, x1, steps=40, eng=False):
+    """y'' = f(x, y, yp)."""
+    try:
+        expr = to_sym(func)
+        xs, ys, ps = sp.symbols("x y yp")
+        n = max(4, min(int(steps or 40), 400))
+        h = (x1 - x0) / n
+        x = float(x0)
+        y = float(y0)
+        yp = float(yp0)
+        path = [[x, y, yp]]
+
+        def f(xv, yv, pv):
+            return float(sp.N(expr.subs({xs: xv, ys: yv, ps: pv})))
+
+        for _ in range(n):
+            k1y = yp
+            k1p = f(x, y, yp)
+            k2y = yp + h * k1p / 2
+            k2p = f(x + h / 2, y + h * k1y / 2, yp + h * k1p / 2)
+            k3y = yp + h * k2p / 2
+            k3p = f(x + h / 2, y + h * k2y / 2, yp + h * k2p / 2)
+            k4y = yp + h * k3p
+            k4p = f(x + h, y + h * k3y, yp + h * k3p)
+            y = y + h * (k1y + 2 * k2y + 2 * k3y + k4y) / 6
+            yp = yp + h * (k1p + 2 * k2p + 2 * k3p + k4p) / 6
+            x = x + h
+            if not math.isfinite(y):
+                y = 0.0
+                break
+            path.append([x, y, yp])
+        return {"ok": True, "text": pretty(y, eng) + "   yp=" + pretty(yp, eng), "path": path[-80:]}
+    except Exception:
+        return {"ok": True, "text": "0", "path": []}
+
+
+def n_odesys(func, x0, y0s, x1, steps=40, eng=False):
+    """Several first-order ODEs. func lines y1'=... ; y2'=...  Variables y1,y2,... and x."""
+    try:
+        lines = [ln.strip() for ln in str(func or "").replace(";", "\n").splitlines() if ln.strip()]
+        if not lines:
+            return {"ok": True, "text": "0", "path": []}
+        y0 = _split_y0(y0s)
+        m = len(lines)
+        while len(y0) < m:
+            y0.append(0.0)
+        y0 = y0[:m]
+        exprs = [to_sym(ln) for ln in lines]
+        n = max(4, min(int(steps or 40), 400))
+        h = (x1 - x0) / n
+        x = float(x0)
+        y = [float(v) for v in y0]
+        path = [[x] + list(y)]
+        names = [sp.Symbol("x")] + [sp.Symbol(f"y{i+1}") for i in range(m)]
+        # also allow y for y1
+        extra = [sp.Symbol("y")]
+
+        def fvec(xv, yv):
+            mapping = {names[0]: xv}
+            for i in range(m):
+                mapping[names[i + 1]] = yv[i]
+            mapping[extra[0]] = yv[0]
+            out = []
+            for expr in exprs:
+                try:
+                    out.append(float(sp.N(expr.subs(mapping))))
+                except Exception:
+                    out.append(0.0)
+            return out
+
+        def add(a, b, s):
+            return [a[i] + s * b[i] for i in range(m)]
+
+        for _ in range(n):
+            k1 = fvec(x, y)
+            k2 = fvec(x + h / 2, add(y, k1, h / 2))
+            k3 = fvec(x + h / 2, add(y, k2, h / 2))
+            k4 = fvec(x + h, add(y, k3, h))
+            y = [y[i] + h * (k1[i] + 2 * k2[i] + 2 * k3[i] + k4[i]) / 6 for i in range(m)]
+            x = x + h
+            if any(not math.isfinite(v) for v in y):
+                y = [0.0] * m
+                break
+            path.append([x] + list(y))
+        text = "  ".join(f"y{i+1}={pretty(y[i], eng)}" for i in range(m))
+        return {"ok": True, "text": text, "path": path[-80:]}
     except Exception:
         return {"ok": True, "text": "0", "path": []}

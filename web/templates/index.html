@@ -20,6 +20,10 @@
       <button data-mode="sources" class="tab" id="tab-sources" title="Alt+8">Sources</button>
       <button data-mode="problems" class="tab" id="tab-problems" title="Alt+9">Problems</button>
       <button data-mode="circuits" class="tab" id="tab-circuits" title="Alt+0">Circuits</button>
+      <button data-mode="graph" class="tab" id="tab-graph" title="Alt+G">Graph</button>
+      <button data-mode="matrix" class="tab" id="tab-matrix" title="Alt+M">Matrix</button>
+      <button data-mode="stats" class="tab" id="tab-stats" title="Alt+D">Stats</button>
+      <button data-mode="triangle" class="tab" id="tab-triangle" title="Alt+T">Triangle</button>
     </nav>
     <label class="lang">
       <span id="lang-label">Language</span>
@@ -36,6 +40,9 @@
     <input id="lookup-q" type="search" autocomplete="off" placeholder="H2O, Fe, Fe-56, R, g">
     <div id="lookup-hits"></div>
     <button id="lookup-insert" type="button">Insert</button>
+    <button id="btn-save" type="button">Save</button>
+    <button id="btn-load" type="button">Load</button>
+    <button id="btn-latex" type="button">LaTeX</button>
   </div>
 
   <main>
@@ -104,12 +111,15 @@
       <label>a / x0 <input id="n-a" value="0"></label>
       <label>b / x1 <input id="n-b" value="1"></label>
       <label>y0 <input id="n-y0" value="1"></label>
+      <label>y'(x0) <input id="n-yp0" value="0"></label>
       <label>steps <input id="n-steps" value="40"></label>
       <div class="row">
         <button id="n-root" type="button">Root</button>
         <button id="n-int" type="button">Integral</button>
         <button id="n-der" type="button">Derivative</button>
         <button id="n-ode" type="button">ODE</button>
+        <button id="n-ode2" type="button">ODE 2nd</button>
+        <button id="n-odesys" type="button">ODE system</button>
       </div>
       <pre id="n-out"></pre>
     </section>
@@ -183,7 +193,77 @@ R2 2 0 2k</textarea>
       <pre id="cir-out"></pre>
       <pre id="cir-steps"></pre>
     </section>
+
+    <section id="view-graph" class="view">
+      <p class="hint" id="graph-hint"></p>
+      <textarea id="graph-text">sin(x)
+x**2/10</textarea>
+      <div class="row">
+        <label id="graph-xmin-label">xmin <input id="graph-xmin" value="-10"></label>
+        <label id="graph-xmax-label">xmax <input id="graph-xmax" value="10"></label>
+        <label>node <input id="graph-node" value="2"></label>
+        <button id="graph-plot" class="accent" type="button">Plot</button>
+        <button id="graph-param" type="button">Parametric</button>
+        <button id="graph-data" type="button">Data</button>
+        <button id="graph-bode" type="button">Bode</button>
+      </div>
+      <div id="graph-svg" class="svg-box"></div>
+      <pre id="graph-out"></pre>
+    </section>
+
+    <section id="view-matrix" class="view">
+      <p class="hint" id="matrix-hint"></p>
+      <label>A</label>
+      <textarea id="mat-a">1, 2
+3, 4</textarea>
+      <label>B / b</label>
+      <textarea id="mat-b">5
+6</textarea>
+      <div class="row">
+        <button id="mat-det" class="accent" type="button">det</button>
+        <button id="mat-inv" type="button">Inverse</button>
+        <button id="mat-t" type="button">Transpose</button>
+        <button id="mat-eig" type="button">Eigen</button>
+        <button id="mat-rref" type="button">RREF</button>
+        <button id="mat-mul" type="button">Multiply</button>
+        <button id="mat-solve" type="button">Solve Ax=b</button>
+        <button id="mat-rank" type="button">rank</button>
+      </div>
+      <pre id="mat-out"></pre>
+      <pre id="mat-steps"></pre>
+    </section>
+
+    <section id="view-stats" class="view">
+      <p class="hint" id="stats-hint"></p>
+      <textarea id="stats-text">1
+2
+3
+4
+5</textarea>
+      <div class="row">
+        <button id="stats-run" class="accent" type="button">Run</button>
+      </div>
+      <div id="stats-svg" class="svg-box"></div>
+      <pre id="stats-out"></pre>
+    </section>
+
+    <section id="view-triangle" class="view">
+      <p class="hint" id="tri-hint"></p>
+      <div class="row tri-fields">
+        <label>a <input id="tri-a" value="3"></label>
+        <label>b <input id="tri-b" value="4"></label>
+        <label>c <input id="tri-c" value="5"></label>
+        <label>A <input id="tri-A" value=""></label>
+        <label>B <input id="tri-B" value=""></label>
+        <label>C <input id="tri-C" value=""></label>
+      </div>
+      <div class="row">
+        <button id="tri-solve" class="accent" type="button">Solve</button>
+      </div>
+      <pre id="tri-out"></pre>
+      <pre id="tri-steps"></pre>
+    </section>
   </main>
-  <script src="/static/ui.js?v=cir1"></script>
+  <script src="/static/ui.js?v=tools1"></script>
 </body>
 </html>

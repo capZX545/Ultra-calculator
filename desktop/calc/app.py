@@ -17,6 +17,13 @@ from .circuits import run as run_circuit
 from .problems import run as run_problem
 from .sanitize import clean_number
 from . import teach
+from . import graphs
+from . import matrixlab
+from . import statsdata
+from . import triangle
+from . import searchall
+from . import sessionstore
+from . import latexout
 
 
 BG = "#1c1f24"
@@ -90,9 +97,19 @@ class UltraDesktop(tk.Tk):
         self.btn_src = tk.Button(top, command=lambda: self._set_mode("sources"))
         self.btn_prob = tk.Button(top, command=lambda: self._set_mode("problems"))
         self.btn_cir = tk.Button(top, command=lambda: self._set_mode("circuits"))
-        for b in (self.btn_calc, self.btn_form, self.btn_poly, self.btn_num, self.btn_algo, self.btn_chem, self.btn_el, self.btn_src, self.btn_prob, self.btn_cir):
+        self.btn_graph = tk.Button(top, command=lambda: self._set_mode("graph"))
+        self.btn_matrix = tk.Button(top, command=lambda: self._set_mode("matrix"))
+        self.btn_stats = tk.Button(top, command=lambda: self._set_mode("stats"))
+        self.btn_tri = tk.Button(top, command=lambda: self._set_mode("triangle"))
+        for b in (self.btn_calc, self.btn_form, self.btn_poly, self.btn_num, self.btn_algo, self.btn_chem, self.btn_el, self.btn_src, self.btn_prob, self.btn_cir, self.btn_graph, self.btn_matrix, self.btn_stats, self.btn_tri):
             self._paint_btn(b, BTN)
             b.pack(side="left", padx=3)
+        self.btn_save = tk.Button(top, command=self._save_session)
+        self.btn_load = tk.Button(top, command=self._load_session)
+        self.btn_latex = tk.Button(top, command=self._copy_latex)
+        for b in (self.btn_save, self.btn_load, self.btn_latex):
+            self._paint_btn(b, BTN2)
+            b.pack(side="right", padx=2)
         self.lang_box = ttk.Combobox(top, values=["en", "fa", "fi"], width=6, state="readonly")
         self.lang_box.set("en")
         self.lang_box.bind("<<ComboboxSelected>>", self._on_lang)
@@ -103,7 +120,7 @@ class UltraDesktop(tk.Tk):
         self._build_lookup()
 
         self.frames = {}
-        for name in ("calc", "formulas", "poly", "numeric", "algo", "chem", "elements", "sources", "problems", "circuits"):
+        for name in ("calc", "formulas", "poly", "numeric", "algo", "chem", "elements", "sources", "problems", "circuits", "graph", "matrix", "stats", "triangle"):
             fr = tk.Frame(self, bg=BG)
             self.frames[name] = fr
         self._build_calc(self.frames["calc"])
@@ -116,6 +133,10 @@ class UltraDesktop(tk.Tk):
         self._build_sources(self.frames["sources"])
         self._build_problems(self.frames["problems"])
         self._build_circuits(self.frames["circuits"])
+        self._build_graph(self.frames["graph"])
+        self._build_matrix(self.frames["matrix"])
+        self._build_stats(self.frames["stats"])
+        self._build_triangle(self.frames["triangle"])
         self._bind_keys()
         self._set_mode("calc")
 
@@ -149,6 +170,10 @@ class UltraDesktop(tk.Tk):
             "sources": self.btn_src,
             "problems": self.btn_prob,
             "circuits": self.btn_cir,
+            "graph": self.btn_graph,
+            "matrix": self.btn_matrix,
+            "stats": self.btn_stats,
+            "triangle": self.btn_tri,
         }
         for key, btn in mapping.items():
             self._paint_btn(btn, ACCENT if key == mode else BTN, "#1c1f24" if key == mode else FG)
@@ -193,11 +218,32 @@ class UltraDesktop(tk.Tk):
             self.prob_hint.configure(text=self.tr("problem_hint"))
         if hasattr(self, "btn_cir"):
             self.btn_cir.configure(text=self.tr("mode_circuits"))
+        if hasattr(self, "btn_graph"):
+            self.btn_graph.configure(text=self.tr("mode_graph"))
+            self.btn_matrix.configure(text=self.tr("mode_matrix"))
+            self.btn_stats.configure(text=self.tr("mode_stats"))
+            self.btn_tri.configure(text=self.tr("mode_triangle"))
+        if hasattr(self, "btn_save"):
+            self.btn_save.configure(text=self.tr("save"))
+            self.btn_load.configure(text=self.tr("load"))
+            self.btn_latex.configure(text=self.tr("latex"))
+        if hasattr(self, "n_ode2_btn"):
+            self.n_ode2_btn.configure(text=self.tr("ode2"))
+            self.n_sys_btn.configure(text=self.tr("odesys"))
         if hasattr(self, "cir_solve_btn"):
             self.cir_solve_btn.configure(text=self.tr("solve"))
             self.cir_inv_btn.configure(text=self.tr("inverse"))
             self.cir_freq_lbl.configure(text=self.tr("circuit_freq"))
             self.cir_hint.configure(text=self.tr("circuit_hint"))
+        if hasattr(self, "graph_hint"):
+            self.graph_hint.configure(text=self.tr("graph_hint"))
+            self.matrix_hint.configure(text=self.tr("matrix_hint"))
+            self.stats_hint.configure(text=self.tr("stats_hint"))
+            self.tri_hint.configure(text=self.tr("triangle_hint"))
+            if hasattr(self, "stats_run_btn"):
+                self.stats_run_btn.configure(text=self.tr("run"))
+            if hasattr(self, "tri_solve_btn"):
+                self.tri_solve_btn.configure(text=self.tr("solve"))
         self.lang_lbl.configure(text=self.tr("language"))
         if hasattr(self, "lookup_lbl"):
             self.lookup_lbl.configure(text=self.tr("lookup"))
@@ -313,6 +359,14 @@ class UltraDesktop(tk.Tk):
             self.bind_all(f"<Control-Key-{i}>", lambda e, m=mode: self._hot_mode(m))
         self.bind_all("<Alt-Key-0>", lambda e: self._hot_mode("circuits"))
         self.bind_all("<Control-Key-0>", lambda e: self._hot_mode("circuits"))
+        self.bind_all("<Alt-g>", lambda e: self._hot_mode("graph"))
+        self.bind_all("<Alt-G>", lambda e: self._hot_mode("graph"))
+        self.bind_all("<Alt-m>", lambda e: self._hot_mode("matrix"))
+        self.bind_all("<Alt-M>", lambda e: self._hot_mode("matrix"))
+        self.bind_all("<Alt-d>", lambda e: self._hot_mode("stats"))
+        self.bind_all("<Alt-D>", lambda e: self._hot_mode("stats"))
+        self.bind_all("<Alt-t>", lambda e: self._hot_mode("triangle"))
+        self.bind_all("<Alt-T>", lambda e: self._hot_mode("triangle"))
         self.bind_all("<Alt-l>", self._hot_lookup)
         self.bind_all("<Alt-L>", self._hot_lookup)
         self.bind_all("<Control-l>", self._hot_lookup)
@@ -350,6 +404,14 @@ class UltraDesktop(tk.Tk):
             self.prob_text.focus_set()
         elif mode == "circuits" and hasattr(self, "cir_text"):
             self.cir_text.focus_set()
+        elif mode == "graph" and hasattr(self, "graph_text"):
+            self.graph_text.focus_set()
+        elif mode == "matrix" and hasattr(self, "mat_a"):
+            self.mat_a.focus_set()
+        elif mode == "stats" and hasattr(self, "stats_text"):
+            self.stats_text.focus_set()
+        elif mode == "triangle" and hasattr(self, "tri_a"):
+            self.tri_a.focus_set()
 
     def _is_typing_widget(self, w) -> bool:
         return isinstance(w, (tk.Entry, tk.Text, ttk.Entry, ttk.Combobox))
@@ -1010,9 +1072,12 @@ class UltraDesktop(tk.Tk):
         self.n_int_btn = tk.Button(btns, command=self._do_int)
         self.n_diff_btn = tk.Button(btns, command=self._do_diff)
         self.n_ode_btn = tk.Button(btns, command=self._do_ode)
-        for b in (self.n_root_btn, self.n_int_btn, self.n_diff_btn, self.n_ode_btn):
+        self.n_ode2_btn = tk.Button(btns, command=self._do_ode2)
+        self.n_sys_btn = tk.Button(btns, command=self._do_odesys)
+        for b in (self.n_root_btn, self.n_int_btn, self.n_diff_btn, self.n_ode_btn, self.n_ode2_btn, self.n_sys_btn):
             self._paint_btn(b, BTN2)
             b.pack(side="left", padx=4)
+        self.n_yp0 = self._labeled_entry(form, "y'(x0)", "0")
         self.n_out = tk.Text(root, bg=PANEL, fg=FG, relief="flat", height=16, font=("Consolas", 11))
         self.n_out.pack(fill="both", expand=True)
 
@@ -1376,6 +1441,194 @@ class UltraDesktop(tk.Tk):
             out = {"text": "0", "steps": []}
         self.cir_result.configure(text=out.get("text") or "0")
         self._show_steps(self.cir_steps, out.get("steps") or [])
+
+    def _do_ode2(self) -> None:
+        x0 = clean_number(self.n_a.get(), 0.0) or 0.0
+        x1 = clean_number(self.n_b.get(), 1.0) or 1.0
+        y0 = clean_number(self.n_y0.get(), 0.0) or 0.0
+        yp0 = clean_number(self.n_yp0.get(), 0.0) or 0.0
+        steps = int(clean_number(self.n_steps.get(), 40.0) or 40)
+        out = self.engine.numeric_ode2(self.n_func.get(), x0, y0, yp0, x1, steps)
+        self.n_out.delete("1.0", "end")
+        self.n_out.insert("1.0", out.get("text") or "0")
+        self.last_latex = out.get("text") or "0"
+
+    def _do_odesys(self) -> None:
+        x0 = clean_number(self.n_a.get(), 0.0) or 0.0
+        x1 = clean_number(self.n_b.get(), 1.0) or 1.0
+        steps = int(clean_number(self.n_steps.get(), 40.0) or 40)
+        out = self.engine.numeric_odesys(self.n_func.get(), x0, self.n_y0.get(), x1, steps)
+        self.n_out.delete("1.0", "end")
+        self.n_out.insert("1.0", out.get("text") or "0")
+        self.last_latex = out.get("text") or "0"
+
+    def _build_graph(self, root: tk.Frame) -> None:
+        self.graph_hint = tk.Label(root, bg=BG, fg=MUTED, wraplength=900, justify="left")
+        self.graph_hint.pack(fill="x")
+        self.graph_text = tk.Text(root, bg="#11141a", fg=FG, insertbackground=FG, relief="flat", height=6, font=("Consolas", 13))
+        self.graph_text.pack(fill="x", pady=4)
+        self.graph_text.insert("1.0", "sin(x)\nx**2/10")
+        row = tk.Frame(root, bg=BG)
+        row.pack(fill="x")
+        self.graph_xmin = tk.Entry(row, width=8, bg="#11141a", fg=FG, insertbackground=FG, relief="flat")
+        self.graph_xmax = tk.Entry(row, width=8, bg="#11141a", fg=FG, insertbackground=FG, relief="flat")
+        self.graph_xmin.insert(0, "-10")
+        self.graph_xmax.insert(0, "10")
+        self.graph_xmin.pack(side="left", padx=4)
+        self.graph_xmax.pack(side="left", padx=4)
+        for lab, kind in (("plot", "func"), ("parametric", "param"), ("data", "data"), ("bode", "bode")):
+            b = tk.Button(row, command=lambda k=kind: self._run_graph(k))
+            self._paint_btn(b, ACCENT if kind == "func" else BTN2, "#1c1f24" if kind == "func" else FG)
+            b.configure(text=self.tr(lab) if lab != "plot" else self.tr("plot"))
+            b.pack(side="left", padx=3)
+            setattr(self, f"graph_{kind}_btn", b)
+        self.graph_svg = tk.Label(root, bg="#11141a")
+        self.graph_svg.pack(fill="both", expand=True)
+        self.graph_out = tk.Label(root, bg=PANEL, fg=FG, font=("Consolas", 12), wraplength=900, justify="left", anchor="w")
+        self.graph_out.pack(fill="x")
+
+    def _run_graph(self, kind: str) -> None:
+        raw = self.graph_text.get("1.0", "end").strip()
+        out = graphs.run(kind, raw, xmin=self.graph_xmin.get(), xmax=self.graph_xmax.get(), data=raw, circuit=raw, lang=self.lang, eng=self.engine.eng)
+        self.graph_out.configure(text=out.get("text") or "0")
+        self.last_latex = out.get("latex") or out.get("text") or ""
+        svg = out.get("svg") or ""
+        if svg:
+            try:
+                import tempfile
+                from pathlib import Path
+                p = Path(tempfile.gettempdir()) / "ultra_plot.svg"
+                p.write_text(svg, encoding="utf-8")
+                img = tk.PhotoImage(file=str(p))
+                self.graph_svg.configure(image=img)
+                self.graph_svg.image = img
+            except Exception:
+                self.graph_out.configure(text=(out.get("text") or "0") + "\n(SVG shown as text)\n" + svg[:400])
+
+    def _build_matrix(self, root: tk.Frame) -> None:
+        self.matrix_hint = tk.Label(root, bg=BG, fg=MUTED, wraplength=900, justify="left")
+        self.matrix_hint.pack(fill="x")
+        self.mat_a = tk.Text(root, bg="#11141a", fg=FG, insertbackground=FG, relief="flat", height=5, font=("Consolas", 13))
+        self.mat_a.pack(fill="x", pady=4)
+        self.mat_a.insert("1.0", "1, 2\n3, 4")
+        self.mat_b = tk.Text(root, bg="#11141a", fg=FG, insertbackground=FG, relief="flat", height=4, font=("Consolas", 13))
+        self.mat_b.pack(fill="x", pady=4)
+        self.mat_b.insert("1.0", "5\n6")
+        row = tk.Frame(root, bg=BG)
+        row.pack(fill="x")
+        for lab, op in (("det", "det"), ("invm", "inv"), ("trans", "t"), ("eig", "eig"), ("rref", "rref"), ("mul", "mul"), ("solve_axb", "solve")):
+            b = tk.Button(row, command=lambda o=op: self._run_matrix(o))
+            self._paint_btn(b, ACCENT if op == "det" else BTN2, "#1c1f24" if op == "det" else FG)
+            b.configure(text=self.tr(lab))
+            b.pack(side="left", padx=3)
+        self.mat_out = tk.Text(root, bg=PANEL, fg=FG, relief="flat", height=12, font=("Consolas", 12))
+        self.mat_out.pack(fill="both", expand=True, pady=8)
+
+    def _run_matrix(self, op: str) -> None:
+        out = matrixlab.run(op, self.mat_a.get("1.0", "end"), self.mat_b.get("1.0", "end"), eng=self.engine.eng, lang=self.lang)
+        self.mat_out.delete("1.0", "end")
+        self.mat_out.insert("1.0", (out.get("text") or "0") + "\n\n" + "\n".join(out.get("steps") or []))
+        self.last_latex = out.get("latex") or out.get("text") or ""
+
+    def _build_stats(self, root: tk.Frame) -> None:
+        self.stats_hint = tk.Label(root, bg=BG, fg=MUTED, wraplength=900, justify="left")
+        self.stats_hint.pack(fill="x")
+        self.stats_text = tk.Text(root, bg="#11141a", fg=FG, insertbackground=FG, relief="flat", height=10, font=("Consolas", 13))
+        self.stats_text.pack(fill="x", pady=4)
+        self.stats_text.insert("1.0", "1\n2\n3\n4\n5")
+        b = tk.Button(root, command=self._run_stats)
+        self._paint_btn(b, ACCENT, "#1c1f24")
+        b.configure(text=self.tr("run"))
+        b.pack(anchor="w")
+        self.stats_run_btn = b
+        self.stats_out = tk.Text(root, bg=PANEL, fg=FG, relief="flat", height=12, font=("Consolas", 12))
+        self.stats_out.pack(fill="both", expand=True, pady=8)
+
+    def _run_stats(self) -> None:
+        out = statsdata.run(self.stats_text.get("1.0", "end"), eng=self.engine.eng, lang=self.lang)
+        self.stats_out.delete("1.0", "end")
+        self.stats_out.insert("1.0", out.get("text") or "0")
+        self.last_latex = out.get("latex") or out.get("text") or ""
+
+    def _build_triangle(self, root: tk.Frame) -> None:
+        self.tri_hint = tk.Label(root, bg=BG, fg=MUTED, wraplength=900, justify="left")
+        self.tri_hint.pack(fill="x")
+        row = tk.Frame(root, bg=BG)
+        row.pack(fill="x", pady=8)
+        self.tri_vars = {}
+        for name in ("a", "b", "c", "A", "B", "C"):
+            box = tk.Frame(row, bg=BG)
+            box.pack(side="left", padx=6)
+            tk.Label(box, text=name, bg=BG, fg=MUTED).pack()
+            ent = tk.Entry(box, width=8, bg="#11141a", fg=FG, insertbackground=FG, relief="flat", justify="center")
+            if name == "a":
+                ent.insert(0, "3")
+            elif name == "b":
+                ent.insert(0, "4")
+            elif name == "c":
+                ent.insert(0, "5")
+            ent.pack()
+            ent.bind("<Return>", lambda e: self._run_triangle() or "break")
+            self.tri_vars[name] = ent
+        self.tri_a = self.tri_vars["a"]
+        b = tk.Button(root, command=self._run_triangle)
+        self._paint_btn(b, ACCENT, "#1c1f24")
+        b.configure(text=self.tr("solve"))
+        b.pack(anchor="w")
+        self.tri_solve_btn = b
+        self.tri_out = tk.Text(root, bg=PANEL, fg=FG, relief="flat", height=12, font=("Consolas", 12))
+        self.tri_out.pack(fill="both", expand=True, pady=8)
+
+    def _run_triangle(self) -> None:
+        values = {k: e.get() for k, e in self.tri_vars.items()}
+        out = triangle.run(values, lang=self.lang, eng=self.engine.eng)
+        self.tri_out.delete("1.0", "end")
+        self.tri_out.insert("1.0", (out.get("text") or "0") + "\n\n" + "\n".join(out.get("steps") or []))
+        self.last_latex = out.get("latex") or out.get("text") or ""
+
+    def _save_session(self) -> None:
+        data = {
+            "lang": self.lang,
+            "circuit": self.cir_text.get("1.0", "end").strip() if hasattr(self, "cir_text") else "",
+            "problem": self.prob_text.get("1.0", "end").strip() if hasattr(self, "prob_text") else "",
+            "graph": self.graph_text.get("1.0", "end").strip() if hasattr(self, "graph_text") else "",
+            "matrix": self.mat_a.get("1.0", "end").strip() if hasattr(self, "mat_a") else "",
+            "stats": self.stats_text.get("1.0", "end").strip() if hasattr(self, "stats_text") else "",
+        }
+        out = sessionstore.save(data)
+        if hasattr(self, "status"):
+            self.status.configure(text=self.tr("session_saved") + " " + (out.get("text") or ""))
+
+    def _load_session(self) -> None:
+        data = sessionstore.load()
+        if not data:
+            return
+        if data.get("circuit") and hasattr(self, "cir_text"):
+            self.cir_text.delete("1.0", "end")
+            self.cir_text.insert("1.0", data["circuit"])
+        if data.get("problem") and hasattr(self, "prob_text"):
+            self.prob_text.delete("1.0", "end")
+            self.prob_text.insert("1.0", data["problem"])
+        if data.get("graph") and hasattr(self, "graph_text"):
+            self.graph_text.delete("1.0", "end")
+            self.graph_text.insert("1.0", data["graph"])
+        if data.get("matrix") and hasattr(self, "mat_a"):
+            self.mat_a.delete("1.0", "end")
+            self.mat_a.insert("1.0", data["matrix"])
+        if data.get("stats") and hasattr(self, "stats_text"):
+            self.stats_text.delete("1.0", "end")
+            self.stats_text.insert("1.0", data["stats"])
+
+    def _copy_latex(self) -> None:
+        src = getattr(self, "last_latex", "") or (self._read_display() if hasattr(self, "display") else "0")
+        tex = latexout.of_result(src, src)
+        try:
+            self.clipboard_clear()
+            self.clipboard_append(tex)
+        except Exception:
+            pass
+        if hasattr(self, "status"):
+            self.status.configure(text=tex[:80])
 
     def _build_sources(self, root: tk.Frame) -> None:
         box = tk.Text(root, bg=PANEL, fg=FG, relief="flat", font=("Segoe UI", 11), wrap="word")

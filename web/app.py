@@ -13,6 +13,13 @@ import core
 import lookup
 import circuits
 import problems
+import graphs
+import matrixlab
+import statsdata
+import triangle
+import searchall
+import sessionstore
+import latexout
 import teach
 from strings import UI, ui_text
 
@@ -125,7 +132,6 @@ def api_numeric():
     func = body.get("func", "x")
     a = float(body.get("a") or 0)
     b = float(body.get("b") or 1)
-    y0 = float(body.get("y0") or 0)
     steps = int(body.get("steps") or 40)
     eng = bool(body.get("eng"))
     lang = body.get("lang", "en")
@@ -137,7 +143,18 @@ def api_numeric():
         out = core.n_deriv(func, a, eng)
         out["steps"] = teach.steps_numeric(lang, "deriv", a, None, None, out.get("text") or "0")
         return jsonify(out)
+    if kind == "ode2":
+        y0 = float(body.get("y0") or 0)
+        yp0 = float(body.get("yp0") or 0)
+        out = core.n_ode2(func, a, y0, yp0, b, steps, eng)
+        out["steps"] = teach.steps_numeric(lang, "ode", a, b, y0, out.get("text") or "0")
+        return jsonify(out)
+    if kind == "odesys":
+        out = core.n_odesys(func, a, body.get("y0") or "1, 0", b, steps, eng)
+        out["steps"] = teach.steps_numeric(lang, "ode", a, b, body.get("y0"), out.get("text") or "0")
+        return jsonify(out)
     if kind == "ode":
+        y0 = float(body.get("y0") or 0)
         out = core.n_ode(func, a, y0, b, steps, eng)
         out["steps"] = teach.steps_numeric(lang, "ode", a, b, y0, out.get("text") or "0")
         return jsonify(out)
@@ -248,6 +265,82 @@ def api_circuit():
             eng=bool(body.get("eng")),
         )
     )
+
+
+@app.post("/api/graph")
+def api_graph():
+    body = request.get_json(silent=True) or {}
+    return jsonify(
+        graphs.run(
+            kind=body.get("kind") or "func",
+            funcs=body.get("funcs") or body.get("text") or "sin(x)",
+            xmin=str(body.get("xmin") or "-10"),
+            xmax=str(body.get("xmax") or "10"),
+            tmin=str(body.get("tmin") or "0"),
+            tmax=str(body.get("tmax") or "6.2832"),
+            data=body.get("data") or "",
+            circuit=body.get("circuit") or "",
+            node=str(body.get("node") or "2"),
+            fmin=str(body.get("fmin") or "1"),
+            fmax=str(body.get("fmax") or "1e5"),
+            n=str(body.get("n") or "200"),
+            lang=body.get("lang") or "en",
+            eng=bool(body.get("eng")),
+        )
+    )
+
+
+@app.post("/api/matrix")
+def api_matrix():
+    body = request.get_json(silent=True) or {}
+    return jsonify(
+        matrixlab.run(
+            body.get("op") or "det",
+            body.get("a") or "",
+            body.get("b") or "",
+            eng=bool(body.get("eng")),
+            lang=body.get("lang") or "en",
+        )
+    )
+
+
+@app.post("/api/stats")
+def api_stats():
+    body = request.get_json(silent=True) or {}
+    return jsonify(statsdata.run(body.get("text") or "", eng=bool(body.get("eng")), lang=body.get("lang") or "en"))
+
+
+@app.post("/api/triangle")
+def api_triangle():
+    body = request.get_json(silent=True) or {}
+    return jsonify(triangle.run(body.get("values") or {}, lang=body.get("lang") or "en", eng=bool(body.get("eng"))))
+
+
+@app.get("/api/search")
+def api_search():
+    q = request.args.get("q", "")
+    lang = request.args.get("lang", "en")
+    fav = request.args.get("fav", "")
+    favorites = [{"kind": p.split(":", 1)[0], "id": p.split(":", 1)[1]} for p in fav.split(",") if ":" in p]
+    return jsonify(searchall.search(q, lang, favorites))
+
+
+@app.post("/api/latex")
+def api_latex():
+    body = request.get_json(silent=True) or {}
+    shown = latexout.of_result(body.get("text") or "", body.get("exact") or "")
+    return jsonify({"ok": True, "text": shown, "latex": shown})
+
+
+@app.get("/api/session")
+def api_session_get():
+    return jsonify(sessionstore.load())
+
+
+@app.post("/api/session")
+def api_session_post():
+    body = request.get_json(silent=True) or {}
+    return jsonify(sessionstore.save(body))
 
 
 @app.post("/api/problem")

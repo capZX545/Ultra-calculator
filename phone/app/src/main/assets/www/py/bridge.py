@@ -10,6 +10,13 @@ import core
 import lookup
 import circuits
 import problems
+import graphs
+import matrixlab
+import statsdata
+import triangle
+import searchall
+import sessionstore
+import latexout
 import strings
 import teach
 
@@ -181,4 +188,40 @@ def _route(path, query, body):
             lang=body.get("lang") or "en",
             eng=bool(body.get("eng")),
         )
+    if path == "/api/graph":
+        return graphs.run(
+            kind=body.get("kind") or "func",
+            funcs=body.get("funcs") or body.get("text") or "sin(x)",
+            xmin=str(body.get("xmin") or "-10"),
+            xmax=str(body.get("xmax") or "10"),
+            tmin=str(body.get("tmin") or "0"),
+            tmax=str(body.get("tmax") or "6.2832"),
+            data=body.get("data") or "",
+            circuit=body.get("circuit") or "",
+            node=str(body.get("node") or "2"),
+            fmin=str(body.get("fmin") or "1"),
+            fmax=str(body.get("fmax") or "1e5"),
+            n=str(body.get("n") or "200"),
+            lang=body.get("lang") or "en",
+            eng=bool(body.get("eng")),
+        )
+    if path == "/api/matrix":
+        return matrixlab.run(body.get("op") or "det", body.get("a") or "", body.get("b") or "", eng=bool(body.get("eng")), lang=body.get("lang") or "en")
+    if path == "/api/stats":
+        return statsdata.run(body.get("text") or "", eng=bool(body.get("eng")), lang=body.get("lang") or "en")
+    if path == "/api/triangle":
+        return triangle.run(body.get("values") or {}, lang=body.get("lang") or "en", eng=bool(body.get("eng")))
+    if path == "/api/search":
+        q = _q(query, "q")
+        lang = _q(query, "lang", "en")
+        fav = _q(query, "fav")
+        favorites = [{"kind": p.split(":", 1)[0], "id": p.split(":", 1)[1]} for p in fav.split(",") if ":" in p]
+        return searchall.search(q, lang, favorites)
+    if path == "/api/latex":
+        shown = latexout.of_result(body.get("text") or "", body.get("exact") or "")
+        return {"ok": True, "text": shown, "latex": shown}
+    if path == "/api/session":
+        if body:
+            return sessionstore.save(body)
+        return sessionstore.load()
     return {}

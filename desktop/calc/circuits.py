@@ -1,4 +1,4 @@
-"""Circuit reader and solver for the desktop app. Independent copy."""
+"""Circuit reader and solver for the web app. Independent copy."""
 
 from __future__ import annotations
 
@@ -173,14 +173,15 @@ class _Net:
         self.find = []
         self.thev = None
         self.eq = None
+        self.tran = None
 
     def add(self, kind, name, n1, n2, val, extra=None):
-        self.elems.append({"k": kind, "name": name, "n1": n1, "n2": n2, "val": val, "extra": extra})
+        self.elems.append({"k": kind, "name": name, "n1": n1, "n2": n2, "val": val, "extra": extra or {}})
 
 
 def _parse_net(text: str) -> _Net:
     net = _Net()
-    counts = {"R": 0, "C": 0, "L": 0, "V": 0, "I": 0}
+    counts = {}
     for raw in text.splitlines():
         line = raw.strip()
         if not line or line.startswith("*") or line.startswith("#"):
@@ -200,23 +201,77 @@ def _parse_net(text: str) -> _Net:
                 net.thev = (parts[1], parts[2])
             elif cmd in {"eq", "want"}:
                 net.eq = " ".join(parts[1:])
+            elif cmd in {"tran", "transient"} and len(parts) >= 3:
+                net.tran = (_num(parts[1], 1e-6) or 1e-6, _num(parts[2], 1e-3) or 1e-3)
             continue
         parts = line.replace(",", " ").split()
         if len(parts) < 3:
             continue
         head = parts[0]
         kind = head[0].upper()
-        if kind not in "RCLVI" or (len(head) > 1 and not head[1].isalnum() and head[1] not in "?!_"):
-            if head.upper() in {"R", "C", "L", "V", "I"}:
+        allowed = "RCLVIEFGHDQM"
+        if kind not in allowed or (len(head) > 1 and not head[1].isalnum() and head[1] not in "?!_"):
+            if head.upper() in set(allowed):
                 kind = head.upper()
             else:
                 continue
-        name = head if len(head) > 1 else f"{kind}{counts.get(kind, 0)+1}"
         counts[kind] = counts.get(kind, 0) + 1
+        name = head if len(head) > 1 else f"{kind}{counts[kind]}"
+        extra = {}
+        if kind in "EG" and len(parts) >= 6:
+            n1, n2 = parts[1], parts[2]
+            extra = {"nc1": parts[3], "nc2": parts[4]}
+            val = parts[5]
+            net.add(kind, name, n1, n2, val, extra)
+            continue
+        if kind in "FH" and len(parts) >= 5:
+            n1, n2 = parts[1], parts[2]
+            extra = {"vname": parts[3]}
+            val = parts[4]
+            net.add(kind, name, n1, n2, val, extra)
+            continue
+        if kind == "D" and len(parts) >= 3:
+            n1, n2 = parts[1], parts[2]
+            val = parts[3] if len(parts) > 3 else "1e-14"
+            if len(parts) > 4:
+                extra["n"] = parts[4]
+            net.add(kind, name, n1, n2, val, extra)
+            continue
+        if kind == "Q" and len(parts) >= 4:
+            nc, nb, ne = parts[1], parts[2], parts[3]
+            extra = {"n3": ne, "model": "npn", "beta": "100"}
+            rest = [p.lower() for p in parts[4:]]
+            for p in rest:
+                if p in {"npn", "pnp"}:
+                    extra["model"] = p
+                elif p.startswith("beta") or p[0].isdigit() or p[0] in "?":
+                    if "beta=" in p:
+                        extra["beta"] = p.split("=", 1)[1]
+                    elif extra.get("beta") == "100" and _num(p) is not None:
+                        extra["beta"] = p
+            val = extra.get("beta") or "100"
+            net.add(kind, name, nc, nb, val, extra)
+            continue
+        if kind == "M" and len(parts) >= 4:
+            nd, ng, ns = parts[1], parts[2], parts[3]
+            extra = {"n3": ns, "model": "nmos", "kp": "2e-4", "vt": "0.7"}
+            rest = parts[4:]
+            for p in rest:
+                pl = p.lower()
+                if pl in {"nmos", "pmos"}:
+                    extra["model"] = pl
+                elif pl.startswith("kp="):
+                    extra["kp"] = p.split("=", 1)[1]
+                elif pl.startswith("vt="):
+                    extra["vt"] = p.split("=", 1)[1]
+                elif _num(p) is not None and extra["kp"] == "2e-4":
+                    extra["kp"] = p
+            net.add(kind, name, nd, ng, extra.get("kp"), extra)
+            continue
         if len(parts) < 4:
             continue
         n1, n2, val = parts[1], parts[2], parts[3]
-        extra = parts[4] if len(parts) > 4 else None
+        extra = {"raw": parts[4]} if len(parts) > 4 else {}
         net.add(kind, name, n1, n2, val, extra)
     return net
 
@@ -239,9 +294,13 @@ def _idx(names, n):
         return None
 
 
-def _solve_mna(net: _Net, freq: float, subst: dict | None = None):
+def _vsrc_list(net: _Net):
+    return [e for e in net.elems if e["k"] in {"V", "E", "H"}]
+
+
+def _solve_mna(net: _Net, freq: float, subst: dict | None = None, vprev=None, iprev=None, h=None, vnl=None):
     names = _nodes(net)
-    vsources = [e for e in net.elems if e["k"] == "V"]
+    vsources = _vsrc_list(net)
     n_n = len(names)
     n_v = len(vsources)
     n = n_n + n_v
@@ -250,6 +309,9 @@ def _solve_mna(net: _Net, freq: float, subst: dict | None = None):
     A = [[0j] * n for _ in range(n)]
     b = [0j] * n
     w = 2 * math.pi * float(freq or 0.0)
+    vprev = vprev or {}
+    iprev = iprev or {}
+    vnl = vnl or {}
 
     def stamp_g(i, j, g):
         if i is not None:
@@ -260,10 +322,18 @@ def _solve_mna(net: _Net, freq: float, subst: dict | None = None):
             A[i][j] -= g
             A[j][i] -= g
 
+    def vn_guess(nm):
+        if _is_gnd(nm):
+            return 0.0
+        return float(vnl.get(nm, 0.0).real if isinstance(vnl.get(nm, 0.0), complex) else vnl.get(nm, 0.0))
+
+    vindex = {e["name"]: k for k, e in enumerate(vsources)}
+
     for e in net.elems:
         i = _idx(names, e["n1"])
         j = _idx(names, e["n2"])
         raw = subst.get(e["name"], e["val"]) if subst else e["val"]
+        extra = e.get("extra") if isinstance(e.get("extra"), dict) else {}
         if e["k"] == "R":
             r = _num(raw)
             if r is None or abs(r) < 1e-18:
@@ -271,11 +341,27 @@ def _solve_mna(net: _Net, freq: float, subst: dict | None = None):
             stamp_g(i, j, 1.0 / r)
         elif e["k"] == "C":
             c = _num(raw) or 0.0
-            if freq and w:
+            if h and h > 0:
+                geq = c / h
+                stamp_g(i, j, geq)
+                vcap = vprev.get(e["name"], 0.0)
+                if i is not None:
+                    b[i] += geq * vcap
+                if j is not None:
+                    b[j] -= geq * vcap
+            elif freq and w:
                 stamp_g(i, j, 1j * w * c)
         elif e["k"] == "L":
             L = _num(raw) or 0.0
-            if freq and w and abs(L) > 1e-18:
+            if h and h > 0 and abs(L) > 1e-18:
+                geq = h / L
+                stamp_g(i, j, geq)
+                il = iprev.get(e["name"], 0.0)
+                if i is not None:
+                    b[i] -= il
+                if j is not None:
+                    b[j] += il
+            elif freq and w and abs(L) > 1e-18:
                 stamp_g(i, j, 1.0 / (1j * w * L))
             else:
                 stamp_g(i, j, 1e9)
@@ -285,12 +371,119 @@ def _solve_mna(net: _Net, freq: float, subst: dict | None = None):
                 b[i] -= cur
             if j is not None:
                 b[j] += cur
-        elif e["k"] == "V":
-            pass
+        elif e["k"] == "G":
+            gm = _num(raw) or 0.0
+            c1 = _idx(names, extra.get("nc1"))
+            c2 = _idx(names, extra.get("nc2"))
+            if i is not None:
+                if c1 is not None:
+                    A[i][c1] += gm
+                if c2 is not None:
+                    A[i][c2] -= gm
+            if j is not None:
+                if c1 is not None:
+                    A[j][c1] -= gm
+                if c2 is not None:
+                    A[j][c2] += gm
+        elif e["k"] == "F":
+            gain = _num(raw) or 0.0
+            ctrl = extra.get("vname")
+            pk = vindex.get(ctrl)
+            if pk is None:
+                continue
+            p = n_n + pk
+            if i is not None:
+                A[i][p] += gain
+            if j is not None:
+                A[j][p] -= gain
+        elif e["k"] == "D":
+            Is = abs(_num(raw) or 1e-14) or 1e-14
+            niss = _num(extra.get("n"), 1.0) or 1.0
+            Vt = 0.026 * niss
+            vd = vn_guess(e["n1"]) - vn_guess(e["n2"])
+            vd = max(-1.5, min(0.9, vd))
+            ex = math.exp(vd / Vt)
+            Id = Is * (ex - 1.0)
+            Geq = Is / Vt * ex
+            Ieq = Id - Geq * vd
+            stamp_g(i, j, Geq)
+            if i is not None:
+                b[i] -= Ieq
+            if j is not None:
+                b[j] += Ieq
+        elif e["k"] == "Q":
+            beta = abs(_num(e["val"]) or 100.0) or 100.0
+            Is = 1e-14
+            model = (extra.get("model") or "npn").lower()
+            nc, nb, ne = e["n1"], e["n2"], extra.get("n3") or "0"
+            ic, ib, ie = _idx(names, nc), _idx(names, nb), _idx(names, ne)
+            vbe = vn_guess(nb) - vn_guess(ne)
+            if model == "pnp":
+                vbe = -vbe
+            vbe = max(-1.5, min(0.9, vbe))
+            Vt = 0.026
+            ex = math.exp(vbe / Vt)
+            Ic = Is * (ex - 1.0)
+            gm = Is / Vt * ex
+            gpi = gm / beta
+            Ib = Ic / beta
+            Ieq_c = Ic - gm * vbe
+            Ieq_b = Ib - gpi * vbe
+            sign = 1.0 if model != "pnp" else -1.0
+            stamp_g(ib, ie, gpi)
+            if ic is not None:
+                if ib is not None:
+                    A[ic][ib] += gm * sign
+                if ie is not None:
+                    A[ic][ie] -= gm * sign
+                b[ic] -= Ieq_c * sign
+            if ib is not None:
+                b[ib] -= Ieq_b * sign
+            if ie is not None:
+                b[ie] += (Ieq_c + Ieq_b) * sign
+        elif e["k"] == "M":
+            Kp = abs(_num(extra.get("kp") or e["val"]) or 2e-4) or 2e-4
+            Vt0 = _num(extra.get("vt"), 0.7) or 0.7
+            model = (extra.get("model") or "nmos").lower()
+            nd, ng, ns = e["n1"], e["n2"], extra.get("n3") or "0"
+            idn, ign, isn = _idx(names, nd), _idx(names, ng), _idx(names, ns)
+            vgs = vn_guess(ng) - vn_guess(ns)
+            vds = vn_guess(nd) - vn_guess(ns)
+            if model == "pmos":
+                vgs, vds = -vgs, -vds
+            Id = 0.0
+            gm = 0.0
+            gds = 0.0
+            if vgs > Vt0:
+                von = vgs - Vt0
+                if vds < von:
+                    Id = Kp * (von * vds - 0.5 * vds * vds)
+                    gm = Kp * vds
+                    gds = Kp * (von - vds)
+                else:
+                    Id = 0.5 * Kp * von * von
+                    gm = Kp * von
+                    gds = 0.0
+            Ieq = Id - gm * vgs - gds * vds
+            sign = 1.0 if model != "pmos" else -1.0
+            stamp_g(idn, isn, gds)
+            if idn is not None:
+                if ign is not None:
+                    A[idn][ign] += gm * sign
+                if isn is not None:
+                    A[idn][isn] -= gm * sign
+                b[idn] -= Ieq * sign
+            if isn is not None:
+                if ign is not None:
+                    A[isn][ign] -= gm * sign
+                if isn is not None:
+                    A[isn][isn] += gm * sign
+                b[isn] += Ieq * sign
     for k, e in enumerate(vsources):
         i = _idx(names, e["n1"])
         j = _idx(names, e["n2"])
         p = n_n + k
+        extra = e.get("extra") if isinstance(e.get("extra"), dict) else {}
         if i is not None:
             A[i][p] += 1
             A[p][i] += 1
@@ -298,7 +491,22 @@ def _solve_mna(net: _Net, freq: float, subst: dict | None = None):
             A[j][p] -= 1
             A[p][j] -= 1
         raw = subst.get(e["name"], e["val"]) if subst else e["val"]
-        b[p] += _num(raw) or 0.0
+        if e["k"] == "V":
+            b[p] += _num(raw) or 0.0
+        elif e["k"] == "E":
+            gain = _num(raw) or 0.0
+            c1 = _idx(names, extra.get("nc1"))
+            c2 = _idx(names, extra.get("nc2"))
+            if c1 is not None:
+                A[p][c1] -= gain
+            if c2 is not None:
+                A[p][c2] += gain
+        elif e["k"] == "H":
+            r = _num(raw) or 0.0
+            ctrl = extra.get("vname")
+            pk = vindex.get(ctrl)
+            if pk is not None:
+                A[p][n_n + pk] -= r
     x = _ge(A, b)
     return x, names, vsources
 
@@ -545,19 +753,110 @@ def _inverse(net: _Net, freq: float, lang: str, eng: bool) -> dict:
     return {"ok": True, "text": shown, "detail": "", "steps": _steps(lang, "inv", name=unknown["name"], text=shown)}
 
 
+def _has_nl(net: _Net) -> bool:
+    return any(e["k"] in {"D", "Q", "M"} for e in net.elems)
+
+
+def _solve_nl(net: _Net, freq: float):
+    names = _nodes(net)
+    vnl = {n: 0.0 for n in names}
+    x = None
+    vs = _vsrc_list(net)
+    for _ in range(50):
+        x, names, vs = _solve_mna(net, freq, vnl=vnl)
+        if x is None:
+            return None, names, vs
+        mx = 0.0
+        nxt = {}
+        for i, n in enumerate(names):
+            val = x[i]
+            old = vnl.get(n, 0.0)
+            try:
+                nv = float(val.real if isinstance(val, complex) else val)
+                ov = float(old.real if isinstance(old, complex) else old)
+            except Exception:
+                nv, ov = 0.0, 0.0
+            nxt[n] = ov + 0.6 * (nv - ov) if abs(nv - ov) > 0.5 else nv
+            mx = max(mx, abs(nv - ov))
+        vnl = nxt
+        if mx < 1e-7:
+            break
+    return x, names, vs
+
+
+def _tran(net: _Net, tstep: float, tstop: float, lang: str, eng: bool) -> dict:
+    tstep = max(float(tstep or 1e-6), 1e-12)
+    tstop = max(float(tstop or 1e-3), tstep)
+    n = int(min(800, max(8, round(tstop / tstep))))
+    h = tstop / n
+    vprev = {}
+    iprev = {}
+    names = _nodes(net)
+    path = []
+    last_x = None
+    last_vs = []
+    t = 0.0
+    for k in range(n + 1):
+        vnl = {n: 0.0 for n in names}
+        x = None
+        vs = last_vs
+        for _ in range(12 if _has_nl(net) else 1):
+            x, names, vs = _solve_mna(net, 0.0, vprev=vprev, iprev=iprev, h=h, vnl=vnl)
+            if x is None:
+                break
+            if not _has_nl(net):
+                break
+            nxt = {}
+            for i, nm in enumerate(names):
+                val = x[i]
+                nxt[nm] = float(val.real if isinstance(val, complex) else val)
+            vnl = nxt
+        if x is None:
+            break
+        last_x, last_vs = x, vs
+        vmap = {names[i]: x[i] for i in range(len(names))}
+        for e in net.elems:
+            if e["k"] == "C":
+                va = 0j if _is_gnd(e["n1"]) else vmap.get(e["n1"], 0j)
+                vb = 0j if _is_gnd(e["n2"]) else vmap.get(e["n2"], 0j)
+                vprev[e["name"]] = (va - vb).real if isinstance(va - vb, complex) else float(va - vb)
+            elif e["k"] == "L":
+                va = 0j if _is_gnd(e["n1"]) else vmap.get(e["n1"], 0j)
+                vb = 0j if _is_gnd(e["n2"]) else vmap.get(e["n2"], 0j)
+                L = _num(e["val"]) or 0.0
+                if abs(L) > 1e-18:
+                    iprev[e["name"]] = iprev.get(e["name"], 0.0) + h / L * float((va - vb).real if isinstance(va - vb, complex) else va - vb)
+        row = [t] + [float((x[i].real if isinstance(x[i], complex) else x[i])) for i in range(len(names))]
+        path.append(row)
+        t += h
+    if last_x is None:
+        return _fail(lang)
+    out = _format_solution(net, last_x, names, last_vs, 0.0, lang, eng)
+    bits = []
+    for row in path[:: max(1, len(path) // 12)][-12:]:
+        vs = " ".join(f"{names[i]}={_pretty(row[i+1], 'V', eng)}" for i in range(len(names)))
+        bits.append(f"t={_pretty(row[0], 's', eng)}  {vs}")
+    extra = "\n".join(bits)
+    out["text"] = (out.get("text") or "0") + " | tran " + extra.replace("\n", " ; ")
+    out["path"] = path[-80:]
+    out["nodes"] = names
+    out["steps"] = (out.get("steps") or []) + _steps(lang, "kind", what=f"transient to {tstop} s, {n} steps")
+    return out
+
+
 def run(raw: str, mode: str = "solve", freq: str = "", lang: str = "en", eng: bool = False) -> dict:
     try:
         text = unicodedata.normalize("NFKC", str(raw or "")).strip().translate(_DIGIT)
         if not text:
             return _fail(lang)
         sc = _shortcuts(text, lang, eng)
-        if sc is not None and not re.match(r"^[RCLVI]\w*\s+\S+\s+\S+", text, re.I | re.M):
+        if sc is not None and not re.match(r"^[RCLVIEFGHDQM]\w*\s+\S+\s+\S+", text, re.I | re.M):
             return sc
         net = _parse_net(text)
         f = _num(freq, None)
         if f is None:
             f = net.freq or 0.0
-        if (mode or "").lower().startswith("inv") or any(e["val"] in {"?", "x", "X"} for e in net.elems):
+        if (mode or "").lower().startswith("inv") or any(str(e["val"]) in {"?", "x", "X"} for e in net.elems):
             if net.eq:
                 return _inverse(net, f, lang, eng)
         if net.thev:
@@ -566,7 +865,13 @@ def run(raw: str, mode: str = "solve", freq: str = "", lang: str = "en", eng: bo
             if sc is not None:
                 return sc
             return _fail(lang)
-        x, names, vs = _solve_mna(net, f)
+        if net.tran or (mode or "").lower().startswith("tran"):
+            ts, tf = net.tran or (1e-6, 1e-3)
+            return _tran(net, ts, tf, lang, eng)
+        if _has_nl(net) and not f:
+            x, names, vs = _solve_nl(net, f)
+        else:
+            x, names, vs = _solve_mna(net, f)
         out = _format_solution(net, x, names, vs, f, lang, eng)
         out["steps"] = _steps(lang, "read", raw=text.splitlines()[0] if text else "") + (out.get("steps") or [])
         return out
