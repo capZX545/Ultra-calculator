@@ -6,8 +6,8 @@ import re
 import unicodedata
 
 import sympy as sp
-from sympy.parsing.sympy_parser import parse_expr, standard_transformations, implicit_multiplication_application
 from sympy.matrices import Matrix
+from sympy.parsing.sympy_parser import parse_expr, standard_transformations, implicit_multiplication_application
 
 from .sanitize import clean_expression
 
@@ -168,7 +168,6 @@ def solve_problem(raw: str, lang: str = "en", unknown: str = "x", eng: bool = Fa
         if not text:
             return _fail(lang)
         u = (unknown or "x").strip() or "x"
-        # several equations
         parts = [p.strip() for p in re.split(r"[;\n]+", text) if p.strip() and "=" in p]
         if len(parts) >= 2:
             eqs = []
@@ -244,7 +243,7 @@ def inverse_problem(raw: str, lang: str = "en", unknown: str = "x", at: str = ""
     try:
         text = _prep(raw)
         if not text:
-            return _fail(lang)
+            return _fail(lang, "none")
         u = (unknown or "x").strip() or "x"
         mat = _matrix(text)
         if mat is not None and mat.rows == mat.cols and mat.rows >= 2:
@@ -255,7 +254,7 @@ def inverse_problem(raw: str, lang: str = "en", unknown: str = "x", at: str = ""
                 steps = _steps(lang, "typed", raw=raw) + _steps(lang, "mat") + _steps(lang, "inv_out", text=shown)
                 return {"ok": True, "kind": "matrix", "text": shown, "solutions": [shown], "steps": steps}
             except Exception:
-                return _fail(lang)
+                return _fail(lang, "none")
         if "=" in text:
             left, right = text.split("=", 1)
             if re.fullmatch(r"[A-Za-z]\(\s*[A-Za-z]\s*\)", left.strip()) or left.strip() in {u, "y", "f"}:
@@ -282,17 +281,17 @@ def inverse_problem(raw: str, lang: str = "en", unknown: str = "x", at: str = ""
             try:
                 val = float(sp.N(expr))
                 if abs(val) < 1e-15:
-                    return _fail(lang)
+                    return _fail(lang, "none")
                 shown = _pretty(1.0 / val, eng)
                 steps = _steps(lang, "typed", raw=raw) + _steps(lang, "inv_out", text=shown)
                 return {"ok": True, "kind": "reciprocal", "text": shown, "solutions": [shown], "steps": steps}
             except Exception:
-                return _fail(lang)
+                return _fail(lang, "none")
         x = sp.Symbol(u) if sp.Symbol(u) in expr.free_symbols else sorted(expr.free_symbols, key=str)[0]
         y = sp.Dummy("y")
         sols = list(sp.solve(sp.Eq(y, expr), x) or [])
         if not sols:
-            return _fail(lang)
+            return _fail(lang, "none")
         invs = [s.subs(y, x) for s in sols]
         shown_fun = ", ".join(str(sp.simplify(s)) for s in invs)
         steps = _steps(lang, "typed", raw=raw) + _steps(lang, "inv_fun", fun=str(expr)) + _steps(lang, "inv_out", text=shown_fun)
@@ -313,7 +312,7 @@ def inverse_problem(raw: str, lang: str = "en", unknown: str = "x", at: str = ""
                 }
         return {"ok": True, "kind": "inverse", "text": shown_fun, "solutions": [str(sp.simplify(s)) for s in invs], "steps": steps}
     except Exception:
-        return _fail(lang)
+        return _fail(lang, "none")
 
 
 def run(raw: str, mode: str = "solve", unknown: str = "x", at: str = "", lang: str = "en", eng: bool = False) -> dict:

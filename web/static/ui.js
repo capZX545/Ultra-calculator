@@ -833,7 +833,7 @@
   document.addEventListener("keydown", (ev) => {
     if (ev.altKey && !ev.ctrlKey && !ev.metaKey) {
       const n = ev.key;
-      if (n >= "1" && n <= "8") {
+      if (n >= "1" && n <= "9") {
         ev.preventDefault();
         showMode(MODES[Number(n) - 1]);
         return;

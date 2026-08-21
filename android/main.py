@@ -268,6 +268,7 @@ class UltraAndroid(App):
             "chem": "chem",
             "elements": "elements",
             "sources": "sources",
+            "problems": "problems",
         }
         self.sm.current = mapping.get(mode, "calc")
         self._paint_nav()
