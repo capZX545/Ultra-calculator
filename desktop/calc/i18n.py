@@ -80,7 +80,11 @@ STRINGS = {
         "lookup_hint": "H2O, Fe, Fe-56, R, g",
         "insert": "Insert",
         "lookup_need_field": "Click the field you want, then insert.",
-        "kbd_hint": "Type in the screen. Enter calculates. Esc clears. Alt+1 to Alt+8 switch pages. Alt+L or / opens lookup. You can type summation(k,k,1,100), diff(x**3,x), integrate(x**2,x,0,1).",
+        "kbd_hint": "Type in the screen. Enter calculates. Esc clears. Alt+1 to Alt+9 switch pages. Alt+L or / opens lookup. You can type summation(k,k,1,100), diff(x**3,x), integrate(x**2,x,0,1).",
+        "mode_problems": "Problems",
+        "inverse": "Inverse",
+        "at_value": "at",
+        "problem_hint": "Type an equation such as 2*x+3=11 or x**2-5*x+6=0. Solve finds the unknown. Inverse finds the inverse function. Fill at to evaluate the inverse at that value. Matrices: 1, 2; 3, 4.",
     },
     "fa": {
         "app_title": "ماشین حساب اولترا",
@@ -159,7 +163,11 @@ STRINGS = {
         "lookup_hint": "H2O, Fe, Fe-56, R, g",
         "insert": "بگذار",
         "lookup_need_field": "اول خانه را انتخاب کن، بعد بگذار.",
-        "kbd_hint": "توی صفحه تایپ کن. Enter حساب می‌کند. Esc پاک می‌کند. Alt+1 تا Alt+8 صفحه را عوض می‌کند. می‌توانی بنویسی summation(k,k,1,100) یا diff(x**3,x).",
+        "kbd_hint": "توی صفحه تایپ کن. Enter حساب می‌کند. Esc پاک می‌کند. Alt+1 تا Alt+9 صفحه را عوض می‌کند. می‌توانی بنویسی summation(k,k,1,100) یا diff(x**3,x).",
+        "mode_problems": "مسائل",
+        "inverse": "حل عکس",
+        "at_value": "در",
+        "problem_hint": "معادله را بنویس، مثلاً 2*x+3=11 یا x**2-5*x+6=0. حل، مجهول را پیدا می‌کند. حل عکس، تابع وارون را می‌دهد. اگر «در» را پر کنی، وارون را در همان نقطه حساب می‌کند. ماتریس: 1, 2; 3, 4.",
     },
     "fi": {
         "app_title": "Ultra-laskin",
@@ -237,7 +245,11 @@ STRINGS = {
         "lookup_hint": "H2O, Fe, Fe-56, R, g",
         "insert": "Lisaa",
         "lookup_need_field": "Napsauta kenttaa, sitten Lisaa.",
-        "kbd_hint": "Kirjoita nayttoon. Enter laskee. Esc tyhjentaa. Alt+1–8 vaihtaa sivua. Voit kirjoittaa summation(k,k,1,100) tai diff(x**3,x).",
+        "kbd_hint": "Kirjoita nayttoon. Enter laskee. Esc tyhjentaa. Alt+1–9 vaihtaa sivua. Voit kirjoittaa summation(k,k,1,100) tai diff(x**3,x).",
+        "mode_problems": "Tehtavat",
+        "inverse": "Kaanteinen",
+        "at_value": "kohdassa",
+        "problem_hint": "Kirjoita yhtalo, esim. 2*x+3=11. Ratkaise etsii tuntemattoman. Kaanteinen etsii kaanteisfunktion. Jos taytat kohdan, se lasketaan siina pisteessa. Matriisit: 1, 2; 3, 4.",
     },
 }
 

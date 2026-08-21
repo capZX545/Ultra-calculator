@@ -13,6 +13,7 @@ from .chemtools import balance_equation, find_element, list_elements, molar_mass
 from .engine import DesktopEngine
 from .i18n import t
 from .lookup import lookup
+from .problems import run as run_problem
 from .sanitize import clean_number
 from . import teach
 
@@ -86,7 +87,8 @@ class UltraDesktop(tk.Tk):
         self.btn_chem = tk.Button(top, command=lambda: self._set_mode("chem"))
         self.btn_el = tk.Button(top, command=lambda: self._set_mode("elements"))
         self.btn_src = tk.Button(top, command=lambda: self._set_mode("sources"))
-        for b in (self.btn_calc, self.btn_form, self.btn_poly, self.btn_num, self.btn_algo, self.btn_chem, self.btn_el, self.btn_src):
+        self.btn_prob = tk.Button(top, command=lambda: self._set_mode("problems"))
+        for b in (self.btn_calc, self.btn_form, self.btn_poly, self.btn_num, self.btn_algo, self.btn_chem, self.btn_el, self.btn_src, self.btn_prob):
             self._paint_btn(b, BTN)
             b.pack(side="left", padx=3)
         self.lang_box = ttk.Combobox(top, values=["en", "fa", "fi"], width=6, state="readonly")
@@ -99,7 +101,7 @@ class UltraDesktop(tk.Tk):
         self._build_lookup()
 
         self.frames = {}
-        for name in ("calc", "formulas", "poly", "numeric", "algo", "chem", "elements", "sources"):
+        for name in ("calc", "formulas", "poly", "numeric", "algo", "chem", "elements", "sources", "problems"):
             fr = tk.Frame(self, bg=BG)
             self.frames[name] = fr
         self._build_calc(self.frames["calc"])
@@ -110,6 +112,7 @@ class UltraDesktop(tk.Tk):
         self._build_chem(self.frames["chem"])
         self._build_elements(self.frames["elements"])
         self._build_sources(self.frames["sources"])
+        self._build_problems(self.frames["problems"])
         self._bind_keys()
         self._set_mode("calc")
 
@@ -141,6 +144,7 @@ class UltraDesktop(tk.Tk):
             "chem": self.btn_chem,
             "elements": self.btn_el,
             "sources": self.btn_src,
+            "problems": self.btn_prob,
         }
         for key, btn in mapping.items():
             self._paint_btn(btn, ACCENT if key == mode else BTN, "#1c1f24" if key == mode else FG)
@@ -175,6 +179,14 @@ class UltraDesktop(tk.Tk):
         self.btn_chem.configure(text=self.tr("mode_chem"))
         self.btn_el.configure(text=self.tr("mode_elements"))
         self.btn_src.configure(text=self.tr("mode_sources"))
+        if hasattr(self, "btn_prob"):
+            self.btn_prob.configure(text=self.tr("mode_problems"))
+        if hasattr(self, "prob_solve_btn"):
+            self.prob_solve_btn.configure(text=self.tr("solve"))
+            self.prob_inv_btn.configure(text=self.tr("inverse"))
+            self.prob_unk_lbl.configure(text=self.tr("unknown"))
+            self.prob_at_lbl.configure(text=self.tr("at_value"))
+            self.prob_hint.configure(text=self.tr("problem_hint"))
         self.lang_lbl.configure(text=self.tr("language"))
         if hasattr(self, "lookup_lbl"):
             self.lookup_lbl.configure(text=self.tr("lookup"))
@@ -284,7 +296,7 @@ class UltraDesktop(tk.Tk):
             self.expr = self.display.get()
 
     def _bind_keys(self) -> None:
-        modes = ["calc", "formulas", "poly", "numeric", "algo", "chem", "elements", "sources"]
+        modes = ["calc", "formulas", "poly", "numeric", "algo", "chem", "elements", "sources", "problems"]
         for i, mode in enumerate(modes, 1):
             self.bind_all(f"<Alt-Key-{i}>", lambda e, m=mode: self._hot_mode(m))
             self.bind_all(f"<Control-Key-{i}>", lambda e, m=mode: self._hot_mode(m))
@@ -321,6 +333,8 @@ class UltraDesktop(tk.Tk):
             self.chem_eq.focus_set()
         elif mode == "elements" and hasattr(self, "el_q"):
             self.el_q.focus_set()
+        elif mode == "problems" and hasattr(self, "prob_text"):
+            self.prob_text.focus_set()
 
     def _is_typing_widget(self, w) -> bool:
         return isinstance(w, (tk.Entry, tk.Text, ttk.Entry, ttk.Combobox))
@@ -1247,6 +1261,72 @@ class UltraDesktop(tk.Tk):
             lines.append(f"  {el['symbol']}-{iso['A']}   {iso['mass']} u   {ab}  {extra}")
         self.el_out.delete("1.0", "end")
         self.el_out.insert("1.0", "\n".join(lines))
+
+    def _build_problems(self, root: tk.Frame) -> None:
+        self.prob_hint = tk.Label(
+            root,
+            bg=BG,
+            fg=MUTED,
+            wraplength=900,
+            justify="left",
+            font=("Segoe UI", 10),
+        )
+        self.prob_hint.pack(fill="x", pady=(0, 6))
+        self.prob_text = tk.Text(
+            root,
+            bg="#11141a",
+            fg=FG,
+            insertbackground=FG,
+            relief="flat",
+            height=6,
+            font=("Consolas", 14),
+            wrap="word",
+        )
+        self.prob_text.pack(fill="x", pady=4)
+        self.prob_text.insert("1.0", "2*x + 3 = 11")
+        row = tk.Frame(root, bg=BG)
+        row.pack(fill="x", pady=6)
+        self.prob_unk_lbl = tk.Label(row, bg=BG, fg=MUTED)
+        self.prob_unk_lbl.pack(side="left")
+        self.prob_unk = tk.Entry(row, width=8, bg="#11141a", fg=FG, insertbackground=FG, relief="flat")
+        self.prob_unk.insert(0, "x")
+        self.prob_unk.pack(side="left", padx=6)
+        self.prob_at_lbl = tk.Label(row, bg=BG, fg=MUTED)
+        self.prob_at_lbl.pack(side="left", padx=(12, 0))
+        self.prob_at = tk.Entry(row, width=10, bg="#11141a", fg=FG, insertbackground=FG, relief="flat")
+        self.prob_at.pack(side="left", padx=6)
+        self.prob_solve_btn = tk.Button(row, command=lambda: self._run_problem("solve"))
+        self.prob_inv_btn = tk.Button(row, command=lambda: self._run_problem("inverse"))
+        self._paint_btn(self.prob_solve_btn, ACCENT, "#1c1f24")
+        self._paint_btn(self.prob_inv_btn, BTN2)
+        self.prob_solve_btn.pack(side="left", padx=6)
+        self.prob_inv_btn.pack(side="left", padx=4)
+        self.prob_result = tk.Label(
+            root,
+            bg=PANEL,
+            fg=FG,
+            font=("Consolas", 16),
+            wraplength=900,
+            justify="left",
+            anchor="w",
+        )
+        self.prob_result.pack(fill="x", pady=8, ipady=10)
+        self.prob_steps = tk.Text(root, bg=PANEL, fg=FG, relief="flat", height=14, font=("Segoe UI", 10), wrap="word")
+        self.prob_steps.pack(fill="both", expand=True)
+        self.prob_text.bind("<Control-Return>", lambda e: self._run_problem("solve") or "break")
+        self.prob_unk.bind("<Return>", lambda e: self._run_problem("solve") or "break")
+        self.prob_at.bind("<Return>", lambda e: self._run_problem("inverse") or "break")
+
+    def _run_problem(self, mode: str) -> None:
+        try:
+            raw = self.prob_text.get("1.0", "end").strip()
+            unknown = (self.prob_unk.get() or "x").strip() or "x"
+            at = (self.prob_at.get() or "").strip()
+            out = run_problem(raw, mode=mode, unknown=unknown, at=at, lang=self.lang, eng=self.engine.eng)
+        except Exception:
+            out = {"text": "0", "steps": []}
+        self.prob_result.configure(text=out.get("text") or "0")
+        self._show_steps(self.prob_steps, out.get("steps") or [])
 
     def _build_sources(self, root: tk.Frame) -> None:
         box = tk.Text(root, bg=PANEL, fg=FG, relief="flat", font=("Segoe UI", 11), wrap="word")

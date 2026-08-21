@@ -24,9 +24,10 @@ Needs numpy, scipy, sympy.
 - **Chemistry** — balance an equation and compute molar mass
 - **Elements** — all 118 elements, atomic number, mass, important isotopes
 - **Sources** — where the formulas come from, and what was not copied
+- **Problems** — type an equation and solve it, or find the inverse function / inverse at a value / inverse of a matrix
 
 ## Keyboard and lookup
 
-Alt+1 to Alt+8 switch pages (also Ctrl+1 to Ctrl+8). Alt+L or Ctrl+L opens lookup. `/` does the same when you are not already in a field. Type `H2O`, `Fe-56`, or `R` in the lookup bar and insert the number into the last field you clicked.
+Alt+1 to Alt+9 switch pages (also Ctrl+1 to Ctrl+9). Alt+L or Ctrl+L opens lookup. `/` does the same when you are not already in a field. Type `H2O`, `Fe-56`, or `R` in the lookup bar and insert the number into the last field you clicked.
 
 Interface languages: English, Persian, Finnish. Bad input does not crash the program.

@@ -47,5 +47,6 @@ The APK lands in `bin/`. Copy it to the phone and install it. The first build do
 - **Chemistry** — balance and molar mass.
 - **Elements** — all 118, with isotopes.
 - **Sources** — where the formulas come from.
+- **Problems** — type an equation and solve it, or find the inverse function / inverse at a value / inverse of a matrix.
 
 Lookup sits under the top buttons. Type `H2O` or `Fe-56` or `g` and Insert puts the number into the last field you tapped.

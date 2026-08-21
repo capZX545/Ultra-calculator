@@ -50,6 +50,10 @@ UI = {
         "clear": "AC",
         "equals": "=",
         "steps": "Steps",
+        "problems": "Problems",
+        "inverse": "Inverse",
+        "at_value": "at",
+        "problem_hint": "Type 2*x+3=11 or x**2-5*x+6=0. Solve finds the unknown. Inverse finds the inverse function. Fill at to evaluate it there. Matrices: 1, 2; 3, 4.",
     },
     "fa": {
         "title": "ماشین حساب اولترا",
@@ -101,6 +105,10 @@ UI = {
         "clear": "پاک",
         "equals": "=",
         "steps": "مراحل",
+        "problems": "مسائل",
+        "inverse": "حل عکس",
+        "at_value": "در",
+        "problem_hint": "معادله را بنویس، مثلاً 2*x+3=11. حل، مجهول را پیدا می‌کند. حل عکس، تابع وارون را می‌دهد.",
     },
     "fi": {
         "title": "Ultra-laskin",

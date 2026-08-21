@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ultra Calculator</title>
-  <link rel="stylesheet" href="/static/style.css?v=feat3">
+  <link rel="stylesheet" href="/static/style.css?v=prob1">
 </head>
 <body>
   <header>
@@ -18,6 +18,7 @@
       <button data-mode="chem" class="tab" id="tab-chem" title="Alt+6">Chemistry</button>
       <button data-mode="elements" class="tab" id="tab-elements" title="Alt+7">Elements</button>
       <button data-mode="sources" class="tab" id="tab-sources" title="Alt+8">Sources</button>
+      <button data-mode="problems" class="tab" id="tab-problems" title="Alt+9">Problems</button>
     </nav>
     <label class="lang">
       <span id="lang-label">Language</span>
@@ -154,7 +155,20 @@
     <section id="view-sources" class="view">
       <pre id="src-out"></pre>
     </section>
+
+    <section id="view-problems" class="view">
+      <p class="hint" id="prob-hint"></p>
+      <textarea id="prob-text">2*x + 3 = 11</textarea>
+      <div class="row">
+        <label id="prob-unk-label">Unknown <input id="prob-unk" value="x"></label>
+        <label id="prob-at-label">at <input id="prob-at" value=""></label>
+        <button id="prob-solve" class="accent" type="button">Solve</button>
+        <button id="prob-inv" type="button">Inverse</button>
+      </div>
+      <pre id="prob-out"></pre>
+      <pre id="prob-steps"></pre>
+    </section>
   </main>
-  <script src="/static/ui.js?v=cat2"></script>
+  <script src="/static/ui.js?v=prob1"></script>
 </body>
 </html>

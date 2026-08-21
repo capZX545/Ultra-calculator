@@ -39,7 +39,7 @@
     sqrt:"sqrt(", "n!":"factorial(", abs:"abs(",
     "1/x":"1/(", pi:"pi", e:"e", ans:"ans", EE:"*10**",
   };
-  const MODES = ["calc", "formulas", "poly", "numeric", "algo", "chem", "elements", "sources"];
+  const MODES = ["calc", "formulas", "poly", "numeric", "algo", "chem", "elements", "sources", "problems"];
 
   const $ = (id) => document.getElementById(id);
   const screen = $("screen");
@@ -115,6 +115,20 @@
     if ($("tab-chem")) $("tab-chem").textContent = s.chem || "Chemistry";
     if ($("tab-elements")) $("tab-elements").textContent = s.elements || "Elements";
     if ($("tab-sources")) $("tab-sources").textContent = s.sources || "Sources";
+    if ($("tab-problems")) $("tab-problems").textContent = s.problems || "Problems";
+    if ($("prob-solve")) $("prob-solve").textContent = s.solve || "Solve";
+    if ($("prob-inv")) $("prob-inv").textContent = s.inverse || "Inverse";
+    if ($("prob-hint")) $("prob-hint").textContent = s.problem_hint || "";
+    if ($("prob-unk-label")) {
+      const inp = $("prob-unk");
+      $("prob-unk-label").textContent = (s.unknown || "Unknown") + " ";
+      if (inp) $("prob-unk-label").appendChild(inp);
+    }
+    if ($("prob-at-label")) {
+      const inp = $("prob-at");
+      $("prob-at-label").textContent = (s.at_value || "at") + " ";
+      if (inp) $("prob-at-label").appendChild(inp);
+    }
     if ($("chem-bal")) $("chem-bal").textContent = s.balance || "Balance";
     if ($("chem-mw")) $("chem-mw").textContent = s.molar || "Molar mass";
     if ($("lookup-label")) $("lookup-label").textContent = s.lookup || "Lookup";
@@ -157,6 +171,8 @@
       $("chem-eq").focus();
     } else if (mode === "elements" && $("el-q")) {
       $("el-q").focus();
+    } else if (mode === "problems" && $("prob-text")) {
+      $("prob-text").focus();
     }
   }
 
@@ -268,13 +284,13 @@
 
   function payloadExpr() {
     return { expr: readExpr() || "0", angle: state.angle, eng: state.eng, ans: state.ans, lang: state.lang };
+  }
 
   function showSteps(id, lines) {
     const el = $(id);
     if (!el) return;
     const rows = lines || [];
     el.textContent = rows.map((s, i) => (i + 1) + ") " + s).join("\n");
-  }
   }
 
   async function loadMeta() {
@@ -921,6 +937,46 @@
     });
   }
   if ($("lookup-insert")) $("lookup-insert").addEventListener("click", insertLookup);
+
+  async function runProblem(mode) {
+    const out = await post("/api/problem", {
+      text: ($("prob-text") && $("prob-text").value) || "",
+      mode: mode || "solve",
+      unknown: ($("prob-unk") && $("prob-unk").value) || "x",
+      at: ($("prob-at") && $("prob-at").value) || "",
+      lang: state.lang,
+      eng: state.eng,
+    });
+    if ($("prob-out")) $("prob-out").textContent = out.text || "0";
+    showSteps("prob-steps", out.steps || []);
+  }
+
+  if ($("prob-solve")) $("prob-solve").addEventListener("click", () => runProblem("solve"));
+  if ($("prob-inv")) $("prob-inv").addEventListener("click", () => runProblem("inverse"));
+  if ($("prob-text")) {
+    $("prob-text").addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter" && (ev.ctrlKey || ev.metaKey)) {
+        ev.preventDefault();
+        runProblem(ev.shiftKey ? "inverse" : "solve");
+      }
+    });
+  }
+  if ($("prob-unk")) {
+    $("prob-unk").addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter") {
+        ev.preventDefault();
+        runProblem("solve");
+      }
+    });
+  }
+  if ($("prob-at")) {
+    $("prob-at").addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter") {
+        ev.preventDefault();
+        runProblem("inverse");
+      }
+    });
+  }
 
   buildKeys();
   buildPoly();

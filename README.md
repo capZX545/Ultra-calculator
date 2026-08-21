@@ -43,7 +43,7 @@ The project that builds that APK is in `phone/`.
 
 ## What the programs can do
 
-There are eight pages: Calculator, Formulas, Polynomial, Numerical, Algorithms, Chemistry, Elements, and Sources.
+There are nine pages: Calculator, Formulas, Polynomial, Numerical, Algorithms, Chemistry, Elements, Sources, and Problems.
 
 ### Calculator
 
@@ -282,6 +282,18 @@ Length, mass, time, force, energy, power, pressure, volume, area, speed, angle, 
 
 Standard physical constants (speed of light, Planck, elementary charge, Boltzmann, Avogadro, R, g, G, ε0, μ0, and the rest) are stored as usable formulas, not as decoration.
 
+### Problems and inverse
+
+A separate page takes an equation you type and actually solves it.
+
+- Solve: `2*x+3=11` gives `4`. `x**2-5*x+6=0` gives `2, 3`. Persian digits work: `۲x+۳=۱۱`.
+- Several equations on separate lines or with `;`: `x+y=5; x-y=1`.
+- Inverse: `2*x+3` gives the inverse function `x/2 - 3/2`. Fill **at** with `11` and it evaluates that inverse: `4`.
+- Inverse of `x**3` is the cube root (all branches sympy finds).
+- Matrix inverse: type `1, 2; 3, 4`.
+- Steps appear under the answer, in the language you picked.
+- Bad input does not crash. The page shows `0` and a short note.
+
 ### Polynomials
 
 You enter coefficients `a6` … `a0`, so up to degree 6.
@@ -326,7 +338,7 @@ Both programs are meant to be used from the keyboard. You do not have to click e
 
 - Click the calculator screen, or just start typing when that page is open.
 - Enter calculates. Esc clears.
-- Alt+1 Calculator, Alt+2 Formulas, Alt+3 Polynomial, Alt+4 Numerical, Alt+5 Algorithms, Alt+6 Chemistry, Alt+7 Elements, Alt+8 Sources. The desktop app also accepts Ctrl+1 to Ctrl+8.
+- Alt+1 Calculator, Alt+2 Formulas, Alt+3 Polynomial, Alt+4 Numerical, Alt+5 Algorithms, Alt+6 Chemistry, Alt+7 Elements, Alt+8 Sources, Alt+9 Problems. The desktop app also accepts Ctrl+1 to Ctrl+9.
 - Alt+L focuses the lookup bar. If you are not already in a text field, `/` does the same. Desktop also accepts Ctrl+L.
 - In Formulas, type in the search box and press Enter to open the first match. Enter in a value field solves. Enter on a chemistry equation balances it. Enter on polynomial coefficients evaluates. Enter on an algorithm runs it.
 
@@ -394,6 +406,7 @@ If one breaks, the other still has the same formulas.
 | Balance and molar mass | yes | yes |
 | Periodic table | yes | yes |
 | Sources | yes | yes |
+| Problems / inverse | yes | yes |
 | en / fa / fi | yes | yes |
 | Persian right-to-left | — | yes |
 

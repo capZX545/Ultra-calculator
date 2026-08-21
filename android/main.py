@@ -24,6 +24,7 @@ import algorithms
 import chemtools
 import core
 import lookup
+import problems
 import teach
 from strings import ui_text
 
@@ -217,6 +218,7 @@ class UltraAndroid(App):
         self.sm.add_widget(self._elements_screen())
         self.sm.add_widget(self._edetail_screen())
         self.sm.add_widget(self._sources_screen())
+        self.sm.add_widget(self._problems_screen())
         root.add_widget(self.sm)
 
         self._paint_nav()
@@ -229,6 +231,8 @@ class UltraAndroid(App):
         self.title_lbl.text = self.tr("title")
         self._paint_nav()
         self._load_lists()
+        if hasattr(self, "prob_hint") and self.prob_hint:
+            self.prob_hint.text = self.tr("problem_hint")
         src = self.sm.get_screen("sources")
         if hasattr(src, "reload"):
             src.reload()
@@ -244,6 +248,7 @@ class UltraAndroid(App):
             ("chem", "chem"),
             ("elements", "elements"),
             ("sources", "sources"),
+            ("problems", "problems"),
         ]
         for mode, key in items:
             b = DarkButton(text=self.tr(key), accent=(self.mode == mode))
@@ -764,6 +769,72 @@ class UltraAndroid(App):
         box.add_widget(self.edetail)
         sc.add_widget(box)
         return sc
+
+    # ----- problems -----
+    def _problems_screen(self):
+        sc = Screen(name="problems")
+        box = BoxLayout(orientation="vertical", spacing=dp(6))
+        self.prob_hint = Label(
+            text=self.tr("problem_hint"),
+            color=MUTED,
+            font_size=dp(12),
+            size_hint_y=None,
+            height=dp(64),
+            text_size=(dp(360), dp(64)),
+            valign="top",
+            halign="left",
+        )
+        box.add_widget(self.prob_hint)
+        self.prob_text = DarkInput(text="2*x + 3 = 11", multiline=True, height=dp(90))
+        self.prob_text.bind(on_text_validate=lambda *_: self._run_problem("solve"))
+        box.add_widget(self.prob_text)
+        row = BoxLayout(size_hint_y=None, height=dp(42), spacing=dp(6))
+        self.prob_unk = DarkInput(text="x", hint_text=self.tr("unknown"), size_hint_x=0.3)
+        self.prob_at = DarkInput(text="", hint_text=self.tr("at_value"), size_hint_x=0.3)
+        row.add_widget(self.prob_unk)
+        row.add_widget(self.prob_at)
+        box.add_widget(row)
+        btns = BoxLayout(size_hint_y=None, height=dp(42), spacing=dp(6))
+        self.prob_solve_btn = DarkButton(text=self.tr("solve"), accent=True)
+        self.prob_solve_btn.bind(on_release=lambda *_: self._run_problem("solve"))
+        self.prob_inv_btn = DarkButton(text=self.tr("inverse"))
+        self.prob_inv_btn.bind(on_release=lambda *_: self._run_problem("inverse"))
+        btns.add_widget(self.prob_solve_btn)
+        btns.add_widget(self.prob_inv_btn)
+        box.add_widget(btns)
+        self.prob_out = Label(
+            text="",
+            color=FG,
+            font_size=dp(16),
+            size_hint_y=None,
+            height=dp(48),
+            text_size=(dp(360), dp(48)),
+            valign="top",
+            halign="left",
+        )
+        box.add_widget(self.prob_out)
+        self.prob_steps = Label(
+            text="",
+            color=MUTED,
+            font_size=dp(12),
+            text_size=(dp(360), dp(220)),
+            valign="top",
+            halign="left",
+        )
+        box.add_widget(self.prob_steps)
+        sc.add_widget(box)
+        return sc
+
+    def _run_problem(self, mode: str):
+        try:
+            raw = self.prob_text.text if self.prob_text else ""
+            unknown = (self.prob_unk.text if self.prob_unk else "x") or "x"
+            at = self.prob_at.text if self.prob_at else ""
+            out = problems.run(raw, mode=mode, unknown=unknown, at=at, lang=self.lang, eng=self.eng)
+        except Exception:
+            out = {"text": "0", "steps": []}
+        self.prob_out.text = out.get("text") or "0"
+        self.prob_steps.text = fmt_steps(out.get("steps") or [])
 
     # ----- sources -----
     def _sources_screen(self):

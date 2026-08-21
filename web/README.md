@@ -24,9 +24,10 @@ Needs Flask, numpy, scipy, sympy.
 - **Chemistry** — balancer and molar mass
 - **Elements** — full periodic table with isotopes
 - **Sources** — links and notes
+- **Problems** — type an equation and solve it, or find the inverse function / inverse at a value / inverse of a matrix
 
 ## Keyboard and lookup
 
-Alt+1 to Alt+8 switch pages. Alt+L opens lookup. `/` does the same when you are not already in a field. Type `H2O`, `Fe-56`, or `R` in the lookup bar and insert the number into the last field you clicked.
+Alt+1 to Alt+9 switch pages. Alt+L opens lookup. `/` does the same when you are not already in a field. Type `H2O`, `Fe-56`, or `R` in the lookup bar and insert the number into the last field you clicked.
 
 Languages: en / fa / fi. Persian is right-to-left. Bad input does not crash the program.
