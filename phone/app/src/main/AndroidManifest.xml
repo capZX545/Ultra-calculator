@@ -3,7 +3,8 @@
     <application
         android:label="Ultra Calculator"
         android:icon="@mipmap/ic_launcher"
-        android:hardwareAccelerated="true">
+        android:hardwareAccelerated="true"
+        android:largeHeap="true">
         <activity
             android:name=".MainActivity"
             android:exported="true"

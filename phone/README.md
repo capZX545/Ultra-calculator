@@ -8,7 +8,7 @@ This is a normal Android app. Install the APK. Numpy, sympy, and the formula eng
 2. Open the file and allow installs from this source if Android asks.
 3. Open Ultra Calculator from the app list.
 
-No internet is required to start.
+The keypad opens at once. The math engine (numpy / sympy) loads in the background from files already inside the APK. No internet is required to start.
 
 ## Build
 

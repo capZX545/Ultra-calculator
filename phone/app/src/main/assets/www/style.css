@@ -143,6 +143,12 @@ aside h2, h2 { font-size: 14px; color: var(--accent); margin: 0 0 8px; }
   position: fixed; inset: 0; background: #1c1f24; z-index: 50;
   display: flex; align-items: center; justify-content: center;
 }
+#boot.boot-away {
+  inset: auto 0 0 0; height: auto; background: #1c1f24ee;
+  z-index: 20; pointer-events: none;
+}
+#boot.boot-away .boot-card { padding: 8px 12px; }
+#boot.boot-away h1 { display: none; }
 .boot-card { text-align: center; padding: 24px; }
 .boot-card h1 { color: #c4a35a; margin-bottom: 12px; }
 #boot-msg { color: #9aa3ad; }

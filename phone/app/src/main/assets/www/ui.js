@@ -78,12 +78,89 @@
     state.expr = el.value === "0" ? "" : el.value;
   }
 
+  function jsEval(body) {
+    const angle = (body && body.angle) || "DEG";
+    const eng = !!(body && body.eng);
+    let expr = String((body && body.expr) || "0");
+    expr = expr.replace(/[۰۱۲۳۴۵۶۷۸۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d));
+    expr = expr.replace(/[٠١٢٣٤٥٦٧٨٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d));
+    expr = expr.replace(/π/g, "pi").replace(/×/g, "*").replace(/÷/g, "/").replace(/−/g, "-").replace(/\^/g, "**");
+    const stripped = expr.replace(/\*\*/g, "^").replace(/\s+/g, "");
+    if (!/^[0-9A-Za-z_+\-*/%().,^]+$/.test(stripped)) {
+      return { ok: true, text: "0", value: 0 };
+    }
+    const toR = (x) => (angle === "DEG" ? Number(x) * Math.PI / 180 : Number(x));
+    const fromR = (x) => (angle === "DEG" ? Number(x) * 180 / Math.PI : Number(x));
+    const fact = (n) => {
+      n = Math.floor(Number(n));
+      if (n < 0 || n > 170) return NaN;
+      let a = 1;
+      for (let i = 2; i <= n; i += 1) a *= i;
+      return a;
+    };
+    const ns = {
+      sin: (x) => Math.sin(toR(x)),
+      cos: (x) => Math.cos(toR(x)),
+      tan: (x) => Math.tan(toR(x)),
+      asin: (x) => fromR(Math.asin(Number(x))),
+      acos: (x) => fromR(Math.acos(Number(x))),
+      atan: (x) => fromR(Math.atan(Number(x))),
+      sinh: Math.sinh,
+      cosh: Math.cosh,
+      tanh: Math.tanh,
+      ln: Math.log,
+      log: Math.log,
+      log10: Math.log10,
+      log2: Math.log2,
+      exp: Math.exp,
+      sqrt: Math.sqrt,
+      abs: Math.abs,
+      factorial: fact,
+      pi: Math.PI,
+      e: Math.E,
+      ans: Number(state.ans) || 0,
+    };
+    try {
+      const fn = new Function(
+        "sin", "cos", "tan", "asin", "acos", "atan", "sinh", "cosh", "tanh",
+        "ln", "log", "log10", "log2", "exp", "sqrt", "abs", "factorial", "pi", "e", "ans",
+        "return (" + expr + ");"
+      );
+      let v = fn(
+        ns.sin, ns.cos, ns.tan, ns.asin, ns.acos, ns.atan, ns.sinh, ns.cosh, ns.tanh,
+        ns.ln, ns.log, ns.log10, ns.log2, ns.exp, ns.sqrt, ns.abs, ns.factorial, ns.pi, ns.e, ns.ans
+      );
+      if (typeof v === "number" && !Number.isFinite(v)) v = 0;
+      let text;
+      if (typeof v !== "number") text = String(v);
+      else if (Math.abs(v) < 1e-15) text = "0";
+      else if (eng && v !== 0) {
+        const exp = Math.floor(Math.log10(Math.abs(v)) / 3) * 3;
+        text = (v / Math.pow(10, exp)).toPrecision(8).replace(/\.?0+$/, "") + "e" + (exp >= 0 ? "+" : "") + exp;
+      } else text = String(parseFloat(v.toPrecision(12)));
+      return { ok: true, text: text, value: v, steps: [] };
+    } catch (err) {
+      return { ok: true, text: "0", value: 0, steps: [] };
+    }
+  }
+
   async function pyCall(path, query, body) {
-    if (!window.pyodideReady) return { ok: true, text: "0" };
-    const req = JSON.stringify({ path: path, query: query || {}, body: body || {} });
-    window.pyodide.globals.set("_req", req);
-    const out = window.pyodide.runPython("import bridge; bridge.handle(_req)");
-    try { return JSON.parse(out); } catch (err) { return { ok: true, text: "0" }; }
+    if (window.pyodideReady && window.pyodide) {
+      try {
+        const req = JSON.stringify({ path: path, query: query || {}, body: body || {} });
+        window.pyodide.globals.set("_req", req);
+        const out = window.pyodide.runPython("import bridge; bridge.handle(_req)");
+        return JSON.parse(out);
+      } catch (err) {
+        if (path === "/api/eval") return jsEval(body || {});
+        return { ok: true, text: "0" };
+      }
+    }
+    if (path === "/api/eval") return jsEval(body || {});
+    if (path === "/api/meta") {
+      return { strings: state.strings || {}, categories: [], total: 0, languages: ["en", "fa", "fi"] };
+    }
+    return { ok: true, text: "0", solutions: [] };
   }
 
   async function post(url, body) {
@@ -979,10 +1056,17 @@
   }
 
   window.startApp = function () {
+    if (window._appStarted) return;
+    window._appStarted = true;
     buildKeys();
     buildPoly();
     loadMeta();
     loadSources();
     if (screen) screen.focus();
   };
+  window.onEngineReady = function () {
+    loadMeta();
+    loadSources();
+  };
+  window.startApp();
 })();
