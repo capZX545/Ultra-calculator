@@ -50,6 +50,10 @@ UI = {
         "clear": "AC",
         "equals": "=",
         "steps": "Steps",
+        "problems": "Problems",
+        "inverse": "Inverse",
+        "at_value": "at",
+        "problem_hint": "Type an equation such as 2*x+3=11 or x**2-5*x+6=0. Solve finds the unknown. Inverse finds the inverse function. Fill at to evaluate the inverse at that value. Matrices: 1, 2; 3, 4.",
     },
     "fa": {
         "title": "ماشین حساب اولترا",
@@ -101,6 +105,10 @@ UI = {
         "clear": "پاک",
         "equals": "=",
         "steps": "مراحل",
+        "problems": "مسائل",
+        "inverse": "حل عکس",
+        "at_value": "در",
+        "problem_hint": "معادله را بنویس، مثلاً 2*x+3=11 یا x**2-5*x+6=0. حل، مجهول را پیدا می‌کند. حل عکس، تابع وارون را می‌دهد. اگر «در» را پر کنی، وارون را در همان نقطه حساب می‌کند. ماتریس: 1, 2; 3, 4.",
     },
     "fi": {
         "title": "Ultra-laskin",
@@ -149,6 +157,11 @@ UI = {
         "clear": "AC",
         "equals": "=",
         "steps": "Askeleet",
+        "algo": "Algoritmit",
+        "problems": "Tehtavat",
+        "inverse": "Kaanteinen",
+        "at_value": "kohdassa",
+        "problem_hint": "Kirjoita yhtalo, esim. 2*x+3=11. Ratkaise etsii tuntemattoman. Kaanteinen etsii kaanteisfunktion. Jos taytat kohdan, se lasketaan siina pisteessa. Matriisit: 1, 2; 3, 4.",
     },
 }
 

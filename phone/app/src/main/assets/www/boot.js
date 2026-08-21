@@ -9,7 +9,7 @@
     await pyodide.loadPackage(["numpy", "sympy"]);
     const files = [
       "clean.py", "teach.py", "chemtools.py", "core.py",
-      "lookup.py", "algorithms.py", "strings.py", "bridge.py",
+      "lookup.py", "algorithms.py", "strings.py", "problems.py", "bridge.py",
       "formulas.json", "elements.json", "sources.json",
     ];
     for (const name of files) {
