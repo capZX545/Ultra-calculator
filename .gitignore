@@ -13,3 +13,18 @@ phone/.gradle/
 phone/app/build/
 phone/build/
 .gradle/
+
+# secrets — never commit
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.keystore
+!phone/debug.keystore
+.secrets
+.secrets.*
+.git-credentials
+.netrc
+local.properties
+**/local.properties
