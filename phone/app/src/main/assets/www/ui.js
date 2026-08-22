@@ -84,6 +84,7 @@
     const angle = (body && body.angle) || "DEG";
     let expr = String((body && body.expr) || "0");
     expr = expr.replace(/π/g, "pi").replace(/×/g, "*").replace(/÷/g, "/").replace(/−/g, "-").replace(/\^/g, "**");
+    expr = expr.replace(/(^|[^0-9.])10(?:\.0+)?[eE]([+-]?\d+)/g, "$11e$2");
     try {
       const fn = new Function("sin","cos","tan","sqrt","abs","pi","e","ans","log","exp","return (" + expr + ");");
       let v = fn(Math.sin, Math.cos, Math.tan, Math.sqrt, Math.abs, Math.PI, Math.E, Number(state.ans)||0, Math.log, Math.exp);

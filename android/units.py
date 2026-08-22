@@ -263,6 +263,7 @@ _NUM = r"(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[eE][+\-]?[0-9]+)?"
 
 def _rewrite(text: str) -> str:
     s = unicodedata.normalize("NFKC", text).translate(_DIGIT)
+    s = re.sub(r"(?<![\d.])10(?:\.0+)?[eE]([+-]?\d+)", r"1e\1", s)
     s = s.replace("×", "*").replace("÷", "/").replace("−", "-").replace("^", "**")
     s = s.replace("π", "pi")
     s = re.sub(r"(\d),(\d)", r"\1.\2", s)
@@ -404,11 +405,11 @@ def try_eval(text: str, eng: bool = False, lang: str = "en"):
     raw = text or ""
     if not _looks_like_units(raw):
         # 12V/2k with no space after k
-        if not re.search(r"[0-9.][ \t]*[A-Za-zΩωµ]", raw):
+        if not re.search(r"[0-9.][ \t]*[A-Za-df-zA-DF-ZΩωµ]", raw):
             return None
         if not _looks_like_units(raw + " "):
             # still try rewrite if a number sits next to a unit letter
-            if not re.search(r"[0-9][A-Za-zΩ]", raw):
+            if not re.search(r"[0-9][A-Za-df-zA-DF-ZΩ]", raw):
                 return None
     try:
         src = _rewrite(raw)

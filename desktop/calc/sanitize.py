@@ -11,6 +11,13 @@ _DIGIT_MAP = str.maketrans(
     "01234567890123456789",
 )
 
+_TEN_E = re.compile(r"(?<![\d.])10(?:\.0+)?[eE]([+-]?\d+)")
+
+
+def rewrite_ten_e(text: str) -> str:
+    return _TEN_E.sub(r"1e\1", text or "")
+
+
 _OP_MAP = {
     "×": "*",
     "∙": "*",
@@ -41,7 +48,8 @@ def _close_parens(text: str) -> str:
 
 
 def _implicit_mul(text: str) -> str:
-    text = re.sub(r"(\d)([A-Za-z_])", r"\1*\2", text)
+    text = re.sub(r"(\d)([A-Za-df-zA-DF-Z_])", r"\1*\2", text)
+    text = re.sub(r"(\d)([eE])(?![+-]?\d)", r"\1*\2", text)
     text = re.sub(r"(\))(\d)", r"\1*\2", text)
     text = re.sub(r"(\))([A-Za-z_(])", r"\1*\2", text)
     return text
@@ -59,7 +67,8 @@ def clean_number(raw: str, default: float | None = None) -> float | None:
         text = text.replace(",", ".")
     else:
         text = text.replace(",", "")
-    text = text.replace("−", "-").replace("–", "-")
+    text = text.replace("−", "-").replace("–", "-").replace("^", "**")
+    text = rewrite_ten_e(text)
     if text.endswith("%"):
         try:
             return float(text[:-1]) / 100.0
@@ -68,7 +77,14 @@ def clean_number(raw: str, default: float | None = None) -> float | None:
     try:
         return float(text)
     except ValueError:
-        return default
+        pass
+    m = re.fullmatch(r"10(?:\*\*)\(?([+-]?\d+)\)?", text)
+    if m:
+        try:
+            return 10.0 ** int(m.group(1))
+        except Exception:
+            return default
+    return default
 
 
 def clean_expression(raw: str, implicit: bool = False) -> str:
@@ -84,6 +100,7 @@ def clean_expression(raw: str, implicit: bool = False) -> str:
     if text.count(",") == 1 and not re.search(r"[A-Za-z_]", text):
         text = text.replace(",", ".")
     text = text.replace("**", "^").replace("^", "**")
+    text = rewrite_ten_e(text)
     text = re.sub(r"[^0-9A-Za-z_+\-*/().,=<>!]", "", text)
     if implicit:
         text = _implicit_mul(text)
