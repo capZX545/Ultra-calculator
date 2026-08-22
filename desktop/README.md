@@ -10,7 +10,7 @@ python3 run.py
 
 Python 3.10+, numpy, scipy, sympy.
 
-Fourteen pages: Calculator (CAS + units on the line), Formulas (5196 / 126), Polynomial ≤ 6, Numerical (root, integral, derivative, RK4, second-order ODE, first-order system), Algorithms (130), Chemistry, Elements (118), Sources, Problems, Circuits (MNA, AC, Thevenin, diode / BJT / MOSFET, `.tran`), Graph, Matrix, Stats, Triangle.
+Fourteen pages: Calculator (CAS + units on the line), Formulas (7531 / 139), Polynomial ≤ 6, Numerical (root, integral, derivative, RK4, second-order ODE, first-order system), Algorithms (130), Chemistry, Elements (118), Sources, Problems, Circuits (MNA, AC, Thevenin, diode / BJT / MOSFET, `.tran`), Graph, Matrix, Stats, Triangle.
 
 Alt+1–9 and Alt+0 switch the first ten pages. Alt+G / M / D / T are Graph / Matrix / Stats / Triangle. Ctrl+1–0 also work. Alt+L or `/` is lookup.
 

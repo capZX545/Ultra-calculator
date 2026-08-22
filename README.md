@@ -29,7 +29,7 @@ pip install -r requirements.txt
 python3 run.py
 ```
 
-Then open port 5000. The APK is `UltraCalculator.apk` at the repo root (same file under `phone/`). Package `org.capzx545.ultracalculator`, minSdk 24, versionName 1.3, versionCode 4. Uninstall an older build first if the installer complains.
+Then open port 5000. The APK is `UltraCalculator.apk` at the repo root (same file under `phone/`). Package `org.capzx545.ultracalculator`, minSdk 24, versionName 1.5, versionCode 6. Uninstall an older build first if the installer complains.
 
 ---
 
@@ -83,7 +83,9 @@ Units are first-class on this screen. `12 V / 2 kohm` is `6 mA`. `5 km / 30 min`
 
 ### Formulas
 
-5196 named equations, 126 categories. Each row is a solvable identity, not a caption. Desktop and web `formulas.json` are the same file (~3.75 MB).
+7531 named equations, 139 categories. Each row is a solvable identity, not a caption. Desktop, web, android, and phone `formulas.json` are the same file (~5.2 MB).
+
+5015 of those are textbook identities. The other 2516 stay in `unit.conv` and are not part of that 5000. A few families are the same identity at each n (n equal resistors, power-law degree n, annuity factor n, binomial n). Each n is its own row because the solver treats it as a different equation.
 
 Default: fill knowns, leave one blank or pick the unknown, Solve. Isolated-LHS formulas skip `solve` and evaluate the right-hand side. Otherwise SymPy solves for that symbol, with `nsolve` as a fallback.
 
@@ -91,69 +93,71 @@ System mode: several equations, several unknowns. Add / remove both.
 
 Search matches id, category, name (all three languages), and the expression string.
 
-Counts by group, they add to 5196:
+Counts by group, they add to 7531:
 
 | Group | n |
 |---|---:|
-| Math | 771 |
-| Engineering math | 62 |
-| Special functions | 154 |
-| Physics | 489 |
-| Chemistry | 207 |
-| Biology | 126 |
-| Medicine and health | 90 |
-| Engineering | 433 |
-| Economics and finance | 95 |
-| Earth and environment | 78 |
-| Other applied | 175 |
+| Math | 1597 |
+| Engineering math | 119 |
+| Special functions | 191 |
+| Physics | 683 |
+| Chemistry | 235 |
+| Biology | 133 |
+| Medicine and health | 107 |
+| Engineering | 1480 |
+| Economics and finance | 167 |
+| Earth and environment | 100 |
+| Other applied | 203 |
 | Unit conversions | 2516 |
 
 Unit conversions are the large block because each pair is a working formula (length, mass, time, force, energy, power, pressure, volume, area, speed, angle, frequency, data, activity, dose).
 
-**Math (771)**
+**Math (1597)**
 
 | Category | n |
 |---|---:|
-| Geometry | 143 |
-| Financial math | 113 |
-| Statistics | 101 |
-| Algebra | 96 |
-| Calculus | 61 |
-| Trigonometry | 54 |
-| Probability | 53 |
+| Algebra | 282 |
+| Geometry | 241 |
+| Calculus | 231 |
+| Probability | 152 |
+| Statistics | 139 |
+| Financial math | 127 |
+| Discrete math | 123 |
+| Trigonometry | 85 |
+| Sequences and series | 65 |
 | Linear algebra | 43 |
+| Complex numbers | 22 |
 | Combinatorics | 19 |
-| Complex numbers | 19 |
 | Number theory | 18 |
 | Finite series | 16 |
 | Coordinate geometry | 15 |
-| Sequences and series | 13 |
+| Optimization | 12 |
 | Measurement uncertainty | 7 |
 
-**Engineering math (62)**
+**Engineering math (119)**
 
 | Category | n |
 |---|---:|
-| Numerical methods | 21 |
-| Ordinary differential equations | 11 |
-| Laplace transform | 10 |
-| Vector calculus | 10 |
-| Fourier analysis | 6 |
-| Partial differential equations | 3 |
+| Fourier analysis | 39 |
+| Numerical methods | 28 |
+| Laplace transform | 19 |
+| Ordinary differential equations | 15 |
+| Vector calculus | 11 |
+| Partial differential equations | 6 |
 | Complex analysis | 1 |
 
-**Special functions (154)**
+**Special functions (191)**
 
 | Category | n |
 |---|---:|
 | Elementary functions | 51 |
+| Orthogonal polynomials | 42 |
 | Gamma, beta, erf | 28 |
 | Bessel-type functions | 17 |
 | Hypergeometric functions | 12 |
 | Named constants | 10 |
 | DLMF extra identities | 10 |
 | Zeta and polylog | 7 |
-| Orthogonal polynomials | 5 |
 | Elliptic integrals | 3 |
 | Complex components | 3 |
 | Elliptic functions | 2 |
@@ -162,89 +166,96 @@ Unit conversions are the large block because each pair is a working formula (len
 | Integer functions | 1 |
 | Number theory functions | 1 |
 
-**Physics (489)**
+**Physics (683)**
 
 | Category | n |
 |---|---:|
+| Circuits | 164 |
 | Thermodynamics | 45 |
-| Circuits | 44 |
-| Optics | 39 |
+| Waves | 45 |
+| Optics | 42 |
 | Dynamics | 36 |
-| Modern physics | 32 |
-| Kinematics | 29 |
+| Modern physics | 35 |
+| Kinematics | 30 |
+| Rotation | 30 |
 | Work and energy | 28 |
 | Fluids | 28 |
-| Waves | 23 |
-| Rotation | 22 |
+| Acoustics | 25 |
+| Magnetism | 23 |
 | Physical constants | 22 |
-| Astronomy | 20 |
-| Electrostatics | 20 |
-| Magnetism | 20 |
+| Astronomy | 22 |
+| Electrostatics | 21 |
+| Oscillations | 16 |
 | Gravitation | 14 |
-| Acoustics | 14 |
 | Nuclear | 13 |
-| Oscillations | 12 |
 | More EM / quantum | 12 |
+| Statistical mechanics | 9 |
+| Relativity | 7 |
 | Semiconductors | 6 |
 | Applied optics | 5 |
 | Radiation dose | 5 |
 
-**Chemistry (207)**
+**Chemistry (235)**
 
 | Category | n |
 |---|---:|
-| Solutions | 27 |
-| Acids and bases | 25 |
-| Gases | 22 |
-| Kinetics | 22 |
+| Solutions | 31 |
+| Kinetics | 27 |
+| Acids and bases | 26 |
+| Gases | 25 |
 | More chemical thermo | 20 |
-| Stoichiometry | 17 |
-| Equilibrium extra | 17 |
+| Stoichiometry | 19 |
+| Equilibrium extra | 19 |
+| Electrochemistry | 15 |
 | Organic calculations | 14 |
-| Electrochemistry | 13 |
 | Stoichiometry extra | 11 |
-| Colligative properties | 8 |
-| Buffers and titration | 4 |
-| Spectroscopy | 4 |
-| Chemical thermodynamics | 3 |
+| Colligative properties | 9 |
+| Chemical thermodynamics | 6 |
+| Spectroscopy | 5 |
+| Buffers and titration | 5 |
+| Surface chemistry | 3 |
 
-**Biology (126)** — Ecology 36, Physiology 34, Genetics 25, Lab and biotech 21, Enzymes 7, Plant physiology 3.
+**Biology (133)** — Ecology 37, Physiology 35, Genetics 26, Lab and biotech 21, Enzymes 9, Plant physiology 3, Neurophysiology 2.
 
-**Medicine and health (90)** — Fitness and nutrition 40, Clinical 33, Pharmacokinetics 16, Lab medicine 1.
+**Medicine and health (107)** — Fitness and nutrition 42, Clinical 38, Pharmacokinetics 20, Cardiology 6, Lab medicine 1.
 
-**Engineering (433)**
+**Engineering (1480)**
 
 | Category | n |
 |---|---:|
-| HVAC | 82 |
-| Electrical engineering | 44 |
-| Machine design | 33 |
-| Heat transfer extra | 31 |
-| Pipes and pumps | 29 |
-| Electric power | 28 |
+| Electrical engineering | 850 |
+| HVAC | 97 |
+| Electric power | 89 |
+| Reliability | 64 |
+| Machine design | 50 |
+| Heat transfer extra | 40 |
+| Pipes and pumps | 35 |
+| Signals | 27 |
+| Steel design | 23 |
+| Control | 22 |
 | Aerospace | 20 |
 | Engineering fluids | 19 |
-| Steel design | 19 |
-| Control | 16 |
 | Civil / structures | 15 |
-| Signals | 15 |
 | Statics and strength | 15 |
-| Chemical engineering | 14 |
-| Manufacturing | 9 |
-| Industrial operations | 7 |
-| Heat transfer | 6 |
-| Psychrometrics | 6 |
+| Chemical engineering | 15 |
+| Industrial operations | 14 |
+| Manufacturing | 10 |
+| Psychrometrics | 10 |
+| RF and antennas | 10 |
+| Concrete | 9 |
+| Transmission lines | 8 |
+| Heat transfer | 7 |
+| Motors and machines | 7 |
 | Materials | 6 |
-| Motors and machines | 6 |
 | Surveying | 6 |
-| Concrete | 4 |
-| Welding | 3 |
+| Welding | 6 |
+| Queueing | 6 |
 
-**Economics and finance (95)** — Investment 23, Market 21, Interest and loans 19, Macro 18, Micro 14.
+**Economics and finance (167)** — Interest and loans 71, Investment 33, Market 23, Macro 23, Micro 17.
 
-**Earth and environment (78)** — Earth and climate 39, Geotechnics 22, Water and environment 9, Weather and climate 8.
+**Earth and environment (100)** — Earth and climate 44, Geotechnics 25, Weather and climate 13, Water and environment 10, Hydrology 8.
 
-**Other applied (175)** — Everyday 67, Computing 24, Psychophysics 20, Musical acoustics 17, Quantum computing 15, Travel 10, Demography 9, Agriculture 5, Photography 5, Networks 3.
+**Other applied (203)** — Everyday 70, Computing 25, Psychophysics 20, Information theory 19, Musical acoustics 17, Quantum computing 15, Demography 12, Travel 10, Photography 6, Agriculture 5, Networks 4.
 
 CODATA / NIST constants (c, h, e, k, N_A, R, g, G, ε0, μ0, …) are stored as formulas you can solve, not as a decoration list.
 
@@ -413,7 +424,7 @@ Web APIs are ordinary JSON POST/GET: `/api/eval`, `/api/solve`, `/api/system`, `
 |---|---|---|---|
 | Keypad + CAS | yes | yes | yes |
 | Units on the keypad | yes | yes | yes |
-| 5196 formulas / systems | yes | yes | yes |
+| 7531 formulas / systems | yes | yes | yes |
 | Teacher steps | yes | yes | yes |
 | Polynomials ≤ 6 | yes | yes | yes |
 | Numerical, RK4, ODE 2, system | yes | yes | yes (no SciPy) |
@@ -439,7 +450,7 @@ The Sources tab lists the maps I used. I did not scrape or paste:
 - Equation Encyclopedia’s copyrighted pages, games, or problem sets
 - arXiv TeX
 
-Named special functions are evaluated with SymPy / SciPy. Constants are public CODATA. The 5196 rows are textbook equations the program can actually solve. That is the point of the catalog. A dump of other people’s pages would be larger and mostly not mine to ship.
+Named special functions are evaluated with SymPy / SciPy. Constants are public CODATA. The 5015 non-unit rows are textbook equations the program can actually solve. Unit conversions are a separate 2516. That is the point of the catalog. A dump of other people’s pages would be larger and mostly not mine to ship.
 
 ---
 

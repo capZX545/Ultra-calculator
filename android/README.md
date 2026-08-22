@@ -1,6 +1,6 @@
 # Ultra Calculator — Android
 
-Standalone phone program. It does not import anything from the `desktop` or `web` folders. Formula IDs and coverage match the other two programs: 5196 named formulas, chemistry balancer, periodic table, algorithms, teacher steps, lookup, English / Persian / Finnish.
+Standalone phone program. It does not import anything from the `desktop` or `web` folders. Formula IDs and coverage match the other two programs: 7531 named formulas (5015 besides unit conversions), chemistry balancer, periodic table, algorithms, teacher steps, lookup, English / Persian / Finnish.
 
 This is a Kivy app. On a computer it opens a tall phone-sized window. On Android you can run it in Pydroid 3, or pack an APK with Buildozer.
 
@@ -40,7 +40,7 @@ The APK lands in `bin/`. Copy it to the phone and install it. The first build do
 ## What is on each page
 
 - **Calculator** — keypad plus the phone keyboard. DEG/RAD, ENG. After `=` a short teacher walkthrough. You can type `diff(x**3,x)` and the other computer-algebra commands.
-- **Formulas** — 5196 formulas. Each category shows how many it has. Tap a name, fill knowns, solve. Steps appear under the answer.
+- **Formulas** — 7531 formulas. Each category shows how many it has. Tap a name, fill knowns, solve. Steps appear under the answer.
 - **Polynomial** — degree 6, value, roots.
 - **Numerical** — root, integral, derivative, RK4 ODE.
 - **Algorithms** — 130 named methods, with counts on the categories.

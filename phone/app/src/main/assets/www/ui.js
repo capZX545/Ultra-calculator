@@ -411,7 +411,8 @@
     const q = $("search").value || "";
     const cat = state.cat || "";
     const url = "/api/formulas?lang=" + encodeURIComponent(state.lang) + "&q=" + encodeURIComponent(q) + "&category=" + encodeURIComponent(cat);
-    state.formulas = await get(url);
+    const listed = await get(url);
+    state.formulas = Array.isArray(listed) ? listed : [];
     const box = $("flist");
     box.innerHTML = "";
     if ($("search-title")) {
@@ -735,7 +736,7 @@
       });
       sel.dataset.ready = "1";
     }
-    state.algos = (data && data.items) || [];
+    state.algos = (data && Array.isArray(data.items)) ? data.items : [];
     const box = $("alist");
     box.innerHTML = "";
     state.algos.forEach((item, i) => {
