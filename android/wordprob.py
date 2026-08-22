@@ -46,6 +46,7 @@ def _clean(raw: str) -> str:
     text = re.sub(r"(\d)\s*\*\s*10\s*([+-]?\d+)", r"\1e\2", text)
     text = re.sub(r"(\d)\s*e\s*\+?\s*(\d+)", r"\1e\2", text)
     text = re.sub(r"(\d)\s+e\s*(\d+)", r"\1e\2", text)
+    text = re.sub(r"(?<![\d.])10(?:\.0+)?[eE]([+-]?\d+)", r"1e\1", text)
     return text
 
 
