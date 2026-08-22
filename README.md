@@ -264,6 +264,7 @@ CODATA / NIST constants (c, h, e, k, N_A, R, g, G, ε0, μ0, …) are stored as 
 Free-form equation, not a catalog row.
 
 - `2*x+3=11` → `4`. `x**2-5*x+6=0` → `2, 3`. Persian digits: `۲x+۳=۱۱`.
+- Word problems: paste the statement. Two point charges and the point where E = 0, Coulomb force, a point-charge field, V = I R, and the usual constant-acceleration motion formulas are handled. Steps come back in the language you picked.
 - Systems: `x+y=5; x-y=1` or separate lines.
 - Inverse: `2*x+3` → `x/2 - 3/2`. Fill **at** with `11` and it evaluates the inverse there.
 - `x**3` inverse is the cube root, every branch SymPy returns.

@@ -319,6 +319,16 @@ def run(raw: str, mode: str = "solve", unknown: str = "x", at: str = "", lang: s
     try:
         if (mode or "solve").lower().startswith("inv"):
             return inverse_problem(raw, lang=lang, unknown=unknown, at=at, eng=eng)
+        try:
+            try:
+                from wordprob import try_solve
+            except Exception:
+                from .wordprob import try_solve
+            hit = try_solve(raw, lang=lang, eng=eng)
+            if hit:
+                return hit
+        except Exception:
+            pass
         return solve_problem(raw, lang=lang, unknown=unknown, eng=eng)
     except Exception:
         return _fail(lang)
