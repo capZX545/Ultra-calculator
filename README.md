@@ -29,7 +29,7 @@ pip install -r requirements.txt
 python3 run.py
 ```
 
-Then open port 5000. The APK is `UltraCalculator.apk` at the repo root (same file under `phone/`). Package `org.capzx545.ultracalculator`, minSdk 24, versionName 1.6, versionCode 7. Uninstall an older build first if the installer complains.
+Then open port 5000. The APK is `UltraCalculator.apk` at the repo root (same file under `phone/`). Package `org.capzx545.ultracalculator`, minSdk 24, versionName 1.7, versionCode 8. Uninstall an older build first if the installer complains.
 
 ---
 

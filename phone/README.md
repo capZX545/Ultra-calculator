@@ -2,7 +2,7 @@
 
 Install `UltraCalculator.apk`. Numpy, sympy, the 7531-formula catalog, and the algorithms are already inside that file. You do not install Pydroid or pip, and the app does not download the engine from the internet.
 
-versionName 1.6, versionCode 7, `org.capzx545.ultracalculator`, minSdk 24. The APK is debug-signed. Uninstall an older build if the installer refuses it.
+versionName 1.7, versionCode 8, `org.capzx545.ultracalculator`, minSdk 24. The APK is debug-signed. Uninstall an older build if the installer refuses it.
 
 The keypad opens at once. Pyodide 0.26.4 plus the numpy / sympy wheels load from assets in the background. No network is required to start.
 

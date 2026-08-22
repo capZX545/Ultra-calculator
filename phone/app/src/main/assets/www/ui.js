@@ -49,28 +49,41 @@
   let memory = 0;
   const local = { catalog: null, algos: null, elements: null, sources: null, strings: null };
 
-  async function loadPacked() {
-    async function j(url) {
-      try {
-        const r = await fetch(new URL(url, document.baseURI).href);
-        if (!r.ok) return null;
-        return await r.json();
-      } catch (err) {
-        return null;
-      }
+  function applyPacked(data) {
+    if (!data) return false;
+    if (data.formulas && data.categories) {
+      local.catalog = { categories: data.categories, formulas: data.formulas };
+    } else if (data.catalog) {
+      local.catalog = data.catalog;
     }
-    const pack = await Promise.all([
+    if (data.algos) local.algos = data.algos;
+    if (data.elements) local.elements = data.elements;
+    if (data.sources) local.sources = data.sources;
+    if (data.strings) local.strings = data.strings;
+    return !!(local.catalog && local.catalog.formulas && local.catalog.formulas.length);
+  }
+
+  function loadPacked() {
+    if (applyPacked(window.PACKED)) return Promise.resolve(true);
+    function j(url) {
+      return fetch(new URL(url, document.baseURI).href).then(function (r) {
+        return r.ok ? r.json() : null;
+      }).catch(function () { return null; });
+    }
+    return Promise.all([
       j("py/formulas.json"),
       j("py/algos.json"),
       j("py/elements.json"),
       j("py/sources.json"),
       j("py/strings.json"),
-    ]);
-    local.catalog = pack[0];
-    local.algos = pack[1];
-    local.elements = pack[2];
-    local.sources = pack[3];
-    local.strings = pack[4];
+    ]).then(function (pack) {
+      local.catalog = pack[0];
+      local.algos = pack[1];
+      local.elements = pack[2];
+      local.sources = pack[3];
+      local.strings = pack[4];
+      return !!(local.catalog && local.catalog.formulas);
+    }).catch(function () { return false; });
   }
 
   function localMeta(lang) {
@@ -1369,12 +1382,14 @@
     window._appStarted = true;
     buildKeys();
     buildPoly();
-    loadPacked().then(function () {
+    var ready = loadPacked();
+    function go() {
       loadMeta();
       loadSources();
       loadAlgos();
       if (screen) screen.focus();
-    });
+    }
+    if (ready && typeof ready.then === "function") ready.then(go); else go();
   };
   window.onEngineReady = function () {
     if ($("kbd-hint") && state.strings && state.strings.engine_ready) {
