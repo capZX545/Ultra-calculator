@@ -9,6 +9,8 @@ import chemtools
 import core
 import lookup
 import circuits
+import circguide
+import seqfind
 import problems
 import graphs
 import matrixlab
@@ -180,6 +182,10 @@ def _route(path, query, body):
             lang=body.get("lang") or "en",
             eng=bool(body.get("eng")),
         )
+    if path == "/api/circguide":
+        return circguide.run(body)
+    if path == "/api/seqfind":
+        return seqfind.run(body.get("text") or "", lang=body.get("lang") or "en", n_next=body.get("n_next") or 5)
     if path == "/api/circuit":
         return circuits.run(
             body.get("text") or "",

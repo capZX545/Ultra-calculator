@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ultra Calculator</title>
-  <link rel="stylesheet" href="/static/style.css?v=prob1">
+  <link rel="stylesheet" href="/static/style.css?v=guide1">
 </head>
 <body>
   <header>
@@ -24,6 +24,7 @@
       <button data-mode="matrix" class="tab" id="tab-matrix" title="Alt+M">Matrix</button>
       <button data-mode="stats" class="tab" id="tab-stats" title="Alt+D">Stats</button>
       <button data-mode="triangle" class="tab" id="tab-triangle" title="Alt+T">Triangle</button>
+      <button data-mode="seq" class="tab" id="tab-seq" title="Alt+S">Sequences</button>
     </nav>
     <label class="lang">
       <span id="lang-label">Language</span>
@@ -182,16 +183,31 @@
 
     <section id="view-circuits" class="view">
       <p class="hint" id="cir-hint"></p>
-      <textarea id="cir-text">V1 1 0 12
+      <div class="wiz">
+        <p class="wiz-q" id="cir-q"></p>
+        <div class="wiz-story" id="cir-story"></div>
+        <div class="wiz-choices" id="cir-choices"></div>
+        <div class="row" id="cir-valrow">
+          <input id="cir-val" autocomplete="off" spellcheck="false">
+          <button id="cir-next" class="accent" type="button">Next</button>
+        </div>
+        <pre id="cir-guide-out"></pre>
+        <pre id="cir-guide-steps"></pre>
+        <div class="row" id="cir-actions"></div>
+      </div>
+      <details class="adv" id="cir-adv">
+        <summary id="cir-adv-sum">Netlist</summary>
+        <textarea id="cir-text">V1 1 0 12
 R1 1 2 1k
 R2 2 0 2k</textarea>
-      <div class="row">
-        <label id="cir-freq-label">f (Hz) <input id="cir-freq" value=""></label>
-        <button id="cir-solve" class="accent" type="button">Solve</button>
-        <button id="cir-inv" type="button">Inverse</button>
-      </div>
-      <pre id="cir-out"></pre>
-      <pre id="cir-steps"></pre>
+        <div class="row">
+          <label id="cir-freq-label">f (Hz) <input id="cir-freq" value=""></label>
+          <button id="cir-solve" class="accent" type="button">Solve</button>
+          <button id="cir-inv" type="button">Inverse</button>
+        </div>
+        <pre id="cir-out"></pre>
+        <pre id="cir-steps"></pre>
+      </details>
     </section>
 
     <section id="view-graph" class="view">
@@ -247,7 +263,17 @@ x**2/10</textarea>
       <pre id="stats-out"></pre>
     </section>
 
+    <section id="view-seq" class="view">
+      <p class="hint" id="seq-hint"></p>
+      <textarea id="seq-text" rows="4">2, 5, 8, 11</textarea>
+      <div class="row">
+        <button id="seq-go" class="accent" type="button">Identify</button>
+      </div>
+      <pre id="seq-out"></pre>
+    </section>
+
     <section id="view-triangle" class="view">
+
       <p class="hint" id="tri-hint"></p>
       <div class="row tri-fields">
         <label>a <input id="tri-a" value="3"></label>
@@ -264,6 +290,7 @@ x**2/10</textarea>
       <pre id="tri-steps"></pre>
     </section>
   </main>
-  <script src="/static/ui.js?v=tools1"></script>
+  <script src="/static/ui.js?v=guide1"></script>
+  <script src="/static/circ.js?v=guide1"></script>
 </body>
 </html>

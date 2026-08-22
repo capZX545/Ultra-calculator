@@ -14,6 +14,8 @@ from .engine import DesktopEngine
 from .i18n import t
 from .lookup import lookup
 from .circuits import run as run_circuit
+from . import circguide
+from . import seqfind
 from .problems import run as run_problem
 from .sanitize import clean_number
 from . import teach
@@ -101,7 +103,8 @@ class UltraDesktop(tk.Tk):
         self.btn_matrix = tk.Button(top, command=lambda: self._set_mode("matrix"))
         self.btn_stats = tk.Button(top, command=lambda: self._set_mode("stats"))
         self.btn_tri = tk.Button(top, command=lambda: self._set_mode("triangle"))
-        for b in (self.btn_calc, self.btn_form, self.btn_poly, self.btn_num, self.btn_algo, self.btn_chem, self.btn_el, self.btn_src, self.btn_prob, self.btn_cir, self.btn_graph, self.btn_matrix, self.btn_stats, self.btn_tri):
+        self.btn_seq = tk.Button(top, command=lambda: self._set_mode("seq"))
+        for b in (self.btn_calc, self.btn_form, self.btn_poly, self.btn_num, self.btn_algo, self.btn_chem, self.btn_el, self.btn_src, self.btn_prob, self.btn_cir, self.btn_graph, self.btn_matrix, self.btn_stats, self.btn_tri, self.btn_seq):
             self._paint_btn(b, BTN)
             b.pack(side="left", padx=3)
         self.btn_save = tk.Button(top, command=self._save_session)
@@ -120,7 +123,7 @@ class UltraDesktop(tk.Tk):
         self._build_lookup()
 
         self.frames = {}
-        for name in ("calc", "formulas", "poly", "numeric", "algo", "chem", "elements", "sources", "problems", "circuits", "graph", "matrix", "stats", "triangle"):
+        for name in ("calc", "formulas", "poly", "numeric", "algo", "chem", "elements", "sources", "problems", "circuits", "graph", "matrix", "stats", "triangle", "seq"):
             fr = tk.Frame(self, bg=BG)
             self.frames[name] = fr
         self._build_calc(self.frames["calc"])
@@ -137,6 +140,7 @@ class UltraDesktop(tk.Tk):
         self._build_matrix(self.frames["matrix"])
         self._build_stats(self.frames["stats"])
         self._build_triangle(self.frames["triangle"])
+        self._build_seq(self.frames["seq"])
         self._bind_keys()
         self._set_mode("calc")
 
@@ -174,6 +178,7 @@ class UltraDesktop(tk.Tk):
             "matrix": self.btn_matrix,
             "stats": self.btn_stats,
             "triangle": self.btn_tri,
+            "seq": self.btn_seq,
         }
         for key, btn in mapping.items():
             self._paint_btn(btn, ACCENT if key == mode else BTN, "#1c1f24" if key == mode else FG)
@@ -218,6 +223,8 @@ class UltraDesktop(tk.Tk):
             self.prob_hint.configure(text=self.tr("problem_hint"))
         if hasattr(self, "btn_cir"):
             self.btn_cir.configure(text=self.tr("mode_circuits"))
+        if hasattr(self, "btn_seq"):
+            self.btn_seq.configure(text=self.tr("mode_seq"))
         if hasattr(self, "btn_graph"):
             self.btn_graph.configure(text=self.tr("mode_graph"))
             self.btn_matrix.configure(text=self.tr("mode_matrix"))
@@ -235,6 +242,15 @@ class UltraDesktop(tk.Tk):
             self.cir_inv_btn.configure(text=self.tr("inverse"))
             self.cir_freq_lbl.configure(text=self.tr("circuit_freq"))
             self.cir_hint.configure(text=self.tr("circuit_hint"))
+        if hasattr(self, "seq_hint"):
+            self.seq_hint.configure(text=self.tr("seq_hint"))
+            self.seq_go.configure(text=self.tr("seq_go"))
+        if hasattr(self, "cir_next"):
+            self.cir_next.configure(text=self.tr("cir_next"))
+            try:
+                self._cir_paint(circguide.run({"action": "start", "lang": self.lang, "eng": getattr(self.engine, "eng", True)}))
+            except Exception:
+                pass
         if hasattr(self, "graph_hint"):
             self.graph_hint.configure(text=self.tr("graph_hint"))
             self.matrix_hint.configure(text=self.tr("matrix_hint"))
@@ -367,6 +383,8 @@ class UltraDesktop(tk.Tk):
         self.bind_all("<Alt-D>", lambda e: self._hot_mode("stats"))
         self.bind_all("<Alt-t>", lambda e: self._hot_mode("triangle"))
         self.bind_all("<Alt-T>", lambda e: self._hot_mode("triangle"))
+        self.bind_all("<Alt-s>", lambda e: self._hot_mode("seq"))
+        self.bind_all("<Alt-S>", lambda e: self._hot_mode("seq"))
         self.bind_all("<Alt-l>", self._hot_lookup)
         self.bind_all("<Alt-L>", self._hot_lookup)
         self.bind_all("<Control-l>", self._hot_lookup)
@@ -1409,8 +1427,33 @@ class UltraDesktop(tk.Tk):
         self._show_steps(self.prob_steps, out.get("steps") or [])
 
     def _build_circuits(self, root: tk.Frame) -> None:
+        self.cir_state = {}
         self.cir_hint = tk.Label(root, bg=BG, fg=MUTED, wraplength=900, justify="left", font=("Segoe UI", 10))
         self.cir_hint.pack(fill="x", pady=(0, 6))
+        self.cir_q = tk.Label(root, text="", bg=BG, fg=ACCENT, font=("Segoe UI", 16, "bold"), wraplength=900, justify="left", anchor="w")
+        self.cir_q.pack(fill="x", pady=(0, 4))
+        self.cir_story = tk.Label(root, text="", bg=BG, fg=MUTED, wraplength=900, justify="left", anchor="w")
+        self.cir_story.pack(fill="x")
+        self.cir_choices = tk.Frame(root, bg=BG)
+        self.cir_choices.pack(fill="x", pady=4)
+        vrow = tk.Frame(root, bg=BG)
+        vrow.pack(fill="x", pady=4)
+        self.cir_val = tk.Entry(vrow, bg="#11141a", fg=FG, insertbackground=FG, relief="flat")
+        self.cir_val.pack(side="left", fill="x", expand=True, ipady=5)
+        self.cir_val.bind("<Return>", lambda e: self._cir_send("next") or "break")
+        self.cir_next = tk.Button(vrow, command=lambda: self._cir_send("next"))
+        self._paint_btn(self.cir_next, ACCENT, "#1c1f24")
+        self.cir_next.pack(side="left", padx=8)
+        self.cir_guide_out = tk.Label(root, text="", bg=BG, fg=FG, font=("Consolas", 16), wraplength=900, justify="left", anchor="w")
+        self.cir_guide_out.pack(fill="x", pady=4)
+        self.cir_guide_steps = tk.Text(root, bg=PANEL, fg=FG, relief="flat", height=7, font=("Segoe UI", 10), wrap="word")
+        self.cir_guide_steps.pack(fill="x", pady=4)
+        self.cir_actions = tk.Frame(root, bg=BG)
+        self.cir_actions.pack(fill="x", pady=4)
+        try:
+            self._cir_paint(circguide.run({"action": "start", "lang": self.lang, "eng": getattr(self.engine, "eng", True)}))
+        except Exception:
+            pass
         self.cir_text = tk.Text(root, bg="#11141a", fg=FG, insertbackground=FG, relief="flat", height=10, font=("Consolas", 13), wrap="word")
         self.cir_text.pack(fill="x", pady=4)
         self.cir_text.insert("1.0", "V1 1 0 12\nR1 1 2 1k\nR2 2 0 2k")
@@ -1431,6 +1474,81 @@ class UltraDesktop(tk.Tk):
         self.cir_steps = tk.Text(root, bg=PANEL, fg=FG, relief="flat", height=12, font=("Segoe UI", 10), wrap="word")
         self.cir_steps.pack(fill="both", expand=True)
         self.cir_text.bind("<Control-Return>", lambda e: self._run_circuit("solve") or "break")
+
+
+    def _cir_send(self, action: str, kind: str = "", conn: str = "") -> None:
+        try:
+            out = circguide.run({
+                "action": action,
+                "state": getattr(self, "cir_state", {}) or {},
+                "kind": kind,
+                "conn": conn,
+                "value": self.cir_val.get() if hasattr(self, "cir_val") else "",
+                "lang": self.lang,
+                "eng": getattr(self.engine, "eng", True),
+            })
+        except Exception:
+            out = {"prompt": "", "story": [], "choices": [], "text": "0", "steps": [], "state": {}, "actions": []}
+        self._cir_paint(out)
+
+    def _cir_paint(self, out: dict) -> None:
+        if not isinstance(out, dict):
+            return
+        self.cir_state = out.get("state") or {}
+        if hasattr(self, "cir_q"):
+            self.cir_q.configure(text=out.get("prompt") or "")
+            self.cir_story.configure(text="\n".join(out.get("story") or []))
+        for child in self.cir_choices.winfo_children():
+            child.destroy()
+        picked = out.get("picked") or ""
+        for ch in out.get("choices") or []:
+            cid = ch.get("id") or ""
+            color = ACCENT if picked and cid == picked else BTN2
+            btn = tk.Button(self.cir_choices, text=ch.get("label") or cid, command=lambda i=cid: self._cir_click(i))
+            self._paint_btn(btn, color, "#1c1f24" if color == ACCENT else FG)
+            btn.pack(side="left", padx=4, pady=2)
+        bits = []
+        if out.get("formula"):
+            bits.append(str(out["formula"]))
+        if out.get("text"):
+            bits.append(str(out["text"]))
+        if hasattr(self, "cir_guide_out"):
+            self.cir_guide_out.configure(text="\n".join(bits))
+            self._show_steps(self.cir_guide_steps, out.get("steps") or [])
+        for child in self.cir_actions.winfo_children():
+            child.destroy()
+        for act in out.get("actions") or []:
+            aid = act.get("id") or ""
+            color = ACCENT if aid == "add" else BTN2
+            btn = tk.Button(self.cir_actions, text=act.get("label") or aid, command=lambda i=aid: self._cir_send(i))
+            self._paint_btn(btn, color, "#1c1f24" if aid == "add" else FG)
+            btn.pack(side="left", padx=4)
+
+    def _cir_click(self, kind: str) -> None:
+        if kind in {"series", "parallel"}:
+            self._cir_send("connect", kind=kind, conn=kind)
+            return
+        self._cir_send("pick", kind=kind)
+
+    def _build_seq(self, root: tk.Frame) -> None:
+        self.seq_hint = tk.Label(root, bg=BG, fg=MUTED, wraplength=900, justify="left")
+        self.seq_hint.pack(fill="x", pady=(0, 6))
+        self.seq_text = tk.Text(root, bg="#11141a", fg=FG, insertbackground=FG, relief="flat", height=6, font=("Consolas", 13))
+        self.seq_text.pack(fill="x")
+        self.seq_text.insert("1.0", "2, 5, 8, 11")
+        self.seq_go = tk.Button(root, command=self._run_seq)
+        self._paint_btn(self.seq_go, ACCENT, "#1c1f24")
+        self.seq_go.pack(anchor="w", pady=6)
+        self.seq_out = tk.Text(root, bg=PANEL, fg=FG, relief="flat", height=18, font=("Segoe UI", 11), wrap="word")
+        self.seq_out.pack(fill="both", expand=True)
+
+    def _run_seq(self) -> None:
+        try:
+            out = seqfind.run(self.seq_text.get("1.0", "end"), lang=self.lang, n_next=5)
+        except Exception:
+            out = {"text": "0"}
+        self.seq_out.delete("1.0", "end")
+        self.seq_out.insert("1.0", out.get("text") or "0")
 
     def _run_circuit(self, mode: str) -> None:
         try:

@@ -41,7 +41,7 @@
     sqrt:"sqrt(", "n!":"factorial(", abs:"abs(",
     "1/x":"1/(", pi:"pi", e:"e", ans:"ans", EE:"*10**",
   };
-  const MODES = ["calc", "formulas", "poly", "numeric", "algo", "chem", "elements", "sources", "problems", "circuits", "graph", "matrix", "stats", "triangle"];
+  const MODES = ["calc", "formulas", "poly", "numeric", "algo", "chem", "elements", "sources", "problems", "circuits", "graph", "matrix", "stats", "triangle", "seq"];
 
   const $ = (id) => document.getElementById(id);
   const screen = $("screen");
@@ -285,6 +285,11 @@
     if ($("tab-matrix")) $("tab-matrix").textContent = s.matrix || "Matrix";
     if ($("tab-stats")) $("tab-stats").textContent = s.stats || "Stats";
     if ($("tab-triangle")) $("tab-triangle").textContent = s.triangle || "Triangle";
+    if ($("tab-seq")) $("tab-seq").textContent = s.seq || "Sequences";
+    if ($("seq-hint")) $("seq-hint").textContent = s.seq_hint || "";
+    if ($("seq-go")) $("seq-go").textContent = s.seq_go || "Identify";
+    if ($("cir-next")) $("cir-next").textContent = s.cir_next || "Next";
+    if ($("cir-adv-sum")) $("cir-adv-sum").textContent = s.cir_adv || "Netlist";
     if ($("graph-plot")) $("graph-plot").textContent = s.plot || "Plot";
     if ($("graph-param")) $("graph-param").textContent = s.parametric || "Parametric";
     if ($("graph-data")) $("graph-data").textContent = s.data || "Data";
@@ -1065,6 +1070,11 @@
         showMode("circuits");
         return;
       }
+      if (n === "s" || n === "S") {
+        ev.preventDefault();
+        showMode("seq");
+        return;
+      }
       if (n === "l" || n === "L") {
         ev.preventDefault();
         focusLookup();
@@ -1397,4 +1407,10 @@
     }
   };
   window.startApp();
+  window.ultraPost = post;
+  window.ultraGet = get;
+  window.ultraState = state;
+  window.ultraShowMode = showMode;
+  window.ultraShowSteps = showSteps;
+
 })();

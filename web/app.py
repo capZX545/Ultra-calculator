@@ -12,6 +12,8 @@ import chemtools
 import core
 import lookup
 import circuits
+import circguide
+import seqfind
 import problems
 import graphs
 import matrixlab
@@ -265,6 +267,18 @@ def api_circuit():
             eng=bool(body.get("eng")),
         )
     )
+
+
+@app.post("/api/circguide")
+def api_circguide():
+    body = request.get_json(silent=True) or {}
+    return jsonify(circguide.run(body))
+
+
+@app.post("/api/seqfind")
+def api_seqfind():
+    body = request.get_json(silent=True) or {}
+    return jsonify(seqfind.run(body.get("text") or "", lang=body.get("lang") or "en", n_next=body.get("n_next") or 5))
 
 
 @app.post("/api/graph")

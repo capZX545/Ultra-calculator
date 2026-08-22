@@ -25,6 +25,8 @@ import chemtools
 import core
 import lookup
 import circuits
+import circguide
+import seqfind
 import problems
 import graphs
 import matrixlab
@@ -231,6 +233,7 @@ class UltraAndroid(App):
         self.sm.add_widget(self._matrix_screen())
         self.sm.add_widget(self._stats_screen())
         self.sm.add_widget(self._triangle_screen())
+        self.sm.add_widget(self._seq_screen())
         root.add_widget(self.sm)
 
         self._paint_nav()
@@ -245,6 +248,11 @@ class UltraAndroid(App):
         self._load_lists()
         if hasattr(self, "prob_hint") and self.prob_hint:
             self.prob_hint.text = self.tr("problem_hint")
+        if hasattr(self, "cir_hint") and self.cir_hint:
+            self.cir_hint.text = self.tr("circuit_hint")
+            self._cir_send("start")
+        if hasattr(self, "seq_hint") and self.seq_hint:
+            self.seq_hint.text = self.tr("seq_hint")
         src = self.sm.get_screen("sources")
         if hasattr(src, "reload"):
             src.reload()
@@ -266,6 +274,7 @@ class UltraAndroid(App):
             ("matrix", "matrix"),
             ("stats", "stats"),
             ("triangle", "triangle"),
+            ("seq", "seq"),
         ]
         for mode, key in items:
             b = DarkButton(text=self.tr(key), accent=(self.mode == mode))
@@ -287,6 +296,11 @@ class UltraAndroid(App):
             "sources": "sources",
             "problems": "problems",
             "circuits": "circuits",
+            "graph": "graph",
+            "matrix": "matrix",
+            "stats": "stats",
+            "triangle": "triangle",
+            "seq": "seq",
         }
         self.sm.current = mapping.get(mode, "calc")
         self._paint_nav()
@@ -847,18 +861,43 @@ class UltraAndroid(App):
     def _circuits_screen(self):
         sc = Screen(name="circuits")
         box = BoxLayout(orientation="vertical", spacing=dp(6))
+        self.cir_state = {}
         self.cir_hint = Label(
             text=self.tr("circuit_hint"),
             color=MUTED,
             font_size=dp(12),
             size_hint_y=None,
-            height=dp(72),
-            text_size=(dp(360), dp(72)),
+            height=dp(44),
+            text_size=(dp(360), dp(44)),
             valign="top",
             halign="left",
         )
         box.add_widget(self.cir_hint)
-        self.cir_text = DarkInput(text="V1 1 0 12\nR1 1 2 1k\nR2 2 0 2k", multiline=True, height=dp(110))
+        self.cir_q = Label(text="", color=ACCENT, font_size=dp(16), bold=True, size_hint_y=None, height=dp(36),
+                           text_size=(dp(360), dp(36)), valign="middle", halign="left")
+        box.add_widget(self.cir_q)
+        self.cir_story = Label(text="", color=MUTED, font_size=dp(12), size_hint_y=None, height=dp(48),
+                              text_size=(dp(360), dp(48)), valign="top", halign="left")
+        box.add_widget(self.cir_story)
+        self.cir_choices = BoxLayout(size_hint_y=None, height=dp(44), spacing=dp(6))
+        box.add_widget(self.cir_choices)
+        valrow = BoxLayout(size_hint_y=None, height=dp(42), spacing=dp(6))
+        self.cir_val = DarkInput(text="", hint_text="")
+        self.cir_val.bind(on_text_validate=lambda *_: self._cir_send("next"))
+        valrow.add_widget(self.cir_val)
+        self.cir_next = DarkButton(text=self.tr("cir_next"), accent=True, size_hint_x=None, width=dp(90))
+        self.cir_next.bind(on_release=lambda *_: self._cir_send("next"))
+        valrow.add_widget(self.cir_next)
+        box.add_widget(valrow)
+        self.cir_guide_out = Label(text="", color=FG, font_size=dp(15), size_hint_y=None, height=dp(44),
+                                  text_size=(dp(360), dp(44)), valign="top", halign="left")
+        box.add_widget(self.cir_guide_out)
+        self.cir_guide_steps = Label(text="", color=MUTED, font_size=dp(12), size_hint_y=None, height=dp(90),
+                                    text_size=(dp(360), dp(90)), valign="top", halign="left")
+        box.add_widget(self.cir_guide_steps)
+        self.cir_actions = BoxLayout(size_hint_y=None, height=dp(42), spacing=dp(6))
+        box.add_widget(self.cir_actions)
+        self.cir_text = DarkInput(text="V1 1 0 12\nR1 1 2 1k\nR2 2 0 2k", multiline=True, height=dp(70))
         box.add_widget(self.cir_text)
         self.cir_freq = DarkInput(text="", hint_text=self.tr("circuit_freq"))
         box.add_widget(self.cir_freq)
@@ -876,7 +915,88 @@ class UltraAndroid(App):
         self.cir_steps = Label(text="", color=MUTED, font_size=dp(12), text_size=(dp(360), dp(180)), valign="top")
         box.add_widget(self.cir_steps)
         sc.add_widget(box)
+        Clock.schedule_once(lambda dt: self._cir_send("start"), 0.2)
         return sc
+
+    def _cir_send(self, action, kind="", conn=""):
+        try:
+            out = circguide.run({
+                "action": action,
+                "state": getattr(self, "cir_state", {}) or {},
+                "kind": kind,
+                "conn": conn,
+                "value": self.cir_val.text if getattr(self, "cir_val", None) else "",
+                "lang": self.lang,
+                "eng": self.eng,
+            })
+        except Exception:
+            out = {"prompt": "", "story": [], "choices": [], "text": "0", "steps": [], "state": {}, "actions": []}
+        self._cir_paint(out)
+
+    def _cir_paint(self, out):
+        if not isinstance(out, dict):
+            return
+        self.cir_state = out.get("state") or {}
+        if getattr(self, "cir_q", None):
+            self.cir_q.text = out.get("prompt") or ""
+            self.cir_story.text = "\n".join(out.get("story") or [])
+        if getattr(self, "cir_choices", None):
+            self.cir_choices.clear_widgets()
+            picked = out.get("picked") or ""
+            for ch in out.get("choices") or []:
+                cid = ch.get("id") or ""
+                b = DarkButton(text=ch.get("label") or cid, accent=(picked == cid))
+                b.bind(on_release=lambda _w, i=cid: self._cir_click(i))
+                self.cir_choices.add_widget(b)
+        if getattr(self, "cir_val", None):
+            self.cir_val.hint_text = out.get("value_hint") or ""
+            if not out.get("need_value"):
+                self.cir_val.text = ""
+        if getattr(self, "cir_next", None):
+            self.cir_next.text = out.get("next_label") or self.tr("cir_next")
+        bits = []
+        if out.get("formula"):
+            bits.append(str(out["formula"]))
+        if out.get("text"):
+            bits.append(str(out["text"]))
+        if getattr(self, "cir_guide_out", None):
+            self.cir_guide_out.text = "\n".join(bits)
+            self.cir_guide_steps.text = fmt_steps(out.get("steps") or [])
+        if getattr(self, "cir_actions", None):
+            self.cir_actions.clear_widgets()
+            for act in out.get("actions") or []:
+                aid = act.get("id") or ""
+                b = DarkButton(text=act.get("label") or aid, accent=(aid == "add"))
+                b.bind(on_release=lambda _w, i=aid: self._cir_send(i))
+                self.cir_actions.add_widget(b)
+
+    def _cir_click(self, kind):
+        if kind in {"series", "parallel"}:
+            self._cir_send("connect", kind=kind, conn=kind)
+            return
+        self._cir_send("pick", kind=kind)
+
+    def _seq_screen(self):
+        sc = Screen(name="seq")
+        box = BoxLayout(orientation="vertical", spacing=dp(6))
+        self.seq_hint = Label(text=self.tr("seq_hint"), color=MUTED, font_size=dp(12), size_hint_y=None, height=dp(48), text_size=(dp(360), dp(48)))
+        box.add_widget(self.seq_hint)
+        self.seq_text = DarkInput(text="2, 5, 8, 11", multiline=True, height=dp(90))
+        box.add_widget(self.seq_text)
+        b = DarkButton(text=self.tr("seq_go"), accent=True)
+        b.bind(on_release=lambda *_: self._run_seq())
+        box.add_widget(b)
+        self.seq_out = Label(text="", color=FG, font_size=dp(13), text_size=(dp(360), dp(360)), valign="top")
+        box.add_widget(self.seq_out)
+        sc.add_widget(box)
+        return sc
+
+    def _run_seq(self):
+        try:
+            out = seqfind.run(self.seq_text.text if self.seq_text else "", lang=self.lang, n_next=5)
+        except Exception:
+            out = {"text": "0"}
+        self.seq_out.text = out.get("text") or "0"
 
     def _run_circuit(self, mode: str):
         try:

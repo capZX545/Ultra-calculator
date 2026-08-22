@@ -83,9 +83,9 @@ Units are first-class on this screen. `12 V / 2 kohm` is `6 mA`. `5 km / 30 min`
 
 ### Formulas
 
-7531 named equations, 139 categories. Each row is a solvable identity, not a caption. Desktop, web, android, and phone `formulas.json` are the same file (~5.2 MB).
+6617 named equations, 139 categories. Each row is a solvable identity, not a caption. Desktop, web, android, and phone `formulas.json` are the same file (~5.2 MB).
 
-5015 of those are textbook identities. The other 2516 stay in `unit.conv` and are not part of that 5000. A few families are the same identity at each n (n equal resistors, power-law degree n, annuity factor n, binomial n). Each n is its own row because the solver treats it as a different equation.
+4101 of those are textbook identities. The other 2516 stay in `unit.conv`. I do not keep a separate row for n equal resistors in parallel. Two parts at a time is enough; the Circuits page asks for the two circuits, then series or parallel.
 
 Default: fill knowns, leave one blank or pick the unknown, Solve. Isolated-LHS formulas skip `solve` and evaluate the right-hand side. Otherwise SymPy solves for that symbol, with `nsolve` as a fallback.
 
@@ -93,18 +93,18 @@ System mode: several equations, several unknowns. Add / remove both.
 
 Search matches id, category, name (all three languages), and the expression string.
 
-Counts by group, they add to 7531:
+Counts by group, they add to 6617:
 
 | Group | n |
 |---|---:|
 | Math | 1597 |
 | Engineering math | 119 |
 | Special functions | 191 |
-| Physics | 683 |
+| Physics | 565 |
 | Chemistry | 235 |
 | Biology | 133 |
 | Medicine and health | 107 |
-| Engineering | 1480 |
+| Engineering | 684 |
 | Economics and finance | 167 |
 | Earth and environment | 100 |
 | Other applied | 203 |
@@ -166,11 +166,11 @@ Unit conversions are the large block because each pair is a working formula (len
 | Integer functions | 1 |
 | Number theory functions | 1 |
 
-**Physics (683)**
+**Physics (565)**
 
 | Category | n |
 |---|---:|
-| Circuits | 164 |
+| Circuits | 46 |
 | Thermodynamics | 45 |
 | Waves | 45 |
 | Optics | 42 |
@@ -219,11 +219,11 @@ Unit conversions are the large block because each pair is a working formula (len
 
 **Medicine and health (107)** — Fitness and nutrition 42, Clinical 38, Pharmacokinetics 20, Cardiology 6, Lab medicine 1.
 
-**Engineering (1480)**
+**Engineering (684)**
 
 | Category | n |
 |---|---:|
-| Electrical engineering | 850 |
+| Electrical engineering | 54 |
 | HVAC | 97 |
 | Electric power | 89 |
 | Reliability | 64 |
@@ -274,7 +274,17 @@ API: `POST /api/problem` with `{text, mode, unknown, at, lang, eng}`.
 
 ### Circuits
 
-Text netlist. There is no schematic editor. Node `0` (also `gnd`, `ground`, `g`, `earth`) is the reference.
+The page is a short questionnaire. It does not ask how many parts sit in parallel.
+
+1. What is the first circuit? Resistor, capacitor, or inductor, then its value (`1k`, `10u`, `4.7`).
+2. What is the second circuit? Same question.
+3. How are those two connected? Series or parallel.
+
+Then it writes the formula and the number. After that you can add another part: the equivalent becomes circuit 1 and it asks for circuit 2 again.
+
+Alt+0. API: `POST /api/circguide`.
+
+Netlist is still there, under the fold. Node `0` (also `gnd`, `ground`, `g`, `earth`) is the reference.
 
 ```
 V1 1 0 12
@@ -348,6 +358,10 @@ Number theory, combinatorics, sequences, dense linear algebra (`1, 2; 3, 4`), sc
 
 Paste a column, or one line of numbers. n, mean, median, min, max, sample variance and stdev, quartiles, IQR, RMS, histogram SVG. Two columns: slope, intercept, Pearson r.
 
+### Sequences
+
+Paste terms (`2 5 8 11` or `3, 6, 12, 24`). The page names the type and writes the general formula. Alt+S. API: `POST /api/seqfind`.
+
 ### Triangle
 
 Sides `a,b,c` opposite angles `A,B,C` in degrees. SSS, SAS, ASA, AAS, SSA (both triangles when the ambiguous case is real). Area, perimeter, altitudes, inradius, circumradius.
@@ -415,7 +429,7 @@ phone/app/src/main/assets/www/
                   index.html, ui.js, boot.js, py/, pyodide/
 ```
 
-Web APIs are ordinary JSON POST/GET: `/api/eval`, `/api/solve`, `/api/system`, `/api/poly`, `/api/numeric`, `/api/problem`, `/api/circuit`, `/api/graph`, `/api/matrix`, `/api/stats`, `/api/triangle`, `/api/search`, `/api/latex`, `/api/session`, plus formulas, algorithms, chemistry, elements, lookup, sources. The phone WebView calls the same paths through `bridge.handle`.
+Web APIs are ordinary JSON POST/GET: `/api/eval`, `/api/solve`, `/api/system`, `/api/poly`, `/api/numeric`, `/api/problem`, `/api/circuit`, `/api/graph`, `/api/matrix`, `/api/stats`, `/api/triangle`, `/api/search`, `/api/latex`, `/api/session`, plus formulas, algorithms, chemistry, elements, lookup, sources, `/api/circguide`, `/api/seqfind`. The phone WebView calls the same paths through `bridge.handle`.
 
 ---
 
@@ -425,14 +439,14 @@ Web APIs are ordinary JSON POST/GET: `/api/eval`, `/api/solve`, `/api/system`, `
 |---|---|---|---|
 | Keypad + CAS | yes | yes | yes |
 | Units on the keypad | yes | yes | yes |
-| 7531 formulas / systems | yes | yes | yes |
+| 6617 formulas / systems | yes | yes | yes |
 | Teacher steps | yes | yes | yes |
 | Polynomials ≤ 6 | yes | yes | yes |
 | Numerical, RK4, ODE 2, system | yes | yes | yes (no SciPy) |
 | 130 algorithms | yes | yes | yes |
 | Chemistry + 118 elements | yes | yes | yes |
 | Problems / inverse | yes | yes | yes |
-| Circuits (MNA, AC, Thevenin, NL, .tran) | yes | yes | yes |
+| Circuits (step wizard + MNA) | yes | yes | yes |
 | Graph SVG | fallback | yes | yes |
 | Matrix / stats / triangle | yes | yes | yes |
 | Save / lookup / LaTeX | yes | yes | yes |
@@ -451,14 +465,14 @@ The Sources tab lists the maps I used. I did not scrape or paste:
 - Equation Encyclopedia’s copyrighted pages, games, or problem sets
 - arXiv TeX
 
-Named special functions are evaluated with SymPy / SciPy. Constants are public CODATA. The 5015 non-unit rows are textbook equations the program can actually solve. Unit conversions are a separate 2516. That is the point of the catalog. A dump of other people’s pages would be larger and mostly not mine to ship.
+Named special functions are evaluated with SymPy / SciPy. Constants are public CODATA. The 4101 non-unit rows are textbook equations the program can actually solve. Unit conversions are a separate 2516. That is the point of the catalog. A dump of other people’s pages would be larger and mostly not mine to ship.
 
 ---
 
 ## Limits I am not pretending are done
 
 - Circuit inverse is one numeric unknown. Not a general nonlinear OP.
-- No schematic drawing. Netlist only.
+- No schematic drawing. The main path is the two-circuit questionnaire. Netlist is extra.
 - Diode / BJT / MOSFET models are the simple stamps described above.
 - Transient is backward Euler, fixed step, short table.
 - Teacher steps explain the solve that ran. They do not invent a Photomath-style derivation for every identity.
