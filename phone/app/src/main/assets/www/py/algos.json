@@ -1,0 +1,4234 @@
+{
+  "categories": {
+    "algo.numth": {
+      "en": "Number theory",
+      "fa": "نظریه اعداد",
+      "fi": "Lukuteoria"
+    },
+    "algo.combo": {
+      "en": "Combinatorics",
+      "fa": "ترکیبیات",
+      "fi": "Kombinatoriikka"
+    },
+    "algo.seq": {
+      "en": "Sequences",
+      "fa": "دنباله ها",
+      "fi": "Jonot"
+    },
+    "algo.linalg": {
+      "en": "Linear algebra",
+      "fa": "جبر خطی",
+      "fi": "Lineaarialgebra"
+    },
+    "algo.root": {
+      "en": "Root finding",
+      "fa": "ریشه یابی",
+      "fi": "Juuren haku"
+    },
+    "algo.integ": {
+      "en": "Integration",
+      "fa": "انتگرال",
+      "fi": "Integrointi"
+    },
+    "algo.ode": {
+      "en": "Differential equations",
+      "fa": "معادلات دیفرانسیل",
+      "fi": "Differentiaaliyhtalot"
+    },
+    "algo.interp": {
+      "en": "Interpolation",
+      "fa": "درونیابی",
+      "fi": "Interpolointi"
+    },
+    "algo.opt": {
+      "en": "Optimization",
+      "fa": "بهینه سازی",
+      "fi": "Optimointi"
+    },
+    "algo.stat": {
+      "en": "Statistics",
+      "fa": "آمار",
+      "fi": "Tilastot"
+    },
+    "algo.dist": {
+      "en": "Distributions",
+      "fa": "توزیع ها",
+      "fi": "Jakaumat"
+    },
+    "algo.signal": {
+      "en": "Signals",
+      "fa": "سیگنال",
+      "fi": "Signaalit"
+    },
+    "algo.geo": {
+      "en": "Geometry algorithms",
+      "fa": "هندسه الگوریتمی",
+      "fi": "Geometria-algoritmit"
+    },
+    "algo.convert": {
+      "en": "Conversion",
+      "fa": "تبدیل",
+      "fi": "Muunnos"
+    }
+  },
+  "items": [
+    {
+      "id": "alg_gcd",
+      "category": "algo.numth",
+      "name": {
+        "en": "GCD",
+        "fa": "ب.م.م",
+        "fi": "GCD"
+      },
+      "params": {
+        "a": {
+          "default": "12",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "b": {
+          "default": "18",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_lcm",
+      "category": "algo.numth",
+      "name": {
+        "en": "LCM",
+        "fa": "ک.م.م",
+        "fi": "SKM"
+      },
+      "params": {
+        "a": {
+          "default": "12",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "b": {
+          "default": "18",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_egcd",
+      "category": "algo.numth",
+      "name": {
+        "en": "Extended GCD",
+        "fa": "ب.م.م گسترش یافته",
+        "fi": "Laajennettu GCD"
+      },
+      "params": {
+        "a": {
+          "default": "12",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "b": {
+          "default": "18",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_invmod",
+      "category": "algo.numth",
+      "name": {
+        "en": "Modular inverse",
+        "fa": "وارون پیمانه ای",
+        "fi": "Modulaarinen kaanne"
+      },
+      "params": {
+        "a": {
+          "default": "3",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "m": {
+          "default": "11",
+          "name": {
+            "en": "modulus",
+            "fa": "modulus",
+            "fi": "modulus"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_powmod",
+      "category": "algo.numth",
+      "name": {
+        "en": "Modular power",
+        "fa": "توان پیمانه ای",
+        "fi": "Modulaarinen potenssi"
+      },
+      "params": {
+        "a": {
+          "default": "3",
+          "name": {
+            "en": "base",
+            "fa": "base",
+            "fi": "base"
+          }
+        },
+        "b": {
+          "default": "5",
+          "name": {
+            "en": "exp",
+            "fa": "exp",
+            "fi": "exp"
+          }
+        },
+        "m": {
+          "default": "7",
+          "name": {
+            "en": "modulus",
+            "fa": "modulus",
+            "fi": "modulus"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_isprime",
+      "category": "algo.numth",
+      "name": {
+        "en": "Primality",
+        "fa": "اول بودن",
+        "fi": "Alkuluku?"
+      },
+      "params": {
+        "n": {
+          "default": "97",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_nextprime",
+      "category": "algo.numth",
+      "name": {
+        "en": "Next prime",
+        "fa": "عدد اول بعدی",
+        "fi": "Seuraava alkuluku"
+      },
+      "params": {
+        "n": {
+          "default": "100",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_prevprime",
+      "category": "algo.numth",
+      "name": {
+        "en": "Previous prime",
+        "fa": "عدد اول قبلی",
+        "fi": "Edellinen alkuluku"
+      },
+      "params": {
+        "n": {
+          "default": "100",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_factor",
+      "category": "algo.numth",
+      "name": {
+        "en": "Integer factorization",
+        "fa": "تجزیه عدد",
+        "fi": "Tekijoihin jako"
+      },
+      "params": {
+        "n": {
+          "default": "360",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_totient",
+      "category": "algo.numth",
+      "name": {
+        "en": "Euler totient",
+        "fa": "فی اویلر",
+        "fi": "Eulerin totientti"
+      },
+      "params": {
+        "n": {
+          "default": "36",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_divisors",
+      "category": "algo.numth",
+      "name": {
+        "en": "Divisors",
+        "fa": "مقسوم علیه ها",
+        "fi": "Tekijat"
+      },
+      "params": {
+        "n": {
+          "default": "60",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_sigma",
+      "category": "algo.numth",
+      "name": {
+        "en": "Divisor sigma",
+        "fa": "سیگما مقسوم علیه",
+        "fi": "Tekijasumma"
+      },
+      "params": {
+        "n": {
+          "default": "12",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        },
+        "k": {
+          "default": "1",
+          "name": {
+            "en": "power k",
+            "fa": "power k",
+            "fi": "power k"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_nthroot",
+      "category": "algo.numth",
+      "name": {
+        "en": "Integer nth root",
+        "fa": "ریشه صحیح",
+        "fi": "Kokonaisjuuri"
+      },
+      "params": {
+        "n": {
+          "default": "81",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        },
+        "k": {
+          "default": "4",
+          "name": {
+            "en": "k",
+            "fa": "k",
+            "fi": "k"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_crt",
+      "category": "algo.numth",
+      "name": {
+        "en": "Chinese remainder",
+        "fa": "باقیمانده چینی",
+        "fi": "Kiinalainen jaannoslause"
+      },
+      "params": {
+        "a1": {
+          "default": "2",
+          "name": {
+            "en": "a1",
+            "fa": "a1",
+            "fi": "a1"
+          }
+        },
+        "n1": {
+          "default": "3",
+          "name": {
+            "en": "n1",
+            "fa": "n1",
+            "fi": "n1"
+          }
+        },
+        "a2": {
+          "default": "3",
+          "name": {
+            "en": "a2",
+            "fa": "a2",
+            "fi": "a2"
+          }
+        },
+        "n2": {
+          "default": "5",
+          "name": {
+            "en": "n2",
+            "fa": "n2",
+            "fi": "n2"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_binom",
+      "category": "algo.combo",
+      "name": {
+        "en": "Binomial C(n,k)",
+        "fa": "ترکیب",
+        "fi": "Binomikerroin"
+      },
+      "params": {
+        "n": {
+          "default": "10",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        },
+        "k": {
+          "default": "3",
+          "name": {
+            "en": "k",
+            "fa": "k",
+            "fi": "k"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_perm",
+      "category": "algo.combo",
+      "name": {
+        "en": "Permutation P(n,k)",
+        "fa": "جایگشت",
+        "fi": "Permutaatio"
+      },
+      "params": {
+        "n": {
+          "default": "10",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        },
+        "k": {
+          "default": "3",
+          "name": {
+            "en": "k",
+            "fa": "k",
+            "fi": "k"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_fact",
+      "category": "algo.combo",
+      "name": {
+        "en": "Factorial",
+        "fa": "فاکتوریل",
+        "fi": "Kertoma"
+      },
+      "params": {
+        "n": {
+          "default": "10",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_catalan",
+      "category": "algo.combo",
+      "name": {
+        "en": "Catalan number",
+        "fa": "عدد کاتالان",
+        "fi": "Catalanin luku"
+      },
+      "params": {
+        "n": {
+          "default": "8",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_bell",
+      "category": "algo.combo",
+      "name": {
+        "en": "Bell number",
+        "fa": "عدد بل",
+        "fi": "Bellin luku"
+      },
+      "params": {
+        "n": {
+          "default": "8",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_stir2",
+      "category": "algo.combo",
+      "name": {
+        "en": "Stirling 2nd kind",
+        "fa": "استرلینگ نوع ۲",
+        "fi": "Stirling 2"
+      },
+      "params": {
+        "n": {
+          "default": "6",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        },
+        "k": {
+          "default": "3",
+          "name": {
+            "en": "k",
+            "fa": "k",
+            "fi": "k"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_part",
+      "category": "algo.combo",
+      "name": {
+        "en": "Integer partitions",
+        "fa": "افراز عدد",
+        "fi": "Osiin jako"
+      },
+      "params": {
+        "n": {
+          "default": "10",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_fib",
+      "category": "algo.seq",
+      "name": {
+        "en": "Fibonacci",
+        "fa": "فیبوناچی",
+        "fi": "Fibonacci"
+      },
+      "params": {
+        "n": {
+          "default": "12",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_lucas",
+      "category": "algo.seq",
+      "name": {
+        "en": "Lucas",
+        "fa": "لوکاس",
+        "fi": "Lucas"
+      },
+      "params": {
+        "n": {
+          "default": "10",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_harm",
+      "category": "algo.seq",
+      "name": {
+        "en": "Harmonic number",
+        "fa": "عدد همساز",
+        "fi": "Harmoninen luku"
+      },
+      "params": {
+        "n": {
+          "default": "10",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_arith_nth",
+      "category": "algo.seq",
+      "name": {
+        "en": "Arithmetic term",
+        "fa": "جمله حسابی",
+        "fi": "Aritmeettinen termi"
+      },
+      "params": {
+        "a": {
+          "default": "2",
+          "name": {
+            "en": "first",
+            "fa": "first",
+            "fi": "first"
+          }
+        },
+        "d": {
+          "default": "3",
+          "name": {
+            "en": "diff",
+            "fa": "diff",
+            "fi": "diff"
+          }
+        },
+        "n": {
+          "default": "10",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_arith_sum",
+      "category": "algo.seq",
+      "name": {
+        "en": "Arithmetic sum",
+        "fa": "جمع حسابی",
+        "fi": "Aritmeettinen summa"
+      },
+      "params": {
+        "a": {
+          "default": "2",
+          "name": {
+            "en": "first",
+            "fa": "first",
+            "fi": "first"
+          }
+        },
+        "d": {
+          "default": "3",
+          "name": {
+            "en": "diff",
+            "fa": "diff",
+            "fi": "diff"
+          }
+        },
+        "n": {
+          "default": "10",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_geom_nth",
+      "category": "algo.seq",
+      "name": {
+        "en": "Geometric term",
+        "fa": "جمله هندسی",
+        "fi": "Geometrinen termi"
+      },
+      "params": {
+        "a": {
+          "default": "2",
+          "name": {
+            "en": "first",
+            "fa": "first",
+            "fi": "first"
+          }
+        },
+        "r": {
+          "default": "3",
+          "name": {
+            "en": "ratio",
+            "fa": "ratio",
+            "fi": "ratio"
+          }
+        },
+        "n": {
+          "default": "6",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_geom_sum",
+      "category": "algo.seq",
+      "name": {
+        "en": "Geometric sum",
+        "fa": "جمع هندسی",
+        "fi": "Geometrinen summa"
+      },
+      "params": {
+        "a": {
+          "default": "2",
+          "name": {
+            "en": "first",
+            "fa": "first",
+            "fi": "first"
+          }
+        },
+        "r": {
+          "default": "3",
+          "name": {
+            "en": "ratio",
+            "fa": "ratio",
+            "fi": "ratio"
+          }
+        },
+        "n": {
+          "default": "6",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_det",
+      "category": "algo.linalg",
+      "name": {
+        "en": "Determinant",
+        "fa": "دترمینان",
+        "fi": "Determinantti"
+      },
+      "params": {
+        "m": {
+          "default": "1, 2; 3, 4",
+          "name": {
+            "en": "matrix",
+            "fa": "matrix",
+            "fi": "matrix"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_inv",
+      "category": "algo.linalg",
+      "name": {
+        "en": "Matrix inverse",
+        "fa": "وارون ماتریس",
+        "fi": "Kaanteismatriisi"
+      },
+      "params": {
+        "m": {
+          "default": "1, 2; 3, 4",
+          "name": {
+            "en": "matrix",
+            "fa": "matrix",
+            "fi": "matrix"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_trans",
+      "category": "algo.linalg",
+      "name": {
+        "en": "Transpose",
+        "fa": "ترانهاده",
+        "fi": "Transpoosi"
+      },
+      "params": {
+        "m": {
+          "default": "1, 2; 3, 4",
+          "name": {
+            "en": "matrix",
+            "fa": "matrix",
+            "fi": "matrix"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_trace",
+      "category": "algo.linalg",
+      "name": {
+        "en": "Trace",
+        "fa": "اثر",
+        "fi": "Jalki"
+      },
+      "params": {
+        "m": {
+          "default": "1, 2; 3, 4",
+          "name": {
+            "en": "matrix",
+            "fa": "matrix",
+            "fi": "matrix"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_rank",
+      "category": "algo.linalg",
+      "name": {
+        "en": "Rank",
+        "fa": "رتبه",
+        "fi": "Aste"
+      },
+      "params": {
+        "m": {
+          "default": "1, 2; 2, 4",
+          "name": {
+            "en": "matrix",
+            "fa": "matrix",
+            "fi": "matrix"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_mul",
+      "category": "algo.linalg",
+      "name": {
+        "en": "Matrix product",
+        "fa": "ضرب ماتریس",
+        "fi": "Matriisitulo"
+      },
+      "params": {
+        "a": {
+          "default": "1, 2; 3, 4",
+          "name": {
+            "en": "A",
+            "fa": "A",
+            "fi": "A"
+          }
+        },
+        "b": {
+          "default": "0, 1; 1, 0",
+          "name": {
+            "en": "B",
+            "fa": "B",
+            "fi": "B"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_linsolve",
+      "category": "algo.linalg",
+      "name": {
+        "en": "Linear solve Ax=b",
+        "fa": "حل Ax=b",
+        "fi": "Lineaarinen ratkaisu"
+      },
+      "params": {
+        "a": {
+          "default": "2, 1; 1, 2",
+          "name": {
+            "en": "A",
+            "fa": "A",
+            "fi": "A"
+          }
+        },
+        "b": {
+          "default": "5, 4",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_eig",
+      "category": "algo.linalg",
+      "name": {
+        "en": "Eigenvalues",
+        "fa": "مقادیر ویژه",
+        "fi": "Ominaisarvot"
+      },
+      "params": {
+        "m": {
+          "default": "2, 1; 1, 2",
+          "name": {
+            "en": "matrix",
+            "fa": "matrix",
+            "fi": "matrix"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_fnorm",
+      "category": "algo.linalg",
+      "name": {
+        "en": "Frobenius norm",
+        "fa": "نرم فروبینیوس",
+        "fi": "Frobenius-normi"
+      },
+      "params": {
+        "m": {
+          "default": "1, 2; 3, 4",
+          "name": {
+            "en": "matrix",
+            "fa": "matrix",
+            "fi": "matrix"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_bisect",
+      "category": "algo.root",
+      "name": {
+        "en": "Bisection",
+        "fa": "نصف کردن",
+        "fi": "Puolitus"
+      },
+      "params": {
+        "f": {
+          "default": "x**2-2",
+          "name": {
+            "en": "f(x)",
+            "fa": "f(x)",
+            "fi": "f(x)"
+          }
+        },
+        "a": {
+          "default": "0",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "b": {
+          "default": "2",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_newton",
+      "category": "algo.root",
+      "name": {
+        "en": "Newton",
+        "fa": "نیوتن",
+        "fi": "Newton"
+      },
+      "params": {
+        "f": {
+          "default": "x**2-2",
+          "name": {
+            "en": "f(x)",
+            "fa": "f(x)",
+            "fi": "f(x)"
+          }
+        },
+        "x0": {
+          "default": "1",
+          "name": {
+            "en": "x0",
+            "fa": "x0",
+            "fi": "x0"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_secant",
+      "category": "algo.root",
+      "name": {
+        "en": "Secant",
+        "fa": "قاطع",
+        "fi": "Sivustaja"
+      },
+      "params": {
+        "f": {
+          "default": "x**2-2",
+          "name": {
+            "en": "f(x)",
+            "fa": "f(x)",
+            "fi": "f(x)"
+          }
+        },
+        "x0": {
+          "default": "1",
+          "name": {
+            "en": "x0",
+            "fa": "x0",
+            "fi": "x0"
+          }
+        },
+        "x1": {
+          "default": "2",
+          "name": {
+            "en": "x1",
+            "fa": "x1",
+            "fi": "x1"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_brent",
+      "category": "algo.root",
+      "name": {
+        "en": "Brent",
+        "fa": "برنت",
+        "fi": "Brent"
+      },
+      "params": {
+        "f": {
+          "default": "x**2-2",
+          "name": {
+            "en": "f(x)",
+            "fa": "f(x)",
+            "fi": "f(x)"
+          }
+        },
+        "a": {
+          "default": "0",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "b": {
+          "default": "2",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_trap",
+      "category": "algo.integ",
+      "name": {
+        "en": "Trapezoid integral",
+        "fa": "ذوزنقه",
+        "fi": "Puolisuunnikas"
+      },
+      "params": {
+        "f": {
+          "default": "x**2",
+          "name": {
+            "en": "f(x)",
+            "fa": "f(x)",
+            "fi": "f(x)"
+          }
+        },
+        "a": {
+          "default": "0",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "b": {
+          "default": "1",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        },
+        "n": {
+          "default": "40",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_simpson",
+      "category": "algo.integ",
+      "name": {
+        "en": "Simpson integral",
+        "fa": "سیمپسون",
+        "fi": "Simpson"
+      },
+      "params": {
+        "f": {
+          "default": "x**2",
+          "name": {
+            "en": "f(x)",
+            "fa": "f(x)",
+            "fi": "f(x)"
+          }
+        },
+        "a": {
+          "default": "0",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "b": {
+          "default": "1",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        },
+        "n": {
+          "default": "40",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_romberg",
+      "category": "algo.integ",
+      "name": {
+        "en": "Romberg integral",
+        "fa": "رامبرگ",
+        "fi": "Romberg"
+      },
+      "params": {
+        "f": {
+          "default": "x**2",
+          "name": {
+            "en": "f(x)",
+            "fa": "f(x)",
+            "fi": "f(x)"
+          }
+        },
+        "a": {
+          "default": "0",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "b": {
+          "default": "1",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_quad",
+      "category": "algo.integ",
+      "name": {
+        "en": "Adaptive quadrature",
+        "fa": "کوادراتور وقتی",
+        "fi": "Adaptiivinen kvadratuuri"
+      },
+      "params": {
+        "f": {
+          "default": "x**2",
+          "name": {
+            "en": "f(x)",
+            "fa": "f(x)",
+            "fi": "f(x)"
+          }
+        },
+        "a": {
+          "default": "0",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "b": {
+          "default": "1",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_euler",
+      "category": "algo.ode",
+      "name": {
+        "en": "Euler ODE",
+        "fa": "اویلر",
+        "fi": "Euler"
+      },
+      "params": {
+        "f": {
+          "default": "-y",
+          "name": {
+            "en": "f(x,y)",
+            "fa": "f(x,y)",
+            "fi": "f(x,y)"
+          }
+        },
+        "x0": {
+          "default": "0",
+          "name": {
+            "en": "x0",
+            "fa": "x0",
+            "fi": "x0"
+          }
+        },
+        "y0": {
+          "default": "1",
+          "name": {
+            "en": "y0",
+            "fa": "y0",
+            "fi": "y0"
+          }
+        },
+        "x1": {
+          "default": "1",
+          "name": {
+            "en": "x1",
+            "fa": "x1",
+            "fi": "x1"
+          }
+        },
+        "steps": {
+          "default": "40",
+          "name": {
+            "en": "steps",
+            "fa": "steps",
+            "fi": "steps"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_heun",
+      "category": "algo.ode",
+      "name": {
+        "en": "Heun ODE",
+        "fa": "هوین",
+        "fi": "Heun"
+      },
+      "params": {
+        "f": {
+          "default": "-y",
+          "name": {
+            "en": "f(x,y)",
+            "fa": "f(x,y)",
+            "fi": "f(x,y)"
+          }
+        },
+        "x0": {
+          "default": "0",
+          "name": {
+            "en": "x0",
+            "fa": "x0",
+            "fi": "x0"
+          }
+        },
+        "y0": {
+          "default": "1",
+          "name": {
+            "en": "y0",
+            "fa": "y0",
+            "fi": "y0"
+          }
+        },
+        "x1": {
+          "default": "1",
+          "name": {
+            "en": "x1",
+            "fa": "x1",
+            "fi": "x1"
+          }
+        },
+        "steps": {
+          "default": "40",
+          "name": {
+            "en": "steps",
+            "fa": "steps",
+            "fi": "steps"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_rk4",
+      "category": "algo.ode",
+      "name": {
+        "en": "RK4 ODE",
+        "fa": "رانگ کوتا ۴",
+        "fi": "RK4"
+      },
+      "params": {
+        "f": {
+          "default": "-y",
+          "name": {
+            "en": "f(x,y)",
+            "fa": "f(x,y)",
+            "fi": "f(x,y)"
+          }
+        },
+        "x0": {
+          "default": "0",
+          "name": {
+            "en": "x0",
+            "fa": "x0",
+            "fi": "x0"
+          }
+        },
+        "y0": {
+          "default": "1",
+          "name": {
+            "en": "y0",
+            "fa": "y0",
+            "fi": "y0"
+          }
+        },
+        "x1": {
+          "default": "1",
+          "name": {
+            "en": "x1",
+            "fa": "x1",
+            "fi": "x1"
+          }
+        },
+        "steps": {
+          "default": "40",
+          "name": {
+            "en": "steps",
+            "fa": "steps",
+            "fi": "steps"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_rk45",
+      "category": "algo.ode",
+      "name": {
+        "en": "RK45 ODE",
+        "fa": "رانگ کوتا ۴۵",
+        "fi": "RK45"
+      },
+      "params": {
+        "f": {
+          "default": "-y",
+          "name": {
+            "en": "f(x,y)",
+            "fa": "f(x,y)",
+            "fi": "f(x,y)"
+          }
+        },
+        "x0": {
+          "default": "0",
+          "name": {
+            "en": "x0",
+            "fa": "x0",
+            "fi": "x0"
+          }
+        },
+        "y0": {
+          "default": "1",
+          "name": {
+            "en": "y0",
+            "fa": "y0",
+            "fi": "y0"
+          }
+        },
+        "x1": {
+          "default": "1",
+          "name": {
+            "en": "x1",
+            "fa": "x1",
+            "fi": "x1"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_lerp",
+      "category": "algo.interp",
+      "name": {
+        "en": "Linear interpolation",
+        "fa": "درونیابی خطی",
+        "fi": "Lineaarinen interpolointi"
+      },
+      "params": {
+        "x0": {
+          "default": "0",
+          "name": {
+            "en": "x0",
+            "fa": "x0",
+            "fi": "x0"
+          }
+        },
+        "y0": {
+          "default": "1",
+          "name": {
+            "en": "y0",
+            "fa": "y0",
+            "fi": "y0"
+          }
+        },
+        "x1": {
+          "default": "2",
+          "name": {
+            "en": "x1",
+            "fa": "x1",
+            "fi": "x1"
+          }
+        },
+        "y1": {
+          "default": "5",
+          "name": {
+            "en": "y1",
+            "fa": "y1",
+            "fi": "y1"
+          }
+        },
+        "x": {
+          "default": "1",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_lagrange",
+      "category": "algo.interp",
+      "name": {
+        "en": "Lagrange interpolation",
+        "fa": "لاگرانژ",
+        "fi": "Lagrange"
+      },
+      "params": {
+        "xs": {
+          "default": "0, 1, 2",
+          "name": {
+            "en": "x values",
+            "fa": "x values",
+            "fi": "x values"
+          }
+        },
+        "ys": {
+          "default": "1, 2, 5",
+          "name": {
+            "en": "y values",
+            "fa": "y values",
+            "fi": "y values"
+          }
+        },
+        "x": {
+          "default": "1.5",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_golden",
+      "category": "algo.opt",
+      "name": {
+        "en": "Bounded scalar min",
+        "fa": "کمینه روی بازه",
+        "fi": "Raja-arvoinen minimi"
+      },
+      "params": {
+        "f": {
+          "default": "(x-2)**2",
+          "name": {
+            "en": "f(x)",
+            "fa": "f(x)",
+            "fi": "f(x)"
+          }
+        },
+        "a": {
+          "default": "0",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "b": {
+          "default": "4",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_nelder",
+      "category": "algo.opt",
+      "name": {
+        "en": "Nelder-Mead min",
+        "fa": "نلدر مید",
+        "fi": "Nelder-Mead"
+      },
+      "params": {
+        "f": {
+          "default": "(x-2)**2",
+          "name": {
+            "en": "f(x)",
+            "fa": "f(x)",
+            "fi": "f(x)"
+          }
+        },
+        "x0": {
+          "default": "0",
+          "name": {
+            "en": "x0",
+            "fa": "x0",
+            "fi": "x0"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_mean",
+      "category": "algo.stat",
+      "name": {
+        "en": "Mean",
+        "fa": "میانگین",
+        "fi": "Keskiarvo"
+      },
+      "params": {
+        "data": {
+          "default": "1, 2, 3, 4, 5",
+          "name": {
+            "en": "data",
+            "fa": "data",
+            "fi": "data"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_median",
+      "category": "algo.stat",
+      "name": {
+        "en": "Median",
+        "fa": "میانه",
+        "fi": "Mediaani"
+      },
+      "params": {
+        "data": {
+          "default": "1, 2, 3, 4, 5",
+          "name": {
+            "en": "data",
+            "fa": "data",
+            "fi": "data"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_var",
+      "category": "algo.stat",
+      "name": {
+        "en": "Sample variance",
+        "fa": "واریانس نمونه",
+        "fi": "Otosvarianssi"
+      },
+      "params": {
+        "data": {
+          "default": "1, 2, 3, 4, 5",
+          "name": {
+            "en": "data",
+            "fa": "data",
+            "fi": "data"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_std",
+      "category": "algo.stat",
+      "name": {
+        "en": "Sample stdev",
+        "fa": "انحراف معیار",
+        "fi": "Keskihajonta"
+      },
+      "params": {
+        "data": {
+          "default": "1, 2, 3, 4, 5",
+          "name": {
+            "en": "data",
+            "fa": "data",
+            "fi": "data"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_geomean",
+      "category": "algo.stat",
+      "name": {
+        "en": "Geometric mean",
+        "fa": "میانگین هندسی",
+        "fi": "Geometrinen keskiarvo"
+      },
+      "params": {
+        "data": {
+          "default": "1, 2, 4, 8",
+          "name": {
+            "en": "data",
+            "fa": "data",
+            "fi": "data"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_rms",
+      "category": "algo.stat",
+      "name": {
+        "en": "RMS",
+        "fa": "جذر میانگین مربع",
+        "fi": "RMS"
+      },
+      "params": {
+        "data": {
+          "default": "3, 4",
+          "name": {
+            "en": "data",
+            "fa": "data",
+            "fi": "data"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_pct",
+      "category": "algo.stat",
+      "name": {
+        "en": "Percentile",
+        "fa": "صدک",
+        "fi": "Persentiili"
+      },
+      "params": {
+        "data": {
+          "default": "1, 2, 3, 4, 5",
+          "name": {
+            "en": "data",
+            "fa": "data",
+            "fi": "data"
+          }
+        },
+        "p": {
+          "default": "75",
+          "name": {
+            "en": "p",
+            "fa": "p",
+            "fi": "p"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_linreg",
+      "category": "algo.stat",
+      "name": {
+        "en": "Linear regression",
+        "fa": "رگرسیون خطی",
+        "fi": "Lineaarinen regressio"
+      },
+      "params": {
+        "xs": {
+          "default": "1, 2, 3, 4",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        },
+        "ys": {
+          "default": "2, 3, 5, 6",
+          "name": {
+            "en": "y",
+            "fa": "y",
+            "fi": "y"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_corr",
+      "category": "algo.stat",
+      "name": {
+        "en": "Pearson correlation",
+        "fa": "همبستگی پیرسون",
+        "fi": "Pearson-korrelaatio"
+      },
+      "params": {
+        "xs": {
+          "default": "1, 2, 3, 4",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        },
+        "ys": {
+          "default": "2, 3, 5, 6",
+          "name": {
+            "en": "y",
+            "fa": "y",
+            "fi": "y"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_fft",
+      "category": "algo.signal",
+      "name": {
+        "en": "FFT magnitudes",
+        "fa": "اندازه تبدیل فوریه",
+        "fi": "FFT-suuruudet"
+      },
+      "params": {
+        "data": {
+          "default": "1, 0, -1, 0",
+          "name": {
+            "en": "samples",
+            "fa": "samples",
+            "fi": "samples"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_conv",
+      "category": "algo.signal",
+      "name": {
+        "en": "Discrete convolution",
+        "fa": "پیچش گسسته",
+        "fi": "Konvoluutio"
+      },
+      "params": {
+        "a": {
+          "default": "1, 2, 3",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "b": {
+          "default": "0, 1, 0.5",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_dist2",
+      "category": "algo.geo",
+      "name": {
+        "en": "2D distance",
+        "fa": "فاصله دوبعدی",
+        "fi": "2D-etaisyys"
+      },
+      "params": {
+        "x1": {
+          "default": "0",
+          "name": {
+            "en": "x1",
+            "fa": "x1",
+            "fi": "x1"
+          }
+        },
+        "y1": {
+          "default": "0",
+          "name": {
+            "en": "y1",
+            "fa": "y1",
+            "fi": "y1"
+          }
+        },
+        "x2": {
+          "default": "3",
+          "name": {
+            "en": "x2",
+            "fa": "x2",
+            "fi": "x2"
+          }
+        },
+        "y2": {
+          "default": "4",
+          "name": {
+            "en": "y2",
+            "fa": "y2",
+            "fi": "y2"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_dist3",
+      "category": "algo.geo",
+      "name": {
+        "en": "3D distance",
+        "fa": "فاصله سه بعدی",
+        "fi": "3D-etaisyys"
+      },
+      "params": {
+        "x1": {
+          "default": "0",
+          "name": {
+            "en": "x1",
+            "fa": "x1",
+            "fi": "x1"
+          }
+        },
+        "y1": {
+          "default": "0",
+          "name": {
+            "en": "y1",
+            "fa": "y1",
+            "fi": "y1"
+          }
+        },
+        "z1": {
+          "default": "0",
+          "name": {
+            "en": "z1",
+            "fa": "z1",
+            "fi": "z1"
+          }
+        },
+        "x2": {
+          "default": "1",
+          "name": {
+            "en": "x2",
+            "fa": "x2",
+            "fi": "x2"
+          }
+        },
+        "y2": {
+          "default": "2",
+          "name": {
+            "en": "y2",
+            "fa": "y2",
+            "fi": "y2"
+          }
+        },
+        "z2": {
+          "default": "2",
+          "name": {
+            "en": "z2",
+            "fa": "z2",
+            "fi": "z2"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_shoelace",
+      "category": "algo.geo",
+      "name": {
+        "en": "Shoelace area",
+        "fa": "مساحت چندضلعی",
+        "fi": "Kenkanauha-ala"
+      },
+      "params": {
+        "pts": {
+          "default": "0,0; 4,0; 4,3; 0,3",
+          "name": {
+            "en": "points",
+            "fa": "points",
+            "fi": "points"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_heron",
+      "category": "algo.geo",
+      "name": {
+        "en": "Heron area",
+        "fa": "هرون",
+        "fi": "Heron"
+      },
+      "params": {
+        "a": {
+          "default": "3",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "b": {
+          "default": "4",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        },
+        "c": {
+          "default": "5",
+          "name": {
+            "en": "c",
+            "fa": "c",
+            "fi": "c"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_haversine",
+      "category": "algo.geo",
+      "name": {
+        "en": "Haversine distance",
+        "fa": "هاورساین",
+        "fi": "Haversine"
+      },
+      "params": {
+        "lat1": {
+          "default": "60.17",
+          "name": {
+            "en": "lat1",
+            "fa": "lat1",
+            "fi": "lat1"
+          }
+        },
+        "lon1": {
+          "default": "24.94",
+          "name": {
+            "en": "lon1",
+            "fa": "lon1",
+            "fi": "lon1"
+          }
+        },
+        "lat2": {
+          "default": "59.33",
+          "name": {
+            "en": "lat2",
+            "fa": "lat2",
+            "fi": "lat2"
+          }
+        },
+        "lon2": {
+          "default": "18.07",
+          "name": {
+            "en": "lon2",
+            "fa": "lon2",
+            "fi": "lon2"
+          }
+        },
+        "r": {
+          "default": "6371",
+          "name": {
+            "en": "R km",
+            "fa": "R km",
+            "fi": "R km"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_base",
+      "category": "algo.convert",
+      "name": {
+        "en": "Integer base convert",
+        "fa": "تبدیل مبنا",
+        "fi": "Kantamuunnos"
+      },
+      "params": {
+        "n": {
+          "default": "255",
+          "name": {
+            "en": "digits",
+            "fa": "digits",
+            "fi": "digits"
+          }
+        },
+        "frm": {
+          "default": "10",
+          "name": {
+            "en": "from base",
+            "fa": "from base",
+            "fi": "from base"
+          }
+        },
+        "to": {
+          "default": "16",
+          "name": {
+            "en": "to base",
+            "fa": "to base",
+            "fi": "to base"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_norm_pdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Normal PDF",
+        "fa": "نرمال چگالی",
+        "fi": "Normaali tiheys"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_norm_cdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Normal CDF",
+        "fa": "نرمال تابع توزیع",
+        "fi": "Normaali kertyma"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_norm_ppf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Normal Quantile PPF",
+        "fa": "نرمال چندک",
+        "fi": "Normaali kvantiili"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "q": {
+          "default": "0.5",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_expon_pdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Exponential PDF",
+        "fa": "نمایی چگالی",
+        "fi": "Eksponentiaalinen tiheys"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_expon_cdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Exponential CDF",
+        "fa": "نمایی تابع توزیع",
+        "fi": "Eksponentiaalinen kertyma"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_expon_ppf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Exponential Quantile PPF",
+        "fa": "نمایی چندک",
+        "fi": "Eksponentiaalinen kvantiili"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "q": {
+          "default": "0.5",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_uniform_pdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Uniform PDF",
+        "fa": "یکنواخت چگالی",
+        "fi": "Tasainen tiheys"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_uniform_cdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Uniform CDF",
+        "fa": "یکنواخت تابع توزیع",
+        "fi": "Tasainen kertyma"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_uniform_ppf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Uniform Quantile PPF",
+        "fa": "یکنواخت چندک",
+        "fi": "Tasainen kvantiili"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "q": {
+          "default": "0.5",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_t_pdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Student t PDF",
+        "fa": "تی استیودنت چگالی",
+        "fi": "Studentin t tiheys"
+      },
+      "params": {
+        "df": {
+          "default": "10",
+          "name": {
+            "en": "df",
+            "fa": "df",
+            "fi": "df"
+          }
+        },
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_t_cdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Student t CDF",
+        "fa": "تی استیودنت تابع توزیع",
+        "fi": "Studentin t kertyma"
+      },
+      "params": {
+        "df": {
+          "default": "10",
+          "name": {
+            "en": "df",
+            "fa": "df",
+            "fi": "df"
+          }
+        },
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_t_ppf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Student t Quantile PPF",
+        "fa": "تی استیودنت چندک",
+        "fi": "Studentin t kvantiili"
+      },
+      "params": {
+        "df": {
+          "default": "10",
+          "name": {
+            "en": "df",
+            "fa": "df",
+            "fi": "df"
+          }
+        },
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "q": {
+          "default": "0.5",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_chi2_pdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Chi-square PDF",
+        "fa": "کای دو چگالی",
+        "fi": "Khiin neliö tiheys"
+      },
+      "params": {
+        "df": {
+          "default": "4",
+          "name": {
+            "en": "df",
+            "fa": "df",
+            "fi": "df"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_chi2_cdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Chi-square CDF",
+        "fa": "کای دو تابع توزیع",
+        "fi": "Khiin neliö kertyma"
+      },
+      "params": {
+        "df": {
+          "default": "4",
+          "name": {
+            "en": "df",
+            "fa": "df",
+            "fi": "df"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_chi2_ppf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Chi-square Quantile PPF",
+        "fa": "کای دو چندک",
+        "fi": "Khiin neliö kvantiili"
+      },
+      "params": {
+        "df": {
+          "default": "4",
+          "name": {
+            "en": "df",
+            "fa": "df",
+            "fi": "df"
+          }
+        },
+        "q": {
+          "default": "0.5",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_f_pdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "F PDF",
+        "fa": "اف چگالی",
+        "fi": "F tiheys"
+      },
+      "params": {
+        "dfn": {
+          "default": "5",
+          "name": {
+            "en": "dfn",
+            "fa": "dfn",
+            "fi": "dfn"
+          }
+        },
+        "dfd": {
+          "default": "10",
+          "name": {
+            "en": "dfd",
+            "fa": "dfd",
+            "fi": "dfd"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_f_cdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "F CDF",
+        "fa": "اف تابع توزیع",
+        "fi": "F kertyma"
+      },
+      "params": {
+        "dfn": {
+          "default": "5",
+          "name": {
+            "en": "dfn",
+            "fa": "dfn",
+            "fi": "dfn"
+          }
+        },
+        "dfd": {
+          "default": "10",
+          "name": {
+            "en": "dfd",
+            "fa": "dfd",
+            "fi": "dfd"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_f_ppf",
+      "category": "algo.dist",
+      "name": {
+        "en": "F Quantile PPF",
+        "fa": "اف چندک",
+        "fi": "F kvantiili"
+      },
+      "params": {
+        "dfn": {
+          "default": "5",
+          "name": {
+            "en": "dfn",
+            "fa": "dfn",
+            "fi": "dfn"
+          }
+        },
+        "dfd": {
+          "default": "10",
+          "name": {
+            "en": "dfd",
+            "fa": "dfd",
+            "fi": "dfd"
+          }
+        },
+        "q": {
+          "default": "0.5",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_gamma_pdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Gamma PDF",
+        "fa": "گاما چگالی",
+        "fi": "Gamma tiheys"
+      },
+      "params": {
+        "a": {
+          "default": "2",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_gamma_cdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Gamma CDF",
+        "fa": "گاما تابع توزیع",
+        "fi": "Gamma kertyma"
+      },
+      "params": {
+        "a": {
+          "default": "2",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_gamma_ppf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Gamma Quantile PPF",
+        "fa": "گاما چندک",
+        "fi": "Gamma kvantiili"
+      },
+      "params": {
+        "a": {
+          "default": "2",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "q": {
+          "default": "0.5",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_beta_pdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Beta PDF",
+        "fa": "بتا چگالی",
+        "fi": "Beeta tiheys"
+      },
+      "params": {
+        "a": {
+          "default": "2",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "b": {
+          "default": "5",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_beta_cdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Beta CDF",
+        "fa": "بتا تابع توزیع",
+        "fi": "Beeta kertyma"
+      },
+      "params": {
+        "a": {
+          "default": "2",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "b": {
+          "default": "5",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_beta_ppf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Beta Quantile PPF",
+        "fa": "بتا چندک",
+        "fi": "Beeta kvantiili"
+      },
+      "params": {
+        "a": {
+          "default": "2",
+          "name": {
+            "en": "a",
+            "fa": "a",
+            "fi": "a"
+          }
+        },
+        "b": {
+          "default": "5",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        },
+        "q": {
+          "default": "0.5",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_lognorm_pdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Log-normal PDF",
+        "fa": "لگ نرمال چگالی",
+        "fi": "Lognormaali tiheys"
+      },
+      "params": {
+        "s": {
+          "default": "0.5",
+          "name": {
+            "en": "s",
+            "fa": "s",
+            "fi": "s"
+          }
+        },
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_lognorm_cdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Log-normal CDF",
+        "fa": "لگ نرمال تابع توزیع",
+        "fi": "Lognormaali kertyma"
+      },
+      "params": {
+        "s": {
+          "default": "0.5",
+          "name": {
+            "en": "s",
+            "fa": "s",
+            "fi": "s"
+          }
+        },
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_lognorm_ppf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Log-normal Quantile PPF",
+        "fa": "لگ نرمال چندک",
+        "fi": "Lognormaali kvantiili"
+      },
+      "params": {
+        "s": {
+          "default": "0.5",
+          "name": {
+            "en": "s",
+            "fa": "s",
+            "fi": "s"
+          }
+        },
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "q": {
+          "default": "0.5",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_weibull_min_pdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Weibull PDF",
+        "fa": "وایبل چگالی",
+        "fi": "Weibull tiheys"
+      },
+      "params": {
+        "c": {
+          "default": "1.5",
+          "name": {
+            "en": "c",
+            "fa": "c",
+            "fi": "c"
+          }
+        },
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_weibull_min_cdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Weibull CDF",
+        "fa": "وایبل تابع توزیع",
+        "fi": "Weibull kertyma"
+      },
+      "params": {
+        "c": {
+          "default": "1.5",
+          "name": {
+            "en": "c",
+            "fa": "c",
+            "fi": "c"
+          }
+        },
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_weibull_min_ppf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Weibull Quantile PPF",
+        "fa": "وایبل چندک",
+        "fi": "Weibull kvantiili"
+      },
+      "params": {
+        "c": {
+          "default": "1.5",
+          "name": {
+            "en": "c",
+            "fa": "c",
+            "fi": "c"
+          }
+        },
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "q": {
+          "default": "0.5",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_cauchy_pdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Cauchy PDF",
+        "fa": "کوشی چگالی",
+        "fi": "Cauchy tiheys"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_cauchy_cdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Cauchy CDF",
+        "fa": "کوشی تابع توزیع",
+        "fi": "Cauchy kertyma"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_cauchy_ppf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Cauchy Quantile PPF",
+        "fa": "کوشی چندک",
+        "fi": "Cauchy kvantiili"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "q": {
+          "default": "0.5",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_laplace_pdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Laplace PDF",
+        "fa": "لاپلاس چگالی",
+        "fi": "Laplace tiheys"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_laplace_cdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Laplace CDF",
+        "fa": "لاپلاس تابع توزیع",
+        "fi": "Laplace kertyma"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_laplace_ppf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Laplace Quantile PPF",
+        "fa": "لاپلاس چندک",
+        "fi": "Laplace kvantiili"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "q": {
+          "default": "0.5",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_logistic_pdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Logistic PDF",
+        "fa": "لجستیک چگالی",
+        "fi": "Logistinen tiheys"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_logistic_cdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Logistic CDF",
+        "fa": "لجستیک تابع توزیع",
+        "fi": "Logistinen kertyma"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_logistic_ppf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Logistic Quantile PPF",
+        "fa": "لجستیک چندک",
+        "fi": "Logistinen kvantiili"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "q": {
+          "default": "0.5",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_rayleigh_pdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Rayleigh PDF",
+        "fa": "ریلی چگالی",
+        "fi": "Rayleigh tiheys"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_rayleigh_cdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Rayleigh CDF",
+        "fa": "ریلی تابع توزیع",
+        "fi": "Rayleigh kertyma"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_rayleigh_ppf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Rayleigh Quantile PPF",
+        "fa": "ریلی چندک",
+        "fi": "Rayleigh kvantiili"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "q": {
+          "default": "0.5",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_pareto_pdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Pareto PDF",
+        "fa": "پارتو چگالی",
+        "fi": "Pareto tiheys"
+      },
+      "params": {
+        "b": {
+          "default": "2",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        },
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_pareto_cdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Pareto CDF",
+        "fa": "پارتو تابع توزیع",
+        "fi": "Pareto kertyma"
+      },
+      "params": {
+        "b": {
+          "default": "2",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        },
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_pareto_ppf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Pareto Quantile PPF",
+        "fa": "پارتو چندک",
+        "fi": "Pareto kvantiili"
+      },
+      "params": {
+        "b": {
+          "default": "2",
+          "name": {
+            "en": "b",
+            "fa": "b",
+            "fi": "b"
+          }
+        },
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "q": {
+          "default": "0.5",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_gumbel_r_pdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Gumbel PDF",
+        "fa": "گامبل چگالی",
+        "fi": "Gumbel tiheys"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_gumbel_r_cdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Gumbel CDF",
+        "fa": "گامبل تابع توزیع",
+        "fi": "Gumbel kertyma"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_gumbel_r_ppf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Gumbel Quantile PPF",
+        "fa": "گامبل چندک",
+        "fi": "Gumbel kvantiili"
+      },
+      "params": {
+        "loc": {
+          "default": "0",
+          "name": {
+            "en": "loc",
+            "fa": "loc",
+            "fi": "loc"
+          }
+        },
+        "scale": {
+          "default": "1",
+          "name": {
+            "en": "scale",
+            "fa": "scale",
+            "fi": "scale"
+          }
+        },
+        "q": {
+          "default": "0.5",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_poisson_pdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Poisson PDF",
+        "fa": "پواسون چگالی",
+        "fi": "Poisson tiheys"
+      },
+      "params": {
+        "mu": {
+          "default": "3",
+          "name": {
+            "en": "mu",
+            "fa": "mu",
+            "fi": "mu"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_poisson_cdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Poisson CDF",
+        "fa": "پواسون تابع توزیع",
+        "fi": "Poisson kertyma"
+      },
+      "params": {
+        "mu": {
+          "default": "3",
+          "name": {
+            "en": "mu",
+            "fa": "mu",
+            "fi": "mu"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_poisson_ppf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Poisson Quantile PPF",
+        "fa": "پواسون چندک",
+        "fi": "Poisson kvantiili"
+      },
+      "params": {
+        "mu": {
+          "default": "3",
+          "name": {
+            "en": "mu",
+            "fa": "mu",
+            "fi": "mu"
+          }
+        },
+        "q": {
+          "default": "0.5",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_binom_pdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Binomial PDF",
+        "fa": "دوجمله ای چگالی",
+        "fi": "Binomi tiheys"
+      },
+      "params": {
+        "n": {
+          "default": "10",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        },
+        "p": {
+          "default": "0.5",
+          "name": {
+            "en": "p",
+            "fa": "p",
+            "fi": "p"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_binom_cdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Binomial CDF",
+        "fa": "دوجمله ای تابع توزیع",
+        "fi": "Binomi kertyma"
+      },
+      "params": {
+        "n": {
+          "default": "10",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        },
+        "p": {
+          "default": "0.5",
+          "name": {
+            "en": "p",
+            "fa": "p",
+            "fi": "p"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_binom_ppf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Binomial Quantile PPF",
+        "fa": "دوجمله ای چندک",
+        "fi": "Binomi kvantiili"
+      },
+      "params": {
+        "n": {
+          "default": "10",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        },
+        "p": {
+          "default": "0.5",
+          "name": {
+            "en": "p",
+            "fa": "p",
+            "fi": "p"
+          }
+        },
+        "q": {
+          "default": "0.5",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_geom_pdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Geometric PDF",
+        "fa": "هندسی چگالی",
+        "fi": "Geometrinen tiheys"
+      },
+      "params": {
+        "p": {
+          "default": "0.3",
+          "name": {
+            "en": "p",
+            "fa": "p",
+            "fi": "p"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_geom_cdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Geometric CDF",
+        "fa": "هندسی تابع توزیع",
+        "fi": "Geometrinen kertyma"
+      },
+      "params": {
+        "p": {
+          "default": "0.3",
+          "name": {
+            "en": "p",
+            "fa": "p",
+            "fi": "p"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_geom_ppf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Geometric Quantile PPF",
+        "fa": "هندسی چندک",
+        "fi": "Geometrinen kvantiili"
+      },
+      "params": {
+        "p": {
+          "default": "0.3",
+          "name": {
+            "en": "p",
+            "fa": "p",
+            "fi": "p"
+          }
+        },
+        "q": {
+          "default": "0.5",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_nbinom_pdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Negative binomial PDF",
+        "fa": "دوجمله ای منفی چگالی",
+        "fi": "Negatiivinen binomi tiheys"
+      },
+      "params": {
+        "n": {
+          "default": "5",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        },
+        "p": {
+          "default": "0.4",
+          "name": {
+            "en": "p",
+            "fa": "p",
+            "fi": "p"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_nbinom_cdf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Negative binomial CDF",
+        "fa": "دوجمله ای منفی تابع توزیع",
+        "fi": "Negatiivinen binomi kertyma"
+      },
+      "params": {
+        "n": {
+          "default": "5",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        },
+        "p": {
+          "default": "0.4",
+          "name": {
+            "en": "p",
+            "fa": "p",
+            "fi": "p"
+          }
+        },
+        "x": {
+          "default": "0",
+          "name": {
+            "en": "x",
+            "fa": "x",
+            "fi": "x"
+          }
+        }
+      }
+    },
+    {
+      "id": "alg_nbinom_ppf",
+      "category": "algo.dist",
+      "name": {
+        "en": "Negative binomial Quantile PPF",
+        "fa": "دوجمله ای منفی چندک",
+        "fi": "Negatiivinen binomi kvantiili"
+      },
+      "params": {
+        "n": {
+          "default": "5",
+          "name": {
+            "en": "n",
+            "fa": "n",
+            "fi": "n"
+          }
+        },
+        "p": {
+          "default": "0.4",
+          "name": {
+            "en": "p",
+            "fa": "p",
+            "fi": "p"
+          }
+        },
+        "q": {
+          "default": "0.5",
+          "name": {
+            "en": "q",
+            "fa": "q",
+            "fi": "q"
+          }
+        }
+      }
+    }
+  ]
+}

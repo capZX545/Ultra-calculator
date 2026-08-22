@@ -47,6 +47,127 @@
   const screen = $("screen");
   const history = $("history");
   let memory = 0;
+  const local = { catalog: null, algos: null, elements: null, sources: null, strings: null };
+
+  async function loadPacked() {
+    async function j(url) {
+      try {
+        const r = await fetch(new URL(url, document.baseURI).href);
+        if (!r.ok) return null;
+        return await r.json();
+      } catch (err) {
+        return null;
+      }
+    }
+    const pack = await Promise.all([
+      j("py/formulas.json"),
+      j("py/algos.json"),
+      j("py/elements.json"),
+      j("py/sources.json"),
+      j("py/strings.json"),
+    ]);
+    local.catalog = pack[0];
+    local.algos = pack[1];
+    local.elements = pack[2];
+    local.sources = pack[3];
+    local.strings = pack[4];
+  }
+
+  function localMeta(lang) {
+    lang = lang || "en";
+    const cats = (local.catalog && local.catalog.categories) || {};
+    const rows = (local.catalog && local.catalog.formulas) || [];
+    const counts = {};
+    rows.forEach((r) => {
+      const k = r.category || "";
+      counts[k] = (counts[k] || 0) + 1;
+    });
+    const labeled = Object.keys(cats).sort().map((id) => ({
+      id: id,
+      label: (cats[id] && (cats[id][lang] || cats[id].en)) || id,
+      count: counts[id] || 0,
+    }));
+    const strings = (local.strings && (local.strings[lang] || local.strings.en)) || {};
+    return { strings: strings, categories: labeled, total: rows.length, languages: ["en", "fa", "fi"] };
+  }
+
+  function localFormulas(q, lang, category) {
+    const rows = (local.catalog && local.catalog.formulas) || [];
+    q = String(q || "").toLowerCase();
+    const out = [];
+    for (let i = 0; i < rows.length; i += 1) {
+      const r = rows[i];
+      if (category && r.category !== category) continue;
+      if (q) {
+        const blob = [r.id, r.category, r.expr, (r.name && r.name[lang]) || "", (r.name && r.name.en) || ""].join(" ").toLowerCase();
+        if (blob.indexOf(q) < 0) continue;
+      }
+      out.push({
+        id: r.id,
+        category: r.category,
+        name: (r.name && (r.name[lang] || r.name.en)) || r.id,
+        expr: r.expr,
+        variables: r.variables || {},
+        names: r.name,
+      });
+    }
+    return out;
+  }
+
+  function localAlgos(q, lang, category) {
+    const pack = local.algos || {};
+    const items = pack.items || [];
+    const cats = pack.categories || {};
+    q = String(q || "").toLowerCase();
+    const counts = {};
+    items.forEach((r) => { counts[r.category] = (counts[r.category] || 0) + 1; });
+    const labeled = Object.keys(cats).sort().map((id) => ({
+      id: id,
+      label: (cats[id] && (cats[id][lang] || cats[id].en)) || id,
+      count: counts[id] || 0,
+    }));
+    const filtered = [];
+    items.forEach((r) => {
+      if (category && r.category !== category) return;
+      if (q) {
+        const blob = [r.id, r.category, (r.name && r.name[lang]) || "", (r.name && r.name.en) || ""].join(" ").toLowerCase();
+        if (blob.indexOf(q) < 0) return;
+      }
+      filtered.push({
+        id: r.id,
+        category: r.category,
+        name: (r.name && (r.name[lang] || r.name.en)) || r.id,
+        params: r.params || {},
+      });
+    });
+    return { categories: labeled, total: items.length, items: filtered };
+  }
+
+  function localElements(q, lang) {
+    let rows = local.elements;
+    if (!rows) return [];
+    if (!Array.isArray(rows) && rows.elements) rows = rows.elements;
+    if (!Array.isArray(rows)) return [];
+    q = String(q || "").toLowerCase();
+    const out = [];
+    rows.forEach((el) => {
+      const name = (el.name && (el.name[lang] || el.name.en)) || el.symbol || "";
+      if (q) {
+        const blob = [String(el.Z || ""), el.symbol || "", name].join(" ").toLowerCase();
+        if (blob.indexOf(q) < 0) return;
+      }
+      out.push({
+        Z: el.Z,
+        symbol: el.symbol,
+        name: name,
+        mass: el.mass,
+        group: el.group,
+        isotopes: el.isotopes || [],
+        names: el.name,
+      });
+    });
+    return out;
+  }
 
   function setScreen(text) {
     screen.value = text || "0";
@@ -107,7 +228,7 @@
       }
     }
     if (path === "/api/eval") return jsEval(body || {});
-    if (path === "/api/meta") return { strings: state.strings || {}, categories: [], total: 0, languages: ["en", "fa", "fi"] };
+    if (path === "/api/meta") return local.catalog ? localMeta(query.lang || state.lang || "en") : { strings: state.strings || {}, categories: [], total: 0, languages: ["en", "fa", "fi"] };
     return { ok: true, text: "0", solutions: [] };
   }
   async function post(url, body) {
@@ -120,7 +241,14 @@
     const u = new URL(url, "https://local.invalid/");
     const query = {};
     u.searchParams.forEach((v, k) => { query[k] = v; });
-    return pyCall(u.pathname, query, {});
+    const path = u.pathname;
+    const lang = query.lang || state.lang || "en";
+    if (path === "/api/meta" && local.catalog) return localMeta(lang);
+    if (path === "/api/formulas" && local.catalog) return localFormulas(query.q, lang, query.category || "");
+    if (path === "/api/algos" && local.algos) return localAlgos(query.q, lang, query.category || "");
+    if (path === "/api/elements" && local.elements) return localElements(query.q, lang);
+    if (path === "/api/sources" && local.sources) return local.sources;
+    return pyCall(path, query, {});
   }
 
   function applyStrings() {
@@ -413,11 +541,19 @@
     const cat = state.cat || "";
     const url = "/api/formulas?lang=" + encodeURIComponent(state.lang) + "&q=" + encodeURIComponent(q) + "&category=" + encodeURIComponent(cat);
     const listed = await get(url);
-    state.formulas = Array.isArray(listed) ? listed : [];
+    const all = Array.isArray(listed) ? listed : [];
+    const cap = 180;
+    state.formulas = all.slice(0, cap);
     const box = $("flist");
     box.innerHTML = "";
     if ($("search-title")) {
-      $("search-title").textContent = (state.strings.search || "Search") + "  (" + state.formulas.length + ")";
+      const more = all.length > cap ? " / " + all.length : "";
+      $("search-title").textContent = (state.strings.search || "Search") + "  (" + state.formulas.length + more + ")";
+    }
+    if (!all.length && !cat && !q) {
+      const li = document.createElement("li");
+      li.textContent = state.strings.pick || "Pick a category.";
+      box.appendChild(li);
     }
     state.formulas.forEach((item, i) => {
       const li = document.createElement("li");
@@ -1233,13 +1369,17 @@
     window._appStarted = true;
     buildKeys();
     buildPoly();
-    loadMeta();
-    loadSources();
-    if (screen) screen.focus();
+    loadPacked().then(function () {
+      loadMeta();
+      loadSources();
+      loadAlgos();
+      if (screen) screen.focus();
+    });
   };
   window.onEngineReady = function () {
-    loadMeta();
-    loadSources();
+    if ($("kbd-hint") && state.strings && state.strings.engine_ready) {
+      $("kbd-hint").textContent = state.strings.engine_ready;
+    }
   };
   window.startApp();
 })();
