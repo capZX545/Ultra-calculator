@@ -29,14 +29,14 @@ pip install -r requirements.txt
 python3 run.py
 ```
 
-Then open port 5000. The APK is `UltraCalculator.apk` at the repo root (same file under `phone/`). Package `org.capzx545.ultracalculator`, minSdk 24, versionName 1.8.2, versionCode 11. Uninstall an older build first if the installer complains. Every GitHub release attaches the Windows installer and the Android APK together.
+Then open port 5000. The APK is `UltraCalculator.apk` at the repo root (same file under `phone/`). Package `org.capzx545.ultracalculator`, minSdk 24, versionName 1.8.3, versionCode 12. Uninstall an older build first if the installer complains. Every GitHub release attaches the Windows installer and the Android APK together.
 
 ### Install the desktop app (no Python)
 
 Releases: https://github.com/capZX545/Ultra-calculator/releases
 
 - **Windows:** run `UltraCalculator-Setup-1.8.0.exe`. It installs for your user account. A desktop shortcut is optional. Or unzip `UltraCalculator-Windows.zip` and double-click `UltraCalculator.exe`.
-- **Android:** install `UltraCalculator-1.8.2.apk`. Uninstall an older build first if the phone refuses it.
+- **Android:** install `UltraCalculator-1.8.3.apk`. Uninstall an older build first if the phone refuses it.
 - **Linux:** unpack `UltraCalculator-Linux.tar.gz` and run `./install.sh` (installs to `~/.local`). Or run `./UltraCalculator` from that folder.
 - **macOS:** unzip `UltraCalculator-macOS.zip` and run `UltraCalculator`.
 

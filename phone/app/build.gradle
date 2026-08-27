@@ -8,8 +8,8 @@ android {
         applicationId "org.capzx545.ultracalculator"
         minSdk 24
         targetSdk 33
-        versionCode 11
-        versionName "1.8.2"
+        versionCode 12
+        versionName "1.8.3"
     }
     buildTypes {
         release { minifyEnabled false }

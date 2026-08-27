@@ -63,7 +63,10 @@
   }
 
   function loadPacked() {
-    if (applyPacked(window.PACKED)) return Promise.resolve(true);
+    applyPacked(window.PACKED);
+    if (local.catalog && local.catalog.formulas && local.catalog.formulas.length) {
+      return Promise.resolve(true);
+    }
     function j(url) {
       return fetch(new URL(url, document.baseURI).href).then(function (r) {
         return r.ok ? r.json() : null;
@@ -76,11 +79,11 @@
       j("py/sources.json"),
       j("py/strings.json"),
     ]).then(function (pack) {
-      local.catalog = pack[0];
-      local.algos = pack[1];
-      local.elements = pack[2];
-      local.sources = pack[3];
-      local.strings = pack[4];
+      if (pack[0]) local.catalog = pack[0];
+      if (pack[1]) local.algos = pack[1];
+      if (pack[2]) local.elements = pack[2];
+      if (pack[3]) local.sources = pack[3];
+      if (pack[4]) local.strings = pack[4];
       return !!(local.catalog && local.catalog.formulas);
     }).catch(function () { return false; });
   }
@@ -413,6 +416,21 @@
     }
   }
   async function pyCall(path, query, body) {
+    if (path === "/api/balance" && window.ultraLocalEng) {
+      return window.ultraLocalEng.balanceEquation((body && (body.eq || body.formula)) || "");
+    }
+    if (path === "/api/molar" && window.ultraLocalEng) {
+      return window.ultraLocalEng.molarMass((body && (body.formula || body.eq)) || "");
+    }
+    if (path === "/api/algo" && window.ultraLocalEng) {
+      return window.ultraLocalEng.runAlgo((body && body.id) || "", (body && body.values) || {});
+    }
+    if (path === "/api/algos" && local.algos) {
+      return localAlgos((query && query.q) || "", (query && query.lang) || state.lang, (query && query.category) || "");
+    }
+    if (path === "/api/elements" && local.elements) {
+      return localElements((query && query.q) || "", (query && query.lang) || state.lang);
+    }
     if (path === "/api/solve") {
       const item = (body && body.expr)
         ? { id: body.id, expr: body.expr, variables: body.variables || {} }
@@ -442,6 +460,32 @@
     if (path === "/api/eval") {
       if (pyOut && pyOut.text != null) return pyOut;
       return jsEval(body || {});
+    }
+    if (path === "/api/balance") {
+      if (window.ultraLocalEng) {
+        const out = window.ultraLocalEng.balanceEquation((body && (body.eq || body.formula)) || "");
+        if (out && out.text) return out;
+      }
+      if (pyOut && pyOut.text) return pyOut;
+      return { ok: true, text: (body && body.eq) || "", coeffs: [] };
+    }
+    if (path === "/api/molar") {
+      if (window.ultraLocalEng) {
+        const out = window.ultraLocalEng.molarMass((body && (body.formula || body.eq)) || "");
+        if (out) return out;
+      }
+      if (pyOut) return pyOut;
+      return { ok: true, text: "0", detail: {} };
+    }
+    if (path === "/api/algo") {
+      if (window.ultraLocalEng) {
+        const out = window.ultraLocalEng.runAlgo((body && body.id) || "", (body && body.values) || {});
+        if (out && String(out.text) !== "0") return out;
+        if (out && !pyOut) return out;
+      }
+      if (pyOut && pyOut.text != null && String(pyOut.text) !== "0") return pyOut;
+      if (window.ultraLocalEng) return window.ultraLocalEng.runAlgo((body && body.id) || "", (body && body.values) || {});
+      return { ok: true, text: "0" };
     }
     if (path === "/api/solve") {
       if (pyOut && pyOut.text != null && String(pyOut.text) !== "0") return pyOut;
@@ -1639,6 +1683,7 @@
     }
   };
   window.startApp();
+  window.ultraLocal = local;
   window.ultraPost = post;
   window.ultraGet = get;
   window.ultraState = state;
