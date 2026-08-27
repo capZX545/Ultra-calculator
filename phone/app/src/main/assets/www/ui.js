@@ -431,6 +431,10 @@
     if (path === "/api/elements" && local.elements) {
       return localElements((query && query.q) || "", (query && query.lang) || state.lang);
     }
+    if (window.ultraExtras && typeof window.ultraExtras.handle === "function") {
+      const extra = window.ultraExtras.handle(path, query, body);
+      if (extra != null) return extra;
+    }
     if (path === "/api/solve") {
       const item = (body && body.expr)
         ? { id: body.id, expr: body.expr, variables: body.variables || {} }
@@ -657,6 +661,8 @@
     const box = $("keys");
     box.innerHTML = "";
     KEYS.forEach((row) => {
+      const line = document.createElement("div");
+      line.className = "krow";
       row.forEach((label) => {
         const b = document.createElement("button");
         b.type = "button";
@@ -664,8 +670,9 @@
         b.tabIndex = -1;
         b.textContent = label;
         b.addEventListener("click", () => onKey(label));
-        box.appendChild(b);
+        line.appendChild(b);
       });
+      box.appendChild(line);
     });
   }
 

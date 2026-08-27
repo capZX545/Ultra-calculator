@@ -54,10 +54,14 @@ main { padding: 16px 18px 32px; }
   background: var(--ink); padding: 10px; min-height: 72px; margin: 8px 0;
   font: 13px/1.45 "Segoe UI", Tahoma, sans-serif; white-space: pre-wrap; color: var(--fg);
 }
-.pad, .keys, #screen { direction: ltr; unicode-bidi: isolate; }
+.pad, .keys, .krow, #screen { direction: ltr !important; unicode-bidi: isolate; }
+body.rtl .pad, body.rtl .keys, body.rtl .krow, body.rtl #screen { direction: ltr !important; }
 #screen { text-align: right; }
-.keys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-.key { padding: 14px 6px; font-family: Consolas, monospace; font-size: 16px; min-height: 48px; }
+.keys { display: block; width: 100%; }
+.krow { display: flex; flex-direction: row; flex-wrap: nowrap; direction: ltr !important; width: 100%; margin: 0 0 6px 0; }
+.krow .key { flex: 1 1 0; width: 25%; margin: 0 3px; padding: 14px 4px; font-family: Consolas, monospace; font-size: 16px; min-height: 48px; }
+.krow .key:first-child { margin-left: 0; }
+.krow .key:last-child { margin-right: 0; }
 .field { direction: ltr; }
 .row { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
 aside { background: var(--panel); padding: 10px; }
@@ -171,8 +175,7 @@ nav { flex-wrap: wrap; }
   h1 { width: 100%; font-size: 16px; }
   nav { overflow-x: auto; flex-wrap: nowrap; width: 100%; padding-bottom: 4px; }
   .tab { flex: 0 0 auto; padding: 10px 12px; }
-  .keys { grid-template-columns: repeat(4, 1fr); }
-  aside { max-height: 120px; overflow: auto; }
+    aside { max-height: 120px; overflow: auto; }
   .calc-wrap { gap: 8px; }
   main { padding: 10px 10px 24px; }
   #lookup-bar { padding: 6px 10px; }
