@@ -1,4 +1,4 @@
-name: Desktop release
+name: App release
 
 on:
   push:
@@ -15,19 +15,23 @@ permissions:
   contents: write
 
 jobs:
-  build:
-    name: Build ${{ matrix.os }}
+  desktop:
+    name: Desktop ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.optional }}
     strategy:
       fail-fast: false
       matrix:
         include:
           - os: windows-latest
             artifact: windows
+            optional: false
           - os: ubuntu-22.04
             artifact: linux
+            optional: false
           - os: macos-13
             artifact: macos
+            optional: true
     steps:
       - uses: actions/checkout@v4
 
@@ -70,13 +74,30 @@ jobs:
           name: desktop-${{ matrix.artifact }}
           if-no-files-found: error
           path: |
-            dist/UltraCalculator-Setup-1.8.0.exe
+            dist/UltraCalculator-Setup-*.exe
             dist/UltraCalculator-Windows.zip
             dist/UltraCalculator-Linux.tar.gz
             dist/UltraCalculator-macOS.zip
 
+  android:
+    name: Android APK
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Stage APK
+        run: |
+          test -f UltraCalculator.apk
+          cp UltraCalculator.apk UltraCalculator-Android.apk
+          ls -lh UltraCalculator-Android.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-apk
+          if-no-files-found: error
+          path: UltraCalculator-Android.apk
+
   release:
-    needs: build
+    needs: [desktop, android]
+    if: always() && needs.android.result == 'success'
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
@@ -98,21 +119,27 @@ jobs:
           if ! echo "$TAG" | grep -q '^v'; then
             TAG="v1.8.0"
           fi
-          NOTES="$(cat <<'EOF'
-          Installable desktop build of Ultra Calculator.
+          VER="${TAG#v}"
+          if [ -f artifacts/UltraCalculator-Android.apk ]; then
+            mv artifacts/UltraCalculator-Android.apk "artifacts/UltraCalculator-${VER}.apk"
+          fi
+          NOTES="$(cat <<EOF
+          Desktop and Android ${TAG}.
 
-          **Windows:** run `UltraCalculator-Setup-1.8.0.exe`. It installs for your user (no admin). A desktop shortcut is optional. You can also unzip `UltraCalculator-Windows.zip` and run `UltraCalculator.exe`.
+          **Windows:** run \`UltraCalculator-Setup-${VER}.exe\`. It installs for your user (no admin). A desktop shortcut is optional. Or unzip \`UltraCalculator-Windows.zip\` and run \`UltraCalculator.exe\`.
 
-          **Linux:** unpack `UltraCalculator-Linux.tar.gz` and run `./install.sh`. That puts the app in `~/.local` and adds a menu entry. Or run `./UltraCalculator` from the folder.
+          **Android:** install \`UltraCalculator-${VER}.apk\`. Uninstall an older build first if the installer refuses it.
 
-          **macOS:** unzip and run `UltraCalculator`.
+          **Linux:** unpack \`UltraCalculator-Linux.tar.gz\` and run \`./install.sh\`, or run \`./UltraCalculator\` from the folder.
 
-          Same calculator as the repo: formulas, circuits (two parts, then series or parallel), sequences, problems, chemistry.
+          **macOS:** unzip and run \`UltraCalculator\` if that archive is attached.
+
+          Same calculator: formulas, circuits (two parts, then series or parallel), sequences, problems, chemistry.
           EOF
           )"
-          FILES=$(find artifacts dist -type f \( -name '*.exe' -o -name '*.zip' -o -name '*.tar.gz' \) 2>/dev/null || true)
+          FILES=$(find artifacts -type f \( -name '*.exe' -o -name '*.zip' -o -name '*.tar.gz' -o -name '*.apk' \) 2>/dev/null || true)
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" $FILES --clobber
           else
-            gh release create "$TAG" $FILES --title "Desktop ${TAG}" --notes "$NOTES"
+            gh release create "$TAG" $FILES --title "Desktop and Android ${TAG}" --notes "$NOTES"
           fi

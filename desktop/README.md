@@ -7,6 +7,7 @@ Standalone tkinter program. It does not import `web/`, `android/`, or `phone/`. 
 From [Releases](https://github.com/capZX545/Ultra-calculator/releases):
 
 - Windows: `UltraCalculator-Setup-1.8.0.exe` (user install, optional desktop shortcut). Portable zip: unzip and run `UltraCalculator.exe`.
+- Android: `UltraCalculator-1.8.0.apk` on the same release. Uninstall an older build first if the phone refuses it.
 - Linux: unpack `UltraCalculator-Linux.tar.gz` and run `./install.sh`, or run `./UltraCalculator` in place.
 - macOS: unzip and run `UltraCalculator`.
 
