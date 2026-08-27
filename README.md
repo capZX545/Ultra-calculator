@@ -29,7 +29,7 @@ pip install -r requirements.txt
 python3 run.py
 ```
 
-Then open port 5000. The APK is `UltraCalculator.apk` at the repo root (same file under `phone/`). Package `org.capzx545.ultracalculator`, minSdk 24, versionName 1.8.0, versionCode 9. Uninstall an older build first if the installer complains. Every GitHub release attaches the Windows installer and the Android APK together.
+Then open port 5000. The APK is `UltraCalculator.apk` at the repo root (same file under `phone/`). Package `org.capzx545.ultracalculator`, minSdk 24, versionName 1.8.1, versionCode 10. Uninstall an older build first if the installer complains. Every GitHub release attaches the Windows installer and the Android APK together.
 
 ### Install the desktop app (no Python)
 

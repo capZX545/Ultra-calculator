@@ -4,7 +4,6 @@
   function say(t) {
     if (msg) msg.textContent = t;
   }
-
   function showApp() {
     if (boot) boot.classList.add("boot-away");
     if (typeof window.startApp === "function") {
@@ -40,35 +39,42 @@
   }
 
   try {
-    say("Loading the math engine…");
+    say("Loading engine…");
     const indexURL = new URL("pyodide/", document.baseURI).href;
+    if (typeof loadPyodide !== "function") {
+      await loadClassic(indexURL + "pyodide.js");
+    }
     if (typeof globalThis._createPyodideModule !== "function") {
       await loadClassic(indexURL + "pyodide.asm.js");
-    }
-    if (typeof loadPyodide !== "function") {
-      throw new Error("Pyodide missing");
     }
     const pyodide = await loadPyodide({
       indexURL: indexURL,
       stdLibURL: indexURL + "python_stdlib.zip",
       lockFileURL: indexURL + "pyodide-lock.json",
     });
-    say("Loading numpy and sympy…");
+    say("Loading numpy / sympy…");
     await pyodide.loadPackage(["numpy", "sympy"]);
     const files = [
       "clean.py", "teach.py", "chemtools.py", "core.py",
       "lookup.py", "algorithms.py", "strings.py", "problems.py", "wordprob.py", "circuits.py", "circguide.py", "seqfind.py", "bridge.py",
       "units.py", "graphs.py", "matrixlab.py", "statsdata.py", "triangle.py",
       "searchall.py", "latexout.py", "sessionstore.py",
-      "formulas.json", "elements.json", "sources.json",
+      "elements.json", "sources.json",
     ];
-    for (let i = 0; i < files.length; i += 1) {
-      const name = files[i];
-      say("Reading " + name + "…");
-      const res = await fetch(new URL("py/" + name, document.baseURI).href);
-      if (!res.ok) throw new Error("missing " + name);
-      const text = await res.text();
-      pyodide.FS.writeFile(name, text);
+    say("Reading files…");
+    await Promise.all(files.map(function (name) {
+      return fetch(new URL("py/" + name, document.baseURI).href).then(function (res) {
+        if (!res.ok) throw new Error("missing " + name);
+        return res.text().then(function (text) {
+          pyodide.FS.writeFile(name, text);
+        });
+      });
+    }));
+    if (window.PACKED) {
+      pyodide.FS.writeFile("formulas.json", JSON.stringify(window.PACKED));
+    } else {
+      const res = await fetch(new URL("py/formulas.json", document.baseURI).href);
+      pyodide.FS.writeFile("formulas.json", await res.text());
     }
     say("Starting…");
     pyodide.runPython("import bridge, core, chemtools, algorithms, lookup, problems, wordprob, circuits, circguide, seqfind, units, graphs, matrixlab, statsdata, triangle, searchall, latexout");
@@ -82,6 +88,6 @@
     say("Calculator is open. Engine: " + (err && err.message ? err.message : "failed"));
     setTimeout(function () {
       if (boot) boot.style.display = "none";
-    }, 3500);
+    }, 1200);
   }
 })();

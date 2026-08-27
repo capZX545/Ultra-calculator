@@ -23,14 +23,13 @@
   };
 
   const KEYS = [
-    ["MC","MR","M+","M-","(",")"],
-    ["sin","cos","tan","ln","log","log2"],
-    ["asin","acos","atan","exp","10^x","x^2"],
-    ["sinh","cosh","tanh","sqrt","x^y","n!"],
-    ["pi","e","7","8","9","/"],
-    ["ans","%","4","5","6","*"],
-    ["1/x","abs","1","2","3","-"],
-    ["EE","+/-","0",".","=","+"],
+    ["AC","C","(",")"],
+    ["sin","cos","tan","/"],
+    ["ln","log","sqrt","*"],
+    ["7","8","9","-"],
+    ["4","5","6","+"],
+    ["1","2","3","^"],
+    ["0",".","pi","="],
   ];
   const MAP = {
     sin:"sin(", cos:"cos(", tan:"tan(",
@@ -39,7 +38,7 @@
     ln:"ln(", log:"log10(", log2:"log2(",
     exp:"exp(", "10^x":"10**(", "x^2":"**2", "x^y":"**",
     sqrt:"sqrt(", "n!":"factorial(", abs:"abs(",
-    "1/x":"1/(", pi:"pi", e:"e", ans:"ans", EE:"*10**",
+    "1/x":"1/(", pi:"pi", e:"e", ans:"ans", EE:"*10**", "^":"**",
   };
   const MODES = ["calc", "formulas", "poly", "numeric", "algo", "chem", "elements", "sources", "problems", "circuits", "graph", "matrix", "stats", "triangle", "seq"];
 
@@ -214,18 +213,99 @@
     state.expr = el.value === "0" ? "" : el.value;
   }
 
+  function degWrap(fn) {
+    return function (x) { return fn((Number(x) || 0) * Math.PI / 180); };
+  }
   function jsEval(body) {
     const angle = (body && body.angle) || "DEG";
     let expr = String((body && body.expr) || "0");
     expr = expr.replace(/π/g, "pi").replace(/×/g, "*").replace(/÷/g, "/").replace(/−/g, "-").replace(/\^/g, "**");
+    expr = expr.replace(/\bpi\b/g, "pi").replace(/\be\b/g, "e");
     expr = expr.replace(/(^|[^0-9.])10(?:\.0+)?[eE]([+-]?\d+)/g, "$11e$2");
+    const sin = angle === "DEG" ? degWrap(Math.sin) : Math.sin;
+    const cos = angle === "DEG" ? degWrap(Math.cos) : Math.cos;
+    const tan = angle === "DEG" ? degWrap(Math.tan) : Math.tan;
     try {
-      const fn = new Function("sin","cos","tan","sqrt","abs","pi","e","ans","log","exp","return (" + expr + ");");
-      let v = fn(Math.sin, Math.cos, Math.tan, Math.sqrt, Math.abs, Math.PI, Math.E, Number(state.ans)||0, Math.log, Math.exp);
+      const fn = new Function("sin","cos","tan","sqrt","abs","pi","e","ans","log","ln","log10","exp","return (" + expr.replace(/\bln\(/g,"log(").replace(/\blog10\(/g,"log10(") + ");");
+      let v = fn(sin, cos, tan, Math.sqrt, Math.abs, Math.PI, Math.E, Number(state.ans)||0, Math.log, Math.log, function(x){return Math.log(x)/Math.LN10;}, Math.exp);
       if (typeof v !== "number" || !Number.isFinite(v)) v = 0;
-      return { ok: true, text: String(v), value: v, steps: [] };
+      const text = String(v);
+      return { ok: true, text: text, value: v, steps: [] };
     } catch (err) {
       return { ok: true, text: "0", value: 0, steps: [] };
+    }
+  }
+  function localSolve(item, values, unknown, eng) {
+    try {
+      const expr = String((item && item.expr) || "");
+      const parts = expr.split("=");
+      if (parts.length < 2) return { ok: true, text: "0", unknown: unknown || "", unit: "", all: ["0"] };
+      const vars = (item && item.variables) || {};
+      const names = Object.keys(vars);
+      unknown = unknown || names[0] || "x";
+      function tok(n) { return new RegExp("\\b" + n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\b", "g"); }
+      function subst(s) {
+        names.forEach(function (n) {
+          if (n === unknown) return;
+          const raw = values ? values[n] : "";
+          if (raw === undefined || raw === null || String(raw).trim() === "") return;
+          const num = Number(String(raw).replace(",", "."));
+          if (!Number.isFinite(num)) return;
+          s = s.replace(tok(n), "(" + num + ")");
+        });
+        return s;
+      }
+      const left = subst(parts[0].trim());
+      const right = subst(parts.slice(1).join("=").trim());
+      function ev(s) {
+        s = String(s);
+        s = s.replace(/\^/g, "**");
+        s = s.replace(/\bpi\b/g, "Math.PI");
+        s = s.replace(/\bsqrt\s*\(/g, "Math.sqrt(");
+        s = s.replace(/\blog10\s*\(/g, "(Math.log(");
+        s = s.replace(/\bln\s*\(/g, "Math.log(");
+        s = s.replace(/\blog\s*\(/g, "Math.log(");
+        s = s.replace(/\bexp\s*\(/g, "Math.exp(");
+        s = s.replace(/\bsin\s*\(/g, "Math.sin(");
+        s = s.replace(/\bcos\s*\(/g, "Math.cos(");
+        s = s.replace(/\btan\s*\(/g, "Math.tan(");
+        s = s.replace(/\babs\s*\(/g, "Math.abs(");
+        const v = Function("return (" + s + ");")();
+        const n = typeof v === "number" ? v : Number(v);
+        return Number.isFinite(n) ? n : NaN;
+      }
+      function fmt(n) {
+        if (!Number.isFinite(n)) return "0";
+        return String(parseFloat(n.toPrecision(10)));
+      }
+      if (left === unknown) {
+        const text = fmt(ev(right));
+        return { ok: true, unknown: unknown, text: text, unit: (vars[unknown] && vars[unknown].unit) || "", all: [text] };
+      }
+      if (right === unknown) {
+        const text = fmt(ev(left));
+        return { ok: true, unknown: unknown, text: text, unit: (vars[unknown] && vars[unknown].unit) || "", all: [text] };
+      }
+      function f(x) {
+        const L = left.replace(tok(unknown), "(" + x + ")");
+        const R = right.replace(tok(unknown), "(" + x + ")");
+        return ev(L) - ev(R);
+      }
+      let x0 = 1;
+      for (let i = 0; i < 50; i += 1) {
+        const y = f(x0);
+        const h = Math.max(1e-7, Math.abs(x0) * 1e-6);
+        const yp = (f(x0 + h) - y) / h;
+        if (!Number.isFinite(y) || !Number.isFinite(yp) || Math.abs(yp) < 1e-14) break;
+        const x1 = x0 - y / yp;
+        if (!Number.isFinite(x1)) break;
+        if (Math.abs(x1 - x0) < 1e-10) { x0 = x1; break; }
+        x0 = x1;
+      }
+      const text = fmt(x0);
+      return { ok: true, unknown: unknown, text: text, unit: (vars[unknown] && vars[unknown].unit) || "", all: [text] };
+    } catch (err) {
+      return { ok: true, text: "0", unknown: unknown || "", unit: "", all: ["0"] };
     }
   }
   async function pyCall(path, query, body) {
@@ -242,6 +322,15 @@
     }
     if (path === "/api/eval") return jsEval(body || {});
     if (path === "/api/meta") return local.catalog ? localMeta(query.lang || state.lang || "en") : { strings: state.strings || {}, categories: [], total: 0, languages: ["en", "fa", "fi"] };
+    if (path === "/api/formulas" && local.catalog) return localFormulas((query && query.q) || "", (query && query.lang) || state.lang, (query && query.category) || "");
+    if (path === "/api/solve") {
+      const id = (body && body.id) || "";
+      const rows = (local.catalog && local.catalog.formulas) || [];
+      let item = null;
+      for (let i = 0; i < rows.length; i += 1) { if (rows[i].id === id) { item = rows[i]; break; } }
+      if (!item) return { ok: true, text: "0", unknown: (body && body.unknown) || "", unit: "", all: ["0"] };
+      return localSolve(item, (body && body.values) || {}, body && body.unknown, !!(body && body.eng));
+    }
     return { ok: true, text: "0", solutions: [] };
   }
   async function post(url, body) {

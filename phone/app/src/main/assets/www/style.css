@@ -54,8 +54,11 @@ main { padding: 16px 18px 32px; }
   background: var(--ink); padding: 10px; min-height: 72px; margin: 8px 0;
   font: 13px/1.45 "Segoe UI", Tahoma, sans-serif; white-space: pre-wrap; color: var(--fg);
 }
-.keys { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
-.key { padding: 12px 6px; font-family: Consolas, monospace; }
+.pad, .keys, #screen { direction: ltr; unicode-bidi: isolate; }
+#screen { text-align: right; }
+.keys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.key { padding: 14px 6px; font-family: Consolas, monospace; font-size: 16px; min-height: 48px; }
+.field { direction: ltr; }
 .row { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
 aside { background: var(--panel); padding: 10px; }
 aside h2, h2 { font-size: 14px; color: var(--accent); margin: 0 0 8px; }
@@ -169,6 +172,10 @@ nav { flex-wrap: wrap; }
   nav { overflow-x: auto; flex-wrap: nowrap; width: 100%; padding-bottom: 4px; }
   .tab { flex: 0 0 auto; padding: 10px 12px; }
   .keys { grid-template-columns: repeat(4, 1fr); }
+  aside { max-height: 120px; overflow: auto; }
+  .calc-wrap { gap: 8px; }
+  main { padding: 10px 10px 24px; }
+  #lookup-bar { padding: 6px 10px; }
 }
 
 .wiz { max-width: 740px; background: var(--panel); padding: 16px; border-radius: 6px; }
