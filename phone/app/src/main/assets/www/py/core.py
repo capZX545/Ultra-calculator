@@ -412,7 +412,7 @@ def solve_named(fid, values, unknown=None, eng=False, lang="en"):
                     sols = [sp.nsolve(eq, sym, guess)]
                     break
                 except Exception:
-                    sols = [0]
+                    continue
         nums = [pretty(_num(sp.N(s)), eng) for s in sols[:6]]
         unit = item["variables"].get(target, {}).get("unit", "")
         mode = "left" if L == sym else ("right" if R == sym else "solve")

@@ -235,21 +235,109 @@
       return { ok: true, text: "0", value: 0, steps: [] };
     }
   }
+  function numOf(raw) {
+    if (raw === undefined || raw === null) return NaN;
+    let s = String(raw).trim();
+    if (!s) return NaN;
+    const fa = "۰۱۲۳۴۵۶۷۸۹٠١٢٣٤٥٦٧٨٩";
+    const en = "01234567890123456789";
+    let out = "";
+    for (let i = 0; i < s.length; i += 1) {
+      const k = fa.indexOf(s[i]);
+      out += k >= 0 ? en[k] : s[i];
+    }
+    s = out.replace(/×/g, "*").replace(/÷/g, "/").replace(/[−–—]/g, "-").replace(/\s/g, "");
+    if (s.indexOf(",") >= 0 && s.indexOf(".") < 0) s = s.replace(",", ".");
+    else s = s.replace(/,/g, "");
+    s = s.replace(/^(?:10(?:\.0+)?)[eE]([+-]?\d+)$/, "1e$1");
+    if (s.charAt(s.length - 1) === "%") {
+      const n = Number(s.slice(0, -1));
+      return Number.isFinite(n) ? n / 100 : NaN;
+    }
+    const n = Number(s);
+    return Number.isFinite(n) ? n : NaN;
+  }
+  function safeEval(s) {
+    s = String(s);
+    s = s.replace(/\^/g, "**");
+    s = s.replace(/\bpi\b/g, "PI");
+    s = s.replace(/\bsqrt\s*\(/g, "sqrt(");
+    s = s.replace(/\blog10\s*\(/g, "log10(");
+    s = s.replace(/\bln\s*\(/g, "log(");
+    s = s.replace(/\blog\s*\(/g, "log(");
+    s = s.replace(/\bexp\s*\(/g, "exp(");
+    s = s.replace(/\basin\s*\(/g, "asin(");
+    s = s.replace(/\bacos\s*\(/g, "acos(");
+    s = s.replace(/\batan2\s*\(/g, "atan2(");
+    s = s.replace(/\batan\s*\(/g, "atan(");
+    s = s.replace(/\bsin\s*\(/g, "sin(");
+    s = s.replace(/\bcos\s*\(/g, "cos(");
+    s = s.replace(/\btan\s*\(/g, "tan(");
+    s = s.replace(/\babs\s*\(/g, "abs(");
+    s = s.replace(/\bfactorial\s*\(/g, "factorial(");
+    s = s.replace(/\bbinomial\s*\(/g, "binomial(");
+    s = s.replace(/\bMod\s*\(/g, "mod(");
+    function factorial(n) {
+      n = Math.round(Number(n));
+      if (!Number.isFinite(n) || n < 0 || n > 170) return NaN;
+      let r = 1;
+      for (let i = 2; i <= n; i += 1) r *= i;
+      return r;
+    }
+    function binomial(n, k) {
+      n = Math.round(Number(n)); k = Math.round(Number(k));
+      if (!Number.isFinite(n) || !Number.isFinite(k) || k < 0 || k > n) return NaN;
+      return factorial(n) / (factorial(k) * factorial(n - k));
+    }
+    function mod(a, b) {
+      const x = Number(a), y = Number(b);
+      if (!y) return NaN;
+      return ((x % y) + y) % y;
+    }
+    try {
+      const fn = new Function(
+        "sin","cos","tan","asin","acos","atan","atan2","sqrt","abs","log","log10","exp","PI","E","factorial","binomial","mod",
+        "return (" + s + ");"
+      );
+      const v = fn(
+        Math.sin, Math.cos, Math.tan, Math.asin, Math.acos, Math.atan, Math.atan2,
+        Math.sqrt, Math.abs, Math.log,
+        Math.log10 || function (x) { return Math.log(x) / Math.LN10; },
+        Math.exp, Math.PI, Math.E, factorial, binomial, mod
+      );
+      const n = typeof v === "number" ? v : Number(v);
+      return Number.isFinite(n) ? n : NaN;
+    } catch (err) {
+      return NaN;
+    }
+  }
+  function pickUnknown(names, values, unknown) {
+    const blanks = [];
+    names.forEach(function (n) {
+      const v = values ? values[n] : "";
+      if (v === undefined || v === null || String(v).trim() === "") blanks.push(n);
+    });
+    if (blanks.length === 1) return blanks[0];
+    if (unknown && names.indexOf(unknown) >= 0) return unknown;
+    return names[0] || unknown || "x";
+  }
   function localSolve(item, values, unknown, eng) {
     try {
-      const expr = String((item && item.expr) || "");
+      if (!item) return { ok: false, text: "0", unknown: unknown || "", unit: "", all: ["0"] };
+      const expr = String(item.expr || "");
       const parts = expr.split("=");
-      if (parts.length < 2) return { ok: true, text: "0", unknown: unknown || "", unit: "", all: ["0"] };
-      const vars = (item && item.variables) || {};
+      if (parts.length < 2) return { ok: false, text: "0", unknown: unknown || "", unit: "", all: ["0"] };
+      const vars = item.variables || {};
       const names = Object.keys(vars);
-      unknown = unknown || names[0] || "x";
-      function tok(n) { return new RegExp("\\b" + n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\b", "g"); }
+      unknown = pickUnknown(names, values, unknown);
+      function tok(n) {
+        return new RegExp("\\b" + String(n).replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\b", "g");
+      }
       function subst(s) {
-        names.forEach(function (n) {
+        const order = names.slice().sort(function (a, b) { return b.length - a.length; });
+        order.forEach(function (n) {
           if (n === unknown) return;
-          const raw = values ? values[n] : "";
-          if (raw === undefined || raw === null || String(raw).trim() === "") return;
-          const num = Number(String(raw).replace(",", "."));
+          const num = numOf(values ? values[n] : "");
           if (!Number.isFinite(num)) return;
           s = s.replace(tok(n), "(" + num + ")");
         });
@@ -257,80 +345,112 @@
       }
       const left = subst(parts[0].trim());
       const right = subst(parts.slice(1).join("=").trim());
-      function ev(s) {
-        s = String(s);
-        s = s.replace(/\^/g, "**");
-        s = s.replace(/\bpi\b/g, "Math.PI");
-        s = s.replace(/\bsqrt\s*\(/g, "Math.sqrt(");
-        s = s.replace(/\blog10\s*\(/g, "(Math.log(");
-        s = s.replace(/\bln\s*\(/g, "Math.log(");
-        s = s.replace(/\blog\s*\(/g, "Math.log(");
-        s = s.replace(/\bexp\s*\(/g, "Math.exp(");
-        s = s.replace(/\bsin\s*\(/g, "Math.sin(");
-        s = s.replace(/\bcos\s*\(/g, "Math.cos(");
-        s = s.replace(/\btan\s*\(/g, "Math.tan(");
-        s = s.replace(/\babs\s*\(/g, "Math.abs(");
-        const v = Function("return (" + s + ");")();
-        const n = typeof v === "number" ? v : Number(v);
-        return Number.isFinite(n) ? n : NaN;
-      }
       function fmt(n) {
         if (!Number.isFinite(n)) return "0";
-        return String(parseFloat(n.toPrecision(10)));
+        if (Math.abs(n) < 1e-15) return "0";
+        if (eng && n !== 0) {
+          const exp = Math.floor(Math.log10(Math.abs(n)) / 3) * 3;
+          return parseFloat((n / Math.pow(10, exp)).toPrecision(8)) + "e" + (exp >= 0 ? "+" : "") + exp;
+        }
+        return String(parseFloat(n.toPrecision(12)));
+      }
+      const unit = (vars[unknown] && vars[unknown].unit) || "";
+      function ok(n) {
+        const text = fmt(n);
+        return { ok: true, unknown: unknown, text: text, unit: unit, all: [text] };
       }
       if (left === unknown) {
-        const text = fmt(ev(right));
-        return { ok: true, unknown: unknown, text: text, unit: (vars[unknown] && vars[unknown].unit) || "", all: [text] };
+        const n = safeEval(right);
+        if (Number.isFinite(n)) return ok(n);
       }
       if (right === unknown) {
-        const text = fmt(ev(left));
-        return { ok: true, unknown: unknown, text: text, unit: (vars[unknown] && vars[unknown].unit) || "", all: [text] };
+        const n = safeEval(left);
+        if (Number.isFinite(n)) return ok(n);
       }
       function f(x) {
         const L = left.replace(tok(unknown), "(" + x + ")");
         const R = right.replace(tok(unknown), "(" + x + ")");
-        return ev(L) - ev(R);
+        return safeEval(L) - safeEval(R);
       }
-      let x0 = 1;
-      for (let i = 0; i < 50; i += 1) {
-        const y = f(x0);
-        const h = Math.max(1e-7, Math.abs(x0) * 1e-6);
-        const yp = (f(x0 + h) - y) / h;
-        if (!Number.isFinite(y) || !Number.isFinite(yp) || Math.abs(yp) < 1e-14) break;
-        const x1 = x0 - y / yp;
-        if (!Number.isFinite(x1)) break;
-        if (Math.abs(x1 - x0) < 1e-10) { x0 = x1; break; }
-        x0 = x1;
+      const guesses = [1, 0, -1, 10, 0.5, -10, 2, -2, 100];
+      let best = NaN;
+      let bestAbs = Infinity;
+      for (let g = 0; g < guesses.length; g += 1) {
+        let x0 = guesses[g];
+        for (let i = 0; i < 40; i += 1) {
+          const y = f(x0);
+          const h = Math.max(1e-7, Math.abs(x0) * 1e-6);
+          const yp = (f(x0 + h) - y) / h;
+          if (!Number.isFinite(y) || !Number.isFinite(yp) || Math.abs(yp) < 1e-14) break;
+          const x1 = x0 - y / yp;
+          if (!Number.isFinite(x1)) break;
+          if (Math.abs(x1 - x0) < 1e-10) { x0 = x1; break; }
+          x0 = x1;
+        }
+        const yb = f(x0);
+        if (Number.isFinite(x0) && Number.isFinite(yb) && Math.abs(yb) < bestAbs) {
+          bestAbs = Math.abs(yb);
+          best = x0;
+          if (bestAbs < 1e-8) break;
+        }
       }
-      const text = fmt(x0);
-      return { ok: true, unknown: unknown, text: text, unit: (vars[unknown] && vars[unknown].unit) || "", all: [text] };
+      if (Number.isFinite(best) && bestAbs < 1e-4) return ok(best);
+      return { ok: false, unknown: unknown, text: "0", unit: unit, all: ["0"] };
     } catch (err) {
-      return { ok: true, text: "0", unknown: unknown || "", unit: "", all: ["0"] };
+      return { ok: false, text: "0", unknown: unknown || "", unit: "", all: ["0"] };
+    }
+  }
+  function parsePy(out) {
+    if (out == null) return null;
+    try {
+      let text = typeof out === "string" ? out : String(out);
+      if (out && typeof out.destroy === "function") {
+        try { out.destroy(); } catch (err) {}
+      }
+      return JSON.parse(text);
+    } catch (err) {
+      return null;
     }
   }
   async function pyCall(path, query, body) {
+    if (path === "/api/solve") {
+      const item = (body && body.expr)
+        ? { id: body.id, expr: body.expr, variables: body.variables || {} }
+        : null;
+      let found = item;
+      if (!found && body && body.id && local.catalog && local.catalog.formulas) {
+        const rows = local.catalog.formulas;
+        for (let i = 0; i < rows.length; i += 1) {
+          if (rows[i].id === body.id) { found = rows[i]; break; }
+        }
+      }
+      if (!found && state.current) found = state.current;
+      const localOut = found ? localSolve(found, (body && body.values) || {}, body && body.unknown, !!(body && body.eng)) : null;
+      if (localOut && localOut.ok) return localOut;
+    }
+    let pyOut = null;
     if (window.pyodideReady && window.pyodide) {
       try {
         const req = JSON.stringify({ path: path, query: query || {}, body: body || {} });
         window.pyodide.globals.set("_req", req);
-        const out = window.pyodide.runPython("import bridge; bridge.handle(_req)");
-        return JSON.parse(out);
+        const out = window.pyodide.runPython("import json, bridge; bridge.handle(_req)");
+        pyOut = parsePy(out);
       } catch (err) {
-        if (path === "/api/eval") return jsEval(body || {});
-        return { ok: true, text: "0" };
+        pyOut = null;
       }
     }
-    if (path === "/api/eval") return jsEval(body || {});
-    if (path === "/api/meta") return local.catalog ? localMeta(query.lang || state.lang || "en") : { strings: state.strings || {}, categories: [], total: 0, languages: ["en", "fa", "fi"] };
-    if (path === "/api/formulas" && local.catalog) return localFormulas((query && query.q) || "", (query && query.lang) || state.lang, (query && query.category) || "");
-    if (path === "/api/solve") {
-      const id = (body && body.id) || "";
-      const rows = (local.catalog && local.catalog.formulas) || [];
-      let item = null;
-      for (let i = 0; i < rows.length; i += 1) { if (rows[i].id === id) { item = rows[i]; break; } }
-      if (!item) return { ok: true, text: "0", unknown: (body && body.unknown) || "", unit: "", all: ["0"] };
-      return localSolve(item, (body && body.values) || {}, body && body.unknown, !!(body && body.eng));
+    if (path === "/api/eval") {
+      if (pyOut && pyOut.text != null) return pyOut;
+      return jsEval(body || {});
     }
+    if (path === "/api/solve") {
+      if (pyOut && pyOut.text != null && String(pyOut.text) !== "0") return pyOut;
+      const found = (body && body.expr) ? { expr: body.expr, variables: body.variables || {} } : state.current;
+      return found ? localSolve(found, (body && body.values) || {}, body && body.unknown, !!(body && body.eng)) : { ok: false, text: "0", unknown: "", unit: "", all: ["0"] };
+    }
+    if (pyOut) return pyOut;
+    if (path === "/api/meta") return local.catalog ? localMeta((query && query.lang) || state.lang || "en") : { strings: state.strings || {}, categories: [], total: 0, languages: ["en", "fa", "fi"] };
+    if (path === "/api/formulas" && local.catalog) return localFormulas((query && query.q) || "", (query && query.lang) || state.lang, (query && query.category) || "");
     return { ok: true, text: "0", solutions: [] };
   }
   async function post(url, body) {
@@ -729,7 +849,10 @@
       const nm = (meta.name && (meta.name[state.lang] || meta.name.en)) || name;
       lab.textContent = name + "  " + nm + "  [" + (meta.unit || "") + "]";
       const input = document.createElement("input");
-      input.dataset.var = name;
+      input.type = "text";
+      input.className = "var-in";
+      input.setAttribute("data-var", name);
+      input.inputMode = "decimal";
       row.appendChild(radio);
       row.appendChild(lab);
       row.appendChild(input);
@@ -757,19 +880,39 @@
       return;
     }
     const values = {};
-    document.querySelectorAll("#fields input[data-var]").forEach((el) => {
-      values[el.dataset.var] = el.value;
+    const blanks = [];
+    document.querySelectorAll("#fields .var-in, #fields input[data-var]").forEach((el) => {
+      const name = el.getAttribute("data-var") || (el.dataset && el.dataset.var);
+      if (!name) return;
+      values[name] = el.value;
+      if (!String(el.value || "").trim()) blanks.push(name);
     });
     const picked = document.querySelector("#fields input[name=unk]:checked");
-    const out = await post("/api/solve", {
+    let unknown = picked ? picked.value : null;
+    if (blanks.length === 1) unknown = blanks[0];
+    const item = {
       id: state.current.id,
-      values: values,
-      unknown: picked ? picked.value : null,
-      eng: state.eng,
-      lang: state.lang,
-    });
+      expr: state.current.expr,
+      variables: state.current.variables || {},
+    };
+    let out = localSolve(item, values, unknown, state.eng);
+    if (!out || !out.ok) {
+      try {
+        const py = await post("/api/solve", {
+          id: item.id,
+          expr: item.expr,
+          variables: item.variables,
+          values: values,
+          unknown: unknown,
+          eng: state.eng,
+          lang: state.lang,
+        });
+        if (py && py.text != null && String(py.text) !== "0") out = py;
+      } catch (err) {}
+    }
+    if (!out) out = { unknown: unknown || "", text: "0", unit: "", all: ["0"] };
     const extra = out.all && out.all.length > 1 ? " | " + out.all.slice(1).join(", ") : "";
-    $("fresult").textContent = (out.unknown || "") + " = " + out.text + " " + (out.unit || "") + extra;
+    $("fresult").textContent = (out.unknown || "") + " = " + (out.text || "0") + (out.unit ? " " + out.unit : "") + extra;
     showSteps("fsteps", out.steps || []);
   }
 
