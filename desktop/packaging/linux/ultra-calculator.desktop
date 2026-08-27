@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Version=1.4
+Name=Ultra Calculator
+Comment=Calculator, formulas, circuits, sequences
+Exec=ultra-calculator
+Icon=ultra-calculator
+Terminal=false
+Categories=Education;Science;Math;
+StartupNotify=true

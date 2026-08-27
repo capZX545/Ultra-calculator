@@ -31,6 +31,16 @@ python3 run.py
 
 Then open port 5000. The APK is `UltraCalculator.apk` at the repo root (same file under `phone/`). Package `org.capzx545.ultracalculator`, minSdk 24, versionName 1.7, versionCode 8. Uninstall an older build first if the installer complains.
 
+### Install the desktop app (no Python)
+
+Releases: https://github.com/capZX545/Ultra-calculator/releases
+
+- **Windows:** run `UltraCalculator-Setup-1.8.0.exe`. It installs for your user account. A desktop shortcut is optional. Or unzip `UltraCalculator-Windows.zip` and double-click `UltraCalculator.exe`.
+- **Linux:** unpack `UltraCalculator-Linux.tar.gz` and run `./install.sh` (installs to `~/.local`). Or run `./UltraCalculator` from that folder.
+- **macOS:** unzip `UltraCalculator-macOS.zip` and run `UltraCalculator`.
+
+The frozen build is made by `.github/workflows/release-desktop.yml` (PyInstaller + Inno Setup on Windows).
+
 ---
 
 ## How the solver works

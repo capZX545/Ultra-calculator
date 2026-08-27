@@ -13,6 +13,11 @@ phone/.gradle/
 phone/app/build/
 phone/build/
 .gradle/
+dist/
+build/
+desktop/build/
+desktop/dist/
+*.spec.bak
 
 # secrets — never commit
 .env

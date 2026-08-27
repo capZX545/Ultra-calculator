@@ -1,0 +1,118 @@
+name: Desktop release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag (for example v1.8.0)"
+        required: false
+        default: "v1.8.0"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            artifact: windows
+          - os: ubuntu-22.04
+            artifact: linux
+          - os: macos-13
+            artifact: macos
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python packages
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pyinstaller numpy scipy sympy
+
+      - name: Freeze the desktop app
+        run: python -m PyInstaller desktop/packaging/UltraCalculator.spec --noconfirm --clean
+
+      - name: Windows installer
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          choco install innosetup -y
+          & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" desktop\packaging\windows\setup.iss
+          Compress-Archive -Path dist\UltraCalculator\* -DestinationPath dist\UltraCalculator-Windows.zip -Force
+
+      - name: Linux archive
+        if: runner.os == 'Linux'
+        run: |
+          cp desktop/packaging/linux/install.sh dist/UltraCalculator/install.sh
+          chmod +x dist/UltraCalculator/install.sh dist/UltraCalculator/UltraCalculator
+          cp desktop/packaging/icon.png dist/UltraCalculator/icon.png
+          tar -C dist -czf dist/UltraCalculator-Linux.tar.gz UltraCalculator
+
+      - name: macOS archive
+        if: runner.os == 'macOS'
+        run: |
+          chmod +x dist/UltraCalculator/UltraCalculator || true
+          ditto -c -k --sequesterRsrc --keepParent dist/UltraCalculator dist/UltraCalculator-macOS.zip
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: desktop-${{ matrix.artifact }}
+          if-no-files-found: error
+          path: |
+            dist/UltraCalculator-Setup-1.8.0.exe
+            dist/UltraCalculator-Windows.zip
+            dist/UltraCalculator-Linux.tar.gz
+            dist/UltraCalculator-macOS.zip
+
+  release:
+    needs: build
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          TAG="${GITHUB_REF_NAME}"
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          fi
+          if ! echo "$TAG" | grep -q '^v'; then
+            TAG="v1.8.0"
+          fi
+          NOTES="$(cat <<'EOF'
+          Installable desktop build of Ultra Calculator.
+
+          **Windows:** run `UltraCalculator-Setup-1.8.0.exe`. It installs for your user (no admin). A desktop shortcut is optional. You can also unzip `UltraCalculator-Windows.zip` and run `UltraCalculator.exe`.
+
+          **Linux:** unpack `UltraCalculator-Linux.tar.gz` and run `./install.sh`. That puts the app in `~/.local` and adds a menu entry. Or run `./UltraCalculator` from the folder.
+
+          **macOS:** unzip and run `UltraCalculator`.
+
+          Same calculator as the repo: formulas, circuits (two parts, then series or parallel), sequences, problems, chemistry.
+          EOF
+          )"
+          FILES=$(find artifacts dist -type f \( -name '*.exe' -o -name '*.zip' -o -name '*.tar.gz' \) 2>/dev/null || true)
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" $FILES --clobber
+          else
+            gh release create "$TAG" $FILES --title "Desktop ${TAG}" --notes "$NOTES"
+          fi
